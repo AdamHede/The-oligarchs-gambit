@@ -3,10 +3,10 @@
 class OligarchGame {
     constructor() {
         this.state = {
-            personalWealth: 50,
-            treasury: 50,
-            elite: 50,
-            anger: 20,
+            personalWealth: 10, // In billions
+            treasury: 1000, // In billions
+            elite: 50, // Percentage
+            anger: 20, // Percentage
             year: 1,
             quarter: 1,
             legacy: [],
@@ -14,6 +14,10 @@ class OligarchGame {
             completedEvents: new Set(),
             eventWeightModifiers: {}
         };
+
+        // Maximum values for wealth metrics (for display bars)
+        this.maxPersonalWealth = 200; // 200 billion
+        this.maxTreasury = 2000; // 2000 billion
 
         this.currentEvent = null;
         this.isGameOver = false;
@@ -67,10 +71,10 @@ class OligarchGame {
 
     restartGame() {
         this.state = {
-            personalWealth: 50,
-            treasury: 50,
-            elite: 50,
-            anger: 20,
+            personalWealth: 10, // In billions
+            treasury: 1000, // In billions
+            elite: 50, // Percentage
+            anger: 20, // Percentage
             year: 1,
             quarter: 1,
             legacy: [],
@@ -101,13 +105,30 @@ class OligarchGame {
     }
 
     updateMetric(metricName, barElement, valueElement) {
-        const value = Math.max(0, Math.min(100, this.state[metricName]));
-        barElement.style.width = `${value}%`;
-        valueElement.textContent = `${Math.round(value)}%`;
+        const value = this.state[metricName];
+
+        // Calculate bar width and display text based on metric type
+        let barWidth, displayText;
+
+        if (metricName === 'personalWealth') {
+            barWidth = Math.max(0, Math.min(100, (value / this.maxPersonalWealth) * 100));
+            displayText = `$${Math.round(value)}B`;
+        } else if (metricName === 'treasury') {
+            barWidth = Math.max(0, Math.min(100, (value / this.maxTreasury) * 100));
+            displayText = `$${Math.round(value)}B`;
+        } else {
+            // Elite and anger are percentages
+            barWidth = Math.max(0, Math.min(100, value));
+            displayText = `${Math.round(value)}%`;
+        }
+
+        barElement.style.width = `${barWidth}%`;
+        valueElement.textContent = displayText;
 
         // Add warning colors for critical levels
         if (metricName === 'treasury' || metricName === 'elite') {
-            if (value <= 10) {
+            if ((metricName === 'treasury' && value <= 100) ||
+                (metricName === 'elite' && value <= 10)) {
                 barElement.style.filter = 'brightness(0.6) saturate(2)';
             } else {
                 barElement.style.filter = 'brightness(1) saturate(1)';
@@ -128,8 +149,13 @@ class OligarchGame {
         this.state.legacy.forEach(legacy => {
             const badge = document.createElement('div');
             badge.className = 'legacy-badge';
+            // Add negative styling for negative weights
+            if (legacy.weight && legacy.weight < 0) {
+                badge.style.backgroundColor = 'rgba(231, 76, 60, 0.3)';
+                badge.style.borderColor = '#e74c3c';
+            }
             badge.innerHTML = `<span>${legacy.icon}</span><span>${legacy.name}</span>`;
-            badge.title = legacy.name;
+            badge.title = `${legacy.name} (${legacy.weight > 0 ? '+' : ''}${legacy.weight || 5}% legacy)`;
             this.legacyContainer.appendChild(badge);
         });
     }
@@ -257,7 +283,7 @@ class OligarchGame {
         button.className = 'choice-btn';
         button.textContent = "Continue business as usual";
         button.addEventListener('click', () => {
-            this.applyEffects({ personalWealth: 5, treasury: -5, elite: 0, anger: 5 });
+            this.applyEffects({ personalWealth: 1, treasury: -10, elite: 0, anger: 5 });
             this.updateUI();
             this.nextTurn();
         });
@@ -306,9 +332,9 @@ class OligarchGame {
             this.state.anger += effects.anger;
         }
 
-        // Clamp values
-        this.state.personalWealth = Math.max(0, Math.min(100, this.state.personalWealth));
-        this.state.treasury = Math.max(0, Math.min(100, this.state.treasury));
+        // Clamp values to appropriate ranges
+        this.state.personalWealth = Math.max(0, Math.min(this.maxPersonalWealth, this.state.personalWealth));
+        this.state.treasury = Math.max(0, Math.min(this.maxTreasury, this.state.treasury));
         this.state.elite = Math.max(0, Math.min(100, this.state.elite));
         this.state.anger = Math.max(0, Math.min(100, this.state.anger));
     }
@@ -344,11 +370,11 @@ class OligarchGame {
             <h3 style="color: #d4af37; margin-bottom: 15px;">Final Statistics</h3>
             <div class="stat-line">
                 <span>💰 Personal Wealth:</span>
-                <span style="color: #d4af37; font-weight: bold;">${Math.round(this.state.personalWealth)}%</span>
+                <span style="color: #d4af37; font-weight: bold;">$${Math.round(this.state.personalWealth)}B</span>
             </div>
             <div class="stat-line">
                 <span>🏛️ State Treasury:</span>
-                <span style="color: #3498db; font-weight: bold;">${Math.round(this.state.treasury)}%</span>
+                <span style="color: #3498db; font-weight: bold;">$${Math.round(this.state.treasury)}B</span>
             </div>
             <div class="stat-line">
                 <span>👔 Elite Approval:</span>
@@ -382,10 +408,15 @@ class OligarchGame {
             `;
         }
 
+        // Calculate weighted legacy score
+        const legacyMultiplier = this.state.legacy.reduce((sum, legacy) => {
+            return sum + (legacy.weight || 5); // Default weight of 5 if not specified
+        }, 0);
+
         // Calculate and display score
         const score = Math.round(this.state.personalWealth *
                                  (this.state.year + this.state.quarter / 4) *
-                                 (1 + this.state.legacy.length * 0.2));
+                                 (1 + legacyMultiplier / 100));
 
         const scoreElement = document.createElement('div');
         scoreElement.style.cssText = 'margin-top: 20px; padding: 20px; background: rgba(212, 175, 55, 0.2); border-radius: 8px;';
@@ -393,6 +424,9 @@ class OligarchGame {
             <h3 style="color: #d4af37;">Oligarch Score: ${score}</h3>
             <p style="color: #b8b8b8; margin-top: 10px; font-size: 0.9em;">
                 (Wealth × Time × Legacy Multiplier)
+            </p>
+            <p style="color: #b8b8b8; margin-top: 5px; font-size: 0.85em;">
+                Legacy Impact: ${legacyMultiplier > 0 ? '+' : ''}${legacyMultiplier}%
             </p>
         `;
         this.finalStats.appendChild(scoreElement);
