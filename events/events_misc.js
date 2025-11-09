@@ -9,6 +9,7 @@ const MISC_EVENTS = [
         description: "Your aluminum magnate friend just acquired a 500-foot superyacht with a submarine dock and missile defense system. He's hosting a party in the Mediterranean. Half your cabinet will be there with their mistresses. Your PR team is panicking - bread lines are getting longer and social media is exploding with anger.",
         weight: 5,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Go. Post photos. Let them seethe with envy.",
@@ -32,6 +33,7 @@ const MISC_EVENTS = [
         description: "An investigative journalist has documents proving you own 47 properties abroad, including a palace that cost more than your official salary for 200 years. She's publishing in 48 hours. Your FSB chief offers three options: novichok, a car accident, or we could just shoot her in the elevator. Your PR chief suggests buying her off.",
         weight: 7,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Eliminate her. Make it look like a robbery gone wrong.",
@@ -80,6 +82,7 @@ const MISC_EVENTS = [
         description: "Your former ally from the wild '90s privatization has gotten too big. He controls 80% of the aluminum market, owns three TV networks, and is funding opposition candidates. His security detail rivals your own. The FSB has prepared charges: fraud, embezzlement, tax evasion. They can arrest him tonight.",
         weight: 7,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Arrest him. Seize everything. Send him to Siberia.",
@@ -125,6 +128,7 @@ const MISC_EVENTS = [
         description: "The Central Bank Governor refuses to print money for your 'infrastructure projects.' She's an Oxford-educated technocrat who actually cares about inflation. International investors love her. You need cash now. Your chief of staff says she'll resign before she complies. Perfect.",
         weight: 5,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Fire her. Install your former bodyguard as replacement.",
@@ -170,6 +174,7 @@ const MISC_EVENTS = [
         description: "Victory Day is here. The generals want a massive show of strength: 15,000 troops, 200 tanks, nuclear ICBMs rolling through Red Square, fighter jet flyovers. Cost: $500 million. The same amount would rebuild 50 hospitals. Your image consultant says the people need bread and circuses. Heavy on the circuses.",
         weight: 5,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Biggest parade in history. Show the West our strength!",
@@ -192,6 +197,7 @@ const MISC_EVENTS = [
         description: "Telegram is exploding with anti-government memes and protest organization. Citizens use VPNs to access banned sites. Your FSB director wants to build a Great Firewall: deep packet inspection, block VPNs, monitor everything, China-style. Cost: $8 billion. The tech is from Huawei.",
         weight: 6,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Build it. Full Chinese model. Total information control.",
@@ -237,6 +243,7 @@ const MISC_EVENTS = [
         description: "Roscosmos wants $12 billion for a Mars mission. It would restore Soviet space glory, inspire the youth, and distract from food prices. The same $12B would fix the entire pension system, which hasn't paid on time in 8 months. Your space chief is passionate. Your finance minister is sweating.",
         weight: 5,
         conditions: { treasury: 200 },
+        onceOnly: true,
         choices: [
             {
                 text: "Fund it! Soviet space glory returns! Mars or bust!",
@@ -283,6 +290,7 @@ const MISC_EVENTS = [
         description: "Your former ally controls the second-largest gas company. He's quietly negotiating his own deals with China, cutting you out. He's offering better prices and faster delivery. Chinese officials are taking his calls. Your monopoly is threatened from within. The FSB has a dossier ready: embezzlement, fraud, treason.",
         weight: 7,
         conditions: { hasTriggered: ["alternative_energy_routes"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Arrest him tonight. Seize his gas company. Restore monopoly.",
@@ -304,6 +312,7 @@ const MISC_EVENTS = [
         description: "The main university's faculty is too liberal. Professors criticize you in lectures. Students learn dangerous ideas. Your education minister wants to fire 40 'problematic' professors and install party loyalists. The university rector is protesting. Western academic organizations are watching.",
         weight: 5,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Full purge. Fire them all. Education must serve the state.",
@@ -325,6 +334,7 @@ const MISC_EVENTS = [
         description: "A military dictatorship wants to buy $8 billion in weapons. They have a horrible human rights record. The UN has an arms embargo. But your defense industry needs the money. The sale would be 'unofficial.' Western media would go crazy. Your military-industrial complex is lobbying hard.",
         weight: 5,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Approve the sale. Route through shell companies. Plausible deniability.",
@@ -346,6 +356,7 @@ const MISC_EVENTS = [
         description: "One TV station refuses to follow the script. They're actually investigating corruption, interviewing opposition, broadcasting protests. The owner is a billionaire who thinks he's untouchable. 15 million viewers trust this station. Your propaganda chief wants it shut down. It's the last independent voice.",
         weight: 6,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Raid and shut it down. 'Tax violations.' Seize the station.",
@@ -367,6 +378,7 @@ const MISC_EVENTS = [
         description: "Your sports minister wants to bid for the World Cup. It would cost $25 billion in stadiums and infrastructure. But it's global prestige. Soft power. National pride. The bribe to FIFA officials alone is $800 million. Qatar did it. Russia did it. Why not you?",
         weight: 5,
         conditions: { treasury: 400 },
+        onceOnly: true,
         choices: [
             {
                 text: "Full bid. Pay the bribes. Win the hosting rights. Glory!",
@@ -388,6 +400,7 @@ const MISC_EVENTS = [
         description: "Leaked documents show you have $18 billion in offshore accounts. The Panama Papers. Everyone knew you were corrupt, but now there's proof. Shell companies, fake nominees, elaborate schemes. International media is having a field day. Your spokesman called it 'fake news.' Nobody believes him.",
         weight: 8,
         conditions: { personalWealth: 40 },
+        onceOnly: true,
         choices: [
             {
                 text: "Defiant denial. Western plot. Arrest the journalist who published it locally.",
@@ -409,6 +422,7 @@ const MISC_EVENTS = [
         description: "Religious extremism is growing in the south. Radical imams control 50+ mosques. They're preaching against secular government, calling for Sharia law. Young men are radicalized. Your security services want mass arrests. Religious leaders say heavy-handed tactics will make it worse.",
         weight: 6,
         conditions: { anger: 35 },
+        onceOnly: true,
         choices: [
             {
                 text: "Security crackdown. Raid mosques. Arrest 500 suspects. No tolerance.",
@@ -430,6 +444,7 @@ const MISC_EVENTS = [
         description: "A major highway bridge collapsed during morning rush hour. 67 dead. The bridge was built in 1973, last inspected in 2008. Maintenance records were falsified. The contractor who 'repaired' it in 2015 is your nephew. This is infrastructure neglect made visible. Families demand answers.",
         weight: 7,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Massive investigation. Arrest your nephew. Show you're serious about accountability.",
@@ -451,6 +466,7 @@ const MISC_EVENTS = [
         description: "You expelled the US Ambassador for 'interfering in internal affairs.' The Americans expelled yours in response. Now 15 European countries followed suit. Diplomatic crisis is escalating. Your foreign minister says we can't back down now—it's a matter of sovereignty. But isolation has consequences.",
         weight: 6,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Escalate. Expel 50 more diplomats. We don't need them.",
@@ -472,6 +488,7 @@ const MISC_EVENTS = [
         description: "A senior official in your administration is leaking to Western media. Classified documents. Meeting transcripts. Your actual net worth. Security services narrowed it to 5 suspects. Your chief of staff recommends arresting all 5. One is your close friend from university. One is the FSB deputy director.",
         weight: 7,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Arrest all 5. Interrogate harshly. Find the leak. No exceptions.",
@@ -493,6 +510,7 @@ const MISC_EVENTS = [
         description: "A massive cyber attack just hit government systems. Foreign intelligence, probably. Your emails are leaked online. Cabinet meetings recorded. Financial transactions exposed. It's a digital Pearl Harbor. Embarrassing, damaging, and ongoing. Your cyber defense is primitive. You need help—maybe from those Chinese cyber units.",
         weight: 7,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Accept Chinese cyber help. They'll secure systems but have backdoor access.",
@@ -514,6 +532,7 @@ const MISC_EVENTS = [
         description: "One company controls 85% of telecom. Service is terrible. Prices are high. They're owned by your former KGB colleague. Competition regulators want to break up the monopoly. Your friend is threatening to release 'certain information' if you move against him. Extortion. But he's right—he knows everything.",
         weight: 6,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Break up the monopoly. Call his bluff. You have more dirt on him.",
@@ -535,6 +554,7 @@ const MISC_EVENTS = [
         description: "Your new main battle tank is a disaster. Engines catch fire. Armor penetrated easily. 40% failure rate in exercises. The defense contractor delivered garbage but charged premium prices. He's your wife's cousin. The generals are quietly furious. This affects national security.",
         weight: 7,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Cancel the contract. Court-martial your wife's cousin. Fix the problem.",
@@ -556,6 +576,7 @@ const MISC_EVENTS = [
         description: "Synthetic opioids are flooding the country. Overdoses up 400%. It's coming from labs in neighboring states—maybe with their government's knowledge. Young people dying. Treatment centers overwhelmed. Harsh drug laws aren't working. Some advisors suggest decriminalization. Your interior minister wants the death penalty for dealers.",
         weight: 6,
         conditions: { anger: 30 },
+        onceOnly: true,
         choices: [
             {
                 text: "Death penalty for trafficking. Harsh mandatory minimums. War on drugs.",
@@ -577,6 +598,7 @@ const MISC_EVENTS = [
         description: "Chinese company is offering AI-powered surveillance: facial recognition, behavior prediction, social credit scoring. It works. Every camera, every transaction, every movement tracked. Perfect social control. Cost: $12 billion and your citizens' privacy forever. Your security chief is salivating.",
         weight: 5,
         conditions: { treasury: 300 },
+        onceOnly: true,
         choices: [
             {
                 text: "Full implementation. Every city. Social credit system. Total surveillance state.",
@@ -598,6 +620,7 @@ const MISC_EVENTS = [
         description: "Your education minister proposes new history textbooks. The 1990s collapse is now 'Western sabotage.' Your rise to power is 'national salvation.' Documented atrocities become 'necessary security measures.' Previous leaders are villains. You're the hero. It's propaganda, but it'll shape a generation's understanding.",
         weight: 5,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Approve everything. Control the narrative. History is written by winners.",
@@ -619,6 +642,7 @@ const MISC_EVENTS = [
         description: "You wore a $650,000 Swiss watch to a state TV interview about pension cuts. The screenshot went viral. Social media is exploding. Opposition calculated: that watch cost more than 80 years of average pension. Your spokesman's excuse ('It's a gift!') made it worse. Optics disaster.",
         weight: 6,
         conditions: { personalWealth: 30 },
+        onceOnly: true,
         choices: [
             {
                 text: "Defiant. 'I earned this.' Attack critics as jealous. Double down.",
@@ -640,6 +664,7 @@ const MISC_EVENTS = [
         description: "Your main political opponent died suddenly. Official cause: heart attack. Unofficially: everyone thinks you killed him. His allies are calling it assassination. International media is speculating. Western governments demand investigation. The truth: he actually had a heart attack. But nobody believes that.",
         weight: 8,
         conditions: { anger: 35 },
+        onceOnly: true,
         choices: [
             {
                 text: "Thorough international investigation. Prove it was natural. Clear your name.",
@@ -661,6 +686,7 @@ const MISC_EVENTS = [
         description: "Your country has 40% of global rare earth mineral reserves—critical for all modern electronics. Chinese companies want exclusive extraction rights. Western tech companies are desperate for supply. You could play them against each other. This is geopolitical leverage. The question is: how ruthless to be?",
         weight: 7,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Auction to highest bidder. West and China compete. Maximize profit.",
@@ -682,6 +708,7 @@ const MISC_EVENTS = [
         description: "A nuclear submarine sank during exercises. 118 sailors trapped. Oxygen running out. International rescue offered. Your admirals refused—'classified military vessel.' 72 hours later: everyone dead. Families are devastated. The media is asking why you rejected help. Pride killed 118 men.",
         weight: 9,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Admit the mistake. Apologize. Compensate families generously. Accountability.",
@@ -703,6 +730,7 @@ const MISC_EVENTS = [
         description: "Your intelligence service runs a massive troll farm: 2,000 employees creating fake social media accounts, spreading disinformation, attacking critics. It's effective. But a whistleblower just leaked the operation. Screenshots of orders. Payment records. Your direct involvement. International scandal. Domestic embarrassment.",
         weight: 7,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Deny everything. 'Fabricated by enemies.' Hunt the whistleblower.",
@@ -724,6 +752,7 @@ const MISC_EVENTS = [
         description: "Your best AI researchers are leaving for Silicon Valley. They're offered 10x salary, freedom to publish, stock options. Your tech sector is being hollowed out. You could restrict emigration, increase funding, or just accept that talent follows freedom and money. Keeping them requires real change.",
         weight: 6,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Exit visa requirements for STEM graduates. Trap them here.",
@@ -745,6 +774,7 @@ const MISC_EVENTS = [
         description: "Your supporters want to erect a 40-meter statue of you in the capital. Cost: $180 million. They say it's about 'preserving your legacy.' Critics call it cult of personality. International media will mock it. But your ego... it would be impressive. Caesar had statues. Stalin had statues. Why not you?",
         weight: 5,
         conditions: { personalWealth: 40, year: 5 },
+        onceOnly: true,
         choices: [
             {
                 text: "Build it. 50 meters, even. Gold-plated. Biggest in the region.",
@@ -766,6 +796,7 @@ const MISC_EVENTS = [
         description: "New law proposal: any NGO receiving foreign funding must register as 'foreign agent.' It effectively kills civil society organizations—human rights groups, environmental orgs, election monitors. The West is threatening sanctions. But it also crushes your opposition's funding pipeline. Effective repression.",
         weight: 7,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Pass it. Register 500+ NGOs as foreign agents. Cripple civil society.",
@@ -787,6 +818,7 @@ const MISC_EVENTS = [
         description: "Your GRU agents tried to poison a defector in Berlin. They were caught on camera. Passports were fake but traceable. German intelligence identified them. Russia now has the whole operation documented. Your spokesman's denials are laughable. Two options: brazen it out or apologize (weakness).",
         weight: 8,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Total denial. 'They're tourists!' Absurd but maintain deniability.",
@@ -808,6 +840,7 @@ const MISC_EVENTS = [
         description: "A major banker's son killed someone in a drunk driving accident. Witnesses everywhere. He's guilty. But his father controls 40% of private credit. He's calling in favors. Wants charges dropped. The victim's family wants justice. This is a test: rule of law vs. oligarch privilege. Everyone's watching.",
         weight: 7,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Drop charges. 'Insufficient evidence.' Oligarch privilege maintained.",
@@ -829,6 +862,7 @@ const MISC_EVENTS = [
         description: "Worst drought in 50 years. Crops failing. Food prices rising 200%. Rural regions face famine. Climate change or bad luck—doesn't matter to starving people. You need emergency food imports ($8B) or ration domestic supplies. Either way, it's a crisis that exposes your agricultural failures.",
         weight: 8,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Emergency imports. Whatever it costs. Prevent famine. Protect legitimacy.",
@@ -850,6 +884,7 @@ const MISC_EVENTS = [
         description: "Architectural plans for your Black Sea palace leaked online. 3D renders. Cost breakdowns. $1.4 billion. Hookah lounge. Underground ice rink. Italian toilet: $850K. People are sharing it everywhere. Your spokesman said 'it's not his palace.' Nobody believes that. The opulence is breathtaking and enraging.",
         weight: 8,
         conditions: { personalWealth: 35 },
+        onceOnly: true,
         choices: [
             {
                 text: "Admit it. 'Yes, it's mine. I earned it.' Own the luxury. Dominance display.",
@@ -871,6 +906,7 @@ const MISC_EVENTS = [
         description: "The Constitutional Court ruled your latest decree unconstitutional. They actually defied you. The chief judge is a holdover from previous era. He has public support. You could ignore the ruling (set precedent), pack the court (obvious), or actually respect it (weakness). Rule of law vs. rule of power.",
         weight: 7,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Ignore the ruling. 'Political decision.' Court has no enforcement power.",
@@ -892,6 +928,7 @@ const MISC_EVENTS = [
         description: "Bitcoin and crypto are booming in your country. Citizens using it to evade capital controls, hide wealth, and escape your monetary policy. Your central bank wants to ban it. Your tech oligarchs want to embrace it. Some officials are mining it themselves. You could ban, regulate, or adopt. Each has implications.",
         weight: 6,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Total ban. Crypto is a threat to monetary sovereignty. Jail miners.",
@@ -913,6 +950,7 @@ const MISC_EVENTS = [
         description: "Your oligarch friend is divorcing his wife. She wants half: $12 billion. She knows everything—offshore accounts, shell companies, your personal deals. He's begging for help. You could pressure judges to minimize her settlement. Or stay neutral. Or even side with her—she'd be grateful and useful.",
         weight: 6,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Rig the court. She gets $500M. Oligarch keeps the rest. Favors owed.",
@@ -934,6 +972,7 @@ const MISC_EVENTS = [
         description: "A nuclear power plant project: 12 reactors, $40 billion, Russian technology. It would solve energy independence. But it's earthquake-prone region. Environmental groups are protesting. Chernobyl anniversary protests are massive. The contractor is offering you a $2B 'consulting fee.'",
         weight: 5,
         conditions: { treasury: 200 },
+        onceOnly: true,
         choices: [
             {
                 text: "Build it. Accept the kickback. Nuclear is the future.",
@@ -955,6 +994,7 @@ const MISC_EVENTS = [
         description: "A neighboring country demands $100 billion in reparations for historical atrocities committed 70 years ago. It's legitimate—your predecessor's regime killed 200,000 of their citizens. International courts support their claim. But paying would bankrupt you. Nationalists say never apologize.",
         weight: 6,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Reject completely. 'Historical revisionism.' We owe nothing.",
@@ -976,6 +1016,7 @@ const MISC_EVENTS = [
         description: "Your daughter is marrying a billionaire oligarch's son. The wedding costs $300 million. Versailles-level opulence. Elton John is performing. Meanwhile, minimum wage is $200/month. The optics are catastrophic. Your PR team is sweating. Cancel, scale down, or embrace it?",
         weight: 6,
         conditions: { personalWealth: 50 },
+        onceOnly: true,
         choices: [
             {
                 text: "Full spectacle. Let them see how power celebrates. Dominance.",
@@ -997,6 +1038,7 @@ const MISC_EVENTS = [
         description: "Implement a social credit system: rewards for loyalty, punishment for dissent. Criticize government online: lose job prospects. Attend rallies: get better housing. The Chinese system works. Your security apparatus wants it. It's Orwellian but effective.",
         weight: 6,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Full implementation. Track everything. Rewards and punishments.",
@@ -1018,6 +1060,7 @@ const MISC_EVENTS = [
         description: "Your state-sponsored athletic doping program was exposed. 1,000+ athletes systematically drugged. Olympics medals stripped. International sporting bans. Your sports minister ran it with FSB help. The whistleblower is in protective custody abroad. Deny or admit?",
         weight: 7,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Total denial. Whistleblower is a traitor. Western conspiracy.",
@@ -1039,6 +1082,7 @@ const MISC_EVENTS = [
         description: "New law: allow foreign investors to buy agricultural land. Chinese companies want 5 million hectares. It's worth $20B. But it's national territory—selling to foreigners is treason to nationalists. Food security concerns. But you need the money.",
         weight: 6,
         conditions: { treasury: -200 },
+        onceOnly: true,
         choices: [
             {
                 text: "Allow the sale. $20B injection. Food security can be managed.",
@@ -1060,6 +1104,7 @@ const MISC_EVENTS = [
         description: "You developed a COVID vaccine. It's 70% effective (you claim 95%). Western vaccines are better but scarce. You could sell to desperate countries, trade for political influence, or donate for goodwill. Vaccine diplomacy is geopolitical leverage.",
         weight: 7,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Sell at premium prices. Maximize profit. Capitalism in crisis.",
@@ -1081,6 +1126,7 @@ const MISC_EVENTS = [
         description: "The major crime bosses want a meeting. They control ports, construction, half the economy. They're requesting 'understanding'—you don't interfere, they support you. Or you could try to break them (risky). Or legitimize them as 'security companies.' The line between state and mafia is blurring.",
         weight: 7,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Partnership. They operate, you get 30%. Mafia state formalized.",
@@ -1102,6 +1148,7 @@ const MISC_EVENTS = [
         description: "Your space station is falling apart. Life support failing. 6 cosmonauts aboard. Budget cuts and corruption left it undermaintained. Rescue mission costs $2B. Or evacuate and let it crash (some deaths possible). Space program pride vs. lives vs. money.",
         weight: 8,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Emergency rescue. Whatever it costs. Save them. National pride.",
@@ -1123,6 +1170,7 @@ const MISC_EVENTS = [
         description: "Undersea internet cables connecting you to the world were cut. Suspicious. Could be sabotage. Internet is down nationwide. Economy losing $2B daily. Repairs take weeks. Maybe it's a  message from adversaries. Or test your resilience. You're digitally isolated.",
         weight: 8,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Emergency satellite internet. Expensive but restores connectivity.",
@@ -1144,6 +1192,7 @@ const MISC_EVENTS = [
         description: "Your rival oligarch had a fatal heart attack. He was about to testify about your corruption. Perfect timing. Everyone suspects you ordered it. The truth: you didn't. It was natural. But the narrative is set—you kill business rivals. Fear increases but so does hatred.",
         weight: 7,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Lean into it. Let them think you did it. Fear is power.",
@@ -1165,6 +1214,7 @@ const MISC_EVENTS = [
         description: "New proposal: 50% tax on luxury goods—yachts, private jets, supercars, watches over $100k. It would raise $8B and look populist. But your oligarch friends would pay it. They're calling you, angry. 'This is our money!' they say. Test of loyalty vs. populism.",
         weight: 6,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Pass it. Populist win. Oligarchs can afford it.",
@@ -1186,6 +1236,7 @@ const MISC_EVENTS = [
         description: "A prominent investigative journalist vanished. Last seen investigating your money laundering network. Her colleagues say she was abducted. International press freedom groups are protesting. Your FSB says they know nothing. Everyone thinks you killed her. She may still be alive... somewhere.",
         weight: 8,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "'She fled the country.' Produce a fake video. End the story.",
@@ -1207,6 +1258,7 @@ const MISC_EVENTS = [
         description: "US Treasury designated you a 'currency manipulator.' They're right—you've been suppressing currency value to boost exports. It works economically but now faces sanctions. Continue manipulation (economic benefit, political cost) or stop (economic damage, sanctions lifted)?",
         weight: 6,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Continue. Economic benefits outweigh sanctions risk.",
@@ -1228,6 +1280,7 @@ const MISC_EVENTS = [
         description: "Afghanistan veterans are protesting. Promised benefits never materialized. Medical care inadequate. Many are homeless. They fought for you, now feel abandoned. War veterans protesting is powerful optics. They have military training and weapons access. This could get ugly.",
         weight: 7,
         conditions: { anger: 30 },
+        onceOnly: true,
         choices: [
             {
                 text: "Full benefits package. $5B annually. Honor their service properly.",
@@ -1249,6 +1302,7 @@ const MISC_EVENTS = [
         description: "Build a massive Arctic military base. Project power. Control shipping lanes. Claim territory. Cost: $15B. Strategic value: enormous. But it's aggressive militarization. US and NATO will respond. Arms race in Arctic begins. Worth it for national security?",
         weight: 6,
         conditions: { treasury: 300 },
+        onceOnly: true,
         choices: [
             {
                 text: "Build it. Full military complex. Permanent Arctic presence.",
@@ -1270,6 +1324,7 @@ const MISC_EVENTS = [
         description: "State TV produced a propaganda piece so absurd it became a meme. CGI was terrible. Lies were obvious. Even your supporters are laughing. International media mocking you. The propaganda minister responsible is your nephew. Fire him (admit failure) or double down (look ridiculous)?",
         weight: 6,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Fire him publicly. 'Unacceptable quality.' Admit error, move on.",
@@ -1291,6 +1346,7 @@ const MISC_EVENTS = [
         description: "Largest lake in country is dying. Pollution from state industries. Fish populations collapsed. 5 million depend on it. Environmental catastrophe. Cleanup costs $10B. Stopping pollution means closing factories (20k jobs). Choose: environment, jobs, or ignore the problem.",
         weight: 6,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Full cleanup. Close polluting factories. Save the lake.",
@@ -1312,6 +1368,7 @@ const MISC_EVENTS = [
         description: "Your oligarch friend wants to start a private space company. Like SpaceX but yours. He needs $20B in state contracts. It's vanity project meets genuine innovation. Could boost aerospace industry. Or it's just billionaire ego. Fund it or refuse?",
         weight: 5,
         conditions: { treasury: 400 },
+        onceOnly: true,
         choices: [
             {
                 text: "Fund it fully. $20B contracts. Maybe it works. National prestige.",
@@ -1333,6 +1390,7 @@ const MISC_EVENTS = [
         description: "You hosted the World Cup. Cost $28B. It was a disaster. Stadiums unfinished. Corruption everywhere. Hooligans rioted. International embarrassment. The Minister responsible stole $8B. Everyone knows. Fire him (admit failure) or protect him (loyalty)?",
         weight: 8,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Arrest the Minister. Recover stolen money. Show accountability.",
@@ -1354,6 +1412,7 @@ const MISC_EVENTS = [
         description: "Your best universities are collapsing. Top professors leaving. Research funding cut. Students going abroad. Academic standards plummeting. You need $15B to stabilize higher education. Or let it decline—educated people cause problems anyway.",
         weight: 6,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Major investment. $15B. Rebuild academic excellence.",
@@ -1375,6 +1434,7 @@ const MISC_EVENTS = [
         description: "Your government launched official cryptocurrency. Citizens bought billions worth. It crashed 95%. Officials profited from insider trading. It was essentially a pump-and-dump scheme. Citizens lost life savings. They're protesting. This was daylight robbery of your own people.",
         weight: 9,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Compensate victims 50%. Admit mistakes. Costly but ethical.",
@@ -1396,6 +1456,7 @@ const MISC_EVENTS = [
         description: "Expand secret police powers. More surveillance. More arrests. No warrants needed. Political prisoners doubled. It's effective repression but increasingly brutal. Even loyal elites are nervous—nobody's safe. This is crossing into true police state territory.",
         weight: 7,
         conditions: { anger: 45 },
+        onceOnly: true,
         choices: [
             {
                 text: "Full expansion. Total security state. Everyone is monitored.",

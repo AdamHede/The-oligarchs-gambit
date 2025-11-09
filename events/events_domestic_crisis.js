@@ -96,6 +96,7 @@ const DOMESTIC_CRISIS_EVENTS = [
         description: "The state pension fund is insolvent. You've been raiding it for years to plug budget holes. 18 million pensioners haven't been paid in 2 months. They're protesting. The finance minister says there's no money. Either cut pensions 40%, raise retirement age to 70, or find $150 billion somehow.",
         weight: 8,
         conditions: { treasury: -100 },
+        onceOnly: true,
         choices: [
             {
                 text: "Cut pensions 40%. They'll adjust. Better than state bankruptcy.",
@@ -117,6 +118,7 @@ const DOMESTIC_CRISIS_EVENTS = [
         description: "Ethnic riots in a border region. The majority ethnic group is attacking the minority. 30 dead so far. It started with a market dispute but decades of resentment exploded. Separatist rhetoric is growing. Both sides are armed. Military deployment could either restore order or escalate to civil conflict.",
         weight: 8,
         conditions: { anger: 40 },
+        onceOnly: true,
         choices: [
             {
                 text: "Military crackdown. Martial law. Curfew. Arrest leaders from both sides.",
@@ -138,6 +140,7 @@ const DOMESTIC_CRISIS_EVENTS = [
         description: "Your health minister proposes privatizing hospitals. It would raise $15B immediately and cut state healthcare costs. But 40 million people rely on state healthcare. Private care is unaffordable for most. Oligarchs are lining up to buy hospitals. The doctors' union is threatening strikes.",
         weight: 6,
         conditions: { treasury: -100 },
+        onceOnly: true,
         choices: [
             {
                 text: "Full privatization. Sell everything. Healthcare is now for profit.",
@@ -159,6 +162,7 @@ const DOMESTIC_CRISIS_EVENTS = [
         description: "Youth unemployment hit 45%. University graduates are driving taxis. Engineering degrees work in call centers. Brain drain accelerating. Young people have no future here. Revolution potential is high. You need jobs, but the economy is stagnant. Maybe a massive public works program?",
         weight: 7,
         conditions: { anger: 35 },
+        onceOnly: true,
         choices: [
             {
                 text: "Massive public works. $30B infrastructure program. Create 500k jobs.",
@@ -180,6 +184,7 @@ const DOMESTIC_CRISIS_EVENTS = [
         description: "You're $200B in debt. Creditors want payment. Options: default (economic chaos), austerity (political suicide), or print money (hyperinflation). Or maybe... seize oligarch wealth? Every option is terrible. Welcome to sovereign debt crisis.",
         weight: 10,
         conditions: { treasury: -500 },
+        onceOnly: true,
         choices: [
             {
                 text: "Default. Restructure debt. 10 years of economic pain.",
@@ -201,6 +206,7 @@ const DOMESTIC_CRISIS_EVENTS = [
         description: "Population declining 1% annually. Birth rates collapsing. Workforce shrinking. Aging crisis. Solutions: immigration (nationalists hate it), child subsidies ($50B/year), or nothing (decline continues). This is existential long-term.",
         weight: 6,
         conditions: { year: 4 },
+        onceOnly: true,
         choices: [
             {
                 text: "Massive immigration program. Open borders to Central Asia.",
@@ -222,6 +228,7 @@ const DOMESTIC_CRISIS_EVENTS = [
         description: "Major prison riot. Inmates took guards hostage. Your interior minister sent special forces. 47 inmates killed. 'Official story: they were armed. Truth: it was an execution. Survivors are talking. Human rights groups investigating. Cover it up or admit?",
         weight: 8,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Full cover-up. Prisoners were dangerous terrorists. Justified response.",

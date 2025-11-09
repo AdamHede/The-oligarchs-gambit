@@ -9,6 +9,7 @@ const SOCIAL_MOVEMENTS_EVENTS = [
         description: "University students are protesting. Started with 200 at the main university, now spreading to 12 campuses. They want free elections, end to corruption, freedom of speech. They're young, tech-savvy, making memes. Western media loves them. Your interior minister says riot police can clear them in an hour. Your political advisor says martyring students creates movements.",
         weight: 7,
         conditions: { anger: 30 },
+        onceOnly: true,
         choices: [
             {
                 text: "Send riot police. Beat them. Arrest the leaders. End this now.",
@@ -201,6 +202,7 @@ const SOCIAL_MOVEMENTS_EVENTS = [
         description: "You blocked social media. They're using mesh networks. You banned VPNs. They're distributing USB sticks with Tor. You shut down opposition sites. They're using blockchain hosting. You arrested tech activists. New ones appear. The youth are always two steps ahead. Your censors are losing the tech war.",
         weight: 7,
         conditions: { hasTriggered: ["social_media_viral"] },
+        onceOnly: true,
         choices: [
             {
                 text: "China-level response. National firewall. Deep packet inspection. $10B investment.",
@@ -222,6 +224,7 @@ const SOCIAL_MOVEMENTS_EVENTS = [
         description: "The movement is fracturing. The students want radical change now. The liberals want gradual reform. The workers want economic justice. The nationalists want ethnic purity. They're fighting each other more than you. Social media feuds. Competing protests. Your intelligence service is quietly helping the fractures grow.",
         weight: 7,
         conditions: { hasTriggered: ["student_movement_grows"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Accelerate the split. Fund the extremes. Make moderates seem weak.",
@@ -243,6 +246,7 @@ const SOCIAL_MOVEMENTS_EVENTS = [
         description: "50,000 women protesting domestic violence laws. 40% of women experience abuse. Police rarely intervene. New law would strengthen protections. But it also empowers feminist movement. Conservative lawmakers oppose it. Orthodox Church opposes it. But the women aren't backing down.",
         weight: 6,
         conditions: { anger: 30 },
+        onceOnly: true,
         choices: [
             {
                 text: "Pass the law. Women's rights matter. Anger conservatives.",

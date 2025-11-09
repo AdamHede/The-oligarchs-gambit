@@ -34,6 +34,7 @@ const WAR_MILITARY_EVENTS = [
         description: "The war needs supplies: body armor, rations, ammunition, vehicles. Your childhood friend owns a defense contractor. His body armor fails ballistic tests. His rations gave soldiers food poisoning. But he's offering 40% of a $10 billion contract directly to your Cyprus account.",
         weight: 8,
         conditions: { hasTriggered: ["special_operation_proposal"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Accept the deal. Soldiers die in war anyway.",
@@ -178,6 +179,7 @@ const WAR_MILITARY_EVENTS = [
         description: "Your mobilization decree went live. Within 24 hours, private jets carried 87 sons of oligarchs, ministers, and generals out of the country. The FSB chief's son is in Dubai. The defense minister's son has a sudden 'heart condition.' The propaganda chief's son is now studying in Switzerland. Meanwhile, poor farmers' sons are getting drafted at gunpoint.",
         weight: 7,
         conditions: { hasTriggered: ["conscription_crisis"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Publicize it. Name and shame. No one is exempt! (Lie)",
@@ -273,6 +275,7 @@ const WAR_MILITARY_EVENTS = [
         description: "Occupied territories are bleeding you dry. Partisans blow up supply convoys weekly. Your soldiers are shot by snipers at checkpoints. Every collaborator you install gets assassinated within months. You're spending $8 billion monthly just to hold territory. The locals hate you. Every house could hide a fighter.",
         weight: 7,
         conditions: { hasTriggered: ["territorial_annexation", "war_goes_badly"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Brutal pacification. Collective punishment. Mass arrests.",
@@ -385,6 +388,7 @@ const WAR_MILITARY_EVENTS = [
         description: "100,000 mothers and wives are marching. They want their sons back. Their husbands. Their brothers. 'Not one more coffin.' Spreading from the capital to 50 cities. These aren't political activists—these are ordinary women who've lost everything. The police are hesitant to beat grieving mothers on camera.",
         weight: 8,
         conditions: { hasTriggered: ["conscription_crisis"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Mass arrests. All of them. 20,000 detained nationwide.",
@@ -483,6 +487,7 @@ const WAR_MILITARY_EVENTS = [
         description: "Your blockade is in its 4th month. No food, medicine, electricity. Hospitals operating by candlelight. Children dying from preventable diseases. The UN estimates 15,000 civilian deaths from the blockade alone. Humanitarian convoys are blocked at checkpoints. CNN has footage of starving families. The ICC prosecutor is watching.",
         weight: 8,
         conditions: { hasTriggered: ["breakaway_province"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Maintain the siege. Starvation is a weapon. They'll surrender.",
@@ -506,6 +511,7 @@ const WAR_MILITARY_EVENTS = [
         description: "You control the cities, they control the countryside. Ambushes kill soldiers weekly. Car bombs target military convoys. Collaborators are executed publicly. You're spending $12 billion annually to hold territory. Veterans are returning traumatized. Mothers are demanding withdrawals. This is Afghanistan, but it's your own country.",
         weight: 7,
         conditions: { hasTriggered: ["urban_warfare_separatist"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Collective punishment. Villages that harbor rebels get razed.",
@@ -640,6 +646,7 @@ const WAR_MILITARY_EVENTS = [
         description: "They have their parliament, control resources, fly their flag alongside yours. It's autonomy, not independence. So far it's holding. They're investing oil revenues in infrastructure. No violence in 18 months. But nationalists in your capital are furious—calling you weak. And other regions are now demanding the same deal.",
         weight: 6,
         conditions: { hasTriggered: ["autonomy_negotiations"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Offer similar autonomy to other restive regions. Federation model.",
@@ -662,6 +669,7 @@ const WAR_MILITARY_EVENTS = [
         description: "Retaliation sparked counter-retaliation. They bombed a school. You bombed a hospital. They attacked a military base. You leveled a neighborhood. Civilians on both sides are traumatized. The cycle is self-sustaining now. Neither side can back down without appearing weak. The violence has its own momentum.",
         weight: 8,
         conditions: { hasTriggered: ["separatist_terrorism_response"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Escalate to overwhelming force. Break them completely. End it.",

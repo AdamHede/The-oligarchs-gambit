@@ -9,6 +9,7 @@ const SANCTIONS_INTERNATIONAL_EVENTS = [
         description: "The West just froze $400 billion in foreign reserves. Banned technology exports. Kicked you out of SWIFT. Cut off all Western financing. Your oligarchs' yachts are being seized in Monaco. The ruble is in free fall. Your finance minister is hyperventilating into a paper bag.",
         weight: 7,
         conditions: { hasTriggered: ["war_goes_badly", "international_sanctions"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Defiance! Nationalize Western assets. Mobilize the economy!",
@@ -31,6 +32,7 @@ const SANCTIONS_INTERNATIONAL_EVENTS = [
         description: "Your former oil oligarch fled to London with $2 billion and a laptop full of kompromat. He's talking to MI6. Knows about the offshore accounts, the palace, the polonium incident, everything. Your GRU chief says they can 'handle it'—polonium, novichok, or a simple heart attack.",
         weight: 6,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Approve the hit. Send the special team to London.",
@@ -100,6 +102,7 @@ const SANCTIONS_INTERNATIONAL_EVENTS = [
         description: "Your best tech workers, doctors, engineers, scientists—they're leaving. 300,000 educated professionals emigrated this year. Brain drain is accelerating. Western sanctions destroyed their salaries' purchasing power. Universities losing professors. Hospitals losing surgeons. Tech companies losing programmers. The future is fleeing.",
         weight: 7,
         conditions: { hasTriggered: ["sanctions_incoming"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Close borders. Exit visas required. Trap the talent.",
@@ -121,6 +124,7 @@ const SANCTIONS_INTERNATIONAL_EVENTS = [
         description: "Import substitution isn't working. Factories need German machine parts—none available. Hospitals need Western medicines—blockaded. Airlines can't get Boeing parts—planes grounded. You can't just replace 40 years of global integration overnight. The economy is seizing up from lack of imports.",
         weight: 8,
         conditions: { hasTriggered: ["sanctions_incoming"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Emergency imports through China. Pay 3x markup. No choice.",
@@ -165,6 +169,7 @@ const SANCTIONS_INTERNATIONAL_EVENTS = [
         description: "You've built a sophisticated sanctions evasion network. Shell companies in Dubai. Front businesses in Turkey. Money laundering through crypto. Phantom tankers with fake transponders. You're moving oil, moving money, moving goods—all off the books. It works, but you're now dependent on criminals and autocrats.",
         weight: 7,
         conditions: { hasTriggered: ["secondary_sanctions_threat"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Expand it. If we're sanctioned anyway, embrace the dark economy.",
@@ -228,6 +233,7 @@ const SANCTIONS_INTERNATIONAL_EVENTS = [
         description: "Secret backchannel talks. The West is willing to lift some sanctions. Terms: withdraw from occupied territories, release political prisoners, allow free elections monitoring, end support for allied regimes. It's basically regime change in slow motion. But the economy desperately needs relief. Your oligarchs are begging you to consider it.",
         weight: 8,
         conditions: { hasTriggered: ["sanctions_incoming"], year: 5 },
+        onceOnly: true,
         choices: [
             {
                 text: "Accept terms. Sanctions relief is worth any humiliation.",

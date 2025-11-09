@@ -234,7 +234,7 @@ class OligarchGame {
     }
 
     initializeEventPool() {
-        // Start with basic recurring events and some storyline initiators
+        // Start with a SMALL pool of 3-4 events for more focused storytelling
         const initialPool = EVENTS.filter(event => {
             // Include basic events (no storyline tag) or storyline initiators
             return !event.conditions ||
@@ -243,8 +243,8 @@ class OligarchGame {
                     !event.conditions.year);
         }).map(e => e.id);
 
-        // Take first ~25 events as starting pool
-        this.state.activeEventPool = initialPool.slice(0, 25);
+        // Take only first 3-4 events - much smaller pool for less repetition
+        this.state.activeEventPool = initialPool.slice(0, 4);
     }
 
     addToEventPool(eventIds) {
