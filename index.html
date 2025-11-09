@@ -72,6 +72,40 @@
             <!-- Legacy Achievements -->
             <div id="legacy-container" class="legacy-container"></div>
 
+            <!-- Debug Section -->
+            <div class="debug-section">
+                <details class="debug-details">
+                    <summary class="debug-summary">🐛 Debug Information</summary>
+                    <div class="debug-content">
+                        <div class="debug-info">
+                            <div class="debug-row">
+                                <span class="debug-label">Version:</span>
+                                <span id="debug-version" class="debug-value">-</span>
+                            </div>
+                            <div class="debug-row">
+                                <span class="debug-label">Latest Changes:</span>
+                                <span id="debug-summary" class="debug-value">-</span>
+                            </div>
+                            <div class="debug-row">
+                                <span class="debug-label">Total Events:</span>
+                                <span id="debug-total-events" class="debug-value">-</span>
+                            </div>
+                            <div class="debug-row">
+                                <span class="debug-label">Active Events:</span>
+                                <span id="debug-active-events" class="debug-value">-</span>
+                            </div>
+                        </div>
+
+                        <details class="debug-events-details">
+                            <summary class="debug-events-summary">⚠️ Active Events List (Spoilers!)</summary>
+                            <div id="debug-events-list" class="debug-events-list">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </details>
+                    </div>
+                </details>
+            </div>
+
             <!-- Event Card -->
             <div id="event-card" class="event-card">
                 <h3 id="event-title" class="event-title"></h3>
