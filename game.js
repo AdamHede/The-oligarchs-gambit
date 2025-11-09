@@ -1,5 +1,10 @@
 // The Oligarch's Gambit - Main Game Engine
 
+// Version tracking
+const GAME_VERSION = "1.3.0";
+const VERSION_SUMMARY = "Scale event system to 154 events with complete storylines";
+const TOTAL_EVENTS = 153;
+
 class OligarchGame {
     constructor() {
         this.state = {
@@ -54,6 +59,13 @@ class OligarchGame {
 
         // Legacy
         this.legacyContainer = document.getElementById('legacy-container');
+
+        // Debug
+        this.debugVersion = document.getElementById('debug-version');
+        this.debugSummary = document.getElementById('debug-summary');
+        this.debugTotalEvents = document.getElementById('debug-total-events');
+        this.debugActiveEvents = document.getElementById('debug-active-events');
+        this.debugEventsList = document.getElementById('debug-events-list');
 
         // Game Over
         this.gameoverReason = document.getElementById('gameover-reason');
@@ -112,6 +124,9 @@ class OligarchGame {
 
         // Update legacy
         this.updateLegacy();
+
+        // Update debug info
+        this.updateDebugInfo();
     }
 
     updateMetric(metricName, barElement, valueElement) {
@@ -179,6 +194,43 @@ class OligarchGame {
 
             this.legacyContainer.appendChild(badge);
         });
+    }
+
+    updateDebugInfo() {
+        // Update version and summary
+        this.debugVersion.textContent = GAME_VERSION;
+        this.debugSummary.textContent = VERSION_SUMMARY;
+        this.debugTotalEvents.textContent = TOTAL_EVENTS;
+
+        // Count active events (events in the active pool that are eligible)
+        const activeEventIds = this.state.activeEventPool;
+        this.debugActiveEvents.textContent = activeEventIds.length;
+
+        // Update active events list
+        this.debugEventsList.innerHTML = '';
+
+        if (activeEventIds.length === 0) {
+            this.debugEventsList.innerHTML = '<div style="color: #888; font-style: italic;">No active events in pool</div>';
+        } else {
+            activeEventIds.forEach(eventId => {
+                const event = EVENTS.find(e => e.id === eventId);
+                if (event) {
+                    const eventItem = document.createElement('div');
+                    eventItem.className = 'debug-event-item';
+
+                    const eligible = this.isEventEligible(event);
+                    const eligibleText = eligible ? '✓' : '✗';
+                    const eligibleColor = eligible ? '#00ff00' : '#ff6b6b';
+
+                    eventItem.innerHTML = `
+                        <span class="debug-event-id" style="color: ${eligibleColor};">${eligibleText} ${event.id}</span>
+                        <span class="debug-event-title">${event.title}</span>
+                    `;
+
+                    this.debugEventsList.appendChild(eventItem);
+                }
+            });
+        }
     }
 
     initializeEventPool() {
@@ -302,56 +354,58 @@ class OligarchGame {
         }
     }
 
+    isEventEligible(event) {
+        // Skip if already completed and onceOnly
+        if (event.onceOnly && this.state.completedEvents.has(event.id)) {
+            return false;
+        }
+
+        // Check conditions
+        if (event.conditions) {
+            // Check metric conditions
+            if (event.conditions.personalWealth !== undefined &&
+                this.state.personalWealth < event.conditions.personalWealth) {
+                return false;
+            }
+            if (event.conditions.treasury !== undefined &&
+                this.state.treasury < event.conditions.treasury) {
+                return false;
+            }
+            if (event.conditions.elite !== undefined &&
+                this.state.elite < event.conditions.elite) {
+                return false;
+            }
+            if (event.conditions.anger !== undefined &&
+                this.state.anger < event.conditions.anger) {
+                return false;
+            }
+            if (event.conditions.year !== undefined &&
+                this.state.year < event.conditions.year) {
+                return false;
+            }
+
+            // Check if required events have been triggered
+            if (event.conditions.hasTriggered) {
+                const hasAll = event.conditions.hasTriggered.some(eventId =>
+                    this.state.triggeredEvents.has(eventId)
+                );
+                if (!hasAll) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     selectEvent() {
         // Filter to events in active pool first
         const poolEvents = EVENTS.filter(event =>
             this.state.activeEventPool.includes(event.id)
         );
 
-        // Then filter by eligibility
-        const eligibleEvents = poolEvents.filter(event => {
-            // Skip if already completed and onceOnly
-            if (event.onceOnly && this.state.completedEvents.has(event.id)) {
-                return false;
-            }
-
-            // Check conditions
-            if (event.conditions) {
-                // Check metric conditions
-                if (event.conditions.personalWealth !== undefined &&
-                    this.state.personalWealth < event.conditions.personalWealth) {
-                    return false;
-                }
-                if (event.conditions.treasury !== undefined &&
-                    this.state.treasury < event.conditions.treasury) {
-                    return false;
-                }
-                if (event.conditions.elite !== undefined &&
-                    this.state.elite < event.conditions.elite) {
-                    return false;
-                }
-                if (event.conditions.anger !== undefined &&
-                    this.state.anger < event.conditions.anger) {
-                    return false;
-                }
-                if (event.conditions.year !== undefined &&
-                    this.state.year < event.conditions.year) {
-                    return false;
-                }
-
-                // Check if required events have been triggered
-                if (event.conditions.hasTriggered) {
-                    const hasAll = event.conditions.hasTriggered.some(eventId =>
-                        this.state.triggeredEvents.has(eventId)
-                    );
-                    if (!hasAll) {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        });
+        // Then filter by eligibility using the helper method
+        const eligibleEvents = poolEvents.filter(event => this.isEventEligible(event));
 
         if (eligibleEvents.length === 0) {
             return null;
