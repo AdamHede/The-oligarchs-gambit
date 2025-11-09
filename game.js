@@ -12,7 +12,11 @@ class OligarchGame {
             legacy: [],
             triggeredEvents: new Set(),
             completedEvents: new Set(),
-            eventWeightModifiers: {}
+            eventWeightModifiers: {},
+            activeEventPool: [], // Events currently in the active pool
+            decisionCounts: {}, // Track recurring decision choices
+            activeStorylines: [], // Currently active storylines
+            completedStorylines: [] // Finished storylines
         };
 
         // Maximum values for wealth metrics (for display bars)
@@ -65,6 +69,7 @@ class OligarchGame {
     startGame() {
         this.titleScreen.classList.remove('active');
         this.gameScreen.classList.add('active');
+        this.initializeEventPool();
         this.updateUI();
         this.nextTurn();
     }
@@ -80,12 +85,17 @@ class OligarchGame {
             legacy: [],
             triggeredEvents: new Set(),
             completedEvents: new Set(),
-            eventWeightModifiers: {}
+            eventWeightModifiers: {},
+            activeEventPool: [],
+            decisionCounts: {},
+            activeStorylines: [],
+            completedStorylines: []
         };
 
         this.isGameOver = false;
         this.gameoverScreen.classList.remove('active');
         this.gameScreen.classList.add('active');
+        this.initializeEventPool();
         this.updateUI();
         this.nextTurn();
     }
@@ -155,9 +165,118 @@ class OligarchGame {
                 badge.style.borderColor = '#e74c3c';
             }
             badge.innerHTML = `<span>${legacy.icon}</span><span>${legacy.name}</span>`;
-            badge.title = `${legacy.name} (${legacy.weight > 0 ? '+' : ''}${legacy.weight || 5}% legacy)`;
+
+            // Make badge clickable with explanation
+            const weight = legacy.weight || 5;
+            const explanation = legacy.explanation || `${legacy.name}`;
+            badge.title = `${explanation} (${weight > 0 ? '+' : ''}${weight}% on Oligarch Score)`;
+            badge.style.cursor = 'pointer';
+
+            // Add click handler for modal/tooltip
+            badge.addEventListener('click', () => {
+                alert(`${legacy.icon} ${legacy.name}\n\n${explanation}\n\nEffect on Oligarch Score: ${weight > 0 ? '+' : ''}${weight}%`);
+            });
+
             this.legacyContainer.appendChild(badge);
         });
+    }
+
+    initializeEventPool() {
+        // Start with basic recurring events and some storyline initiators
+        const initialPool = EVENTS.filter(event => {
+            // Include basic events (no storyline tag) or storyline initiators
+            return !event.conditions ||
+                   ((!event.conditions.hasTriggered || event.conditions.hasTriggered.length === 0) &&
+                    !event.conditions.personalWealth &&
+                    !event.conditions.year);
+        }).map(e => e.id);
+
+        // Take first ~25 events as starting pool
+        this.state.activeEventPool = initialPool.slice(0, 25);
+    }
+
+    addToEventPool(eventIds) {
+        if (!Array.isArray(eventIds)) {
+            eventIds = [eventIds];
+        }
+
+        eventIds.forEach(eventId => {
+            // Check if it's a storyline pattern like "*storyline:name"
+            if (eventId.startsWith('*storyline:')) {
+                const storylineName = eventId.substring(11);
+                const storylineEvents = EVENTS
+                    .filter(e => e.storyline === storylineName)
+                    .map(e => e.id);
+                storylineEvents.forEach(id => {
+                    if (!this.state.activeEventPool.includes(id)) {
+                        this.state.activeEventPool.push(id);
+                    }
+                });
+            } else {
+                // Regular event ID
+                if (!this.state.activeEventPool.includes(eventId)) {
+                    this.state.activeEventPool.push(eventId);
+                }
+            }
+        });
+    }
+
+    removeFromEventPool(eventIds) {
+        if (!Array.isArray(eventIds)) {
+            eventIds = [eventIds];
+        }
+
+        eventIds.forEach(eventId => {
+            // Check if it's a storyline pattern
+            if (eventId.startsWith('*storyline:')) {
+                const storylineName = eventId.substring(11);
+                this.state.activeEventPool = this.state.activeEventPool.filter(id => {
+                    const event = EVENTS.find(e => e.id === id);
+                    return !event || event.storyline !== storylineName;
+                });
+            } else {
+                // Regular event ID
+                this.state.activeEventPool = this.state.activeEventPool.filter(id => id !== eventId);
+            }
+        });
+    }
+
+    trackDecision(eventId, choiceIndex) {
+        // Create a unique key for this decision
+        const decisionKey = `${eventId}_choice_${choiceIndex}`;
+
+        if (!this.state.decisionCounts[decisionKey]) {
+            this.state.decisionCounts[decisionKey] = 0;
+        }
+
+        this.state.decisionCounts[decisionKey]++;
+
+        // Return the count for conditional logic
+        return this.state.decisionCounts[decisionKey];
+    }
+
+    checkDecisionThresholds(eventId, choiceIndex) {
+        // Check if decision tracking triggers new events
+        const event = EVENTS.find(e => e.id === eventId);
+        if (!event || !event.choices || !event.choices[choiceIndex]) {
+            return;
+        }
+
+        const choice = event.choices[choiceIndex];
+        if (choice.decisionThreshold) {
+            const decisionKey = `${eventId}_choice_${choiceIndex}`;
+            const count = this.state.decisionCounts[decisionKey] || 0;
+
+            if (count >= choice.decisionThreshold.count) {
+                // Trigger the threshold events
+                if (choice.decisionThreshold.addToPool) {
+                    this.addToEventPool(choice.decisionThreshold.addToPool);
+                }
+                if (choice.decisionThreshold.removeFromPool) {
+                    this.removeFromEventPool(choice.decisionThreshold.removeFromPool);
+                }
+            }
+        }
     }
 
     nextTurn() {
@@ -184,8 +303,13 @@ class OligarchGame {
     }
 
     selectEvent() {
-        // Get all eligible events
-        const eligibleEvents = EVENTS.filter(event => {
+        // Filter to events in active pool first
+        const poolEvents = EVENTS.filter(event =>
+            this.state.activeEventPool.includes(event.id)
+        );
+
+        // Then filter by eligibility
+        const eligibleEvents = poolEvents.filter(event => {
             // Skip if already completed and onceOnly
             if (event.onceOnly && this.state.completedEvents.has(event.id)) {
                 return false;
@@ -267,7 +391,7 @@ class OligarchGame {
             const button = document.createElement('button');
             button.className = 'choice-btn';
             button.textContent = choice.text;
-            button.addEventListener('click', () => this.makeChoice(choice, event.id));
+            button.addEventListener('click', () => this.makeChoice(choice, event.id, index));
             this.choicesContainer.appendChild(button);
         });
     }
@@ -290,7 +414,7 @@ class OligarchGame {
         this.choicesContainer.appendChild(button);
     }
 
-    makeChoice(choice, eventId) {
+    makeChoice(choice, eventId, choiceIndex) {
         // Apply effects
         this.applyEffects(choice.effects);
 
@@ -299,15 +423,52 @@ class OligarchGame {
             this.state.legacy.push(choice.legacy);
         }
 
-        // Trigger new events
+        // Trigger new events (legacy system)
         if (choice.eventTriggers) {
             choice.eventTriggers.forEach(triggerId => {
                 this.state.triggeredEvents.add(triggerId);
             });
         }
 
-        // Mark event as completed
+        // Pool management - add events
+        if (choice.addToPool) {
+            this.addToEventPool(choice.addToPool);
+        }
+
+        // Pool management - remove events
+        if (choice.removeFromPool) {
+            this.removeFromEventPool(choice.removeFromPool);
+        }
+
+        // Track decision for recurring events
+        const event = EVENTS.find(e => e.id === eventId);
+        if (event && !event.onceOnly) {
+            this.trackDecision(eventId, choiceIndex);
+            this.checkDecisionThresholds(eventId, choiceIndex);
+        }
+
+        // Mark event as completed and remove from pool if onceOnly
         this.state.completedEvents.add(eventId);
+        if (event && event.onceOnly) {
+            this.removeFromEventPool(eventId);
+        }
+
+        // Handle storyline activation/completion
+        if (event && event.storyline) {
+            if (!this.state.activeStorylines.includes(event.storyline)) {
+                this.state.activeStorylines.push(event.storyline);
+            }
+
+            // Check if this completes the storyline
+            if (choice.completeStoryline) {
+                this.state.completedStorylines.push(event.storyline);
+                this.state.activeStorylines = this.state.activeStorylines.filter(
+                    s => s !== event.storyline
+                );
+                // Remove all remaining events from this storyline
+                this.removeFromEventPool(`*storyline:${event.storyline}`);
+            }
+        }
 
         // Update UI
         this.updateUI();

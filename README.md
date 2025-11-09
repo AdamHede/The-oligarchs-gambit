@@ -2,6 +2,8 @@
 
 A satirical single-player strategy game where you play as an oligarch in a country suspiciously similar to modern Russia. Balance personal wealth, state treasury, elite approval, and public anger as you navigate through political dilemmas inspired by recent history.
 
+**Play the game:** [https://the-oligarchs-gambit.pages.dev](https://the-oligarchs-gambit.pages.dev)
+
 ## Game Concept
 
 You are an oligarch in power, making quarterly decisions that affect four key metrics:
@@ -22,7 +24,19 @@ The game ends if Elite Approval reaches 0%, Public Anger reaches 100%, or the St
 
 ### Event System Architecture
 
-The event system is designed to scale to 150-250 events with complex interconnections:
+The event system uses a sophisticated two-pool architecture inspired by **The King's Dilemma** board game, designed to scale to 250+ events with complex interconnections and branching storylines.
+
+For complete documentation, see:
+- [EVENTS_SYSTEM.md](EVENTS_SYSTEM.md) - Detailed event system mechanics
+- [TONE_AND_STYLE.md](TONE_AND_STYLE.md) - Writing guidelines and tone guide
+- [STORYLINES.md](STORYLINES.md) - Storyline design and basic events
+
+#### Two-Pool System
+
+**Universe Pool:** All ~250 possible events in the game
+**Active Pool:** 20-30 events that can currently be drawn
+
+Events dynamically move in and out of the active pool based on player decisions, creating a narrative that adapts to your choices while maintaining unpredictable pacing.
 
 #### Event Structure
 ```javascript
@@ -30,6 +44,8 @@ The event system is designed to scale to 150-250 events with complex interconnec
     id: "unique_event_id",
     title: "Event Title",
     description: "Event description text",
+    storyline: "storyline_name",     // Optional: Tags event as part of a storyline
+    type: "basic|storyline|conditional", // Event type
     onceOnly: true/false,           // Can only happen once
     weight: 1-10,                    // Probability weight
     conditions: {
@@ -51,9 +67,18 @@ The event system is designed to scale to 150-250 events with complex interconnec
             },
             legacy: {                // Optional achievement
                 icon: "🏰",
-                name: "Achievement Name"
+                name: "Achievement Name",
+                weight: 15,          // Effect on oligarch score
+                explanation: "Brief description of what this represents"
             },
-            eventTriggers: ["event_id1", "event_id2"]  // Events this choice unlocks
+            eventTriggers: ["event_id1"],     // Legacy system (still supported)
+            addToPool: ["event_id1", "event_id2"],  // Add events to active pool
+            removeFromPool: ["event_id3"],          // Remove events from active pool
+            completeStoryline: "storyline_name",    // Marks storyline as complete
+            decisionThreshold: {     // For recurring events
+                count: 3,            // After this many times choosing this option
+                addToPool: ["triggered_event"]  // Add these events
+            }
         }
     ]
 }
@@ -104,12 +129,16 @@ The game satirizes authoritarian leadership through:
 
 ### Game State
 The game tracks:
-- Four core metrics (0-100%)
+- Four core metrics (personalWealth, treasury, elite, anger)
 - Current year and quarter
-- Set of triggered events
+- Set of triggered events (legacy system)
 - Set of completed events
 - Array of legacy achievements earned
-- Event weight modifiers (for future use)
+- Event weight modifiers
+- **Active event pool** (20-30 events currently drawable)
+- **Decision counts** (tracks recurring event choices)
+- **Active storylines** (currently running narratives)
+- **Completed storylines** (finished narrative arcs)
 
 ### Mobile Optimization
 - Responsive design works on all screen sizes
