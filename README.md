@@ -1,5 +1,7 @@
 # The Oligarch's Gambit
 
+**Version:** v1.3
+
 A satirical single-player strategy game where you play as an oligarch in a country suspiciously similar to modern Russia. Balance personal wealth, state treasury, elite approval, and public anger as you navigate through political dilemmas inspired by recent history.
 
 **Play the game:** [https://the-oligarchs-gambit.pages.dev](https://the-oligarchs-gambit.pages.dev)
@@ -191,6 +193,32 @@ When adding new events, maintain the satirical tone that:
 - References real events obliquely
 - Presents impossible choices with no "good" options
 - Emphasizes the absurdity of maintaining power through corruption
+
+## Version History
+
+### v1.3 (Current)
+- **Event Organization**: Split 153 events into 7 categorized files for easier management
+  - `events/events_war_military.js` - War & Military Operations (29 events)
+  - `events/events_energy_pipeline.js` - Energy & Pipeline Politics (12 events)
+  - `events/events_sanctions_international.js` - International Sanctions (11 events)
+  - `events/events_succession_power.js` - Succession & Power Struggles (13 events)
+  - `events/events_social_movements.js` - Student & Social Movements (11 events)
+  - `events/events_domestic_crisis.js` - Domestic Crisis (11 events)
+  - `events/events_misc.js` - Miscellaneous Events (66 events)
+- Added version tracking to all files
+- Created events/README.md for documentation
+
+### v1.2
+- Scaled event system to 154 events with complete storylines
+- Implemented two-pool event architecture
+
+### v1.1
+- Added sophisticated decision tracking and event triggers
+- Implemented storyline system
+
+### v1.0
+- Initial release with core game mechanics
+- 20 basic events
 
 ## Credits
 
