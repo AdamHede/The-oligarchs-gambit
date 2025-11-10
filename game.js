@@ -1,8 +1,8 @@
 // The Oligarch's Gambit - Main Game Engine
 
 // Version tracking
-const GAME_VERSION = "1.4.0";
-const VERSION_SUMMARY = "Balance patch: Better start (90% elite, 10% anger) + outcome visibility";
+const GAME_VERSION = "1.5.0";
+const VERSION_SUMMARY = "Event generation bug fix + outcome indicators (↑/↓)";
 const TOTAL_EVENTS = 153;
 
 class OligarchGame {
@@ -447,9 +447,21 @@ class OligarchGame {
 
         for (const [key, value] of Object.entries(effects)) {
             if (value !== 0 && effectIcons[key]) {
-                const sign = value > 0 ? '+' : '';
+                // Determine magnitude indicator
+                let indicator = '';
+                const absValue = Math.abs(value);
+                const direction = value > 0 ? '↑' : '↓';
+
+                if (absValue <= 10) {
+                    indicator = direction;
+                } else if (absValue <= 20) {
+                    indicator = direction + direction;
+                } else {
+                    indicator = direction + direction + direction;
+                }
+
                 const color = value > 0 ? '#2ecc71' : '#e74c3c';
-                effectStrings.push(`<span style="color: ${color};">${effectIcons[key]} ${sign}${value}</span>`);
+                effectStrings.push(`<span style="color: ${color};">${effectIcons[key]} ${indicator}</span>`);
             }
         }
 

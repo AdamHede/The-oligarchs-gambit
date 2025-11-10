@@ -102,7 +102,7 @@ Each event follows this structure:
             text: "Choice text",
             effects: { /* stat changes */ },
             legacy: { /* legacy achievement */ },
-            eventTriggers: [ /* IDs of events to add to pool */ ]
+            addToPool: [ /* IDs of events to add to pool */ ]
         }
     ]
 }

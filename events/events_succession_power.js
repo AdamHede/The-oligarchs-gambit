@@ -37,12 +37,12 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Promote him. Defense Minister. Keep him close. Control him from within.",
                 effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 0 },
-                eventTriggers: ["general_power_grows"]
+                addToPool: ["general_power_grows"]
             },
             {
                 text: "Arrest him tonight. Treason charges. Fake coup plot evidence.",
                 effects: { personalWealth: 0, treasury: -50, elite: -20, anger: 15 },
-                eventTriggers: ["military_loyalty_crisis"]
+                addToPool: ["military_loyalty_crisis"]
             },
             {
                 text: "Forced retirement. 'Health reasons.' Pension and a dacha. Neutralize quietly.",
@@ -61,12 +61,12 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Strike first. Arrest him and 40 officers. Decapitate his network.",
                 effects: { personalWealth: 0, treasury: -80, elite: -25, anger: 20 },
-                eventTriggers: ["coup_attempt", "military_fragmentation"]
+                addToPool: ["coup_attempt", "military_fragmentation"]
             },
             {
                 text: "Power-sharing. Make him Prime Minister. Co-rule. (Temporary truce)",
                 effects: { personalWealth: 0, treasury: 0, elite: 0, anger: 10 },
-                eventTriggers: ["tandem_rule"]
+                addToPool: ["tandem_rule"]
             },
             {
                 text: "Bribe his network. Offer them more than he can. Buy their loyalty.",
@@ -90,7 +90,7 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Fight. Rally loyalists. Promise them everything. This is my country.",
                 effects: { personalWealth: -20, treasury: -400, elite: -30, anger: 40 },
-                eventTriggers: ["civil_war_brink"]
+                addToPool: ["civil_war_brink"]
             },
             {
                 text: "Negotiate surrender. Immunity for you and family. They won. Accept it.",
@@ -115,13 +115,13 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Purge the military. Fire 200 officers. Install totally loyal (incompetent) ones.",
                 effects: { personalWealth: 0, treasury: -100, elite: -30, anger: 20 },
-                eventTriggers: ["weakened_military"]
+                addToPool: ["weakened_military"]
             },
             {
                 text: "Execute the general. Televise it. Show what happens to traitors.",
                 effects: { personalWealth: 0, treasury: -50, elite: -35, anger: 25 },
                 legacy: { icon: "⚰️", name: "General Killer", weight: -15 },
-                eventTriggers: ["military_fragmentation"]
+                addToPool: ["military_fragmentation"]
             }
         ]
     },
@@ -144,7 +144,7 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Go silent. Disappear for months. Rule from an undisclosed bunker.",
                 effects: { personalWealth: 0, treasury: 0, elite: -20, anger: 30 },
-                eventTriggers: ["power_vacuum"]
+                addToPool: ["power_vacuum"]
             }
         ]
     },
@@ -159,7 +159,7 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Assassination order. GRU team to Warsaw. Permanent solution.",
                 effects: { personalWealth: -3, treasury: -40, elite: 5, anger: 20 },
-                eventTriggers: ["international_sanctions"]
+                addToPool: ["international_sanctions"]
             },
             {
                 text: "Discredit him. Release kompromat. Corruption, affairs, scandal.",
@@ -182,7 +182,7 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Strengthen presidency. Transfer powers from PM. Constitutional changes.",
                 effects: { personalWealth: 0, treasury: -60, elite: 5, anger: 15 },
-                eventTriggers: ["power_struggle_escalates"]
+                addToPool: ["power_struggle_escalates"]
             },
             {
                 text: "Accept it. Genuine power-sharing. He handles military, you handle money.",
@@ -191,7 +191,7 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Slow coup. Remove his allies one by one. Year-long campaign to weaken him.",
                 effects: { personalWealth: -3, treasury: -80, elite: -5, anger: 10 },
-                eventTriggers: ["power_struggle_escalates"]
+                addToPool: ["power_struggle_escalates"]
             }
         ]
     },
@@ -206,7 +206,7 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Presidential coup. Arrest him. Declare emergency. Winner takes all.",
                 effects: { personalWealth: -10, treasury: -150, elite: -20, anger: 30 },
-                eventTriggers: ["coup_attempt"]
+                addToPool: ["coup_attempt"]
             },
             {
                 text: "Resign. Step down. 'For the good of the nation.' (You lose)",

@@ -34,7 +34,7 @@ const ENERGY_PIPELINE_EVENTS = [
                 text: "Cut the gas. Winter is coming. Let them beg.",
                 effects: { personalWealth: -5, treasury: -150, elite: 10, anger: 5 },
                 legacy: { icon: "❄️", name: "Ice King", weight: 8 },
-                eventTriggers: ["international_sanctions"]
+                addToPool: ["international_sanctions"]
             },
             {
                 text: "Triple the price. $2,000 per cubic meter. Take it or freeze.",
@@ -65,7 +65,7 @@ const ENERGY_PIPELINE_EVENTS = [
             {
                 text: "Offer to rebuild—for triple the original cost.",
                 effects: { personalWealth: 8, treasury: -200, elite: 0, anger: 10 },
-                eventTriggers: ["pipeline_construction_scandal"]
+                addToPool: ["pipeline_construction_scandal"]
             }
         ]
     },
@@ -125,7 +125,7 @@ const ENERGY_PIPELINE_EVENTS = [
             {
                 text: "Enforce it strictly. No rubles, no gas. Total currency warfare.",
                 effects: { personalWealth: 5, treasury: 280, elite: 15, anger: 10 },
-                eventTriggers: ["european_energy_crisis"]
+                addToPool: ["european_energy_crisis"]
             },
             {
                 text: "Carve out exceptions for 'friendly' countries. Divide them.",
@@ -149,7 +149,7 @@ const ENERGY_PIPELINE_EVENTS = [
                 text: "Sign it. China's the future anyway. Europe's finished.",
                 effects: { personalWealth: 12, treasury: -350, elite: 10, anger: 15 },
                 legacy: { icon: "🐉", name: "Dragon's Partner", weight: 8 },
-                eventTriggers: ["chinese_dependence"]
+                addToPool: ["chinese_dependence"]
             },
             {
                 text: "Negotiate hard. Play India against China for better terms.",
@@ -180,7 +180,7 @@ const ENERGY_PIPELINE_EVENTS = [
             {
                 text: "Accept reduced market share. Focus on Asia. Europe's lost anyway.",
                 effects: { personalWealth: 0, treasury: -80, elite: -10, anger: 5 },
-                eventTriggers: ["alternative_energy_routes"]
+                addToPool: ["alternative_energy_routes"]
             }
         ]
     },
@@ -196,7 +196,7 @@ const ENERGY_PIPELINE_EVENTS = [
                 text: "Full extraction. Militarize the Arctic. Plant the flag. Drill.",
                 effects: { personalWealth: 25, treasury: -450, elite: 15, anger: 20 },
                 legacy: { icon: "🛢️", name: "Arctic Baron", weight: 14 },
-                eventTriggers: ["arctic_militarization", "environmental_catastrophe"]
+                addToPool: ["arctic_militarization", "environmental_catastrophe"]
             },
             {
                 text: "Limited extraction. Joint venture with Western oil companies.",

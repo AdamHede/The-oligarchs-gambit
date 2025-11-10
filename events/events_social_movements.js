@@ -14,17 +14,17 @@ const SOCIAL_MOVEMENTS_EVENTS = [
             {
                 text: "Send riot police. Beat them. Arrest the leaders. End this now.",
                 effects: { personalWealth: 0, treasury: -20, elite: 5, anger: 25 },
-                eventTriggers: ["student_martyrdom"]
+                addToPool: ["student_martyrdom"]
             },
             {
                 text: "Ignore them. Students always protest. They'll get bored and graduate.",
                 effects: { personalWealth: 0, treasury: 0, elite: 0, anger: 10 },
-                eventTriggers: ["student_movement_grows"]
+                addToPool: ["student_movement_grows"]
             },
             {
                 text: "Meet with them. Listen. Promise vague reforms. Co-opt the moderates.",
                 effects: { personalWealth: 0, treasury: -10, elite: -5, anger: -5 },
-                eventTriggers: ["movement_cooptation"]
+                addToPool: ["movement_cooptation"]
             }
         ]
     },
@@ -39,17 +39,17 @@ const SOCIAL_MOVEMENTS_EVENTS = [
             {
                 text: "Midnight raid. SWAT teams. Clear it violently. National TV blackout.",
                 effects: { personalWealth: 0, treasury: -40, elite: 10, anger: 35 },
-                eventTriggers: ["student_martyrdom", "international_condemnation"]
+                addToPool: ["student_martyrdom", "international_condemnation"]
             },
             {
                 text: "Siege tactics. Cut power, water, food. Wait them out. Slow pressure.",
                 effects: { personalWealth: 0, treasury: -20, elite: 5, anger: 20 },
-                eventTriggers: ["student_movement_grows"]
+                addToPool: ["student_movement_grows"]
             },
             {
                 text: "Negotiate. End the occupation peacefully. Grant minor concessions.",
                 effects: { personalWealth: 0, treasury: -15, elite: -10, anger: -10 },
-                eventTriggers: ["movement_cooptation"]
+                addToPool: ["movement_cooptation"]
             }
         ]
     },
@@ -64,7 +64,7 @@ const SOCIAL_MOVEMENTS_EVENTS = [
             {
                 text: "Full internet crackdown. Block social media. VPN ban. Information war.",
                 effects: { personalWealth: 0, treasury: -100, elite: 5, anger: 40 },
-                eventTriggers: ["tech_savvy_resistance"]
+                addToPool: ["tech_savvy_resistance"]
             },
             {
                 text: "Apologize. Scapegoat the police officer. Public trial. Damage control.",
@@ -88,7 +88,7 @@ const SOCIAL_MOVEMENTS_EVENTS = [
                 text: "Deny. Cover up. Threaten the family. Arrest anyone who investigates.",
                 effects: { personalWealth: 0, treasury: -30, elite: 5, anger: 50 },
                 legacy: { icon: "🩸", name: "Martyr Maker", weight: -20 },
-                eventTriggers: ["color_revolution"]
+                addToPool: ["color_revolution"]
             },
             {
                 text: "Admit negligence. Prosecute officers. Pay family blood money. Contain it.",
@@ -111,7 +111,7 @@ const SOCIAL_MOVEMENTS_EVENTS = [
             {
                 text: "Declare them a terrorist organization. Mass arrests. Label it a foreign coup.",
                 effects: { personalWealth: 0, treasury: -80, elite: 10, anger: 45 },
-                eventTriggers: ["color_revolution"]
+                addToPool: ["color_revolution"]
             },
             {
                 text: "Target the leadership. Arrest organizers. Disrupt funding. Cut off the head.",
@@ -120,7 +120,7 @@ const SOCIAL_MOVEMENTS_EVENTS = [
             {
                 text: "Make real concessions. Anti-corruption reforms. Release political prisoners.",
                 effects: { personalWealth: -5, treasury: -60, elite: -20, anger: -25 },
-                eventTriggers: ["movement_cooptation"]
+                addToPool: ["movement_cooptation"]
             }
         ]
     },
@@ -136,7 +136,7 @@ const SOCIAL_MOVEMENTS_EVENTS = [
                 text: "State of emergency. Military in the streets. Shoot strikers. Total war.",
                 effects: { personalWealth: 0, treasury: -150, elite: -15, anger: 70 },
                 legacy: { icon: "⚔️", name: "Strike Breaker", weight: -18 },
-                eventTriggers: ["color_revolution"]
+                addToPool: ["color_revolution"]
             },
             {
                 text: "Arrest union leaders. Replace them. Force workers back with threats.",
@@ -168,7 +168,7 @@ const SOCIAL_MOVEMENTS_EVENTS = [
             {
                 text: "Reject. These demands are unacceptable. No negotiations with traitors.",
                 effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 35 },
-                eventTriggers: ["color_revolution"]
+                addToPool: ["color_revolution"]
             }
         ]
     },
