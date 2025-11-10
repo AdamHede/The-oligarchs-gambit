@@ -1,8 +1,8 @@
 // The Oligarch's Gambit - Main Game Engine
 
 // Version tracking
-const GAME_VERSION = "1.3.0";
-const VERSION_SUMMARY = "Scale event system to 154 events with complete storylines";
+const GAME_VERSION = "1.4.0";
+const VERSION_SUMMARY = "Balance patch: Better start (90% elite, 10% anger) + outcome visibility";
 const TOTAL_EVENTS = 153;
 
 class OligarchGame {
@@ -10,8 +10,8 @@ class OligarchGame {
         this.state = {
             personalWealth: 10, // In billions
             treasury: 1000, // In billions
-            elite: 50, // Percentage
-            anger: 20, // Percentage
+            elite: 90, // Percentage
+            anger: 10, // Percentage
             year: 1,
             quarter: 1,
             legacy: [],
@@ -90,8 +90,8 @@ class OligarchGame {
         this.state = {
             personalWealth: 10, // In billions
             treasury: 1000, // In billions
-            elite: 50, // Percentage
-            anger: 20, // Percentage
+            elite: 90, // Percentage
+            anger: 10, // Percentage
             year: 1,
             quarter: 1,
             legacy: [],
@@ -434,6 +434,28 @@ class OligarchGame {
         return weightedEvents[0].event;
     }
 
+    formatEffects(effects) {
+        if (!effects) return '';
+
+        const effectStrings = [];
+        const effectIcons = {
+            personalWealth: '💰',
+            treasury: '🏛️',
+            elite: '👔',
+            anger: '😤'
+        };
+
+        for (const [key, value] of Object.entries(effects)) {
+            if (value !== 0 && effectIcons[key]) {
+                const sign = value > 0 ? '+' : '';
+                const color = value > 0 ? '#2ecc71' : '#e74c3c';
+                effectStrings.push(`<span style="color: ${color};">${effectIcons[key]} ${sign}${value}</span>`);
+            }
+        }
+
+        return effectStrings.length > 0 ? `<div class="choice-effects">${effectStrings.join(' ')}</div>` : '';
+    }
+
     displayEvent(event) {
         this.currentEvent = event;
         this.eventTitle.textContent = event.title;
@@ -444,7 +466,14 @@ class OligarchGame {
         event.choices.forEach((choice, index) => {
             const button = document.createElement('button');
             button.className = 'choice-btn';
-            button.textContent = choice.text;
+
+            // Create choice text with effects preview
+            const effectsHTML = this.formatEffects(choice.effects);
+            button.innerHTML = `
+                <div class="choice-text">${choice.text}</div>
+                ${effectsHTML}
+            `;
+
             button.addEventListener('click', () => this.makeChoice(choice, event.id, index));
             this.choicesContainer.appendChild(button);
         });

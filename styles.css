@@ -372,6 +372,20 @@ body {
     transform: translateX(2px);
 }
 
+.choice-text {
+    margin-bottom: 8px;
+    font-size: 1em;
+}
+
+.choice-effects {
+    display: flex;
+    gap: 12px;
+    font-size: 0.9em;
+    padding-top: 8px;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+    margin-top: 8px;
+}
+
 /* Game Over Screen */
 #gameover-screen {
     text-align: center;
