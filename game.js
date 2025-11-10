@@ -1,8 +1,8 @@
 // The Oligarch's Gambit - Main Game Engine
 
 // Version tracking
-const GAME_VERSION = "1.5.0";
-const VERSION_SUMMARY = "Event generation bug fix + outcome indicators (↑/↓)";
+const GAME_VERSION = "1.5.1";
+const VERSION_SUMMARY = "Fix event condition checking (hasTriggered)";
 const TOTAL_EVENTS = 153;
 
 class OligarchGame {
@@ -542,8 +542,9 @@ class OligarchGame {
             this.checkDecisionThresholds(eventId, choiceIndex);
         }
 
-        // Mark event as completed and remove from pool if onceOnly
+        // Mark event as completed and triggered (for hasTriggered conditions)
         this.state.completedEvents.add(eventId);
+        this.state.triggeredEvents.add(eventId);
         if (event && event.onceOnly) {
             this.removeFromEventPool(eventId);
         }
