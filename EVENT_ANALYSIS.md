@@ -1,30 +1,30 @@
 # Event Tree Structure
 
-*Generated: 11/10/2025, 8:44:31 PM*
+*Generated: 11/10/2025, 9:46:59 PM*
 
 ## Statistics
 
-- **Total Events:** 154
+- **Total Events:** 147
 - **Entry Points:** 91
-- **Once-Only Events:** 148
-- **Recurring Events:** 6
-- **Conditional Events:** 103
+- **Once-Only Events:** 140
+- **Recurring Events:** 7
+- **Conditional Events:** 95
 
 ### Branching Analysis
 
-- **Dead Ends** (no new events): 115 (74.7%)
-- **Branching Events** (1+ new events): 39 (25.3%)
-- **Major Branches** (3+ new events): 12 (7.8%)
+- **Dead Ends** (no new events): 117 (79.6%)
+- **Branching Events** (1+ new events): 30 (20.4%)
+- **Major Branches** (3+ new events): 7 (4.8%)
 
 ### Chain Depth
 
-- **Longest Chain:** 8 events deep
-- **Average Depth:** 0.8
+- **Longest Chain:** 6 events deep
+- **Average Depth:** 0.4
 
 ### Events by Category
 
 - **misc:** 67 events
-- **war_military:** 29 events
+- **war_military:** 22 events
 - **succession_power:** 13 events
 - **energy_pipeline:** 12 events
 - **sanctions_international:** 11 events
@@ -34,22 +34,139 @@
 ### Events by Storyline
 
 - **energy_politics:** 12 events
-- **war_military:** 6 events
+- **war_military:** 7 events
 - **oligarch_intrigue:** 1 events
 
 ## ⚠️ Warnings
 
-- Event "war_profiteering" references non-existent event "military_disaster" in addToPool
-- Event "war_goes_badly" references non-existent event "mobilization_announcement" in addToPool
+- Event "war_goes_badly" references non-existent event "military_humiliation" in addToPool
+- Event "war_profiteering" references non-existent event "defense_scandal" in addToPool
+- Event "war_profiteering" references non-existent event "improved_equipment" in addToPool
+- Event "war_profiteering" references non-existent event "contractor_resentment" in addToPool
+- Event "war_profiteering" references non-existent event "military_effectiveness_boost" in addToPool
+- Event "war_profiteering" references non-existent event "oligarch_resentment" in addToPool
+- Event "bridge_strike" references non-existent event "civilian_casualties_winter" in addToPool
+- Event "bridge_strike" references non-existent event "military_targets_campaign" in addToPool
+- Event "bridge_strike" references non-existent event "international_praise" in addToPool
+- Event "bridge_strike" references non-existent event "bridge_reconstruction" in addToPool
+- Event "bridge_strike" references non-existent event "engineers_shortage" in addToPool
+- Event "conscription_crisis" references non-existent event "mass_protest_mobilization" in addToPool
+- Event "conscription_crisis" references non-existent event "border_guard_corruption" in addToPool
+- Event "conscription_crisis" references non-existent event "draft_dodgers" in addToPool
 - Event "conscription_crisis" references non-existent event "ethnic_tensions" in addToPool
-- Event "war_crimes_allegations" references non-existent event "international_tribunal" in addToPool
-- Event "war_crimes_allegations" references non-existent event "international_tribunal" in addToPool
+- Event "conscription_crisis" references non-existent event "regional_resentment" in addToPool
+- Event "conscription_crisis" references non-existent event "minority_backlash" in addToPool
+- Event "conscription_crisis" references non-existent event "mercenary_costs" in addToPool
+- Event "conscription_crisis" references non-existent event "private_army_problem" in addToPool
+- Event "mobilization_announcement" references non-existent event "mobilization_lies_exposed" in addToPool
+- Event "mobilization_announcement" references non-existent event "trust_collapse" in addToPool
+- Event "mobilization_announcement" references non-existent event "mass_panic" in addToPool
+- Event "mobilization_announcement" references non-existent event "airport_chaos" in addToPool
+- Event "mobilization_announcement" references non-existent event "border_stampede" in addToPool
+- Event "mobilization_announcement" references non-existent event "confusion_and_rumors" in addToPool
+- Event "mobilization_announcement" references non-existent event "speculation_frenzy" in addToPool
+- Event "elite_sons_fleeing" references non-existent event "elite_rebellion_brewing" in addToPool
+- Event "elite_sons_fleeing" references non-existent event "oligarch_conspiracy" in addToPool
+- Event "elite_sons_fleeing" references non-existent event "class_rage_building" in addToPool
+- Event "elite_sons_fleeing" references non-existent event "populist_anger" in addToPool
+- Event "elite_sons_fleeing" references non-existent event "minister_resentment" in addToPool
+- Event "elite_sons_fleeing" references non-existent event "elite_fear" in addToPool
+- Event "war_crimes_allegations" references non-existent event "evidence_mounts" in addToPool
+- Event "war_crimes_allegations" references non-existent event "whistleblower_leaks" in addToPool
+- Event "war_crimes_allegations" references non-existent event "scapegoat_soldiers" in addToPool
+- Event "war_crimes_allegations" references non-existent event "military_morale_drop" in addToPool
 - Event "war_crimes_allegations" references non-existent event "sanctions_escalation" in addToPool
-- Event "wagner_mutiny" references non-existent event "wagner_leader_death" in addToPool
-- Event "wagner_mutiny" references non-existent event "military_fragmentation" in addToPool
+- Event "war_crimes_allegations" references non-existent event "pariah_status" in addToPool
+- Event "international_tribunal" references non-existent event "isolated_dictator" in addToPool
+- Event "international_tribunal" references non-existent event "bunker_mentality" in addToPool
+- Event "international_tribunal" references non-existent event "paranoia_grows" in addToPool
+- Event "international_tribunal" references non-existent event "loyalist_circle" in addToPool
+- Event "international_tribunal" references non-existent event "generals_panic" in addToPool
+- Event "international_tribunal" references non-existent event "coup_attempt_imminent" in addToPool
 - Event "nuclear_threats" references non-existent event "nuclear_escalation_crisis" in addToPool
+- Event "nuclear_threats" references non-existent event "nato_intervention_threat" in addToPool
+- Event "nuclear_threats" references non-existent event "apocalypse_risk" in addToPool
+- Event "nuclear_threats" references non-existent event "nuclear_brinkmanship" in addToPool
+- Event "nuclear_threats" references non-existent event "credibility_test" in addToPool
+- Event "nuclear_threats" references non-existent event "western_panic" in addToPool
+- Event "nuclear_threats" references non-existent event "generals_lose_faith" in addToPool
+- Event "nuclear_threats" references non-existent event "search_for_options" in addToPool
+- Event "wagner_mutiny" references non-existent event "wagner_deal" in addToPool
+- Event "wagner_mutiny" references non-existent event "wagner_exile" in addToPool
+- Event "wagner_mutiny" references non-existent event "military_humiliation" in addToPool
+- Event "wagner_mutiny" references non-existent event "wagner_battle" in addToPool
+- Event "wagner_mutiny" references non-existent event "civil_war_risk" in addToPool
+- Event "wagner_mutiny" references non-existent event "military_split" in addToPool
+- Event "wagner_mutiny" references non-existent event "mercenary_anger" in addToPool
+- Event "wagner_mutiny" references non-existent event "loyalty_through_fear" in addToPool
+- Event "wagner_leader_death" references non-existent event "wagner_revenge_plot" in addToPool
+- Event "wagner_leader_death" references non-existent event "mercenary_dissolution" in addToPool
+- Event "wagner_leader_death" references non-existent event "fear_consolidates" in addToPool
+- Event "wagner_leader_death" references non-existent event "ruthless_reputation" in addToPool
+- Event "wagner_leader_death" references non-existent event "mercenary_integration" in addToPool
+- Event "wagner_leader_death" references non-existent event "military_expansion" in addToPool
+- Event "nationalist_backlash" references non-existent event "nationalist_underground" in addToPool
+- Event "nationalist_backlash" references non-existent event "martyrdom_effect" in addToPool
+- Event "nationalist_backlash" references non-existent event "nationalist_insider" in addToPool
+- Event "nationalist_backlash" references non-existent event "moderate_nationalists" in addToPool
+- Event "nationalist_backlash" references non-existent event "creeping_escalation" in addToPool
+- Event "frozen_conflict" references non-existent event "permanent_occupation_costs" in addToPool
+- Event "frozen_conflict" references non-existent event "insurgency_forever" in addToPool
+- Event "frozen_conflict" references non-existent event "peace_talks_begin" in addToPool
+- Event "frozen_conflict" references non-existent event "hardliner_opposition" in addToPool
+- Event "frozen_conflict" references non-existent event "militarized_society" in addToPool
+- Event "frozen_conflict" references non-existent event "permanent_war_economy" in addToPool
+- Event "negotiated_settlement" references non-existent event "nationalist_rage" in addToPool
+- Event "negotiated_settlement" references non-existent event "economic_recovery" in addToPool
+- Event "negotiated_settlement" references non-existent event "purge_generals" in addToPool
+- Event "negotiated_settlement" references non-existent event "covert_war_continues" in addToPool
+- Event "negotiated_settlement" references non-existent event "sanctions_stay" in addToPool
+- Event "negotiated_settlement" references non-existent event "endless_war" in addToPool
+- Event "negotiated_settlement" references non-existent event "economic_collapse_looms" in addToPool
 - Event "territorial_annexation" references non-existent event "permanent_occupation" in addToPool
+- Event "territorial_annexation" references non-existent event "international_isolation" in addToPool
+- Event "territorial_annexation" references non-existent event "selective_occupation" in addToPool
+- Event "territorial_annexation" references non-existent event "resource_extraction_ramps" in addToPool
+- Event "territorial_annexation" references non-existent event "puppet_government_problems" in addToPool
+- Event "partisan_resistance" references non-existent event "population_flees" in addToPool
+- Event "partisan_resistance" references non-existent event "war_crimes_new" in addToPool
+- Event "partisan_resistance" references non-existent event "occupation_costs_spiral" in addToPool
+- Event "partisan_resistance" references non-existent event "limited_success" in addToPool
+- Event "partisan_resistance" references non-existent event "tactical_retreat" in addToPool
+- Event "partisan_resistance" references non-existent event "nationalist_anger_retreat" in addToPool
+- Event "military_disaster" references non-existent event "oligarch_panic" in addToPool
+- Event "military_disaster" references non-existent event "contractor_revenge" in addToPool
+- Event "military_disaster" references non-existent event "military_morale_boost" in addToPool
+- Event "military_disaster" references non-existent event "treasury_crisis" in addToPool
+- Event "military_disaster" references non-existent event "coverup_fails" in addToPool
+- Event "military_disaster" references non-existent event "truth_leaks_anyway" in addToPool
+- Event "soldier_mutiny" references non-existent event "fear_in_ranks" in addToPool
+- Event "soldier_mutiny" references non-existent event "underground_resistance" in addToPool
+- Event "soldier_mutiny" references non-existent event "other_units_demand_same" in addToPool
+- Event "soldier_mutiny" references non-existent event "concession_cascade" in addToPool
+- Event "soldier_mutiny" references non-existent event "temporary_calm" in addToPool
+- Event "soldier_mutiny" references non-existent event "problem_delayed" in addToPool
+- Event "breakaway_province" references non-existent event "internal_war" in addToPool
+- Event "breakaway_province" references non-existent event "ethnic_conflict" in addToPool
 - Event "breakaway_province" references non-existent event "international_condemnation" in addToPool
+- Event "breakaway_province" references non-existent event "humanitarian_crisis" in addToPool
+- Event "breakaway_province" references non-existent event "refugee_flows" in addToPool
+- Event "breakaway_province" references non-existent event "international_pressure" in addToPool
+- Event "breakaway_province" references non-existent event "autonomy_precedent" in addToPool
+- Event "breakaway_province" references non-existent event "other_regions_want_same" in addToPool
+- Event "military_corruption_exposed" references non-existent event "minister_has_receipts" in addToPool
+- Event "military_corruption_exposed" references non-existent event "blackmail_threat" in addToPool
+- Event "military_corruption_exposed" references non-existent event "coverup_attempt" in addToPool
+- Event "military_corruption_exposed" references non-existent event "evidence_spreads_anyway" in addToPool
+- Event "military_corruption_exposed" references non-existent event "oligarchs_fear_you" in addToPool
+- Event "military_corruption_exposed" references non-existent event "confiscation_precedent" in addToPool
+- Event "coup_risk_grows" references non-existent event "loyalty_purge" in addToPool
+- Event "coup_risk_grows" references non-existent event "paranoia_spreads" in addToPool
+- Event "coup_risk_grows" references non-existent event "general_arrests" in addToPool
+- Event "coup_risk_grows" references non-existent event "conspirators_fracture" in addToPool
+- Event "coup_risk_grows" references non-existent event "bought_loyalty" in addToPool
+- Event "coup_risk_grows" references non-existent event "coup_plot_develops" in addToPool
+- Event "coup_risk_grows" references non-existent event "surveillance_intensifies" in addToPool
 - Event "gas_leverage" references non-existent event "international_sanctions" in addToPool
 - Event "alternative_energy_routes" references non-existent event "chinese_dependence" in addToPool
 - Event "arctic_oil_discovery" references non-existent event "arctic_militarization" in addToPool
@@ -69,10 +186,7 @@
 
 *These events have `hasTriggered` conditions but are never added to the pool by any choice:*
 
-- **bridge_strike** (war_military): "The Bridge Explodes"
-- **nuclear_threats** (war_military): "The Nuclear Option"
 - **territorial_annexation** (war_military): "Annexation Referendum"
-- **sanctions_incoming** (sanctions_international): "International Sanctions"
 - **asset_freeze_escalation** (sanctions_international): "The Oligarchs' Yachts"
 - **secondary_sanctions_threat** (sanctions_international): "The Sanctions Tighten"
 - **brain_drain_sanctions** (sanctions_international): "The Exodus"
@@ -124,60 +238,23 @@
   └─ **war_goes_badly** - The 72-Hour War: Day 47 🔒 [war_military]
     └─ **conscription_crisis** - The Mobilization 🔒 [war_military]
       └─ **elite_sons_fleeing** - The Patriotic Elite 🔒
-      └─ **mass_protest_mobilization** - The Mothers March 🔒
-      └─ **wagner_mutiny** - The Chef's Rebellion 🔒
+      └─ **wagner_mutiny** - The Chef Rebels 🔒 [war_military]
     └─ **war_crimes_allegations** - The Massacre 🔒 [war_military]
-    └─ **frozen_conflict** - The New Normal 🔒
-      └─ **catastrophic_defeat** - The Rout 🔒
-    └─ **partisan_resistance** - Ghosts in the Occupation 🔒
-      └─ **war_crimes_allegations** - The Massacre 🔒 [war_military]
-      └─ **frozen_conflict** - The New Normal 🔒
-    └─ **negotiated_settlement** - Peace Talks 🔒
-      └─ **frozen_conflict** - The New Normal 🔒
-      └─ **catastrophic_defeat** - The Rout 🔒
-      └─ **pyrrhic_victory** - Victory Day 🔒
-    └─ ... and 1 more
+      └─ **international_tribunal** - The Hague Calls 🔒
+    └─ **mobilization_announcement** - The Mobilization Speech 🔒
+    └─ **elite_sons_fleeing** - The Patriotic Elite 🔒
+    └─ **frozen_conflict** - The Forever War 🔒
+    └─ ... and 4 more
   └─ **war_profiteering** - Defense Contracts 🔒 [war_military]
+    └─ **military_disaster** - The Equipment Failure 🔒
+    └─ **soldier_mutiny** - The Battalion Refuses 🔒
   └─ **conscription_crisis** - The Mobilization 🔒 [war_military]
     └─ **elite_sons_fleeing** - The Patriotic Elite 🔒
-    └─ **mass_protest_mobilization** - The Mothers March 🔒
-    └─ **wagner_mutiny** - The Chef's Rebellion 🔒
-  └─ **nationalist_backlash** - The Hardliners Revolt 🔒 [war_military]
-    └─ **war_goes_badly** - The 72-Hour War: Day 47 🔒 [war_military]
-      └─ **conscription_crisis** - The Mobilization 🔒 [war_military]
-      └─ **war_crimes_allegations** - The Massacre 🔒 [war_military]
-      └─ **frozen_conflict** - The New Normal 🔒
-      └─ **partisan_resistance** - Ghosts in the Occupation 🔒
-      └─ **negotiated_settlement** - Peace Talks 🔒
-      └─ ... and 1 more
-
-▶ **breakaway_province** - The Breakaway Province 🔒
-  └─ **urban_warfare_separatist** - Street by Street 🔒
-    └─ **separatist_insurgency** - The Endless War 🔒
-      └─ **war_crimes_allegations** - The Massacre 🔒 [war_military]
-      └─ **de_facto_independence** - The Frozen Breakaway 🔒
-    └─ **war_crimes_allegations** - The Massacre 🔒 [war_military]
-    └─ **autonomy_negotiations** - The Negotiating Table 🔒
-      └─ **autonomous_province** - The Autonomy Experiment 🔒
-  └─ **separatist_referendum** - The Independence Vote 🔒
-    └─ **urban_warfare_separatist** - Street by Street 🔒
-      └─ **separatist_insurgency** - The Endless War 🔒
-      └─ **war_crimes_allegations** - The Massacre 🔒 [war_military]
-      └─ **autonomy_negotiations** - The Negotiating Table 🔒
-    └─ **separatist_terrorism_response** - Retribution 🔒
-      └─ **urban_warfare_separatist** - Street by Street 🔒
-      └─ **cycle_of_violence** - Blood for Blood 🔒
-    └─ **negotiated_separation** - The Velvet Divorce 🔒
-  └─ **humanitarian_crisis_separatist** - The Siege Tightens 🔒
-    └─ **war_crimes_allegations** - The Massacre 🔒 [war_military]
-    └─ **autonomy_negotiations** - The Negotiating Table 🔒
-      └─ **autonomous_province** - The Autonomy Experiment 🔒
-      └─ **urban_warfare_separatist** - Street by Street 🔒
-  └─ **autonomy_negotiations** - The Negotiating Table 🔒
-    └─ **autonomous_province** - The Autonomy Experiment 🔒
-    └─ **urban_warfare_separatist** - Street by Street 🔒
-      └─ **separatist_insurgency** - The Endless War 🔒
-      └─ **war_crimes_allegations** - The Massacre 🔒 [war_military]
+    └─ **wagner_mutiny** - The Chef Rebels 🔒 [war_military]
+      └─ **wagner_leader_death** - The Suspicious Plane Crash 🔒
+  └─ **sanctions_incoming** - International Sanctions 🔒
+  └─ **military_corruption_exposed** - The Defense Ministry Scandal 🔒
+  └─ ... and 2 more
 
 ▶ **gas_pipeline_deal** - The Pipeline Opportunity 🔒 [energy_politics]
   └─ **pipeline_sabotage** - The Mysterious Explosion 🔒 [energy_politics]

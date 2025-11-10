@@ -1,10 +1,10 @@
 {
-  "version": "1.7.0",
-  "generatedAt": "2025-11-10T20:44:31.778Z",
+  "version": "1.6.0",
+  "generatedAt": "2025-11-10T21:46:59.646Z",
   "statistics": {
-    "total": 154,
+    "total": 147,
     "byCategory": {
-      "war_military": 29,
+      "war_military": 22,
       "energy_pipeline": 12,
       "sanctions_international": 11,
       "succession_power": 13,
@@ -13,24 +13,24 @@
       "misc": 67
     },
     "byStoryline": {
-      "war_military": 6,
+      "war_military": 7,
       "energy_politics": 12,
       "oligarch_intrigue": 1
     },
     "byType": {
-      "onceOnly": 148,
-      "recurring": 6,
-      "conditional": 103,
+      "onceOnly": 140,
+      "recurring": 7,
+      "conditional": 95,
       "entryPoint": 91
     },
     "branching": {
-      "deadEnds": 115,
-      "branches": 39,
-      "majorBranches": 12
+      "deadEnds": 117,
+      "branches": 30,
+      "majorBranches": 7
     },
     "chains": {
-      "longest": 8,
-      "average": "0.8"
+      "longest": 6,
+      "average": "0.4"
     }
   },
   "events": [
@@ -46,67 +46,15 @@
         "war_goes_badly",
         "war_profiteering",
         "conscription_crisis",
+        "sanctions_incoming",
+        "military_corruption_exposed",
+        "coup_risk_grows",
         "nationalist_backlash"
       ],
       "triggeredBy": [],
       "isEntryPoint": true,
       "isOrphaned": false,
-      "chainDepth": 5
-    },
-    {
-      "id": "war_profiteering",
-      "title": "Defense Contracts",
-      "category": "war_military",
-      "storyline": "war_military",
-      "onceOnly": true,
-      "weight": 8,
-      "conditions": {
-        "hasTriggered": [
-          "special_operation_proposal"
-        ]
-      },
-      "triggers": [],
-      "triggeredBy": [
-        {
-          "from": "special_operation_proposal",
-          "choice": 0,
-          "choiceText": "Launch the invasion. Annex their resources."
-        }
-      ],
-      "isEntryPoint": false,
-      "isOrphaned": false,
-      "chainDepth": 0
-    },
-    {
-      "id": "nationalist_backlash",
-      "title": "The Hardliners Revolt",
-      "category": "war_military",
-      "storyline": "war_military",
-      "onceOnly": true,
-      "weight": 8,
-      "conditions": {
-        "hasTriggered": [
-          "nationalist_backlash"
-        ]
-      },
-      "triggers": [
-        "war_goes_badly"
-      ],
-      "triggeredBy": [
-        {
-          "from": "special_operation_proposal",
-          "choice": 2,
-          "choiceText": "Reject it. The West's sanctions would cripple us."
-        },
-        {
-          "from": "war_goes_badly",
-          "choice": 2,
-          "choiceText": "Negotiate. Blame the generals. Seek face-saving exit."
-        }
-      ],
-      "isEntryPoint": false,
-      "isOrphaned": false,
-      "chainDepth": 4
+      "chainDepth": 6
     },
     {
       "id": "war_goes_badly",
@@ -123,8 +71,11 @@
       "triggers": [
         "conscription_crisis",
         "war_crimes_allegations",
+        "mobilization_announcement",
+        "elite_sons_fleeing",
         "frozen_conflict",
         "partisan_resistance",
+        "bridge_strike",
         "negotiated_settlement",
         "nationalist_backlash"
       ],
@@ -138,6 +89,60 @@
           "from": "nationalist_backlash",
           "choice": 2,
           "choiceText": "Fine. Limited 'peacekeeping operation.' Just the border region."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 4
+    },
+    {
+      "id": "war_profiteering",
+      "title": "Defense Contracts",
+      "category": "war_military",
+      "storyline": "war_military",
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "special_operation_proposal"
+        ]
+      },
+      "triggers": [
+        "military_disaster",
+        "soldier_mutiny"
+      ],
+      "triggeredBy": [
+        {
+          "from": "special_operation_proposal",
+          "choice": 0,
+          "choiceText": "Launch the invasion. Annex their resources."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 1
+    },
+    {
+      "id": "bridge_strike",
+      "title": "The Bridge Explodes",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "war_goes_badly"
+        ]
+      },
+      "triggers": [
+        "energy_infrastructure_war",
+        "nuclear_threats"
+      ],
+      "triggeredBy": [
+        {
+          "from": "war_goes_badly",
+          "choice": 1,
+          "choiceText": "Dig in. Limited objectives. Hold what we have, claim victory."
         }
       ],
       "isEntryPoint": false,
@@ -158,7 +163,6 @@
       },
       "triggers": [
         "elite_sons_fleeing",
-        "mass_protest_mobilization",
         "wagner_mutiny"
       ],
       "triggeredBy": [
@@ -175,18 +179,18 @@
       ],
       "isEntryPoint": false,
       "isOrphaned": false,
-      "chainDepth": 1
+      "chainDepth": 2
     },
     {
-      "id": "war_crimes_allegations",
-      "title": "The Massacre",
+      "id": "mobilization_announcement",
+      "title": "The Mobilization Speech",
       "category": "war_military",
-      "storyline": "war_military",
+      "storyline": null,
       "onceOnly": true,
-      "weight": 8,
+      "weight": 7,
       "conditions": {
         "hasTriggered": [
-          "war_goes_badly"
+          "conscription_crisis"
         ]
       },
       "triggers": [],
@@ -195,56 +199,11 @@
           "from": "war_goes_badly",
           "choice": 0,
           "choiceText": "Escalate. Full invasion. Mobilize reserves. Flatten cities."
-        },
-        {
-          "from": "partisan_resistance",
-          "choice": 0,
-          "choiceText": "Brutal pacification. Collective punishment. Mass arrests."
-        },
-        {
-          "from": "urban_warfare_separatist",
-          "choice": 0,
-          "choiceText": "Level it. Artillery, airstrikes, total war. Grozny doctrine."
-        },
-        {
-          "from": "humanitarian_crisis_separatist",
-          "choice": 0,
-          "choiceText": "Maintain the siege. Starvation is a weapon. They'll surrender."
-        },
-        {
-          "from": "separatist_insurgency",
-          "choice": 0,
-          "choiceText": "Collective punishment. Villages that harbor rebels get razed."
-        },
-        {
-          "from": "energy_infrastructure_war",
-          "choice": 0,
-          "choiceText": "Continue the campaign. More missiles. Break them completely."
         }
       ],
       "isEntryPoint": false,
       "isOrphaned": false,
       "chainDepth": 0
-    },
-    {
-      "id": "bridge_strike",
-      "title": "The Bridge Explodes",
-      "category": "war_military",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 8,
-      "conditions": {
-        "hasTriggered": [
-          "special_operation_proposal"
-        ]
-      },
-      "triggers": [
-        "energy_infrastructure_war"
-      ],
-      "triggeredBy": [],
-      "isEntryPoint": false,
-      "isOrphaned": true,
-      "chainDepth": 4
     },
     {
       "id": "elite_sons_fleeing",
@@ -261,6 +220,11 @@
       "triggers": [],
       "triggeredBy": [
         {
+          "from": "war_goes_badly",
+          "choice": 0,
+          "choiceText": "Escalate. Full invasion. Mobilize reserves. Flatten cities."
+        },
+        {
           "from": "conscription_crisis",
           "choice": 0,
           "choiceText": "Full mobilization. Every man 18-60. Close the borders."
@@ -271,23 +235,59 @@
       "chainDepth": 0
     },
     {
-      "id": "wagner_mutiny",
-      "title": "The Chef's Rebellion",
+      "id": "war_crimes_allegations",
+      "title": "The Massacre",
+      "category": "war_military",
+      "storyline": "war_military",
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "war_goes_badly"
+        ]
+      },
+      "triggers": [
+        "international_tribunal"
+      ],
+      "triggeredBy": [
+        {
+          "from": "war_goes_badly",
+          "choice": 0,
+          "choiceText": "Escalate. Full invasion. Mobilize reserves. Flatten cities."
+        },
+        {
+          "from": "energy_infrastructure_war",
+          "choice": 0,
+          "choiceText": "Continue the campaign. More missiles. Break them completely."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 1
+    },
+    {
+      "id": "international_tribunal",
+      "title": "The Hague Calls",
       "category": "war_military",
       "storyline": null,
       "onceOnly": true,
-      "weight": 12,
+      "weight": 6,
       "conditions": {
         "hasTriggered": [
-          "conscription_crisis"
+          "war_crimes_allegations"
         ]
       },
       "triggers": [],
       "triggeredBy": [
         {
-          "from": "conscription_crisis",
+          "from": "war_crimes_allegations",
+          "choice": 0,
+          "choiceText": "Deny everything. Western propaganda. Staged by actors."
+        },
+        {
+          "from": "war_crimes_allegations",
           "choice": 2,
-          "choiceText": "Pay mercenaries. Private military companies. No conscription."
+          "choiceText": "Defiant: 'This is war. Casualties happen. We make no apologies.'"
         }
       ],
       "isEntryPoint": false,
@@ -300,23 +300,79 @@
       "category": "war_military",
       "storyline": null,
       "onceOnly": true,
-      "weight": 9,
+      "weight": 5,
       "conditions": {
         "hasTriggered": [
           "war_goes_badly"
         ]
       },
       "triggers": [],
-      "triggeredBy": [],
+      "triggeredBy": [
+        {
+          "from": "bridge_strike",
+          "choice": 0,
+          "choiceText": "Massive retaliation. Target their power grid. No electricity."
+        }
+      ],
       "isEntryPoint": false,
-      "isOrphaned": true,
+      "isOrphaned": false,
       "chainDepth": 0
     },
     {
-      "id": "territorial_annexation",
-      "title": "Annexation Referendum",
+      "id": "wagner_mutiny",
+      "title": "The Chef Rebels",
+      "category": "war_military",
+      "storyline": "war_military",
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "hasTriggered": [
+          "conscription_crisis"
+        ]
+      },
+      "triggers": [
+        "wagner_leader_death"
+      ],
+      "triggeredBy": [
+        {
+          "from": "conscription_crisis",
+          "choice": 2,
+          "choiceText": "Pay mercenaries. Private military companies. No conscription."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 1
+    },
+    {
+      "id": "wagner_leader_death",
+      "title": "The Suspicious Plane Crash",
       "category": "war_military",
       "storyline": null,
+      "onceOnly": true,
+      "weight": 5,
+      "conditions": {
+        "hasTriggered": [
+          "wagner_mutiny"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "wagner_mutiny",
+          "choice": 2,
+          "choiceText": "Eliminate him afterwards. Plane crash. Convenient accident."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "nationalist_backlash",
+      "title": "The Hardliners Revolt",
+      "category": "war_military",
+      "storyline": "war_military",
       "onceOnly": true,
       "weight": 8,
       "conditions": {
@@ -325,68 +381,72 @@
         ]
       },
       "triggers": [
-        "negotiated_settlement"
+        "war_goes_badly"
       ],
-      "triggeredBy": [],
+      "triggeredBy": [
+        {
+          "from": "special_operation_proposal",
+          "choice": 2,
+          "choiceText": "Reject it. The West's sanctions would cripple us."
+        },
+        {
+          "from": "war_goes_badly",
+          "choice": 2,
+          "choiceText": "Negotiate. Blame the generals. Seek face-saving exit."
+        }
+      ],
       "isEntryPoint": false,
-      "isOrphaned": true,
-      "chainDepth": 3
+      "isOrphaned": false,
+      "chainDepth": 5
     },
     {
-      "id": "partisan_resistance",
-      "title": "Ghosts in the Occupation",
+      "id": "frozen_conflict",
+      "title": "The Forever War",
       "category": "war_military",
       "storyline": null,
       "onceOnly": true,
-      "weight": 7,
+      "weight": 6,
       "conditions": {
         "hasTriggered": [
-          "territorial_annexation",
           "war_goes_badly"
-        ]
+        ],
+        "year": 3
       },
-      "triggers": [
-        "war_crimes_allegations",
-        "frozen_conflict"
-      ],
+      "triggers": [],
       "triggeredBy": [
         {
           "from": "war_goes_badly",
           "choice": 1,
           "choiceText": "Dig in. Limited objectives. Hold what we have, claim victory."
+        },
+        {
+          "from": "territorial_annexation",
+          "choice": 2,
+          "choiceText": "Declare them 'independent republics.' Puppet states."
         }
       ],
       "isEntryPoint": false,
       "isOrphaned": false,
-      "chainDepth": 2
+      "chainDepth": 0
     },
     {
       "id": "negotiated_settlement",
-      "title": "Peace Talks",
+      "title": "The Armistice",
       "category": "war_military",
       "storyline": null,
       "onceOnly": true,
-      "weight": 8,
+      "weight": 5,
       "conditions": {
         "hasTriggered": [
           "war_goes_badly"
         ]
       },
-      "triggers": [
-        "frozen_conflict",
-        "catastrophic_defeat",
-        "pyrrhic_victory"
-      ],
+      "triggers": [],
       "triggeredBy": [
         {
           "from": "war_goes_badly",
           "choice": 2,
           "choiceText": "Negotiate. Blame the generals. Seek face-saving exit."
-        },
-        {
-          "from": "territorial_annexation",
-          "choice": 2,
-          "choiceText": "Wait. Use as negotiating leverage for peace talks."
         },
         {
           "from": "energy_infrastructure_war",
@@ -396,35 +456,11 @@
       ],
       "isEntryPoint": false,
       "isOrphaned": false,
-      "chainDepth": 2
-    },
-    {
-      "id": "pyrrhic_victory",
-      "title": "Victory Day",
-      "category": "war_military",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 9,
-      "conditions": {
-        "hasTriggered": [
-          "special_operation_proposal"
-        ]
-      },
-      "triggers": [],
-      "triggeredBy": [
-        {
-          "from": "negotiated_settlement",
-          "choice": 2,
-          "choiceText": "Walk away from talks. We fight until total victory."
-        }
-      ],
-      "isEntryPoint": false,
-      "isOrphaned": false,
       "chainDepth": 0
     },
     {
-      "id": "frozen_conflict",
-      "title": "The New Normal",
+      "id": "territorial_annexation",
+      "title": "Annexation Referendum",
       "category": "war_military",
       "storyline": null,
       "onceOnly": true,
@@ -432,11 +468,32 @@
       "conditions": {
         "hasTriggered": [
           "war_goes_badly"
-        ]
+        ],
+        "year": 2
       },
       "triggers": [
-        "catastrophic_defeat"
+        "partisan_resistance",
+        "frozen_conflict"
       ],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 1
+    },
+    {
+      "id": "partisan_resistance",
+      "title": "The Insurgency",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": false,
+      "weight": 7,
+      "conditions": {
+        "hasTriggered": [
+          "territorial_annexation",
+          "frozen_conflict"
+        ]
+      },
+      "triggers": [],
       "triggeredBy": [
         {
           "from": "war_goes_badly",
@@ -444,43 +501,9 @@
           "choiceText": "Dig in. Limited objectives. Hold what we have, claim victory."
         },
         {
-          "from": "partisan_resistance",
-          "choice": 2,
-          "choiceText": "Withdraw to defensible lines. Cut losses. Fortress strategy."
-        },
-        {
-          "from": "negotiated_settlement",
+          "from": "territorial_annexation",
           "choice": 0,
-          "choiceText": "Ceasefire. Freeze current lines. Korea-style armistice."
-        }
-      ],
-      "isEntryPoint": false,
-      "isOrphaned": false,
-      "chainDepth": 1
-    },
-    {
-      "id": "catastrophic_defeat",
-      "title": "The Rout",
-      "category": "war_military",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 10,
-      "conditions": {
-        "hasTriggered": [
-          "war_goes_badly"
-        ]
-      },
-      "triggers": [],
-      "triggeredBy": [
-        {
-          "from": "negotiated_settlement",
-          "choice": 2,
-          "choiceText": "Walk away from talks. We fight until total victory."
-        },
-        {
-          "from": "frozen_conflict",
-          "choice": 1,
-          "choiceText": "One more push. Break the stalemate. Mobilize again."
+          "choiceText": "Annex all of it. Official ceremony. Constitutional changes."
         }
       ],
       "isEntryPoint": false,
@@ -488,23 +511,48 @@
       "chainDepth": 0
     },
     {
-      "id": "mass_protest_mobilization",
-      "title": "The Mothers March",
+      "id": "military_disaster",
+      "title": "The Equipment Failure",
       "category": "war_military",
       "storyline": null,
       "onceOnly": true,
-      "weight": 8,
+      "weight": 6,
       "conditions": {
         "hasTriggered": [
+          "war_profiteering"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "war_profiteering",
+          "choice": 0,
+          "choiceText": "Accept the deal. Soldiers die in war anyway."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "soldier_mutiny",
+      "title": "The Battalion Refuses",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "hasTriggered": [
+          "military_disaster",
           "conscription_crisis"
         ]
       },
       "triggers": [],
       "triggeredBy": [
         {
-          "from": "conscription_crisis",
+          "from": "war_profiteering",
           "choice": 0,
-          "choiceText": "Full mobilization. Every man 18-60. Close the borders."
+          "choiceText": "Accept the deal. Soldiers die in war anyway."
         }
       ],
       "isEntryPoint": false,
@@ -517,351 +565,61 @@
       "category": "war_military",
       "storyline": null,
       "onceOnly": true,
-      "weight": 9,
-      "conditions": {
-        "anger": 35,
-        "year": 2
-      },
-      "triggers": [
-        "urban_warfare_separatist",
-        "separatist_referendum",
-        "humanitarian_crisis_separatist",
-        "autonomy_negotiations"
-      ],
-      "triggeredBy": [
-        {
-          "from": "autonomous_province",
-          "choice": 2,
-          "choiceText": "Renege on the deal. Slowly strip their autonomy away."
-        }
-      ],
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
       "isEntryPoint": true,
       "isOrphaned": false,
-      "chainDepth": 7
+      "chainDepth": 0
     },
     {
-      "id": "urban_warfare_separatist",
-      "title": "Street by Street",
+      "id": "military_corruption_exposed",
+      "title": "The Defense Ministry Scandal",
       "category": "war_military",
       "storyline": null,
       "onceOnly": true,
-      "weight": 10,
+      "weight": 6,
       "conditions": {
         "hasTriggered": [
-          "breakaway_province"
+          "special_operation_proposal"
         ]
       },
-      "triggers": [
-        "separatist_insurgency",
-        "war_crimes_allegations",
-        "autonomy_negotiations"
-      ],
+      "triggers": [],
       "triggeredBy": [
         {
-          "from": "breakaway_province",
-          "choice": 0,
-          "choiceText": "Full military assault. No negotiations with traitors."
-        },
-        {
-          "from": "separatist_referendum",
-          "choice": 0,
-          "choiceText": "Declare the vote illegal. Double military pressure. No surrender."
-        },
-        {
-          "from": "separatist_terrorism_response",
-          "choice": 0,
-          "choiceText": "Massive retaliation. Bomb their 'capital.' Kill their leadership."
-        },
-        {
-          "from": "autonomy_negotiations",
-          "choice": 2,
-          "choiceText": "Walk away. These demands are insulting. Resume military operations."
-        }
-      ],
-      "isEntryPoint": false,
-      "isOrphaned": false,
-      "chainDepth": 7
-    },
-    {
-      "id": "separatist_referendum",
-      "title": "The Independence Vote",
-      "category": "war_military",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 9,
-      "conditions": {
-        "hasTriggered": [
-          "breakaway_province"
-        ]
-      },
-      "triggers": [
-        "urban_warfare_separatist",
-        "separatist_terrorism_response",
-        "negotiated_separation"
-      ],
-      "triggeredBy": [
-        {
-          "from": "breakaway_province",
-          "choice": 0,
-          "choiceText": "Full military assault. No negotiations with traitors."
-        }
-      ],
-      "isEntryPoint": false,
-      "isOrphaned": false,
-      "chainDepth": 8
-    },
-    {
-      "id": "humanitarian_crisis_separatist",
-      "title": "The Siege Tightens",
-      "category": "war_military",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 8,
-      "conditions": {
-        "hasTriggered": [
-          "breakaway_province"
-        ]
-      },
-      "triggers": [
-        "war_crimes_allegations",
-        "autonomy_negotiations"
-      ],
-      "triggeredBy": [
-        {
-          "from": "breakaway_province",
+          "from": "special_operation_proposal",
           "choice": 1,
-          "choiceText": "Blockade the province. Cut power, water, food. Strangle them."
+          "choiceText": "Delay. Bleed the generals for kickbacks first."
         }
       ],
       "isEntryPoint": false,
       "isOrphaned": false,
-      "chainDepth": 8
+      "chainDepth": 0
     },
     {
-      "id": "separatist_insurgency",
-      "title": "The Endless War",
+      "id": "coup_risk_grows",
+      "title": "The Generals Whisper",
       "category": "war_military",
       "storyline": null,
       "onceOnly": true,
       "weight": 7,
       "conditions": {
         "hasTriggered": [
-          "urban_warfare_separatist"
+          "special_operation_proposal"
         ]
       },
-      "triggers": [
-        "war_crimes_allegations",
-        "de_facto_independence"
-      ],
+      "triggers": [],
       "triggeredBy": [
         {
-          "from": "urban_warfare_separatist",
-          "choice": 0,
-          "choiceText": "Level it. Artillery, airstrikes, total war. Grozny doctrine."
-        },
-        {
-          "from": "urban_warfare_separatist",
+          "from": "special_operation_proposal",
           "choice": 1,
-          "choiceText": "Slow advance. Minimize civilian casualties. Months of grinding war."
-        }
-      ],
-      "isEntryPoint": false,
-      "isOrphaned": false,
-      "chainDepth": 1
-    },
-    {
-      "id": "separatist_terrorism_response",
-      "title": "Retribution",
-      "category": "war_military",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 9,
-      "conditions": {
-        "hasTriggered": [
-          "separatist_referendum"
-        ]
-      },
-      "triggers": [
-        "urban_warfare_separatist",
-        "cycle_of_violence"
-      ],
-      "triggeredBy": [
-        {
-          "from": "separatist_referendum",
-          "choice": 1,
-          "choiceText": "Covert campaign. Assassinate their leaders. Destabilize their 'state.'"
-        }
-      ],
-      "isEntryPoint": false,
-      "isOrphaned": false,
-      "chainDepth": 8
-    },
-    {
-      "id": "autonomy_negotiations",
-      "title": "The Negotiating Table",
-      "category": "war_military",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 8,
-      "conditions": {
-        "hasTriggered": [
-          "breakaway_province"
-        ]
-      },
-      "triggers": [
-        "autonomous_province",
-        "urban_warfare_separatist"
-      ],
-      "triggeredBy": [
-        {
-          "from": "breakaway_province",
-          "choice": 2,
-          "choiceText": "Negotiate. Offer expanded autonomy. Keep them in the federation."
-        },
-        {
-          "from": "urban_warfare_separatist",
-          "choice": 2,
-          "choiceText": "Withdraw. This is unwinnable. Cut a deal now."
-        },
-        {
-          "from": "humanitarian_crisis_separatist",
-          "choice": 2,
-          "choiceText": "Lift the blockade. The optics are destroying us internationally."
-        },
-        {
-          "from": "cycle_of_violence",
-          "choice": 2,
-          "choiceText": "Unilateral ceasefire. Someone has to stop first. (Seen as weakness)"
-        }
-      ],
-      "isEntryPoint": false,
-      "isOrphaned": false,
-      "chainDepth": 7
-    },
-    {
-      "id": "negotiated_separation",
-      "title": "The Velvet Divorce",
-      "category": "war_military",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 8,
-      "conditions": {
-        "hasTriggered": [
-          "separatist_referendum"
-        ]
-      },
-      "triggers": [],
-      "triggeredBy": [
-        {
-          "from": "separatist_referendum",
-          "choice": 2,
-          "choiceText": "Recognize reality. Negotiate terms of separation. Salvage what we can."
+          "choiceText": "Delay. Bleed the generals for kickbacks first."
         }
       ],
       "isEntryPoint": false,
       "isOrphaned": false,
       "chainDepth": 0
-    },
-    {
-      "id": "de_facto_independence",
-      "title": "The Frozen Breakaway",
-      "category": "war_military",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 6,
-      "conditions": {
-        "hasTriggered": [
-          "separatist_insurgency"
-        ]
-      },
-      "triggers": [],
-      "triggeredBy": [
-        {
-          "from": "separatist_insurgency",
-          "choice": 2,
-          "choiceText": "Controlled withdrawal. Defend key infrastructure only. Admit partial defeat."
-        }
-      ],
-      "isEntryPoint": false,
-      "isOrphaned": false,
-      "chainDepth": 0
-    },
-    {
-      "id": "brutal_reconquest",
-      "title": "Victory at Any Cost",
-      "category": "war_military",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 8,
-      "conditions": {
-        "hasTriggered": [
-          "urban_warfare_separatist"
-        ]
-      },
-      "triggers": [],
-      "triggeredBy": [
-        {
-          "from": "cycle_of_violence",
-          "choice": 0,
-          "choiceText": "Escalate to overwhelming force. Break them completely. End it."
-        }
-      ],
-      "isEntryPoint": false,
-      "isOrphaned": false,
-      "chainDepth": 0
-    },
-    {
-      "id": "autonomous_province",
-      "title": "The Autonomy Experiment",
-      "category": "war_military",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 6,
-      "conditions": {
-        "hasTriggered": [
-          "autonomy_negotiations"
-        ]
-      },
-      "triggers": [
-        "breakaway_province"
-      ],
-      "triggeredBy": [
-        {
-          "from": "autonomy_negotiations",
-          "choice": 0,
-          "choiceText": "Accept their demands. Autonomy is better than independence."
-        }
-      ],
-      "isEntryPoint": false,
-      "isOrphaned": false,
-      "chainDepth": 8
-    },
-    {
-      "id": "cycle_of_violence",
-      "title": "Blood for Blood",
-      "category": "war_military",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 8,
-      "conditions": {
-        "hasTriggered": [
-          "separatist_terrorism_response"
-        ]
-      },
-      "triggers": [
-        "brutal_reconquest",
-        "autonomy_negotiations"
-      ],
-      "triggeredBy": [
-        {
-          "from": "separatist_terrorism_response",
-          "choice": 0,
-          "choiceText": "Massive retaliation. Bomb their 'capital.' Kill their leadership."
-        }
-      ],
-      "isEntryPoint": false,
-      "isOrphaned": false,
-      "chainDepth": 8
     },
     {
       "id": "gas_pipeline_deal",
@@ -1180,9 +938,15 @@
         ]
       },
       "triggers": [],
-      "triggeredBy": [],
+      "triggeredBy": [
+        {
+          "from": "special_operation_proposal",
+          "choice": 0,
+          "choiceText": "Launch the invasion. Annex their resources."
+        }
+      ],
       "isEntryPoint": false,
-      "isOrphaned": true,
+      "isOrphaned": false,
       "chainDepth": 0
     },
     {
@@ -2368,7 +2132,7 @@
       ],
       "isEntryPoint": false,
       "isOrphaned": false,
-      "chainDepth": 3
+      "chainDepth": 2
     },
     {
       "id": "energy_oligarch_rivalry",
@@ -3165,17 +2929,134 @@
     }
   ],
   "warnings": [
-    "Event \"war_profiteering\" references non-existent event \"military_disaster\" in addToPool",
-    "Event \"war_goes_badly\" references non-existent event \"mobilization_announcement\" in addToPool",
+    "Event \"war_goes_badly\" references non-existent event \"military_humiliation\" in addToPool",
+    "Event \"war_profiteering\" references non-existent event \"defense_scandal\" in addToPool",
+    "Event \"war_profiteering\" references non-existent event \"improved_equipment\" in addToPool",
+    "Event \"war_profiteering\" references non-existent event \"contractor_resentment\" in addToPool",
+    "Event \"war_profiteering\" references non-existent event \"military_effectiveness_boost\" in addToPool",
+    "Event \"war_profiteering\" references non-existent event \"oligarch_resentment\" in addToPool",
+    "Event \"bridge_strike\" references non-existent event \"civilian_casualties_winter\" in addToPool",
+    "Event \"bridge_strike\" references non-existent event \"military_targets_campaign\" in addToPool",
+    "Event \"bridge_strike\" references non-existent event \"international_praise\" in addToPool",
+    "Event \"bridge_strike\" references non-existent event \"bridge_reconstruction\" in addToPool",
+    "Event \"bridge_strike\" references non-existent event \"engineers_shortage\" in addToPool",
+    "Event \"conscription_crisis\" references non-existent event \"mass_protest_mobilization\" in addToPool",
+    "Event \"conscription_crisis\" references non-existent event \"border_guard_corruption\" in addToPool",
+    "Event \"conscription_crisis\" references non-existent event \"draft_dodgers\" in addToPool",
     "Event \"conscription_crisis\" references non-existent event \"ethnic_tensions\" in addToPool",
-    "Event \"war_crimes_allegations\" references non-existent event \"international_tribunal\" in addToPool",
-    "Event \"war_crimes_allegations\" references non-existent event \"international_tribunal\" in addToPool",
+    "Event \"conscription_crisis\" references non-existent event \"regional_resentment\" in addToPool",
+    "Event \"conscription_crisis\" references non-existent event \"minority_backlash\" in addToPool",
+    "Event \"conscription_crisis\" references non-existent event \"mercenary_costs\" in addToPool",
+    "Event \"conscription_crisis\" references non-existent event \"private_army_problem\" in addToPool",
+    "Event \"mobilization_announcement\" references non-existent event \"mobilization_lies_exposed\" in addToPool",
+    "Event \"mobilization_announcement\" references non-existent event \"trust_collapse\" in addToPool",
+    "Event \"mobilization_announcement\" references non-existent event \"mass_panic\" in addToPool",
+    "Event \"mobilization_announcement\" references non-existent event \"airport_chaos\" in addToPool",
+    "Event \"mobilization_announcement\" references non-existent event \"border_stampede\" in addToPool",
+    "Event \"mobilization_announcement\" references non-existent event \"confusion_and_rumors\" in addToPool",
+    "Event \"mobilization_announcement\" references non-existent event \"speculation_frenzy\" in addToPool",
+    "Event \"elite_sons_fleeing\" references non-existent event \"elite_rebellion_brewing\" in addToPool",
+    "Event \"elite_sons_fleeing\" references non-existent event \"oligarch_conspiracy\" in addToPool",
+    "Event \"elite_sons_fleeing\" references non-existent event \"class_rage_building\" in addToPool",
+    "Event \"elite_sons_fleeing\" references non-existent event \"populist_anger\" in addToPool",
+    "Event \"elite_sons_fleeing\" references non-existent event \"minister_resentment\" in addToPool",
+    "Event \"elite_sons_fleeing\" references non-existent event \"elite_fear\" in addToPool",
+    "Event \"war_crimes_allegations\" references non-existent event \"evidence_mounts\" in addToPool",
+    "Event \"war_crimes_allegations\" references non-existent event \"whistleblower_leaks\" in addToPool",
+    "Event \"war_crimes_allegations\" references non-existent event \"scapegoat_soldiers\" in addToPool",
+    "Event \"war_crimes_allegations\" references non-existent event \"military_morale_drop\" in addToPool",
     "Event \"war_crimes_allegations\" references non-existent event \"sanctions_escalation\" in addToPool",
-    "Event \"wagner_mutiny\" references non-existent event \"wagner_leader_death\" in addToPool",
-    "Event \"wagner_mutiny\" references non-existent event \"military_fragmentation\" in addToPool",
+    "Event \"war_crimes_allegations\" references non-existent event \"pariah_status\" in addToPool",
+    "Event \"international_tribunal\" references non-existent event \"isolated_dictator\" in addToPool",
+    "Event \"international_tribunal\" references non-existent event \"bunker_mentality\" in addToPool",
+    "Event \"international_tribunal\" references non-existent event \"paranoia_grows\" in addToPool",
+    "Event \"international_tribunal\" references non-existent event \"loyalist_circle\" in addToPool",
+    "Event \"international_tribunal\" references non-existent event \"generals_panic\" in addToPool",
+    "Event \"international_tribunal\" references non-existent event \"coup_attempt_imminent\" in addToPool",
     "Event \"nuclear_threats\" references non-existent event \"nuclear_escalation_crisis\" in addToPool",
+    "Event \"nuclear_threats\" references non-existent event \"nato_intervention_threat\" in addToPool",
+    "Event \"nuclear_threats\" references non-existent event \"apocalypse_risk\" in addToPool",
+    "Event \"nuclear_threats\" references non-existent event \"nuclear_brinkmanship\" in addToPool",
+    "Event \"nuclear_threats\" references non-existent event \"credibility_test\" in addToPool",
+    "Event \"nuclear_threats\" references non-existent event \"western_panic\" in addToPool",
+    "Event \"nuclear_threats\" references non-existent event \"generals_lose_faith\" in addToPool",
+    "Event \"nuclear_threats\" references non-existent event \"search_for_options\" in addToPool",
+    "Event \"wagner_mutiny\" references non-existent event \"wagner_deal\" in addToPool",
+    "Event \"wagner_mutiny\" references non-existent event \"wagner_exile\" in addToPool",
+    "Event \"wagner_mutiny\" references non-existent event \"military_humiliation\" in addToPool",
+    "Event \"wagner_mutiny\" references non-existent event \"wagner_battle\" in addToPool",
+    "Event \"wagner_mutiny\" references non-existent event \"civil_war_risk\" in addToPool",
+    "Event \"wagner_mutiny\" references non-existent event \"military_split\" in addToPool",
+    "Event \"wagner_mutiny\" references non-existent event \"mercenary_anger\" in addToPool",
+    "Event \"wagner_mutiny\" references non-existent event \"loyalty_through_fear\" in addToPool",
+    "Event \"wagner_leader_death\" references non-existent event \"wagner_revenge_plot\" in addToPool",
+    "Event \"wagner_leader_death\" references non-existent event \"mercenary_dissolution\" in addToPool",
+    "Event \"wagner_leader_death\" references non-existent event \"fear_consolidates\" in addToPool",
+    "Event \"wagner_leader_death\" references non-existent event \"ruthless_reputation\" in addToPool",
+    "Event \"wagner_leader_death\" references non-existent event \"mercenary_integration\" in addToPool",
+    "Event \"wagner_leader_death\" references non-existent event \"military_expansion\" in addToPool",
+    "Event \"nationalist_backlash\" references non-existent event \"nationalist_underground\" in addToPool",
+    "Event \"nationalist_backlash\" references non-existent event \"martyrdom_effect\" in addToPool",
+    "Event \"nationalist_backlash\" references non-existent event \"nationalist_insider\" in addToPool",
+    "Event \"nationalist_backlash\" references non-existent event \"moderate_nationalists\" in addToPool",
+    "Event \"nationalist_backlash\" references non-existent event \"creeping_escalation\" in addToPool",
+    "Event \"frozen_conflict\" references non-existent event \"permanent_occupation_costs\" in addToPool",
+    "Event \"frozen_conflict\" references non-existent event \"insurgency_forever\" in addToPool",
+    "Event \"frozen_conflict\" references non-existent event \"peace_talks_begin\" in addToPool",
+    "Event \"frozen_conflict\" references non-existent event \"hardliner_opposition\" in addToPool",
+    "Event \"frozen_conflict\" references non-existent event \"militarized_society\" in addToPool",
+    "Event \"frozen_conflict\" references non-existent event \"permanent_war_economy\" in addToPool",
+    "Event \"negotiated_settlement\" references non-existent event \"nationalist_rage\" in addToPool",
+    "Event \"negotiated_settlement\" references non-existent event \"economic_recovery\" in addToPool",
+    "Event \"negotiated_settlement\" references non-existent event \"purge_generals\" in addToPool",
+    "Event \"negotiated_settlement\" references non-existent event \"covert_war_continues\" in addToPool",
+    "Event \"negotiated_settlement\" references non-existent event \"sanctions_stay\" in addToPool",
+    "Event \"negotiated_settlement\" references non-existent event \"endless_war\" in addToPool",
+    "Event \"negotiated_settlement\" references non-existent event \"economic_collapse_looms\" in addToPool",
     "Event \"territorial_annexation\" references non-existent event \"permanent_occupation\" in addToPool",
+    "Event \"territorial_annexation\" references non-existent event \"international_isolation\" in addToPool",
+    "Event \"territorial_annexation\" references non-existent event \"selective_occupation\" in addToPool",
+    "Event \"territorial_annexation\" references non-existent event \"resource_extraction_ramps\" in addToPool",
+    "Event \"territorial_annexation\" references non-existent event \"puppet_government_problems\" in addToPool",
+    "Event \"partisan_resistance\" references non-existent event \"population_flees\" in addToPool",
+    "Event \"partisan_resistance\" references non-existent event \"war_crimes_new\" in addToPool",
+    "Event \"partisan_resistance\" references non-existent event \"occupation_costs_spiral\" in addToPool",
+    "Event \"partisan_resistance\" references non-existent event \"limited_success\" in addToPool",
+    "Event \"partisan_resistance\" references non-existent event \"tactical_retreat\" in addToPool",
+    "Event \"partisan_resistance\" references non-existent event \"nationalist_anger_retreat\" in addToPool",
+    "Event \"military_disaster\" references non-existent event \"oligarch_panic\" in addToPool",
+    "Event \"military_disaster\" references non-existent event \"contractor_revenge\" in addToPool",
+    "Event \"military_disaster\" references non-existent event \"military_morale_boost\" in addToPool",
+    "Event \"military_disaster\" references non-existent event \"treasury_crisis\" in addToPool",
+    "Event \"military_disaster\" references non-existent event \"coverup_fails\" in addToPool",
+    "Event \"military_disaster\" references non-existent event \"truth_leaks_anyway\" in addToPool",
+    "Event \"soldier_mutiny\" references non-existent event \"fear_in_ranks\" in addToPool",
+    "Event \"soldier_mutiny\" references non-existent event \"underground_resistance\" in addToPool",
+    "Event \"soldier_mutiny\" references non-existent event \"other_units_demand_same\" in addToPool",
+    "Event \"soldier_mutiny\" references non-existent event \"concession_cascade\" in addToPool",
+    "Event \"soldier_mutiny\" references non-existent event \"temporary_calm\" in addToPool",
+    "Event \"soldier_mutiny\" references non-existent event \"problem_delayed\" in addToPool",
+    "Event \"breakaway_province\" references non-existent event \"internal_war\" in addToPool",
+    "Event \"breakaway_province\" references non-existent event \"ethnic_conflict\" in addToPool",
     "Event \"breakaway_province\" references non-existent event \"international_condemnation\" in addToPool",
+    "Event \"breakaway_province\" references non-existent event \"humanitarian_crisis\" in addToPool",
+    "Event \"breakaway_province\" references non-existent event \"refugee_flows\" in addToPool",
+    "Event \"breakaway_province\" references non-existent event \"international_pressure\" in addToPool",
+    "Event \"breakaway_province\" references non-existent event \"autonomy_precedent\" in addToPool",
+    "Event \"breakaway_province\" references non-existent event \"other_regions_want_same\" in addToPool",
+    "Event \"military_corruption_exposed\" references non-existent event \"minister_has_receipts\" in addToPool",
+    "Event \"military_corruption_exposed\" references non-existent event \"blackmail_threat\" in addToPool",
+    "Event \"military_corruption_exposed\" references non-existent event \"coverup_attempt\" in addToPool",
+    "Event \"military_corruption_exposed\" references non-existent event \"evidence_spreads_anyway\" in addToPool",
+    "Event \"military_corruption_exposed\" references non-existent event \"oligarchs_fear_you\" in addToPool",
+    "Event \"military_corruption_exposed\" references non-existent event \"confiscation_precedent\" in addToPool",
+    "Event \"coup_risk_grows\" references non-existent event \"loyalty_purge\" in addToPool",
+    "Event \"coup_risk_grows\" references non-existent event \"paranoia_spreads\" in addToPool",
+    "Event \"coup_risk_grows\" references non-existent event \"general_arrests\" in addToPool",
+    "Event \"coup_risk_grows\" references non-existent event \"conspirators_fracture\" in addToPool",
+    "Event \"coup_risk_grows\" references non-existent event \"bought_loyalty\" in addToPool",
+    "Event \"coup_risk_grows\" references non-existent event \"coup_plot_develops\" in addToPool",
+    "Event \"coup_risk_grows\" references non-existent event \"surveillance_intensifies\" in addToPool",
     "Event \"gas_leverage\" references non-existent event \"international_sanctions\" in addToPool",
     "Event \"alternative_energy_routes\" references non-existent event \"chinese_dependence\" in addToPool",
     "Event \"arctic_oil_discovery\" references non-existent event \"arctic_militarization\" in addToPool",
