@@ -9,6 +9,7 @@ const WAR_MILITARY_EVENTS = [
         description: "Your generals present invasion plans for a neighboring state. Intelligence says their military is weak, the operation will take 72 hours maximum. The defense contractors are salivating. Your state media has already prepared the narrative: we're liberating oppressed ethnic minorities from a Nazi regime.",
         onceOnly: true,
         weight: 10,
+        storyline: "war_military",
         conditions: {},
         choices: [
             {
@@ -33,6 +34,7 @@ const WAR_MILITARY_EVENTS = [
         title: "Defense Contracts",
         description: "The war needs supplies: body armor, rations, ammunition, vehicles. Your childhood friend owns a defense contractor. His body armor fails ballistic tests. His rations gave soldiers food poisoning. But he's offering 40% of a $10 billion contract directly to your Cyprus account.",
         weight: 8,
+        storyline: "war_military",
         conditions: { hasTriggered: ["special_operation_proposal"] },
         onceOnly: true,
         choices: [
@@ -57,6 +59,7 @@ const WAR_MILITARY_EVENTS = [
         title: "The Hardliners Revolt",
         description: "The ultranationalists are furious you rejected the invasion. They're calling you a coward and a Western puppet. Their leader is a popular ex-general with 500k followers. He's staging rallies, burning your effigy. Some active-duty generals are quietly sympathetic. This could turn into a coup.",
         weight: 8,
+        storyline: "war_military",
         conditions: { hasTriggered: ["nationalist_backlash"] },
         onceOnly: true,
         choices: [
@@ -80,6 +83,7 @@ const WAR_MILITARY_EVENTS = [
         title: "The 72-Hour War: Day 47",
         description: "Your generals promised 72 hours. It's been 47 days. The capital hasn't fallen. Your tanks are stuck in mud. Javelin missiles destroyed 450 vehicles. Generals are lying about casualties. Actual dead: 8,000. Official count: 498. Mothers are calling. The coffins keep coming. The defense minister says we need more troops, more time, more everything.",
         weight: 10,
+        storyline: "war_military",
         conditions: { hasTriggered: ["special_operation_proposal"] },
         onceOnly: true,
         choices: [
@@ -105,6 +109,7 @@ const WAR_MILITARY_EVENTS = [
         title: "The Mobilization",
         description: "The military needs 300,000 more troops. Your defense minister wants partial mobilization. Problem: the word 'mobilization' hasn't been used since 1941. It will cause panic. Men are already fleeing to Georgia, Kazakhstan, Finland. Border crossings are jammed. Flights out are $5,000 and sold out for weeks.",
         weight: 9,
+        storyline: "war_military",
         conditions: { hasTriggered: ["war_goes_badly"] },
         onceOnly: true,
         choices: [
@@ -130,6 +135,7 @@ const WAR_MILITARY_EVENTS = [
         title: "The Massacre",
         description: "Satellite photos show mass graves. 400+ civilian bodies in streets. Hands bound. Execution-style. The photos are everywhere: BBC, CNN, Al Jazeera. The UN Security Council is meeting. The prosecutor at The Hague is opening an investigation. Your defense minister says it was the enemy staging fake bodies. Nobody believes him.",
         weight: 8,
+        storyline: "war_military",
         conditions: { hasTriggered: ["war_goes_badly"] },
         onceOnly: true,
         choices: [

@@ -1,4 +1,4 @@
-// The Oligarch's Gambit - v1.3
+// The Oligarch's Gambit - v1.6
 // Main Events File - Combines all event categories
 
 // This file combines events from multiple categorized files for easier organization
@@ -9,7 +9,7 @@
 // - events_succession_power.js (13 events)
 // - events_social_movements.js (11 events)
 // - events_domestic_crisis.js (11 events)
-// - events_misc.js (66 events)
+// - events_misc.js (67 events - added 'A Quiet Quarter')
 
 const EVENTS = [
     ...WAR_MILITARY_EVENTS,

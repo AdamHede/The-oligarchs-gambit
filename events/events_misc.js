@@ -1,8 +1,22 @@
 // The Oligarch's Gambit - v1.3
 // Corruption, Control, Tech & Cultural Events
-// 66 events
+// 67 events (added A Quiet Quarter)
 
 const MISC_EVENTS = [
+    {
+        id: "quiet_quarter",
+        title: "A Quiet Quarter",
+        description: "Nothing particularly dramatic happens this quarter. Your administration continues its usual operations. The bureaucracy grinds on. Budgets are approved. Palms are greased. The elite are satisfied with the status quo, but the treasury bleeds from inefficiency and corruption as always.",
+        weight: 3,
+        conditions: {},
+        onceOnly: false,
+        choices: [
+            {
+                text: "Continue business as usual",
+                effects: { personalWealth: 0, treasury: -100, elite: 5, anger: -5 }
+            }
+        ]
+    },
     {
         id: "oligarch_yacht_party",
         title: "The Yacht Incident",
