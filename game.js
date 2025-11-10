@@ -1,9 +1,9 @@
 // The Oligarch's Gambit - Main Game Engine
 
 // Version tracking
-const GAME_VERSION = "1.5.1";
-const VERSION_SUMMARY = "Fix event condition checking (hasTriggered)";
-const TOTAL_EVENTS = 153;
+const GAME_VERSION = "1.6.0";
+const VERSION_SUMMARY = "Fix event chain system, add storylines, 'A Quiet Quarter' always available";
+const TOTAL_EVENTS = 154;
 
 class OligarchGame {
     constructor() {
@@ -245,6 +245,11 @@ class OligarchGame {
 
         // Take only first 3-4 events - much smaller pool for less repetition
         this.state.activeEventPool = initialPool.slice(0, 4);
+
+        // Always ensure "quiet_quarter" is available as a fallback
+        if (!this.state.activeEventPool.includes("quiet_quarter")) {
+            this.state.activeEventPool.push("quiet_quarter");
+        }
     }
 
     addToEventPool(eventIds) {
@@ -470,7 +475,15 @@ class OligarchGame {
 
     displayEvent(event) {
         this.currentEvent = event;
-        this.eventTitle.textContent = event.title;
+
+        // Add storyline tag if present
+        if (event.storyline) {
+            const storylineTag = this.formatStorylineTag(event.storyline);
+            this.eventTitle.innerHTML = `${storylineTag} ${event.title}`;
+        } else {
+            this.eventTitle.textContent = event.title;
+        }
+
         this.eventDescription.textContent = event.description;
 
         // Clear and populate choices
@@ -489,6 +502,19 @@ class OligarchGame {
             button.addEventListener('click', () => this.makeChoice(choice, event.id, index));
             this.choicesContainer.appendChild(button);
         });
+    }
+
+    formatStorylineTag(storyline) {
+        // Create a small colored tag to indicate storyline
+        const tagNames = {
+            'war_military': '⚔️ War',
+            'energy_politics': '⚡ Energy',
+            'oligarch_intrigue': '👑 Intrigue',
+            'sanctions': '🚫 Sanctions'
+        };
+
+        const tagName = tagNames[storyline] || storyline;
+        return `<span style="display: inline-block; background: rgba(212, 175, 55, 0.3); color: #d4af37; padding: 2px 8px; border-radius: 4px; font-size: 0.75em; margin-right: 8px; font-weight: normal;">${tagName}</span>`;
     }
 
     displayFallbackEvent() {

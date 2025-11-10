@@ -32,21 +32,24 @@ const SANCTIONS_INTERNATIONAL_EVENTS = [
         description: "Your former oil oligarch fled to London with $2 billion and a laptop full of kompromat. He's talking to MI6. Knows about the offshore accounts, the palace, the polonium incident, everything. Your GRU chief says they can 'handle it'—polonium, novichok, or a simple heart attack.",
         weight: 6,
         conditions: {},
+        storyline: "oligarch_intrigue",
         onceOnly: true,
         choices: [
             {
                 text: "Approve the hit. Send the special team to London.",
                 effects: { personalWealth: -2, treasury: -20, elite: 10, anger: 15 },
                 legacy: { icon: "☂️", name: "Long Reach", weight: 11 },
-                addToPool: ["international_sanctions"]
+                addToPool: ["international_sanctions", "rival_oligarch", "oligarch_yacht_party"]
             },
             {
                 text: "Disinformation campaign. He's mentally unstable. A thief.",
-                effects: { personalWealth: -1, treasury: -30, elite: 0, anger: 5 }
+                effects: { personalWealth: -1, treasury: -30, elite: 0, anger: 5 },
+                addToPool: ["journalist_problem", "rival_oligarch", "palace_construction"]
             },
             {
                 text: "Freeze his assets. Arrest his brother. His kids can't leave.",
-                effects: { personalWealth: 6, treasury: 40, elite: -10, anger: 10 }
+                effects: { personalWealth: 6, treasury: 40, elite: -10, anger: 10 },
+                addToPool: ["rival_oligarch", "oligarch_yacht_party", "palace_construction"]
             }
         ]
     },
