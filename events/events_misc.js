@@ -39,7 +39,7 @@ const MISC_EVENTS = [
                 text: "Eliminate her. Make it look like a robbery gone wrong.",
                 effects: { personalWealth: -1, treasury: -10, elite: 10, anger: 25 },
                 legacy: { icon: "🤐", name: "Silencer", weight: 8 },
-                eventTriggers: ["international_sanctions"]
+                addToPool: ["international_sanctions"]
             },
             {
                 text: "Offer her $5M and a state TV anchor position.",
@@ -64,7 +64,7 @@ const MISC_EVENTS = [
                 text: "Build it. Caesar had palaces. Kings had palaces. I deserve this.",
                 effects: { personalWealth: -5, treasury: -300, elite: -5, anger: 30 },
                 legacy: { icon: "🏰", name: "Palace Builder", weight: 15 },
-                eventTriggers: ["palace_scandal"]
+                addToPool: ["palace_scandal"]
             },
             {
                 text: "Scale it down. Build 'off the books' using state contractors.",
@@ -110,7 +110,7 @@ const MISC_EVENTS = [
                 text: "Clear the square. Beat them. Arrest thousands.",
                 effects: { personalWealth: 0, treasury: -30, elite: 10, anger: 35 },
                 legacy: { icon: "🛡️", name: "Iron Fist", weight: 6 },
-                eventTriggers: ["international_sanctions"]
+                addToPool: ["international_sanctions"]
             },
             {
                 text: "Bus in 100k loyalists. Pay them $50 each. Drown them out.",
@@ -134,7 +134,7 @@ const MISC_EVENTS = [
                 text: "Fire her. Install your former bodyguard as replacement.",
                 effects: { personalWealth: 5, treasury: -100, elite: 5, anger: 15 },
                 legacy: { icon: "💀", name: "Economy Killer", weight: -8 },
-                eventTriggers: ["economic_crisis"]
+                addToPool: ["economic_crisis"]
             },
             {
                 text: "Keep her as figurehead. Route around her decisions.",
@@ -271,7 +271,7 @@ const MISC_EVENTS = [
             {
                 text: "Continue the campaign. More missiles. Break them completely.",
                 effects: { personalWealth: 0, treasury: -150, elite: 10, anger: 20 },
-                eventTriggers: ["war_crimes_allegations"]
+                addToPool: ["war_crimes_allegations"]
             },
             {
                 text: "Pause. We made our point. Let them suffer but not die.",
@@ -280,7 +280,7 @@ const MISC_EVENTS = [
             {
                 text: "Offer to restore power in exchange for territorial concessions.",
                 effects: { personalWealth: 0, treasury: -40, elite: 0, anger: 10 },
-                eventTriggers: ["negotiated_settlement"]
+                addToPool: ["negotiated_settlement"]
             }
         ]
     },

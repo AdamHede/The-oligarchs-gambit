@@ -15,7 +15,7 @@ const WAR_MILITARY_EVENTS = [
                 text: "Launch the invasion. Annex their resources.",
                 effects: { personalWealth: -2, treasury: -200, elite: 15, anger: 30 },
                 legacy: { icon: "⚔️", name: "Liberator", weight: 12 },
-                eventTriggers: ["war_goes_badly", "war_profiteering", "conscription_crisis"]
+                addToPool: ["war_goes_badly", "war_profiteering", "conscription_crisis"]
             },
             {
                 text: "Delay. Bleed the generals for kickbacks first.",
@@ -24,7 +24,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Reject it. The West's sanctions would cripple us.",
                 effects: { personalWealth: 0, treasury: 20, elite: -15, anger: -10 },
-                eventTriggers: ["nationalist_backlash"]
+                addToPool: ["nationalist_backlash"]
             }
         ]
     },
@@ -40,7 +40,7 @@ const WAR_MILITARY_EVENTS = [
                 text: "Accept the deal. Soldiers die in war anyway.",
                 effects: { personalWealth: 18, treasury: -100, elite: 10, anger: 15 },
                 legacy: { icon: "💸", name: "War Profiteer", weight: -15 },
-                eventTriggers: ["military_disaster"]
+                addToPool: ["military_disaster"]
             },
             {
                 text: "Accept but demand he fixes quality. Take 15%.",
@@ -71,7 +71,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Fine. Limited 'peacekeeping operation.' Just the border region.",
                 effects: { personalWealth: -3, treasury: -180, elite: 10, anger: 25 },
-                eventTriggers: ["war_goes_badly"]
+                addToPool: ["war_goes_badly"]
             }
         ]
     },
@@ -86,17 +86,17 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Escalate. Full invasion. Mobilize reserves. Flatten cities.",
                 effects: { personalWealth: -5, treasury: -400, elite: -10, anger: 40 },
-                eventTriggers: ["conscription_crisis", "war_crimes_allegations", "mobilization_announcement"]
+                addToPool: ["conscription_crisis", "war_crimes_allegations", "mobilization_announcement"]
             },
             {
                 text: "Dig in. Limited objectives. Hold what we have, claim victory.",
                 effects: { personalWealth: -3, treasury: -200, elite: 5, anger: 25 },
-                eventTriggers: ["frozen_conflict", "partisan_resistance"]
+                addToPool: ["frozen_conflict", "partisan_resistance"]
             },
             {
                 text: "Negotiate. Blame the generals. Seek face-saving exit.",
                 effects: { personalWealth: 0, treasury: -100, elite: -20, anger: -15 },
-                eventTriggers: ["negotiated_settlement", "nationalist_backlash"]
+                addToPool: ["negotiated_settlement", "nationalist_backlash"]
             }
         ]
     },
@@ -111,17 +111,17 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Full mobilization. Every man 18-60. Close the borders.",
                 effects: { personalWealth: 0, treasury: -350, elite: -15, anger: 60 },
-                eventTriggers: ["elite_sons_fleeing", "mass_protest_mobilization"]
+                addToPool: ["elite_sons_fleeing", "mass_protest_mobilization"]
             },
             {
                 text: "'Partial' mobilization. Target ethnic minorities and poor regions.",
                 effects: { personalWealth: 0, treasury: -250, elite: 5, anger: 35 },
-                eventTriggers: ["ethnic_tensions"]
+                addToPool: ["ethnic_tensions"]
             },
             {
                 text: "Pay mercenaries. Private military companies. No conscription.",
                 effects: { personalWealth: -8, treasury: -300, elite: 10, anger: 15 },
-                eventTriggers: ["wagner_mutiny"]
+                addToPool: ["wagner_mutiny"]
             }
         ]
     },
@@ -136,7 +136,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Deny everything. Western propaganda. Staged by actors.",
                 effects: { personalWealth: 0, treasury: -40, elite: 5, anger: 20 },
-                eventTriggers: ["international_tribunal"]
+                addToPool: ["international_tribunal"]
             },
             {
                 text: "Blame rogue units. Court-martial some junior officers.",
@@ -146,7 +146,7 @@ const WAR_MILITARY_EVENTS = [
                 text: "Defiant: 'This is war. Casualties happen. We make no apologies.'",
                 effects: { personalWealth: 0, treasury: -20, elite: 15, anger: 25 },
                 legacy: { icon: "⚰️", name: "War Criminal", weight: -30 },
-                eventTriggers: ["international_tribunal", "sanctions_escalation"]
+                addToPool: ["international_tribunal", "sanctions_escalation"]
             }
         ]
     },
@@ -161,7 +161,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Massive retaliation. Target their power grid. No electricity.",
                 effects: { personalWealth: 0, treasury: -80, elite: 15, anger: 15 },
-                eventTriggers: ["energy_infrastructure_war"]
+                addToPool: ["energy_infrastructure_war"]
             },
             {
                 text: "Precision strikes. Military targets only. Show restraint.",
@@ -206,13 +206,13 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Negotiate. Promise him anything. Then eliminate him later.",
                 effects: { personalWealth: -3, treasury: -80, elite: -15, anger: 20 },
-                eventTriggers: ["wagner_leader_death"]
+                addToPool: ["wagner_leader_death"]
             },
             {
                 text: "Full military response. Bomb the convoy. End this now.",
                 effects: { personalWealth: 0, treasury: -120, elite: -20, anger: 25 },
                 legacy: { icon: "🔪", name: "Chef Killer", weight: -12 },
-                eventTriggers: ["military_fragmentation"]
+                addToPool: ["military_fragmentation"]
             },
             {
                 text: "Let him march. Wait for him to stall. Internal pressure stops him.",
@@ -232,7 +232,7 @@ const WAR_MILITARY_EVENTS = [
                 text: "Nuclear demonstration. Unpopulated area. Show we're serious.",
                 effects: { personalWealth: 0, treasury: -100, elite: -20, anger: 50 },
                 legacy: { icon: "☢️", name: "Nuclear Brinkmanship", weight: -25 },
-                eventTriggers: ["nuclear_escalation_crisis"]
+                addToPool: ["nuclear_escalation_crisis"]
             },
             {
                 text: "Threaten only. Raise alert level. Move warheads. Psychological warfare.",
@@ -256,7 +256,7 @@ const WAR_MILITARY_EVENTS = [
                 text: "Grand annexation ceremony. Sign the documents. History is made!",
                 effects: { personalWealth: 0, treasury: -100, elite: 20, anger: 20 },
                 legacy: { icon: "🗺️", name: "Conqueror", weight: 25 },
-                eventTriggers: ["permanent_occupation"]
+                addToPool: ["permanent_occupation"]
             },
             {
                 text: "Annex but keep it quiet. No ceremony. Fait accompli.",
@@ -265,7 +265,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Wait. Use as negotiating leverage for peace talks.",
                 effects: { personalWealth: 0, treasury: 0, elite: -10, anger: 10 },
-                eventTriggers: ["negotiated_settlement"]
+                addToPool: ["negotiated_settlement"]
             }
         ]
     },
@@ -280,7 +280,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Brutal pacification. Collective punishment. Mass arrests.",
                 effects: { personalWealth: 0, treasury: -120, elite: 5, anger: 20 },
-                eventTriggers: ["war_crimes_allegations"]
+                addToPool: ["war_crimes_allegations"]
             },
             {
                 text: "Hearts and minds. Invest in infrastructure. Buy loyalty.",
@@ -289,7 +289,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Withdraw to defensible lines. Cut losses. Fortress strategy.",
                 effects: { personalWealth: 0, treasury: -80, elite: -15, anger: 10 },
-                eventTriggers: ["frozen_conflict"]
+                addToPool: ["frozen_conflict"]
             }
         ]
     },
@@ -305,7 +305,7 @@ const WAR_MILITARY_EVENTS = [
                 text: "Ceasefire. Freeze current lines. Korea-style armistice.",
                 effects: { personalWealth: 0, treasury: -100, elite: 0, anger: -20 },
                 legacy: { icon: "🕊️", name: "Frozen War", weight: -8 },
-                eventTriggers: ["frozen_conflict"]
+                addToPool: ["frozen_conflict"]
             },
             {
                 text: "Trade territory for sanctions relief. Pragmatic retreat.",
@@ -315,7 +315,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Walk away from talks. We fight until total victory.",
                 effects: { personalWealth: 0, treasury: -200, elite: 10, anger: 35 },
-                eventTriggers: ["catastrophic_defeat", "pyrrhic_victory"]
+                addToPool: ["catastrophic_defeat", "pyrrhic_victory"]
             }
         ]
     },
@@ -354,7 +354,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "One more push. Break the stalemate. Mobilize again.",
                 effects: { personalWealth: -5, treasury: -400, elite: -15, anger: 50 },
-                eventTriggers: ["catastrophic_defeat"]
+                addToPool: ["catastrophic_defeat"]
             }
         ]
     },
@@ -415,17 +415,17 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Full military assault. No negotiations with traitors.",
                 effects: { personalWealth: 0, treasury: -280, elite: 10, anger: 35 },
-                eventTriggers: ["urban_warfare_separatist", "separatist_referendum"]
+                addToPool: ["urban_warfare_separatist", "separatist_referendum"]
             },
             {
                 text: "Blockade the province. Cut power, water, food. Strangle them.",
                 effects: { personalWealth: 0, treasury: -120, elite: 5, anger: 30 },
-                eventTriggers: ["humanitarian_crisis_separatist", "international_condemnation"]
+                addToPool: ["humanitarian_crisis_separatist", "international_condemnation"]
             },
             {
                 text: "Negotiate. Offer expanded autonomy. Keep them in the federation.",
                 effects: { personalWealth: 0, treasury: -80, elite: -15, anger: -10 },
-                eventTriggers: ["autonomy_negotiations"]
+                addToPool: ["autonomy_negotiations"]
             }
         ]
     },
@@ -441,17 +441,17 @@ const WAR_MILITARY_EVENTS = [
                 text: "Level it. Artillery, airstrikes, total war. Grozny doctrine.",
                 effects: { personalWealth: 0, treasury: -400, elite: 5, anger: 50 },
                 legacy: { icon: "💣", name: "City Destroyer", weight: -22 },
-                eventTriggers: ["separatist_insurgency", "war_crimes_allegations"]
+                addToPool: ["separatist_insurgency", "war_crimes_allegations"]
             },
             {
                 text: "Slow advance. Minimize civilian casualties. Months of grinding war.",
                 effects: { personalWealth: 0, treasury: -300, elite: -5, anger: 35 },
-                eventTriggers: ["separatist_insurgency"]
+                addToPool: ["separatist_insurgency"]
             },
             {
                 text: "Withdraw. This is unwinnable. Cut a deal now.",
                 effects: { personalWealth: 0, treasury: -100, elite: -20, anger: 10 },
-                eventTriggers: ["autonomy_negotiations"]
+                addToPool: ["autonomy_negotiations"]
             }
         ]
     },
@@ -466,18 +466,18 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Declare the vote illegal. Double military pressure. No surrender.",
                 effects: { personalWealth: 0, treasury: -250, elite: 5, anger: 40 },
-                eventTriggers: ["urban_warfare_separatist"]
+                addToPool: ["urban_warfare_separatist"]
             },
             {
                 text: "Covert campaign. Assassinate their leaders. Destabilize their 'state.'",
                 effects: { personalWealth: -3, treasury: -80, elite: 10, anger: 30 },
-                eventTriggers: ["separatist_terrorism_response"]
+                addToPool: ["separatist_terrorism_response"]
             },
             {
                 text: "Recognize reality. Negotiate terms of separation. Salvage what we can.",
                 effects: { personalWealth: -15, treasury: -200, elite: -25, anger: -15 },
                 legacy: { icon: "🕊️", name: "Let Them Go", weight: -12 },
-                eventTriggers: ["negotiated_separation"]
+                addToPool: ["negotiated_separation"]
             }
         ]
     },
@@ -492,7 +492,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Maintain the siege. Starvation is a weapon. They'll surrender.",
                 effects: { personalWealth: 0, treasury: -60, elite: 5, anger: 25 },
-                eventTriggers: ["war_crimes_allegations"]
+                addToPool: ["war_crimes_allegations"]
             },
             {
                 text: "Allow limited humanitarian aid. Not enough to fight, just enough to survive.",
@@ -501,7 +501,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Lift the blockade. The optics are destroying us internationally.",
                 effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -10 },
-                eventTriggers: ["autonomy_negotiations"]
+                addToPool: ["autonomy_negotiations"]
             }
         ]
     },
@@ -516,7 +516,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Collective punishment. Villages that harbor rebels get razed.",
                 effects: { personalWealth: 0, treasury: -150, elite: 5, anger: 35 },
-                eventTriggers: ["war_crimes_allegations"]
+                addToPool: ["war_crimes_allegations"]
             },
             {
                 text: "Counter-insurgency. Buy local loyalty. Win hearts and minds. (Expensive)",
@@ -525,7 +525,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Controlled withdrawal. Defend key infrastructure only. Admit partial defeat.",
                 effects: { personalWealth: 0, treasury: -120, elite: -15, anger: 15 },
-                eventTriggers: ["de_facto_independence"]
+                addToPool: ["de_facto_independence"]
             }
         ]
     },
@@ -540,7 +540,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Massive retaliation. Bomb their 'capital.' Kill their leadership.",
                 effects: { personalWealth: 0, treasury: -180, elite: 15, anger: -15 },
-                eventTriggers: ["urban_warfare_separatist", "cycle_of_violence"]
+                addToPool: ["urban_warfare_separatist", "cycle_of_violence"]
             },
             {
                 text: "Targeted operations. Special forces. Surgical strikes only.",
@@ -564,7 +564,7 @@ const WAR_MILITARY_EVENTS = [
                 text: "Accept their demands. Autonomy is better than independence.",
                 effects: { personalWealth: -10, treasury: -150, elite: -20, anger: -20 },
                 legacy: { icon: "🤝", name: "Negotiated Autonomy", weight: 5 },
-                eventTriggers: ["autonomous_province"]
+                addToPool: ["autonomous_province"]
             },
             {
                 text: "Limited concessions. 30% of revenue, elected governor. Take it or leave it.",
@@ -573,7 +573,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Walk away. These demands are insulting. Resume military operations.",
                 effects: { personalWealth: 0, treasury: -200, elite: 10, anger: 35 },
-                eventTriggers: ["urban_warfare_separatist"]
+                addToPool: ["urban_warfare_separatist"]
             }
         ]
     },
@@ -659,7 +659,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Renege on the deal. Slowly strip their autonomy away.",
                 effects: { personalWealth: 0, treasury: 0, elite: 15, anger: 40 },
-                eventTriggers: ["breakaway_province"]
+                addToPool: ["breakaway_province"]
             }
         ]
     },
@@ -674,7 +674,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Escalate to overwhelming force. Break them completely. End it.",
                 effects: { personalWealth: 0, treasury: -350, elite: 10, anger: 40 },
-                eventTriggers: ["brutal_reconquest"]
+                addToPool: ["brutal_reconquest"]
             },
             {
                 text: "Maintain current level. Match their violence, no more, no less.",
@@ -683,7 +683,7 @@ const WAR_MILITARY_EVENTS = [
             {
                 text: "Unilateral ceasefire. Someone has to stop first. (Seen as weakness)",
                 effects: { personalWealth: 0, treasury: -60, elite: -15, anger: 10 },
-                eventTriggers: ["autonomy_negotiations"]
+                addToPool: ["autonomy_negotiations"]
             }
         ]
     }

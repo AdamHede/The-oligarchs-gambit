@@ -38,7 +38,7 @@ const SANCTIONS_INTERNATIONAL_EVENTS = [
                 text: "Approve the hit. Send the special team to London.",
                 effects: { personalWealth: -2, treasury: -20, elite: 10, anger: 15 },
                 legacy: { icon: "☂️", name: "Long Reach", weight: 11 },
-                eventTriggers: ["international_sanctions"]
+                addToPool: ["international_sanctions"]
             },
             {
                 text: "Disinformation campaign. He's mentally unstable. A thief.",
@@ -87,7 +87,7 @@ const SANCTIONS_INTERNATIONAL_EVENTS = [
             {
                 text: "Sanction evasion. Shell companies. Front businesses. Criminal networks.",
                 effects: { personalWealth: 15, treasury: -200, elite: -10, anger: 20 },
-                eventTriggers: ["sanctions_evasion_network"]
+                addToPool: ["sanctions_evasion_network"]
             },
             {
                 text: "Capitulate. Accept sanctions terms. Seek readmission to global economy.",
