@@ -1,4 +1,4 @@
-// The Oligarch's Gambit - v1.3
+// The Oligarch's Gambit - v1.6.0
 // Corruption, Control, Tech & Cultural Events
 // 67 events (added A Quiet Quarter)
 

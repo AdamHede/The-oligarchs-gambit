@@ -1,4 +1,4 @@
-// The Oligarch's Gambit - v1.3
+// The Oligarch's Gambit - v1.6.0
 // International Sanctions & Isolation
 // 11 events
 

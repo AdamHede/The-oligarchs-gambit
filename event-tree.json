@@ -1,0 +1,3194 @@
+{
+  "version": "1.7.0",
+  "generatedAt": "2025-11-10T20:44:31.778Z",
+  "statistics": {
+    "total": 154,
+    "byCategory": {
+      "war_military": 29,
+      "energy_pipeline": 12,
+      "sanctions_international": 11,
+      "succession_power": 13,
+      "social_movements": 11,
+      "domestic_crisis": 11,
+      "misc": 67
+    },
+    "byStoryline": {
+      "war_military": 6,
+      "energy_politics": 12,
+      "oligarch_intrigue": 1
+    },
+    "byType": {
+      "onceOnly": 148,
+      "recurring": 6,
+      "conditional": 103,
+      "entryPoint": 91
+    },
+    "branching": {
+      "deadEnds": 115,
+      "branches": 39,
+      "majorBranches": 12
+    },
+    "chains": {
+      "longest": 8,
+      "average": "0.8"
+    }
+  },
+  "events": [
+    {
+      "id": "special_operation_proposal",
+      "title": "A Neighboring Territory",
+      "category": "war_military",
+      "storyline": "war_military",
+      "onceOnly": true,
+      "weight": 10,
+      "conditions": {},
+      "triggers": [
+        "war_goes_badly",
+        "war_profiteering",
+        "conscription_crisis",
+        "nationalist_backlash"
+      ],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 5
+    },
+    {
+      "id": "war_profiteering",
+      "title": "Defense Contracts",
+      "category": "war_military",
+      "storyline": "war_military",
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "special_operation_proposal"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "special_operation_proposal",
+          "choice": 0,
+          "choiceText": "Launch the invasion. Annex their resources."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "nationalist_backlash",
+      "title": "The Hardliners Revolt",
+      "category": "war_military",
+      "storyline": "war_military",
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "nationalist_backlash"
+        ]
+      },
+      "triggers": [
+        "war_goes_badly"
+      ],
+      "triggeredBy": [
+        {
+          "from": "special_operation_proposal",
+          "choice": 2,
+          "choiceText": "Reject it. The West's sanctions would cripple us."
+        },
+        {
+          "from": "war_goes_badly",
+          "choice": 2,
+          "choiceText": "Negotiate. Blame the generals. Seek face-saving exit."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 4
+    },
+    {
+      "id": "war_goes_badly",
+      "title": "The 72-Hour War: Day 47",
+      "category": "war_military",
+      "storyline": "war_military",
+      "onceOnly": true,
+      "weight": 10,
+      "conditions": {
+        "hasTriggered": [
+          "special_operation_proposal"
+        ]
+      },
+      "triggers": [
+        "conscription_crisis",
+        "war_crimes_allegations",
+        "frozen_conflict",
+        "partisan_resistance",
+        "negotiated_settlement",
+        "nationalist_backlash"
+      ],
+      "triggeredBy": [
+        {
+          "from": "special_operation_proposal",
+          "choice": 0,
+          "choiceText": "Launch the invasion. Annex their resources."
+        },
+        {
+          "from": "nationalist_backlash",
+          "choice": 2,
+          "choiceText": "Fine. Limited 'peacekeeping operation.' Just the border region."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 3
+    },
+    {
+      "id": "conscription_crisis",
+      "title": "The Mobilization",
+      "category": "war_military",
+      "storyline": "war_military",
+      "onceOnly": true,
+      "weight": 9,
+      "conditions": {
+        "hasTriggered": [
+          "war_goes_badly"
+        ]
+      },
+      "triggers": [
+        "elite_sons_fleeing",
+        "mass_protest_mobilization",
+        "wagner_mutiny"
+      ],
+      "triggeredBy": [
+        {
+          "from": "special_operation_proposal",
+          "choice": 0,
+          "choiceText": "Launch the invasion. Annex their resources."
+        },
+        {
+          "from": "war_goes_badly",
+          "choice": 0,
+          "choiceText": "Escalate. Full invasion. Mobilize reserves. Flatten cities."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 1
+    },
+    {
+      "id": "war_crimes_allegations",
+      "title": "The Massacre",
+      "category": "war_military",
+      "storyline": "war_military",
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "war_goes_badly"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "war_goes_badly",
+          "choice": 0,
+          "choiceText": "Escalate. Full invasion. Mobilize reserves. Flatten cities."
+        },
+        {
+          "from": "partisan_resistance",
+          "choice": 0,
+          "choiceText": "Brutal pacification. Collective punishment. Mass arrests."
+        },
+        {
+          "from": "urban_warfare_separatist",
+          "choice": 0,
+          "choiceText": "Level it. Artillery, airstrikes, total war. Grozny doctrine."
+        },
+        {
+          "from": "humanitarian_crisis_separatist",
+          "choice": 0,
+          "choiceText": "Maintain the siege. Starvation is a weapon. They'll surrender."
+        },
+        {
+          "from": "separatist_insurgency",
+          "choice": 0,
+          "choiceText": "Collective punishment. Villages that harbor rebels get razed."
+        },
+        {
+          "from": "energy_infrastructure_war",
+          "choice": 0,
+          "choiceText": "Continue the campaign. More missiles. Break them completely."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "bridge_strike",
+      "title": "The Bridge Explodes",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "special_operation_proposal"
+        ]
+      },
+      "triggers": [
+        "energy_infrastructure_war"
+      ],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 4
+    },
+    {
+      "id": "elite_sons_fleeing",
+      "title": "The Patriotic Elite",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "hasTriggered": [
+          "conscription_crisis"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "conscription_crisis",
+          "choice": 0,
+          "choiceText": "Full mobilization. Every man 18-60. Close the borders."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "wagner_mutiny",
+      "title": "The Chef's Rebellion",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 12,
+      "conditions": {
+        "hasTriggered": [
+          "conscription_crisis"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "conscription_crisis",
+          "choice": 2,
+          "choiceText": "Pay mercenaries. Private military companies. No conscription."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "nuclear_threats",
+      "title": "The Nuclear Option",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 9,
+      "conditions": {
+        "hasTriggered": [
+          "war_goes_badly"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 0
+    },
+    {
+      "id": "territorial_annexation",
+      "title": "Annexation Referendum",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "special_operation_proposal"
+        ]
+      },
+      "triggers": [
+        "negotiated_settlement"
+      ],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 3
+    },
+    {
+      "id": "partisan_resistance",
+      "title": "Ghosts in the Occupation",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "hasTriggered": [
+          "territorial_annexation",
+          "war_goes_badly"
+        ]
+      },
+      "triggers": [
+        "war_crimes_allegations",
+        "frozen_conflict"
+      ],
+      "triggeredBy": [
+        {
+          "from": "war_goes_badly",
+          "choice": 1,
+          "choiceText": "Dig in. Limited objectives. Hold what we have, claim victory."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 2
+    },
+    {
+      "id": "negotiated_settlement",
+      "title": "Peace Talks",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "war_goes_badly"
+        ]
+      },
+      "triggers": [
+        "frozen_conflict",
+        "catastrophic_defeat",
+        "pyrrhic_victory"
+      ],
+      "triggeredBy": [
+        {
+          "from": "war_goes_badly",
+          "choice": 2,
+          "choiceText": "Negotiate. Blame the generals. Seek face-saving exit."
+        },
+        {
+          "from": "territorial_annexation",
+          "choice": 2,
+          "choiceText": "Wait. Use as negotiating leverage for peace talks."
+        },
+        {
+          "from": "energy_infrastructure_war",
+          "choice": 2,
+          "choiceText": "Offer to restore power in exchange for territorial concessions."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 2
+    },
+    {
+      "id": "pyrrhic_victory",
+      "title": "Victory Day",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 9,
+      "conditions": {
+        "hasTriggered": [
+          "special_operation_proposal"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "negotiated_settlement",
+          "choice": 2,
+          "choiceText": "Walk away from talks. We fight until total victory."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "frozen_conflict",
+      "title": "The New Normal",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "hasTriggered": [
+          "war_goes_badly"
+        ]
+      },
+      "triggers": [
+        "catastrophic_defeat"
+      ],
+      "triggeredBy": [
+        {
+          "from": "war_goes_badly",
+          "choice": 1,
+          "choiceText": "Dig in. Limited objectives. Hold what we have, claim victory."
+        },
+        {
+          "from": "partisan_resistance",
+          "choice": 2,
+          "choiceText": "Withdraw to defensible lines. Cut losses. Fortress strategy."
+        },
+        {
+          "from": "negotiated_settlement",
+          "choice": 0,
+          "choiceText": "Ceasefire. Freeze current lines. Korea-style armistice."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 1
+    },
+    {
+      "id": "catastrophic_defeat",
+      "title": "The Rout",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 10,
+      "conditions": {
+        "hasTriggered": [
+          "war_goes_badly"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "negotiated_settlement",
+          "choice": 2,
+          "choiceText": "Walk away from talks. We fight until total victory."
+        },
+        {
+          "from": "frozen_conflict",
+          "choice": 1,
+          "choiceText": "One more push. Break the stalemate. Mobilize again."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "mass_protest_mobilization",
+      "title": "The Mothers March",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "conscription_crisis"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "conscription_crisis",
+          "choice": 0,
+          "choiceText": "Full mobilization. Every man 18-60. Close the borders."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "breakaway_province",
+      "title": "The Breakaway Province",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 9,
+      "conditions": {
+        "anger": 35,
+        "year": 2
+      },
+      "triggers": [
+        "urban_warfare_separatist",
+        "separatist_referendum",
+        "humanitarian_crisis_separatist",
+        "autonomy_negotiations"
+      ],
+      "triggeredBy": [
+        {
+          "from": "autonomous_province",
+          "choice": 2,
+          "choiceText": "Renege on the deal. Slowly strip their autonomy away."
+        }
+      ],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 7
+    },
+    {
+      "id": "urban_warfare_separatist",
+      "title": "Street by Street",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 10,
+      "conditions": {
+        "hasTriggered": [
+          "breakaway_province"
+        ]
+      },
+      "triggers": [
+        "separatist_insurgency",
+        "war_crimes_allegations",
+        "autonomy_negotiations"
+      ],
+      "triggeredBy": [
+        {
+          "from": "breakaway_province",
+          "choice": 0,
+          "choiceText": "Full military assault. No negotiations with traitors."
+        },
+        {
+          "from": "separatist_referendum",
+          "choice": 0,
+          "choiceText": "Declare the vote illegal. Double military pressure. No surrender."
+        },
+        {
+          "from": "separatist_terrorism_response",
+          "choice": 0,
+          "choiceText": "Massive retaliation. Bomb their 'capital.' Kill their leadership."
+        },
+        {
+          "from": "autonomy_negotiations",
+          "choice": 2,
+          "choiceText": "Walk away. These demands are insulting. Resume military operations."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 7
+    },
+    {
+      "id": "separatist_referendum",
+      "title": "The Independence Vote",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 9,
+      "conditions": {
+        "hasTriggered": [
+          "breakaway_province"
+        ]
+      },
+      "triggers": [
+        "urban_warfare_separatist",
+        "separatist_terrorism_response",
+        "negotiated_separation"
+      ],
+      "triggeredBy": [
+        {
+          "from": "breakaway_province",
+          "choice": 0,
+          "choiceText": "Full military assault. No negotiations with traitors."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 8
+    },
+    {
+      "id": "humanitarian_crisis_separatist",
+      "title": "The Siege Tightens",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "breakaway_province"
+        ]
+      },
+      "triggers": [
+        "war_crimes_allegations",
+        "autonomy_negotiations"
+      ],
+      "triggeredBy": [
+        {
+          "from": "breakaway_province",
+          "choice": 1,
+          "choiceText": "Blockade the province. Cut power, water, food. Strangle them."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 8
+    },
+    {
+      "id": "separatist_insurgency",
+      "title": "The Endless War",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "hasTriggered": [
+          "urban_warfare_separatist"
+        ]
+      },
+      "triggers": [
+        "war_crimes_allegations",
+        "de_facto_independence"
+      ],
+      "triggeredBy": [
+        {
+          "from": "urban_warfare_separatist",
+          "choice": 0,
+          "choiceText": "Level it. Artillery, airstrikes, total war. Grozny doctrine."
+        },
+        {
+          "from": "urban_warfare_separatist",
+          "choice": 1,
+          "choiceText": "Slow advance. Minimize civilian casualties. Months of grinding war."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 1
+    },
+    {
+      "id": "separatist_terrorism_response",
+      "title": "Retribution",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 9,
+      "conditions": {
+        "hasTriggered": [
+          "separatist_referendum"
+        ]
+      },
+      "triggers": [
+        "urban_warfare_separatist",
+        "cycle_of_violence"
+      ],
+      "triggeredBy": [
+        {
+          "from": "separatist_referendum",
+          "choice": 1,
+          "choiceText": "Covert campaign. Assassinate their leaders. Destabilize their 'state.'"
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 8
+    },
+    {
+      "id": "autonomy_negotiations",
+      "title": "The Negotiating Table",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "breakaway_province"
+        ]
+      },
+      "triggers": [
+        "autonomous_province",
+        "urban_warfare_separatist"
+      ],
+      "triggeredBy": [
+        {
+          "from": "breakaway_province",
+          "choice": 2,
+          "choiceText": "Negotiate. Offer expanded autonomy. Keep them in the federation."
+        },
+        {
+          "from": "urban_warfare_separatist",
+          "choice": 2,
+          "choiceText": "Withdraw. This is unwinnable. Cut a deal now."
+        },
+        {
+          "from": "humanitarian_crisis_separatist",
+          "choice": 2,
+          "choiceText": "Lift the blockade. The optics are destroying us internationally."
+        },
+        {
+          "from": "cycle_of_violence",
+          "choice": 2,
+          "choiceText": "Unilateral ceasefire. Someone has to stop first. (Seen as weakness)"
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 7
+    },
+    {
+      "id": "negotiated_separation",
+      "title": "The Velvet Divorce",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "separatist_referendum"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "separatist_referendum",
+          "choice": 2,
+          "choiceText": "Recognize reality. Negotiate terms of separation. Salvage what we can."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "de_facto_independence",
+      "title": "The Frozen Breakaway",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "hasTriggered": [
+          "separatist_insurgency"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "separatist_insurgency",
+          "choice": 2,
+          "choiceText": "Controlled withdrawal. Defend key infrastructure only. Admit partial defeat."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "brutal_reconquest",
+      "title": "Victory at Any Cost",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "urban_warfare_separatist"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "cycle_of_violence",
+          "choice": 0,
+          "choiceText": "Escalate to overwhelming force. Break them completely. End it."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "autonomous_province",
+      "title": "The Autonomy Experiment",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "hasTriggered": [
+          "autonomy_negotiations"
+        ]
+      },
+      "triggers": [
+        "breakaway_province"
+      ],
+      "triggeredBy": [
+        {
+          "from": "autonomy_negotiations",
+          "choice": 0,
+          "choiceText": "Accept their demands. Autonomy is better than independence."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 8
+    },
+    {
+      "id": "cycle_of_violence",
+      "title": "Blood for Blood",
+      "category": "war_military",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "separatist_terrorism_response"
+        ]
+      },
+      "triggers": [
+        "brutal_reconquest",
+        "autonomy_negotiations"
+      ],
+      "triggeredBy": [
+        {
+          "from": "separatist_terrorism_response",
+          "choice": 0,
+          "choiceText": "Massive retaliation. Bomb their 'capital.' Kill their leadership."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 8
+    },
+    {
+      "id": "gas_pipeline_deal",
+      "title": "The Pipeline Opportunity",
+      "category": "energy_pipeline",
+      "storyline": "energy_politics",
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {},
+      "triggers": [
+        "pipeline_sabotage",
+        "pipeline_construction_scandal",
+        "opec_plus_meeting",
+        "lng_terminal_race"
+      ],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 2
+    },
+    {
+      "id": "gas_leverage",
+      "title": "Energy Diplomacy",
+      "category": "energy_pipeline",
+      "storyline": "energy_politics",
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [
+        "european_energy_crisis",
+        "gas_for_rubles",
+        "lng_terminal_race",
+        "opec_plus_meeting"
+      ],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 2
+    },
+    {
+      "id": "pipeline_sabotage",
+      "title": "The Mysterious Explosion",
+      "category": "energy_pipeline",
+      "storyline": "energy_politics",
+      "onceOnly": true,
+      "weight": 9,
+      "conditions": {
+        "hasTriggered": [
+          "gas_pipeline_deal"
+        ]
+      },
+      "triggers": [
+        "pipeline_construction_scandal"
+      ],
+      "triggeredBy": [
+        {
+          "from": "gas_pipeline_deal",
+          "choice": 0,
+          "choiceText": "Route it through the nephew. He 'earned' this."
+        },
+        {
+          "from": "gas_pipeline_deal",
+          "choice": 1,
+          "choiceText": "Take 10%, fill the treasury with the rest."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 1
+    },
+    {
+      "id": "european_energy_crisis",
+      "title": "Europe Shivers",
+      "category": "energy_pipeline",
+      "storyline": "energy_politics",
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "gas_leverage"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "gas_leverage",
+          "choice": 0,
+          "choiceText": "Cut the gas. Winter is coming. Let them beg."
+        },
+        {
+          "from": "gas_leverage",
+          "choice": 1,
+          "choiceText": "Triple the price. $2,000 per cubic meter. Take it or freeze."
+        },
+        {
+          "from": "gas_for_rubles",
+          "choice": 0,
+          "choiceText": "Enforce it strictly. No rubles, no gas. Total currency warfare."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "opec_plus_meeting",
+      "title": "The Cartel Convenes",
+      "category": "energy_pipeline",
+      "storyline": "energy_politics",
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "treasury": 200
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "gas_pipeline_deal",
+          "choice": 0,
+          "choiceText": "Route it through the nephew. He 'earned' this."
+        },
+        {
+          "from": "gas_pipeline_deal",
+          "choice": 1,
+          "choiceText": "Take 10%, fill the treasury with the rest."
+        },
+        {
+          "from": "gas_leverage",
+          "choice": 2,
+          "choiceText": "Honor contracts. Maintain reliable supply. Long game."
+        }
+      ],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "gas_for_rubles",
+      "title": "The Currency Weapon",
+      "category": "energy_pipeline",
+      "storyline": "energy_politics",
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "gas_leverage"
+        ]
+      },
+      "triggers": [
+        "european_energy_crisis"
+      ],
+      "triggeredBy": [
+        {
+          "from": "gas_leverage",
+          "choice": 0,
+          "choiceText": "Cut the gas. Winter is coming. Let them beg."
+        },
+        {
+          "from": "gas_leverage",
+          "choice": 1,
+          "choiceText": "Triple the price. $2,000 per cubic meter. Take it or freeze."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 1
+    },
+    {
+      "id": "alternative_energy_routes",
+      "title": "The Chinese Pivot",
+      "category": "energy_pipeline",
+      "storyline": "energy_politics",
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "hasTriggered": [
+          "sanctions_incoming"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "lng_terminal_race",
+          "choice": 2,
+          "choiceText": "Accept reduced market share. Focus on Asia. Europe's lost anyway."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "lng_terminal_race",
+      "title": "The LNG Gambit",
+      "category": "energy_pipeline",
+      "storyline": "energy_politics",
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "hasTriggered": [
+          "gas_leverage"
+        ]
+      },
+      "triggers": [
+        "alternative_energy_routes"
+      ],
+      "triggeredBy": [
+        {
+          "from": "gas_pipeline_deal",
+          "choice": 1,
+          "choiceText": "Take 10%, fill the treasury with the rest."
+        },
+        {
+          "from": "gas_leverage",
+          "choice": 1,
+          "choiceText": "Triple the price. $2,000 per cubic meter. Take it or freeze."
+        },
+        {
+          "from": "gas_leverage",
+          "choice": 2,
+          "choiceText": "Honor contracts. Maintain reliable supply. Long game."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 1
+    },
+    {
+      "id": "arctic_oil_discovery",
+      "title": "Black Gold in the Arctic",
+      "category": "energy_pipeline",
+      "storyline": "energy_politics",
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "treasury": 300
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "climate_pressure",
+      "title": "The Green Transition",
+      "category": "energy_pipeline",
+      "storyline": "energy_politics",
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "year": 4
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "pipeline_construction_scandal",
+      "title": "The Pipeline to Nowhere",
+      "category": "energy_pipeline",
+      "storyline": "energy_politics",
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "hasTriggered": [
+          "pipeline_sabotage"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "gas_pipeline_deal",
+          "choice": 0,
+          "choiceText": "Route it through the nephew. He 'earned' this."
+        },
+        {
+          "from": "pipeline_sabotage",
+          "choice": 2,
+          "choiceText": "Offer to rebuild—for triple the original cost."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "strategic_reserve_depletion",
+      "title": "The Empty Tanks",
+      "category": "energy_pipeline",
+      "storyline": "energy_politics",
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "personalWealth": 30
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "sanctions_incoming",
+      "title": "International Sanctions",
+      "category": "sanctions_international",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "hasTriggered": [
+          "war_goes_badly",
+          "international_sanctions"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 0
+    },
+    {
+      "id": "oligarch_exile",
+      "title": "The London Defector",
+      "category": "sanctions_international",
+      "storyline": "oligarch_intrigue",
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {},
+      "triggers": [
+        "rival_oligarch",
+        "oligarch_yacht_party",
+        "journalist_problem",
+        "palace_construction"
+      ],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 1
+    },
+    {
+      "id": "asset_freeze_escalation",
+      "title": "The Oligarchs' Yachts",
+      "category": "sanctions_international",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 9,
+      "conditions": {
+        "hasTriggered": [
+          "sanctions_incoming"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 0
+    },
+    {
+      "id": "secondary_sanctions_threat",
+      "title": "The Sanctions Tighten",
+      "category": "sanctions_international",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 10,
+      "conditions": {
+        "hasTriggered": [
+          "sanctions_incoming"
+        ]
+      },
+      "triggers": [
+        "sanctions_evasion_network"
+      ],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 1
+    },
+    {
+      "id": "brain_drain_sanctions",
+      "title": "The Exodus",
+      "category": "sanctions_international",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "hasTriggered": [
+          "sanctions_incoming"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 0
+    },
+    {
+      "id": "import_substitution_failure",
+      "title": "The Missing Parts",
+      "category": "sanctions_international",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "sanctions_incoming"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 0
+    },
+    {
+      "id": "financial_system_crisis",
+      "title": "Bank Run",
+      "category": "sanctions_international",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 12,
+      "conditions": {
+        "hasTriggered": [
+          "sanctions_incoming"
+        ],
+        "anger": 50
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 0
+    },
+    {
+      "id": "sanctions_evasion_network",
+      "title": "The Shadow Economy",
+      "category": "sanctions_international",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "hasTriggered": [
+          "secondary_sanctions_threat"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "secondary_sanctions_threat",
+          "choice": 1,
+          "choiceText": "Sanction evasion. Shell companies. Front businesses. Criminal networks."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "china_bailout",
+      "title": "The Dragon's Terms",
+      "category": "sanctions_international",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 10,
+      "conditions": {
+        "hasTriggered": [
+          "financial_system_crisis"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 0
+    },
+    {
+      "id": "economic_adaptation",
+      "title": "The New Normal",
+      "category": "sanctions_international",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "hasTriggered": [
+          "sanctions_incoming"
+        ],
+        "year": 6
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 0
+    },
+    {
+      "id": "sanctions_relief_talks",
+      "title": "The Sanctions Off-Ramp",
+      "category": "sanctions_international",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "sanctions_incoming"
+        ],
+        "year": 5
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 0
+    },
+    {
+      "id": "succession_question",
+      "title": "The Successor Problem",
+      "category": "succession_power",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 4,
+      "conditions": {
+        "year": 3
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "ambitious_general",
+      "title": "The General's Ambition",
+      "category": "succession_power",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "year": 3,
+        "elite": -50
+      },
+      "triggers": [
+        "general_power_grows",
+        "military_loyalty_crisis"
+      ],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 5
+    },
+    {
+      "id": "general_power_grows",
+      "title": "The General's Network",
+      "category": "succession_power",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 10,
+      "conditions": {
+        "hasTriggered": [
+          "ambitious_general"
+        ]
+      },
+      "triggers": [
+        "coup_attempt",
+        "tandem_rule"
+      ],
+      "triggeredBy": [
+        {
+          "from": "ambitious_general",
+          "choice": 0,
+          "choiceText": "Promote him. Defense Minister. Keep him close. Control him from within."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 4
+    },
+    {
+      "id": "coup_attempt",
+      "title": "The Midnight Knock",
+      "category": "succession_power",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 15,
+      "conditions": {
+        "hasTriggered": [
+          "general_power_grows"
+        ]
+      },
+      "triggers": [
+        "civil_war_brink"
+      ],
+      "triggeredBy": [
+        {
+          "from": "general_power_grows",
+          "choice": 0,
+          "choiceText": "Strike first. Arrest him and 40 officers. Decapitate his network."
+        },
+        {
+          "from": "power_struggle_escalates",
+          "choice": 0,
+          "choiceText": "Presidential coup. Arrest him. Declare emergency. Winner takes all."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 1
+    },
+    {
+      "id": "military_loyalty_crisis",
+      "title": "The Army Divided",
+      "category": "succession_power",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 12,
+      "conditions": {
+        "hasTriggered": [
+          "ambitious_general"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "ambitious_general",
+          "choice": 1,
+          "choiceText": "Arrest him tonight. Treason charges. Fake coup plot evidence."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "assassination_attempt",
+      "title": "The Poisoned Cup",
+      "category": "succession_power",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 10,
+      "conditions": {
+        "elite": -60,
+        "year": 4
+      },
+      "triggers": [
+        "power_vacuum"
+      ],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 1
+    },
+    {
+      "id": "rival_in_exile",
+      "title": "The Pretender Abroad",
+      "category": "succession_power",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "hasTriggered": [
+          "ambitious_general",
+          "coup_attempt"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 0
+    },
+    {
+      "id": "tandem_rule",
+      "title": "The Uneasy Partnership",
+      "category": "succession_power",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "general_power_grows"
+        ]
+      },
+      "triggers": [
+        "power_struggle_escalates"
+      ],
+      "triggeredBy": [
+        {
+          "from": "general_power_grows",
+          "choice": 1,
+          "choiceText": "Power-sharing. Make him Prime Minister. Co-rule. (Temporary truce)"
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 3
+    },
+    {
+      "id": "power_struggle_escalates",
+      "title": "The Breaking Point",
+      "category": "succession_power",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 12,
+      "conditions": {
+        "hasTriggered": [
+          "tandem_rule"
+        ]
+      },
+      "triggers": [
+        "coup_attempt"
+      ],
+      "triggeredBy": [
+        {
+          "from": "tandem_rule",
+          "choice": 0,
+          "choiceText": "Strengthen presidency. Transfer powers from PM. Constitutional changes."
+        },
+        {
+          "from": "tandem_rule",
+          "choice": 2,
+          "choiceText": "Slow coup. Remove his allies one by one. Year-long campaign to weaken him."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 2
+    },
+    {
+      "id": "civil_war_brink",
+      "title": "The Nation Fractures",
+      "category": "succession_power",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 14,
+      "conditions": {
+        "hasTriggered": [
+          "coup_attempt"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "coup_attempt",
+          "choice": 1,
+          "choiceText": "Fight. Rally loyalists. Promise them everything. This is my country."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "power_vacuum",
+      "title": "The Invisible Leader",
+      "category": "succession_power",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 9,
+      "conditions": {
+        "hasTriggered": [
+          "assassination_attempt"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "assassination_attempt",
+          "choice": 2,
+          "choiceText": "Go silent. Disappear for months. Rule from an undisclosed bunker."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "military_coup_plot_discovered",
+      "title": "The Colonel's Plot",
+      "category": "succession_power",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 9,
+      "conditions": {
+        "elite": -40
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "succession_grooming",
+      "title": "The Chosen One",
+      "category": "succession_power",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "year": 8
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "student_protest_small",
+      "title": "The Campus Rebellion",
+      "category": "social_movements",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "anger": 30
+      },
+      "triggers": [
+        "student_martyrdom",
+        "student_movement_grows",
+        "movement_cooptation"
+      ],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 3
+    },
+    {
+      "id": "university_occupation",
+      "title": "The Occupied Campus",
+      "category": "social_movements",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 9,
+      "conditions": {
+        "hasTriggered": [
+          "student_protest_small"
+        ]
+      },
+      "triggers": [
+        "student_martyrdom",
+        "student_movement_grows",
+        "movement_cooptation"
+      ],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 3
+    },
+    {
+      "id": "social_media_viral",
+      "title": "The Viral Moment",
+      "category": "social_movements",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 10,
+      "conditions": {
+        "hasTriggered": [
+          "student_protest_small"
+        ]
+      },
+      "triggers": [
+        "tech_savvy_resistance"
+      ],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 1
+    },
+    {
+      "id": "student_martyrdom",
+      "title": "The Martyr",
+      "category": "social_movements",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 11,
+      "conditions": {
+        "hasTriggered": [
+          "student_protest_small"
+        ]
+      },
+      "triggers": [
+        "color_revolution"
+      ],
+      "triggeredBy": [
+        {
+          "from": "student_protest_small",
+          "choice": 0,
+          "choiceText": "Send riot police. Beat them. Arrest the leaders. End this now."
+        },
+        {
+          "from": "university_occupation",
+          "choice": 0,
+          "choiceText": "Midnight raid. SWAT teams. Clear it violently. National TV blackout."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 1
+    },
+    {
+      "id": "student_movement_grows",
+      "title": "The Movement Spreads",
+      "category": "social_movements",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 9,
+      "conditions": {
+        "hasTriggered": [
+          "student_protest_small"
+        ]
+      },
+      "triggers": [
+        "color_revolution",
+        "movement_cooptation"
+      ],
+      "triggeredBy": [
+        {
+          "from": "student_protest_small",
+          "choice": 1,
+          "choiceText": "Ignore them. Students always protest. They'll get bored and graduate."
+        },
+        {
+          "from": "university_occupation",
+          "choice": 1,
+          "choiceText": "Siege tactics. Cut power, water, food. Wait them out. Slow pressure."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 2
+    },
+    {
+      "id": "general_strike",
+      "title": "The General Strike",
+      "category": "social_movements",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 12,
+      "conditions": {
+        "hasTriggered": [
+          "student_movement_grows"
+        ]
+      },
+      "triggers": [
+        "color_revolution"
+      ],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 1
+    },
+    {
+      "id": "movement_cooptation",
+      "title": "Buying the Revolution",
+      "category": "social_movements",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "student_protest_small"
+        ]
+      },
+      "triggers": [
+        "color_revolution"
+      ],
+      "triggeredBy": [
+        {
+          "from": "student_protest_small",
+          "choice": 2,
+          "choiceText": "Meet with them. Listen. Promise vague reforms. Co-opt the moderates."
+        },
+        {
+          "from": "university_occupation",
+          "choice": 2,
+          "choiceText": "Negotiate. End the occupation peacefully. Grant minor concessions."
+        },
+        {
+          "from": "student_movement_grows",
+          "choice": 2,
+          "choiceText": "Make real concessions. Anti-corruption reforms. Release political prisoners."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 1
+    },
+    {
+      "id": "color_revolution",
+      "title": "The Final Confrontation",
+      "category": "social_movements",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 15,
+      "conditions": {
+        "hasTriggered": [
+          "student_movement_grows"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "student_martyrdom",
+          "choice": 0,
+          "choiceText": "Deny. Cover up. Threaten the family. Arrest anyone who investigates."
+        },
+        {
+          "from": "student_movement_grows",
+          "choice": 0,
+          "choiceText": "Declare them a terrorist organization. Mass arrests. Label it a foreign coup."
+        },
+        {
+          "from": "general_strike",
+          "choice": 0,
+          "choiceText": "State of emergency. Military in the streets. Shoot strikers. Total war."
+        },
+        {
+          "from": "movement_cooptation",
+          "choice": 2,
+          "choiceText": "Reject. These demands are unacceptable. No negotiations with traitors."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "tech_savvy_resistance",
+      "title": "The Digital Underground",
+      "category": "social_movements",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "hasTriggered": [
+          "social_media_viral"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "social_media_viral",
+          "choice": 0,
+          "choiceText": "Full internet crackdown. Block social media. VPN ban. Information war."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "movement_fractures",
+      "title": "The Split",
+      "category": "social_movements",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "hasTriggered": [
+          "student_movement_grows"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 0
+    },
+    {
+      "id": "women_rights_protest",
+      "title": "The Women's March",
+      "category": "social_movements",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "anger": 30
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "food_inflation",
+      "title": "The Price of Bread",
+      "category": "domestic_crisis",
+      "storyline": null,
+      "onceOnly": false,
+      "weight": 7,
+      "conditions": {
+        "anger": 35
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "ruble_collapse",
+      "title": "Currency Freefall",
+      "category": "domestic_crisis",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 11,
+      "conditions": {
+        "hasTriggered": [
+          "sanctions_incoming"
+        ],
+        "treasury": -200
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 0
+    },
+    {
+      "id": "labor_strike",
+      "title": "The Factory Strike",
+      "category": "domestic_crisis",
+      "storyline": null,
+      "onceOnly": false,
+      "weight": 6,
+      "conditions": {
+        "anger": 30
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "disaster_response",
+      "title": "The Dam Breaks",
+      "category": "domestic_crisis",
+      "storyline": null,
+      "onceOnly": false,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "pension_crisis",
+      "title": "The Pension Fund",
+      "category": "domestic_crisis",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "treasury": -100
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "ethnic_tensions_flare",
+      "title": "Ethnic Violence",
+      "category": "domestic_crisis",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "anger": 40
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "healthcare_privatization",
+      "title": "The Hospital Sale",
+      "category": "domestic_crisis",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "treasury": -100
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "youth_unemployment_crisis",
+      "title": "The Lost Generation",
+      "category": "domestic_crisis",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "anger": 35
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "state_bankruptcy_risk",
+      "title": "The Default Crisis",
+      "category": "domestic_crisis",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 10,
+      "conditions": {
+        "treasury": -500
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "population_decline",
+      "title": "The Demographic Crisis",
+      "category": "domestic_crisis",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "year": 4
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "prison_riot",
+      "title": "The Prison Massacre",
+      "category": "domestic_crisis",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "quiet_quarter",
+      "title": "A Quiet Quarter",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": false,
+      "weight": 3,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "oligarch_yacht_party",
+      "title": "The Yacht Incident",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 5,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "oligarch_exile",
+          "choice": 0,
+          "choiceText": "Approve the hit. Send the special team to London."
+        },
+        {
+          "from": "oligarch_exile",
+          "choice": 2,
+          "choiceText": "Freeze his assets. Arrest his brother. His kids can't leave."
+        }
+      ],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "journalist_problem",
+      "title": "An Inconvenient Reporter",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "oligarch_exile",
+          "choice": 1,
+          "choiceText": "Disinformation campaign. He's mentally unstable. A thief."
+        }
+      ],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "palace_construction",
+      "title": "The Black Sea Palace",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "personalWealth": 15
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "oligarch_exile",
+          "choice": 1,
+          "choiceText": "Disinformation campaign. He's mentally unstable. A thief."
+        },
+        {
+          "from": "oligarch_exile",
+          "choice": 2,
+          "choiceText": "Freeze his assets. Arrest his brother. His kids can't leave."
+        }
+      ],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "rival_oligarch",
+      "title": "The Aluminum King's Ambition",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "oligarch_exile",
+          "choice": 0,
+          "choiceText": "Approve the hit. Send the special team to London."
+        },
+        {
+          "from": "oligarch_exile",
+          "choice": 1,
+          "choiceText": "Disinformation campaign. He's mentally unstable. A thief."
+        },
+        {
+          "from": "oligarch_exile",
+          "choice": 2,
+          "choiceText": "Freeze his assets. Arrest his brother. His kids can't leave."
+        }
+      ],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "protest_movement",
+      "title": "The Growing Protests",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": false,
+      "weight": 6,
+      "conditions": {
+        "anger": 40
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "central_bank_governor",
+      "title": "The Competent Bureaucrat",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 5,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "election_season",
+      "title": "Election Time",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": false,
+      "weight": 8,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "military_parade",
+      "title": "Victory Day Parade",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 5,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "internet_control",
+      "title": "The Digital Frontier",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "constitutional_reform",
+      "title": "Constitutional Creativity",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "year": 2
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "space_program",
+      "title": "To The Stars",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 5,
+      "conditions": {
+        "treasury": 200
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "energy_infrastructure_war",
+      "title": "Winter Campaign",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "hasTriggered": [
+          "bridge_strike"
+        ]
+      },
+      "triggers": [
+        "war_crimes_allegations",
+        "negotiated_settlement"
+      ],
+      "triggeredBy": [
+        {
+          "from": "bridge_strike",
+          "choice": 0,
+          "choiceText": "Massive retaliation. Target their power grid. No electricity."
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 3
+    },
+    {
+      "id": "energy_oligarch_rivalry",
+      "title": "The Gas Baron's Move",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "hasTriggered": [
+          "alternative_energy_routes"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": false,
+      "isOrphaned": true,
+      "chainDepth": 0
+    },
+    {
+      "id": "university_purge",
+      "title": "Academic Freedom",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 5,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "arms_deal_offer",
+      "title": "The Questionable Client",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 5,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "media_oligarch_challenge",
+      "title": "The Independent TV Station",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "sports_prestige",
+      "title": "The World Cup Bid",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 5,
+      "conditions": {
+        "treasury": 400
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "tax_haven_scandal",
+      "title": "The Panama Papers",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "personalWealth": 40
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "religious_extremism",
+      "title": "The Rising Fundamentalism",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "anger": 35
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "infrastructure_collapse",
+      "title": "The Bridge Falls",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "diplomatic_incident",
+      "title": "The Ambassador Expelled",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "whistleblower",
+      "title": "The Insider",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "cyber_attack",
+      "title": "The Hack",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "monopoly_breakup",
+      "title": "The Telecom Monopoly",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "military_equipment_failure",
+      "title": "The Defective Tanks",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "drug_epidemic",
+      "title": "The Opioid Crisis",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "anger": 30
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "artificial_intelligence_surveillance",
+      "title": "The AI Panopticon",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 5,
+      "conditions": {
+        "treasury": 300
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "historical_revisionism_project",
+      "title": "Rewriting History",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 5,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "wealth_display_problem",
+      "title": "The Watch",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "personalWealth": 30
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "opposition_figure_death",
+      "title": "Convenient Death",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "anger": 35
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "rare_earth_monopoly",
+      "title": "The Strategic Minerals",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "submarine_accident",
+      "title": "The Lost Submarine",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 9,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "fake_news_factory",
+      "title": "The Troll Farm",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "brain_drain_tech",
+      "title": "The AI Startup Exodus",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "monument_controversy",
+      "title": "The Statue",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 5,
+      "conditions": {
+        "personalWealth": 40,
+        "year": 5
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "foreign_agent_law",
+      "title": "Foreign Agent Registration",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "assassination_abroad_exposed",
+      "title": "The Botched Hit",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "banking_heir_arrest",
+      "title": "The Banker's Son",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "drought_famine_risk",
+      "title": "The Drought",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "palace_scandal_leak",
+      "title": "The Palace Plans",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "personalWealth": 35
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "constitutional_court_defiance",
+      "title": "The Stubborn Court",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "bitcoin_boom",
+      "title": "The Crypto Question",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "oligarch_divorce",
+      "title": "The $12 Billion Divorce",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "nuclear_power_plant",
+      "title": "The Nuclear Option",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 5,
+      "conditions": {
+        "treasury": 200
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "historical_reparations_demand",
+      "title": "The Reparations Claim",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "royal_marriage_analogy",
+      "title": "The Dynastic Marriage",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "personalWealth": 50
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "social_credit_system",
+      "title": "The Loyalty Score",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "sports_doping_scandal",
+      "title": "The Doping Program",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "agricultural_land_grab",
+      "title": "The Farmland Seizure",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "treasury": -200
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "vaccine_nationalism",
+      "title": "The Vaccine Diplomacy",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "mafia_state_problem",
+      "title": "The Bratva Summit",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "space_station_disaster",
+      "title": "The Station Falls",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "internet_cable_sabotage",
+      "title": "The Severed Cables",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "oligarch_heart_attack",
+      "title": "The Suspicious Timing",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "luxury_goods_tax",
+      "title": "The Oligarch Tax",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "journalist_abduction",
+      "title": "The Missing Reporter",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "currency_manipulation",
+      "title": "The Currency War",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "veterans_protests",
+      "title": "The Forgotten Veterans",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "anger": 30
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "arctic_military_base",
+      "title": "The Arctic Fortress",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {
+        "treasury": 300
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "state_tv_propaganda_fail",
+      "title": "The Propaganda Blunder",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "biodiversity_collapse",
+      "title": "The Dying Lake",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "billionaire_space_race",
+      "title": "The Oligarch's Rocket",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 5,
+      "conditions": {
+        "treasury": 400
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "fifa_world_cup_disaster",
+      "title": "The World Cup Failure",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "educational_brain_drain_crisis",
+      "title": "The University Exodus",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 6,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "cyber_currency_scheme",
+      "title": "The State Crypto Scam",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 9,
+      "conditions": {},
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "secret_police_expansion",
+      "title": "The New KGB",
+      "category": "misc",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "anger": 45
+      },
+      "triggers": [],
+      "triggeredBy": [],
+      "isEntryPoint": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    }
+  ],
+  "warnings": [
+    "Event \"war_profiteering\" references non-existent event \"military_disaster\" in addToPool",
+    "Event \"war_goes_badly\" references non-existent event \"mobilization_announcement\" in addToPool",
+    "Event \"conscription_crisis\" references non-existent event \"ethnic_tensions\" in addToPool",
+    "Event \"war_crimes_allegations\" references non-existent event \"international_tribunal\" in addToPool",
+    "Event \"war_crimes_allegations\" references non-existent event \"international_tribunal\" in addToPool",
+    "Event \"war_crimes_allegations\" references non-existent event \"sanctions_escalation\" in addToPool",
+    "Event \"wagner_mutiny\" references non-existent event \"wagner_leader_death\" in addToPool",
+    "Event \"wagner_mutiny\" references non-existent event \"military_fragmentation\" in addToPool",
+    "Event \"nuclear_threats\" references non-existent event \"nuclear_escalation_crisis\" in addToPool",
+    "Event \"territorial_annexation\" references non-existent event \"permanent_occupation\" in addToPool",
+    "Event \"breakaway_province\" references non-existent event \"international_condemnation\" in addToPool",
+    "Event \"gas_leverage\" references non-existent event \"international_sanctions\" in addToPool",
+    "Event \"alternative_energy_routes\" references non-existent event \"chinese_dependence\" in addToPool",
+    "Event \"arctic_oil_discovery\" references non-existent event \"arctic_militarization\" in addToPool",
+    "Event \"arctic_oil_discovery\" references non-existent event \"environmental_catastrophe\" in addToPool",
+    "Event \"oligarch_exile\" references non-existent event \"international_sanctions\" in addToPool",
+    "Event \"general_power_grows\" references non-existent event \"military_fragmentation\" in addToPool",
+    "Event \"military_loyalty_crisis\" references non-existent event \"weakened_military\" in addToPool",
+    "Event \"military_loyalty_crisis\" references non-existent event \"military_fragmentation\" in addToPool",
+    "Event \"rival_in_exile\" references non-existent event \"international_sanctions\" in addToPool",
+    "Event \"university_occupation\" references non-existent event \"international_condemnation\" in addToPool",
+    "Event \"journalist_problem\" references non-existent event \"international_sanctions\" in addToPool",
+    "Event \"palace_construction\" references non-existent event \"palace_scandal\" in addToPool",
+    "Event \"protest_movement\" references non-existent event \"international_sanctions\" in addToPool",
+    "Event \"central_bank_governor\" references non-existent event \"economic_crisis\" in addToPool"
+  ]
+}

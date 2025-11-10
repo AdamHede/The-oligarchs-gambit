@@ -1,4 +1,4 @@
-// The Oligarch's Gambit - v1.3
+// The Oligarch's Gambit - v1.6.0
 // War & Military Operations
 // 29 events
 

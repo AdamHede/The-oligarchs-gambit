@@ -1,4 +1,4 @@
-// The Oligarch's Gambit - v1.3
+// The Oligarch's Gambit - v1.6.0
 // Student & Social Movements
 // 11 events
 
