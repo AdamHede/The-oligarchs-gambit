@@ -9,6 +9,7 @@ const SUCCESSION_POWER_EVENTS = [
         description: "You're 68 years old. The oligarchs want to know: what happens when you die? Who protects them? Your PM is competent but weak. Your chief of staff is loyal but unpopular. Some whisper about actual elections. One oligarch mentions that Kazakh transition model. Everyone is nervous.",
         weight: 4,
         conditions: { year: 3 },
+        onceOnly: true,
         choices: [
             {
                 text: "Succession? I'll rule until I'm 90. End of discussion.",
@@ -153,6 +154,7 @@ const SUCCESSION_POWER_EVENTS = [
         description: "Your former PM fled to Warsaw. He's set up a 'government in exile.' Western capitals are receiving him. He's giving interviews calling you a dictator. EU Parliament gave him a standing ovation. He's promising free elections if he returns. Young people inside your country are sharing his speeches. He's becoming a symbol.",
         weight: 7,
         conditions: { hasTriggered: ["ambitious_general", "coup_attempt"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Assassination order. GRU team to Warsaw. Permanent solution.",
@@ -175,6 +177,7 @@ const SUCCESSION_POWER_EVENTS = [
         description: "You're President. He's Prime Minister. Officially equal. Actually competing. Every decision is negotiated. The oligarchs play you off each other. The military is split in loyalty. The bureaucracy doesn't know who to obey. This can't last. Eventually, one of you must dominate—or destroy—the other.",
         weight: 8,
         conditions: { hasTriggered: ["general_power_grows"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Strengthen presidency. Transfer powers from PM. Constitutional changes.",
@@ -247,6 +250,7 @@ const SUCCESSION_POWER_EVENTS = [
         description: "No one's seen you in 4 months. Your inner circle is running things by committee. Rumors say you're dead, incapacitated, insane. Your PM is acting president. Oligarchs are looting state assets. Regions are ignoring federal law. The state is dissolving in your absence. You need to reappear, or accept you've lost control forever.",
         weight: 9,
         conditions: { hasTriggered: ["assassination_attempt"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Dramatic return. National address. Purge those who overstepped. Reassert control.",
@@ -269,6 +273,7 @@ const SUCCESSION_POWER_EVENTS = [
         description: "Your FSB discovered a coup plot. Junior military officers, 200+ involved. They planned to arrest you during military parade. Plot was serious—trucks, weapons, safe houses. Ringleader is a colonel. Now: show trials, mass purge, or quiet arrests?",
         weight: 9,
         conditions: { elite: -40 },
+        onceOnly: true,
         choices: [
             {
                 text: "Public show trials. Televise executions. Terror as deterrent.",
@@ -290,6 +295,7 @@ const SUCCESSION_POWER_EVENTS = [
         description: "You need to groom a successor. Options: your son (incompetent but loyal), your PM (competent but ambitious), or a young technocrat (unknown quantity). The succession determines your legacy and retirement security. Choose carefully.",
         weight: 7,
         conditions: { year: 8 },
+        onceOnly: true,
         choices: [
             {
                 text: "Your son. Keep power in family. Incompetence is manageable.",

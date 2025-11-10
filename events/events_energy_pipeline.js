@@ -9,6 +9,7 @@ const ENERGY_PIPELINE_EVENTS = [
         description: "A $50 billion natural gas pipeline deal is on the table. European customers are desperate for energy. Your 23-year-old nephew just incorporated a 'consulting firm' last week. The state could use the revenue, but your Swiss accounts could use it more.",
         weight: 8,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Route it through the nephew. He 'earned' this.",
@@ -27,6 +28,7 @@ const ENERGY_PIPELINE_EVENTS = [
         description: "Europe depends on your natural gas for heating and power. Winter is coming. Germany, France, Italy—they're all vulnerable. You could shut off Nord Stream and watch them freeze until they lift sanctions. Or triple prices. Or play the long game.",
         weight: 7,
         conditions: {},
+        onceOnly: true,
         choices: [
             {
                 text: "Cut the gas. Winter is coming. Let them beg.",
@@ -73,6 +75,7 @@ const ENERGY_PIPELINE_EVENTS = [
         description: "Germany's factories are shutting down from energy shortages. France is rationing heating. Italy's economy is contracting 8%. European leaders are desperate. They're offering to ease sanctions, recognize your territorial claims, anything for gas. The EU is fracturing over energy policy. You hold all the cards this winter.",
         weight: 8,
         conditions: { hasTriggered: ["gas_leverage"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Maximum extraction. Bleed them for every concession possible.",
@@ -95,6 +98,7 @@ const ENERGY_PIPELINE_EVENTS = [
         description: "OPEC+ meeting in Vienna. The Saudis want production cuts to keep prices high. The Emirates want to pump more. The Americans are threatening everyone. You control 18% of global gas exports. Your vote decides whether oil hits $150/barrel or crashes to $60. The Saudis sent a $2B 'consulting contract' to your shell company as encouragement.",
         weight: 7,
         conditions: { treasury: 200 },
+        onceOnly: true,
         choices: [
             {
                 text: "Side with Saudis. Production cuts. Take the $2B. Prices soar.",
@@ -163,6 +167,7 @@ const ENERGY_PIPELINE_EVENTS = [
         description: "Americans are building LNG terminals to ship gas to Europe, undercutting your pipelines. Qatar is ramping up exports. Your monopoly is ending. Your energy minister says you need to invest $80 billion in LNG technology to compete, or offer Europe such deep discounts that LNG isn't competitive. Your market share is slipping.",
         weight: 6,
         conditions: { hasTriggered: ["gas_leverage"] },
+        onceOnly: true,
         choices: [
             {
                 text: "Massive LNG investment. Compete directly with US suppliers.",
@@ -209,6 +214,7 @@ const ENERGY_PIPELINE_EVENTS = [
         description: "Europe's accelerating away from fossil fuels. They're investing $2 trillion in renewables. Your energy exports are projected to drop 40% by 2030. Your entire economy is built on oil and gas. The finance minister is panicking. Diversification would cost trillions you don't have. The petro-state model is dying.",
         weight: 6,
         conditions: { year: 4 },
+        onceOnly: true,
         choices: [
             {
                 text: "Climate denial. Double down on oil. It's a hoax anyway.",
@@ -253,6 +259,7 @@ const ENERGY_PIPELINE_EVENTS = [
         description: "Your strategic petroleum reserve is nearly empty. You sold it off over the years to plug budget holes and pocket the difference. A leaked report shows reserves are at 15% when they should be 95%. If there's an energy shock or supply disruption, the economy collapses immediately. The energy minister who wrote the report just resigned.",
         weight: 6,
         conditions: { personalWealth: 30 },
+        onceOnly: true,
         choices: [
             {
                 text: "Classify all reserve data. Kill the story. 'National security.'",
