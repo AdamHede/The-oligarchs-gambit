@@ -235,15 +235,18 @@ const MISC_EVENTS = [
             {
                 text: "Fund it! Soviet space glory returns! Mars or bust!",
                 effects: { personalWealth: 0, treasury: -280, elite: 10, anger: 20 },
-                legacy: { icon: "🚀", name: "Cosmic Dreamer", weight: 9 }
+                legacy: { icon: "🚀", name: "Cosmic Dreamer", weight: 9 },
+                addToPool: ["space_program_decline"]
             },
             {
                 text: "Fund it. But 50% goes to my nephew's 'consulting firm.'",
-                effects: { personalWealth: 16, treasury: -320, elite: 5, anger: 25 }
+                effects: { personalWealth: 16, treasury: -320, elite: 5, anger: 25 },
+                addToPool: ["space_corruption_exposed"]
             },
             {
                 text: "Reject. Fix pensions first. Earth before Mars.",
-                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -10 }
+                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -10 },
+                addToPool: ["pensioners_relieved"]
             }
         ]
     },
