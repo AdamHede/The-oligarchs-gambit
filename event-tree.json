@@ -1,6 +1,6 @@
 {
   "version": "1.6.0",
-  "generatedAt": "2025-11-11T07:41:08.739Z",
+  "generatedAt": "2025-11-11T07:43:42.476Z",
   "statistics": {
     "total": 147,
     "byCategory": {
@@ -14,23 +14,22 @@
     },
     "byStoryline": {
       "war_military": 7,
-      "energy_politics": 12,
-      "oligarch_intrigue": 1
+      "energy_politics": 12
     },
     "byType": {
       "onceOnly": 140,
       "recurring": 7,
-      "conditional": 95,
-      "entryPoint": 91
+      "conditional": 96,
+      "entryPoint": 90
     },
     "branching": {
-      "deadEnds": 116,
-      "branches": 31,
+      "deadEnds": 113,
+      "branches": 34,
       "majorBranches": 7
     },
     "chains": {
       "longest": 6,
-      "average": "0.4"
+      "average": "0.5"
     }
   },
   "events": [
@@ -247,7 +246,8 @@
         ]
       },
       "triggers": [
-        "international_tribunal"
+        "international_tribunal",
+        "sanctions_escalation"
       ],
       "triggeredBy": [
         {
@@ -720,6 +720,11 @@
           "from": "gas_for_rubles",
           "choice": 0,
           "choiceText": "Enforce it strictly. No rubles, no gas. Total currency warfare."
+        },
+        {
+          "from": "secondary_sanctions_threat",
+          "choice": 2,
+          "choiceText": "Threaten energy cutoffs. Make them feel pain too."
         }
       ],
       "isEntryPoint": false,
@@ -942,14 +947,18 @@
       "category": "sanctions_international",
       "storyline": null,
       "onceOnly": true,
-      "weight": 7,
+      "weight": 9,
       "conditions": {
         "hasTriggered": [
-          "war_goes_badly",
-          "international_sanctions"
+          "special_operation_proposal",
+          "war_crimes_allegations"
         ]
       },
-      "triggers": [],
+      "triggers": [
+        "asset_freeze_escalation",
+        "swift_disconnection",
+        "sanctions_relief_talks"
+      ],
       "triggeredBy": [
         {
           "from": "special_operation_proposal",
@@ -959,26 +968,7 @@
       ],
       "isEntryPoint": false,
       "isOrphaned": false,
-      "chainDepth": 0
-    },
-    {
-      "id": "oligarch_exile",
-      "title": "The London Defector",
-      "category": "sanctions_international",
-      "storyline": "oligarch_intrigue",
-      "onceOnly": true,
-      "weight": 6,
-      "conditions": {},
-      "triggers": [
-        "rival_oligarch",
-        "oligarch_yacht_party",
-        "journalist_problem",
-        "palace_construction"
-      ],
-      "triggeredBy": [],
-      "isEntryPoint": true,
-      "isOrphaned": false,
-      "chainDepth": 1
+      "chainDepth": 2
     },
     {
       "id": "asset_freeze_escalation",
@@ -986,17 +976,49 @@
       "category": "sanctions_international",
       "storyline": null,
       "onceOnly": true,
-      "weight": 9,
+      "weight": 8,
       "conditions": {
         "hasTriggered": [
           "sanctions_incoming"
         ]
       },
       "triggers": [],
-      "triggeredBy": [],
+      "triggeredBy": [
+        {
+          "from": "sanctions_incoming",
+          "choice": 0,
+          "choiceText": "Defiance! Nationalize Western assets. Mobilize the economy!"
+        }
+      ],
       "isEntryPoint": false,
-      "isOrphaned": true,
+      "isOrphaned": false,
       "chainDepth": 0
+    },
+    {
+      "id": "swift_disconnection",
+      "title": "Cut Off from SWIFT",
+      "category": "sanctions_international",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 8,
+      "conditions": {
+        "hasTriggered": [
+          "sanctions_incoming"
+        ]
+      },
+      "triggers": [
+        "china_bailout"
+      ],
+      "triggeredBy": [
+        {
+          "from": "sanctions_incoming",
+          "choice": 0,
+          "choiceText": "Defiance! Nationalize Western assets. Mobilize the economy!"
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
+      "chainDepth": 1
     },
     {
       "id": "secondary_sanctions_threat",
@@ -1004,19 +1026,21 @@
       "category": "sanctions_international",
       "storyline": null,
       "onceOnly": true,
-      "weight": 10,
+      "weight": 7,
       "conditions": {
         "hasTriggered": [
           "sanctions_incoming"
-        ]
+        ],
+        "year": 2
       },
       "triggers": [
-        "sanctions_evasion_network"
+        "import_substitution_failure",
+        "european_energy_crisis"
       ],
       "triggeredBy": [],
       "isEntryPoint": false,
       "isOrphaned": true,
-      "chainDepth": 1
+      "chainDepth": 2
     },
     {
       "id": "brain_drain_sanctions",
@@ -1024,11 +1048,12 @@
       "category": "sanctions_international",
       "storyline": null,
       "onceOnly": true,
-      "weight": 7,
+      "weight": 6,
       "conditions": {
         "hasTriggered": [
           "sanctions_incoming"
-        ]
+        ],
+        "year": 1
       },
       "triggers": [],
       "triggeredBy": [],
@@ -1042,17 +1067,25 @@
       "category": "sanctions_international",
       "storyline": null,
       "onceOnly": true,
-      "weight": 8,
+      "weight": 7,
       "conditions": {
         "hasTriggered": [
-          "sanctions_incoming"
+          "secondary_sanctions_threat"
         ]
       },
-      "triggers": [],
-      "triggeredBy": [],
+      "triggers": [
+        "china_bailout"
+      ],
+      "triggeredBy": [
+        {
+          "from": "secondary_sanctions_threat",
+          "choice": 1,
+          "choiceText": "Total autarky. We'll make everything ourselves."
+        }
+      ],
       "isEntryPoint": false,
-      "isOrphaned": true,
-      "chainDepth": 0
+      "isOrphaned": false,
+      "chainDepth": 1
     },
     {
       "id": "financial_system_crisis",
@@ -1060,41 +1093,17 @@
       "category": "sanctions_international",
       "storyline": null,
       "onceOnly": true,
-      "weight": 12,
+      "weight": 8,
       "conditions": {
         "hasTriggered": [
-          "sanctions_incoming"
+          "swift_disconnection"
         ],
-        "anger": 50
+        "treasury": 400
       },
       "triggers": [],
       "triggeredBy": [],
       "isEntryPoint": false,
       "isOrphaned": true,
-      "chainDepth": 0
-    },
-    {
-      "id": "sanctions_evasion_network",
-      "title": "The Shadow Economy",
-      "category": "sanctions_international",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 7,
-      "conditions": {
-        "hasTriggered": [
-          "secondary_sanctions_threat"
-        ]
-      },
-      "triggers": [],
-      "triggeredBy": [
-        {
-          "from": "secondary_sanctions_threat",
-          "choice": 1,
-          "choiceText": "Sanction evasion. Shell companies. Front businesses. Criminal networks."
-        }
-      ],
-      "isEntryPoint": false,
-      "isOrphaned": false,
       "chainDepth": 0
     },
     {
@@ -1103,16 +1112,28 @@
       "category": "sanctions_international",
       "storyline": null,
       "onceOnly": true,
-      "weight": 10,
+      "weight": 7,
       "conditions": {
         "hasTriggered": [
-          "financial_system_crisis"
-        ]
+          "sanctions_incoming"
+        ],
+        "treasury": 500
       },
       "triggers": [],
-      "triggeredBy": [],
+      "triggeredBy": [
+        {
+          "from": "swift_disconnection",
+          "choice": 1,
+          "choiceText": "Pivot to Chinese payment systems. CIPS. UnionPay."
+        },
+        {
+          "from": "import_substitution_failure",
+          "choice": 2,
+          "choiceText": "Force China to sell you everything. Pay whatever it takes."
+        }
+      ],
       "isEntryPoint": false,
-      "isOrphaned": true,
+      "isOrphaned": false,
       "chainDepth": 0
     },
     {
@@ -1121,18 +1142,20 @@
       "category": "sanctions_international",
       "storyline": null,
       "onceOnly": true,
-      "weight": 6,
+      "weight": 5,
       "conditions": {
         "hasTriggered": [
           "sanctions_incoming"
         ],
-        "year": 6
+        "year": 3
       },
-      "triggers": [],
+      "triggers": [
+        "sanctions_relief_talks"
+      ],
       "triggeredBy": [],
       "isEntryPoint": false,
       "isOrphaned": true,
-      "chainDepth": 0
+      "chainDepth": 1
     },
     {
       "id": "sanctions_relief_talks",
@@ -1140,17 +1163,53 @@
       "category": "sanctions_international",
       "storyline": null,
       "onceOnly": true,
-      "weight": 8,
+      "weight": 6,
       "conditions": {
         "hasTriggered": [
           "sanctions_incoming"
         ],
-        "year": 5
+        "year": 2
       },
       "triggers": [],
-      "triggeredBy": [],
+      "triggeredBy": [
+        {
+          "from": "sanctions_incoming",
+          "choice": 2,
+          "choiceText": "Negotiate. Offer minor concessions for sanctions relief."
+        },
+        {
+          "from": "economic_adaptation",
+          "choice": 2,
+          "choiceText": "Quietly seek sanctions relief. The war costs too much."
+        }
+      ],
       "isEntryPoint": false,
-      "isOrphaned": true,
+      "isOrphaned": false,
+      "chainDepth": 0
+    },
+    {
+      "id": "sanctions_escalation",
+      "title": "Maximum Pressure",
+      "category": "sanctions_international",
+      "storyline": null,
+      "onceOnly": true,
+      "weight": 7,
+      "conditions": {
+        "hasTriggered": [
+          "war_crimes_allegations",
+          "territorial_annexation"
+        ]
+      },
+      "triggers": [],
+      "triggeredBy": [
+        {
+          "from": "war_crimes_allegations",
+          "choice": 2,
+          "choiceText": "Defiant: 'This is war. Casualties happen. We make no apologies.'"
+        }
+      ],
+      "isEntryPoint": false,
+      "isOrphaned": false,
       "chainDepth": 0
     },
     {
@@ -1922,18 +1981,7 @@
       "weight": 5,
       "conditions": {},
       "triggers": [],
-      "triggeredBy": [
-        {
-          "from": "oligarch_exile",
-          "choice": 0,
-          "choiceText": "Approve the hit. Send the special team to London."
-        },
-        {
-          "from": "oligarch_exile",
-          "choice": 2,
-          "choiceText": "Freeze his assets. Arrest his brother. His kids can't leave."
-        }
-      ],
+      "triggeredBy": [],
       "isEntryPoint": true,
       "isOrphaned": false,
       "chainDepth": 0
@@ -1947,13 +1995,7 @@
       "weight": 7,
       "conditions": {},
       "triggers": [],
-      "triggeredBy": [
-        {
-          "from": "oligarch_exile",
-          "choice": 1,
-          "choiceText": "Disinformation campaign. He's mentally unstable. A thief."
-        }
-      ],
+      "triggeredBy": [],
       "isEntryPoint": true,
       "isOrphaned": false,
       "chainDepth": 0
@@ -1969,18 +2011,7 @@
         "personalWealth": 15
       },
       "triggers": [],
-      "triggeredBy": [
-        {
-          "from": "oligarch_exile",
-          "choice": 1,
-          "choiceText": "Disinformation campaign. He's mentally unstable. A thief."
-        },
-        {
-          "from": "oligarch_exile",
-          "choice": 2,
-          "choiceText": "Freeze his assets. Arrest his brother. His kids can't leave."
-        }
-      ],
+      "triggeredBy": [],
       "isEntryPoint": true,
       "isOrphaned": false,
       "chainDepth": 0
@@ -1994,23 +2025,7 @@
       "weight": 7,
       "conditions": {},
       "triggers": [],
-      "triggeredBy": [
-        {
-          "from": "oligarch_exile",
-          "choice": 0,
-          "choiceText": "Approve the hit. Send the special team to London."
-        },
-        {
-          "from": "oligarch_exile",
-          "choice": 1,
-          "choiceText": "Disinformation campaign. He's mentally unstable. A thief."
-        },
-        {
-          "from": "oligarch_exile",
-          "choice": 2,
-          "choiceText": "Freeze his assets. Arrest his brother. His kids can't leave."
-        }
-      ],
+      "triggeredBy": [],
       "isEntryPoint": true,
       "isOrphaned": false,
       "chainDepth": 0
@@ -2977,7 +2992,6 @@
     "Event \"war_crimes_allegations\" references non-existent event \"whistleblower_leaks\" in addToPool",
     "Event \"war_crimes_allegations\" references non-existent event \"scapegoat_soldiers\" in addToPool",
     "Event \"war_crimes_allegations\" references non-existent event \"military_morale_drop\" in addToPool",
-    "Event \"war_crimes_allegations\" references non-existent event \"sanctions_escalation\" in addToPool",
     "Event \"war_crimes_allegations\" references non-existent event \"pariah_status\" in addToPool",
     "Event \"international_tribunal\" references non-existent event \"isolated_dictator\" in addToPool",
     "Event \"international_tribunal\" references non-existent event \"bunker_mentality\" in addToPool",
@@ -3171,7 +3185,129 @@
     "Event \"strategic_reserve_depletion\" references non-existent event \"scapegoat_search\" in addToPool",
     "Event \"strategic_reserve_depletion\" references non-existent event \"problem_persists\" in addToPool",
     "Event \"strategic_reserve_depletion\" references non-existent event \"next_crisis_worse\" in addToPool",
-    "Event \"oligarch_exile\" references non-existent event \"international_sanctions\" in addToPool",
+    "Event \"sanctions_incoming\" references non-existent event \"economic_isolation\" in addToPool",
+    "Event \"sanctions_incoming\" references non-existent event \"retaliation_measures\" in addToPool",
+    "Event \"sanctions_incoming\" references non-existent event \"sanctions_evasion_network\" in addToPool",
+    "Event \"sanctions_incoming\" references non-existent event \"offshore_schemes\" in addToPool",
+    "Event \"sanctions_incoming\" references non-existent event \"neutral_countries_help\" in addToPool",
+    "Event \"sanctions_incoming\" references non-existent event \"smuggling_networks\" in addToPool",
+    "Event \"sanctions_incoming\" references non-existent event \"hardliner_backlash\" in addToPool",
+    "Event \"sanctions_incoming\" references non-existent event \"negotiation_process\" in addToPool",
+    "Event \"sanctions_incoming\" references non-existent event \"weakness_perceived\" in addToPool",
+    "Event \"asset_freeze_escalation\" references non-existent event \"treasury_hemorrhage\" in addToPool",
+    "Event \"asset_freeze_escalation\" references non-existent event \"compensation_demands\" in addToPool",
+    "Event \"asset_freeze_escalation\" references non-existent event \"budget_crisis\" in addToPool",
+    "Event \"asset_freeze_escalation\" references non-existent event \"elite_dependency\" in addToPool",
+    "Event \"asset_freeze_escalation\" references non-existent event \"oligarch_rebellion\" in addToPool",
+    "Event \"asset_freeze_escalation\" references non-existent event \"defections_begin\" in addToPool",
+    "Event \"asset_freeze_escalation\" references non-existent event \"elite_conspiracy\" in addToPool",
+    "Event \"asset_freeze_escalation\" references non-existent event \"loyalty_crisis\" in addToPool",
+    "Event \"asset_freeze_escalation\" references non-existent event \"total_elite_panic\" in addToPool",
+    "Event \"asset_freeze_escalation\" references non-existent event \"mass_flight_attempts\" in addToPool",
+    "Event \"asset_freeze_escalation\" references non-existent event \"confiscation_precedent\" in addToPool",
+    "Event \"asset_freeze_escalation\" references non-existent event \"oligarch_purge\" in addToPool",
+    "Event \"swift_disconnection\" references non-existent event \"bank_run\" in addToPool",
+    "Event \"swift_disconnection\" references non-existent event \"currency_controls\" in addToPool",
+    "Event \"swift_disconnection\" references non-existent event \"capital_flight\" in addToPool",
+    "Event \"swift_disconnection\" references non-existent event \"financial_panic\" in addToPool",
+    "Event \"swift_disconnection\" references non-existent event \"chinese_dependency\" in addToPool",
+    "Event \"swift_disconnection\" references non-existent event \"eastern_pivot\" in addToPool",
+    "Event \"swift_disconnection\" references non-existent event \"unfavorable_terms\" in addToPool",
+    "Event \"swift_disconnection\" references non-existent event \"crypto_evasion\" in addToPool",
+    "Event \"swift_disconnection\" references non-existent event \"shadow_banking\" in addToPool",
+    "Event \"swift_disconnection\" references non-existent event \"parallel_economy\" in addToPool",
+    "Event \"swift_disconnection\" references non-existent event \"tech_challenges\" in addToPool",
+    "Event \"secondary_sanctions_threat\" references non-existent event \"bribe_network\" in addToPool",
+    "Event \"secondary_sanctions_threat\" references non-existent event \"neutral_countries_help\" in addToPool",
+    "Event \"secondary_sanctions_threat\" references non-existent event \"sanctions_leakage\" in addToPool",
+    "Event \"secondary_sanctions_threat\" references non-existent event \"diplomatic_costs\" in addToPool",
+    "Event \"secondary_sanctions_threat\" references non-existent event \"economic_decline\" in addToPool",
+    "Event \"secondary_sanctions_threat\" references non-existent event \"shortage_crisis\" in addToPool",
+    "Event \"secondary_sanctions_threat\" references non-existent event \"technological_regression\" in addToPool",
+    "Event \"secondary_sanctions_threat\" references non-existent event \"gas_cutoff_threat\" in addToPool",
+    "Event \"secondary_sanctions_threat\" references non-existent event \"energy_weapon\" in addToPool",
+    "Event \"secondary_sanctions_threat\" references non-existent event \"counter_sanctions\" in addToPool",
+    "Event \"brain_drain_sanctions\" references non-existent event \"border_closure\" in addToPool",
+    "Event \"brain_drain_sanctions\" references non-existent event \"underground_escape_routes\" in addToPool",
+    "Event \"brain_drain_sanctions\" references non-existent event \"desperation_grows\" in addToPool",
+    "Event \"brain_drain_sanctions\" references non-existent event \"iron_curtain_redux\" in addToPool",
+    "Event \"brain_drain_sanctions\" references non-existent event \"brain_drain_accelerates\" in addToPool",
+    "Event \"brain_drain_sanctions\" references non-existent event \"economic_competitiveness_lost\" in addToPool",
+    "Event \"brain_drain_sanctions\" references non-existent event \"tech_gap\" in addToPool",
+    "Event \"brain_drain_sanctions\" references non-existent event \"talent_shortage\" in addToPool",
+    "Event \"brain_drain_sanctions\" references non-existent event \"retention_crisis\" in addToPool",
+    "Event \"brain_drain_sanctions\" references non-existent event \"wage_inflation\" in addToPool",
+    "Event \"brain_drain_sanctions\" references non-existent event \"fiscal_crisis\" in addToPool",
+    "Event \"brain_drain_sanctions\" references non-existent event \"temporary_solution\" in addToPool",
+    "Event \"import_substitution_failure\" references non-existent event \"smuggling_networks\" in addToPool",
+    "Event \"import_substitution_failure\" references non-existent event \"price_gouging\" in addToPool",
+    "Event \"import_substitution_failure\" references non-existent event \"quality_problems\" in addToPool",
+    "Event \"import_substitution_failure\" references non-existent event \"sanctions_violations\" in addToPool",
+    "Event \"import_substitution_failure\" references non-existent event \"technological_regression\" in addToPool",
+    "Event \"import_substitution_failure\" references non-existent event \"1980s_redux\" in addToPool",
+    "Event \"import_substitution_failure\" references non-existent event \"falling_standards\" in addToPool",
+    "Event \"import_substitution_failure\" references non-existent event \"safety_compromised\" in addToPool",
+    "Event \"import_substitution_failure\" references non-existent event \"unfavorable_terms\" in addToPool",
+    "Event \"import_substitution_failure\" references non-existent event \"debt_trap\" in addToPool",
+    "Event \"import_substitution_failure\" references non-existent event \"dependency_deepens\" in addToPool",
+    "Event \"financial_system_crisis\" references non-existent event \"hyperinflation_risk\" in addToPool",
+    "Event \"financial_system_crisis\" references non-existent event \"currency_collapse\" in addToPool",
+    "Event \"financial_system_crisis\" references non-existent event \"money_printing_spiral\" in addToPool",
+    "Event \"financial_system_crisis\" references non-existent event \"savings_destroyed\" in addToPool",
+    "Event \"financial_system_crisis\" references non-existent event \"frozen_savings\" in addToPool",
+    "Event \"financial_system_crisis\" references non-existent event \"rage_at_government\" in addToPool",
+    "Event \"financial_system_crisis\" references non-existent event \"deposit_confiscation\" in addToPool",
+    "Event \"financial_system_crisis\" references non-existent event \"trust_destroyed\" in addToPool",
+    "Event \"financial_system_crisis\" references non-existent event \"financial_chaos\" in addToPool",
+    "Event \"financial_system_crisis\" references non-existent event \"savings_lost\" in addToPool",
+    "Event \"financial_system_crisis\" references non-existent event \"bank_collapse_cascade\" in addToPool",
+    "Event \"financial_system_crisis\" references non-existent event \"economic_meltdown\" in addToPool",
+    "Event \"china_bailout\" references non-existent event \"chinese_dependency\" in addToPool",
+    "Event \"china_bailout\" references non-existent event \"vassal_state_warnings\" in addToPool",
+    "Event \"china_bailout\" references non-existent event \"sovereignty_concerns\" in addToPool",
+    "Event \"china_bailout\" references non-existent event \"long_term_trap\" in addToPool",
+    "Event \"china_bailout\" references non-existent event \"chinese_negotiations\" in addToPool",
+    "Event \"china_bailout\" references non-existent event \"better_deal\" in addToPool",
+    "Event \"china_bailout\" references non-existent event \"mutual_respect\" in addToPool",
+    "Event \"china_bailout\" references non-existent event \"bargaining_success\" in addToPool",
+    "Event \"china_bailout\" references non-existent event \"isolated_completely\" in addToPool",
+    "Event \"china_bailout\" references non-existent event \"economic_crisis_deepens\" in addToPool",
+    "Event \"china_bailout\" references non-existent event \"no_friends\" in addToPool",
+    "Event \"china_bailout\" references non-existent event \"pride_costs\" in addToPool",
+    "Event \"economic_adaptation\" references non-existent event \"false_confidence\" in addToPool",
+    "Event \"economic_adaptation\" references non-existent event \"hidden_fragility\" in addToPool",
+    "Event \"economic_adaptation\" references non-existent event \"propaganda_victory\" in addToPool",
+    "Event \"economic_adaptation\" references non-existent event \"alternative_order\" in addToPool",
+    "Event \"economic_adaptation\" references non-existent event \"multipolarity\" in addToPool",
+    "Event \"economic_adaptation\" references non-existent event \"brics_expansion\" in addToPool",
+    "Event \"economic_adaptation\" references non-existent event \"long_game\" in addToPool",
+    "Event \"economic_adaptation\" references non-existent event \"backroom_deals\" in addToPool",
+    "Event \"economic_adaptation\" references non-existent event \"concessions_needed\" in addToPool",
+    "Event \"economic_adaptation\" references non-existent event \"realism_sets_in\" in addToPool",
+    "Event \"sanctions_relief_talks\" references non-existent event \"hardliner_rage\" in addToPool",
+    "Event \"sanctions_relief_talks\" references non-existent event \"nationalist_betrayal\" in addToPool",
+    "Event \"sanctions_relief_talks\" references non-existent event \"economic_recovery\" in addToPool",
+    "Event \"sanctions_relief_talks\" references non-existent event \"partial_victory\" in addToPool",
+    "Event \"sanctions_relief_talks\" references non-existent event \"sanctions_snap_back\" in addToPool",
+    "Event \"sanctions_relief_talks\" references non-existent event \"credibility_lost\" in addToPool",
+    "Event \"sanctions_relief_talks\" references non-existent event \"worse_than_before\" in addToPool",
+    "Event \"sanctions_relief_talks\" references non-existent event \"trust_destroyed\" in addToPool",
+    "Event \"sanctions_relief_talks\" references non-existent event \"endless_sanctions\" in addToPool",
+    "Event \"sanctions_relief_talks\" references non-existent event \"permanent_isolation\" in addToPool",
+    "Event \"sanctions_relief_talks\" references non-existent event \"siege_mentality\" in addToPool",
+    "Event \"sanctions_relief_talks\" references non-existent event \"economic_decline_continues\" in addToPool",
+    "Event \"sanctions_escalation\" references non-existent event \"discount_oil\" in addToPool",
+    "Event \"sanctions_escalation\" references non-existent event \"lost_revenue\" in addToPool",
+    "Event \"sanctions_escalation\" references non-existent event \"chinese_leverage\" in addToPool",
+    "Event \"sanctions_escalation\" references non-existent event \"fire_sale\" in addToPool",
+    "Event \"sanctions_escalation\" references non-existent event \"energy_weapon\" in addToPool",
+    "Event \"sanctions_escalation\" references non-existent event \"global_pain\" in addToPool",
+    "Event \"sanctions_escalation\" references non-existent event \"blowback\" in addToPool",
+    "Event \"sanctions_escalation\" references non-existent event \"price_spike\" in addToPool",
+    "Event \"sanctions_escalation\" references non-existent event \"austerity_rage\" in addToPool",
+    "Event \"sanctions_escalation\" references non-existent event \"pension_cuts\" in addToPool",
+    "Event \"sanctions_escalation\" references non-existent event \"social_collapse_risk\" in addToPool",
+    "Event \"sanctions_escalation\" references non-existent event \"survival_mode\" in addToPool",
     "Event \"general_power_grows\" references non-existent event \"military_fragmentation\" in addToPool",
     "Event \"military_loyalty_crisis\" references non-existent event \"weakened_military\" in addToPool",
     "Event \"military_loyalty_crisis\" references non-existent event \"military_fragmentation\" in addToPool",

@@ -1,25 +1,25 @@
 # Event Tree Structure
 
-*Generated: 11/11/2025, 7:41:08 AM*
+*Generated: 11/11/2025, 7:43:42 AM*
 
 ## Statistics
 
 - **Total Events:** 147
-- **Entry Points:** 91
+- **Entry Points:** 90
 - **Once-Only Events:** 140
 - **Recurring Events:** 7
-- **Conditional Events:** 95
+- **Conditional Events:** 96
 
 ### Branching Analysis
 
-- **Dead Ends** (no new events): 116 (78.9%)
-- **Branching Events** (1+ new events): 31 (21.1%)
+- **Dead Ends** (no new events): 113 (76.9%)
+- **Branching Events** (1+ new events): 34 (23.1%)
 - **Major Branches** (3+ new events): 7 (4.8%)
 
 ### Chain Depth
 
 - **Longest Chain:** 6 events deep
-- **Average Depth:** 0.4
+- **Average Depth:** 0.5
 
 ### Events by Category
 
@@ -35,7 +35,6 @@
 
 - **energy_politics:** 12 events
 - **war_military:** 7 events
-- **oligarch_intrigue:** 1 events
 
 ## ⚠️ Warnings
 
@@ -75,7 +74,6 @@
 - Event "war_crimes_allegations" references non-existent event "whistleblower_leaks" in addToPool
 - Event "war_crimes_allegations" references non-existent event "scapegoat_soldiers" in addToPool
 - Event "war_crimes_allegations" references non-existent event "military_morale_drop" in addToPool
-- Event "war_crimes_allegations" references non-existent event "sanctions_escalation" in addToPool
 - Event "war_crimes_allegations" references non-existent event "pariah_status" in addToPool
 - Event "international_tribunal" references non-existent event "isolated_dictator" in addToPool
 - Event "international_tribunal" references non-existent event "bunker_mentality" in addToPool
@@ -269,7 +267,129 @@
 - Event "strategic_reserve_depletion" references non-existent event "scapegoat_search" in addToPool
 - Event "strategic_reserve_depletion" references non-existent event "problem_persists" in addToPool
 - Event "strategic_reserve_depletion" references non-existent event "next_crisis_worse" in addToPool
-- Event "oligarch_exile" references non-existent event "international_sanctions" in addToPool
+- Event "sanctions_incoming" references non-existent event "economic_isolation" in addToPool
+- Event "sanctions_incoming" references non-existent event "retaliation_measures" in addToPool
+- Event "sanctions_incoming" references non-existent event "sanctions_evasion_network" in addToPool
+- Event "sanctions_incoming" references non-existent event "offshore_schemes" in addToPool
+- Event "sanctions_incoming" references non-existent event "neutral_countries_help" in addToPool
+- Event "sanctions_incoming" references non-existent event "smuggling_networks" in addToPool
+- Event "sanctions_incoming" references non-existent event "hardliner_backlash" in addToPool
+- Event "sanctions_incoming" references non-existent event "negotiation_process" in addToPool
+- Event "sanctions_incoming" references non-existent event "weakness_perceived" in addToPool
+- Event "asset_freeze_escalation" references non-existent event "treasury_hemorrhage" in addToPool
+- Event "asset_freeze_escalation" references non-existent event "compensation_demands" in addToPool
+- Event "asset_freeze_escalation" references non-existent event "budget_crisis" in addToPool
+- Event "asset_freeze_escalation" references non-existent event "elite_dependency" in addToPool
+- Event "asset_freeze_escalation" references non-existent event "oligarch_rebellion" in addToPool
+- Event "asset_freeze_escalation" references non-existent event "defections_begin" in addToPool
+- Event "asset_freeze_escalation" references non-existent event "elite_conspiracy" in addToPool
+- Event "asset_freeze_escalation" references non-existent event "loyalty_crisis" in addToPool
+- Event "asset_freeze_escalation" references non-existent event "total_elite_panic" in addToPool
+- Event "asset_freeze_escalation" references non-existent event "mass_flight_attempts" in addToPool
+- Event "asset_freeze_escalation" references non-existent event "confiscation_precedent" in addToPool
+- Event "asset_freeze_escalation" references non-existent event "oligarch_purge" in addToPool
+- Event "swift_disconnection" references non-existent event "bank_run" in addToPool
+- Event "swift_disconnection" references non-existent event "currency_controls" in addToPool
+- Event "swift_disconnection" references non-existent event "capital_flight" in addToPool
+- Event "swift_disconnection" references non-existent event "financial_panic" in addToPool
+- Event "swift_disconnection" references non-existent event "chinese_dependency" in addToPool
+- Event "swift_disconnection" references non-existent event "eastern_pivot" in addToPool
+- Event "swift_disconnection" references non-existent event "unfavorable_terms" in addToPool
+- Event "swift_disconnection" references non-existent event "crypto_evasion" in addToPool
+- Event "swift_disconnection" references non-existent event "shadow_banking" in addToPool
+- Event "swift_disconnection" references non-existent event "parallel_economy" in addToPool
+- Event "swift_disconnection" references non-existent event "tech_challenges" in addToPool
+- Event "secondary_sanctions_threat" references non-existent event "bribe_network" in addToPool
+- Event "secondary_sanctions_threat" references non-existent event "neutral_countries_help" in addToPool
+- Event "secondary_sanctions_threat" references non-existent event "sanctions_leakage" in addToPool
+- Event "secondary_sanctions_threat" references non-existent event "diplomatic_costs" in addToPool
+- Event "secondary_sanctions_threat" references non-existent event "economic_decline" in addToPool
+- Event "secondary_sanctions_threat" references non-existent event "shortage_crisis" in addToPool
+- Event "secondary_sanctions_threat" references non-existent event "technological_regression" in addToPool
+- Event "secondary_sanctions_threat" references non-existent event "gas_cutoff_threat" in addToPool
+- Event "secondary_sanctions_threat" references non-existent event "energy_weapon" in addToPool
+- Event "secondary_sanctions_threat" references non-existent event "counter_sanctions" in addToPool
+- Event "brain_drain_sanctions" references non-existent event "border_closure" in addToPool
+- Event "brain_drain_sanctions" references non-existent event "underground_escape_routes" in addToPool
+- Event "brain_drain_sanctions" references non-existent event "desperation_grows" in addToPool
+- Event "brain_drain_sanctions" references non-existent event "iron_curtain_redux" in addToPool
+- Event "brain_drain_sanctions" references non-existent event "brain_drain_accelerates" in addToPool
+- Event "brain_drain_sanctions" references non-existent event "economic_competitiveness_lost" in addToPool
+- Event "brain_drain_sanctions" references non-existent event "tech_gap" in addToPool
+- Event "brain_drain_sanctions" references non-existent event "talent_shortage" in addToPool
+- Event "brain_drain_sanctions" references non-existent event "retention_crisis" in addToPool
+- Event "brain_drain_sanctions" references non-existent event "wage_inflation" in addToPool
+- Event "brain_drain_sanctions" references non-existent event "fiscal_crisis" in addToPool
+- Event "brain_drain_sanctions" references non-existent event "temporary_solution" in addToPool
+- Event "import_substitution_failure" references non-existent event "smuggling_networks" in addToPool
+- Event "import_substitution_failure" references non-existent event "price_gouging" in addToPool
+- Event "import_substitution_failure" references non-existent event "quality_problems" in addToPool
+- Event "import_substitution_failure" references non-existent event "sanctions_violations" in addToPool
+- Event "import_substitution_failure" references non-existent event "technological_regression" in addToPool
+- Event "import_substitution_failure" references non-existent event "1980s_redux" in addToPool
+- Event "import_substitution_failure" references non-existent event "falling_standards" in addToPool
+- Event "import_substitution_failure" references non-existent event "safety_compromised" in addToPool
+- Event "import_substitution_failure" references non-existent event "unfavorable_terms" in addToPool
+- Event "import_substitution_failure" references non-existent event "debt_trap" in addToPool
+- Event "import_substitution_failure" references non-existent event "dependency_deepens" in addToPool
+- Event "financial_system_crisis" references non-existent event "hyperinflation_risk" in addToPool
+- Event "financial_system_crisis" references non-existent event "currency_collapse" in addToPool
+- Event "financial_system_crisis" references non-existent event "money_printing_spiral" in addToPool
+- Event "financial_system_crisis" references non-existent event "savings_destroyed" in addToPool
+- Event "financial_system_crisis" references non-existent event "frozen_savings" in addToPool
+- Event "financial_system_crisis" references non-existent event "rage_at_government" in addToPool
+- Event "financial_system_crisis" references non-existent event "deposit_confiscation" in addToPool
+- Event "financial_system_crisis" references non-existent event "trust_destroyed" in addToPool
+- Event "financial_system_crisis" references non-existent event "financial_chaos" in addToPool
+- Event "financial_system_crisis" references non-existent event "savings_lost" in addToPool
+- Event "financial_system_crisis" references non-existent event "bank_collapse_cascade" in addToPool
+- Event "financial_system_crisis" references non-existent event "economic_meltdown" in addToPool
+- Event "china_bailout" references non-existent event "chinese_dependency" in addToPool
+- Event "china_bailout" references non-existent event "vassal_state_warnings" in addToPool
+- Event "china_bailout" references non-existent event "sovereignty_concerns" in addToPool
+- Event "china_bailout" references non-existent event "long_term_trap" in addToPool
+- Event "china_bailout" references non-existent event "chinese_negotiations" in addToPool
+- Event "china_bailout" references non-existent event "better_deal" in addToPool
+- Event "china_bailout" references non-existent event "mutual_respect" in addToPool
+- Event "china_bailout" references non-existent event "bargaining_success" in addToPool
+- Event "china_bailout" references non-existent event "isolated_completely" in addToPool
+- Event "china_bailout" references non-existent event "economic_crisis_deepens" in addToPool
+- Event "china_bailout" references non-existent event "no_friends" in addToPool
+- Event "china_bailout" references non-existent event "pride_costs" in addToPool
+- Event "economic_adaptation" references non-existent event "false_confidence" in addToPool
+- Event "economic_adaptation" references non-existent event "hidden_fragility" in addToPool
+- Event "economic_adaptation" references non-existent event "propaganda_victory" in addToPool
+- Event "economic_adaptation" references non-existent event "alternative_order" in addToPool
+- Event "economic_adaptation" references non-existent event "multipolarity" in addToPool
+- Event "economic_adaptation" references non-existent event "brics_expansion" in addToPool
+- Event "economic_adaptation" references non-existent event "long_game" in addToPool
+- Event "economic_adaptation" references non-existent event "backroom_deals" in addToPool
+- Event "economic_adaptation" references non-existent event "concessions_needed" in addToPool
+- Event "economic_adaptation" references non-existent event "realism_sets_in" in addToPool
+- Event "sanctions_relief_talks" references non-existent event "hardliner_rage" in addToPool
+- Event "sanctions_relief_talks" references non-existent event "nationalist_betrayal" in addToPool
+- Event "sanctions_relief_talks" references non-existent event "economic_recovery" in addToPool
+- Event "sanctions_relief_talks" references non-existent event "partial_victory" in addToPool
+- Event "sanctions_relief_talks" references non-existent event "sanctions_snap_back" in addToPool
+- Event "sanctions_relief_talks" references non-existent event "credibility_lost" in addToPool
+- Event "sanctions_relief_talks" references non-existent event "worse_than_before" in addToPool
+- Event "sanctions_relief_talks" references non-existent event "trust_destroyed" in addToPool
+- Event "sanctions_relief_talks" references non-existent event "endless_sanctions" in addToPool
+- Event "sanctions_relief_talks" references non-existent event "permanent_isolation" in addToPool
+- Event "sanctions_relief_talks" references non-existent event "siege_mentality" in addToPool
+- Event "sanctions_relief_talks" references non-existent event "economic_decline_continues" in addToPool
+- Event "sanctions_escalation" references non-existent event "discount_oil" in addToPool
+- Event "sanctions_escalation" references non-existent event "lost_revenue" in addToPool
+- Event "sanctions_escalation" references non-existent event "chinese_leverage" in addToPool
+- Event "sanctions_escalation" references non-existent event "fire_sale" in addToPool
+- Event "sanctions_escalation" references non-existent event "energy_weapon" in addToPool
+- Event "sanctions_escalation" references non-existent event "global_pain" in addToPool
+- Event "sanctions_escalation" references non-existent event "blowback" in addToPool
+- Event "sanctions_escalation" references non-existent event "price_spike" in addToPool
+- Event "sanctions_escalation" references non-existent event "austerity_rage" in addToPool
+- Event "sanctions_escalation" references non-existent event "pension_cuts" in addToPool
+- Event "sanctions_escalation" references non-existent event "social_collapse_risk" in addToPool
+- Event "sanctions_escalation" references non-existent event "survival_mode" in addToPool
 - Event "general_power_grows" references non-existent event "military_fragmentation" in addToPool
 - Event "military_loyalty_crisis" references non-existent event "weakened_military" in addToPool
 - Event "military_loyalty_crisis" references non-existent event "military_fragmentation" in addToPool
@@ -285,14 +405,10 @@
 *These events have `hasTriggered` conditions but are never added to the pool by any choice:*
 
 - **territorial_annexation** (war_military): "Annexation Referendum"
-- **asset_freeze_escalation** (sanctions_international): "The Oligarchs' Yachts"
 - **secondary_sanctions_threat** (sanctions_international): "The Sanctions Tighten"
 - **brain_drain_sanctions** (sanctions_international): "The Exodus"
-- **import_substitution_failure** (sanctions_international): "The Missing Parts"
 - **financial_system_crisis** (sanctions_international): "Bank Run"
-- **china_bailout** (sanctions_international): "The Dragon's Terms"
 - **economic_adaptation** (sanctions_international): "The New Normal"
-- **sanctions_relief_talks** (sanctions_international): "The Sanctions Off-Ramp"
 - **rival_in_exile** (succession_power): "The Pretender Abroad"
 - **university_occupation** (social_movements): "The Occupied Campus"
 - **social_media_viral** (social_movements): "The Viral Moment"
@@ -313,7 +429,6 @@
 - **arctic_oil_discovery** (energy_pipeline): "Black Gold in the Arctic"
 - **climate_pressure** (energy_pipeline): "The Green Transition"
 - **strategic_reserve_depletion** (energy_pipeline): "The Empty Tanks"
-- **oligarch_exile** (sanctions_international): "The London Defector"
 - **succession_question** (succession_power): "The Successor Problem"
 - **ambitious_general** (succession_power): "The General's Ambition"
 - **assassination_attempt** (succession_power): "The Poisoned Cup"
@@ -325,8 +440,9 @@
 - **labor_strike** (domestic_crisis): "The Factory Strike"
 - **disaster_response** (domestic_crisis): "The Dam Breaks"
 - **pension_crisis** (domestic_crisis): "The Pension Fund"
+- **ethnic_tensions_flare** (domestic_crisis): "Ethnic Violence"
 
-*... and 71 more*
+*... and 70 more*
 
 ## 🌳 Event Tree Visualization
 
@@ -339,6 +455,7 @@
       └─ **wagner_mutiny** - The Chef Rebels 🔒 [war_military]
     └─ **war_crimes_allegations** - The Massacre 🔒 [war_military]
       └─ **international_tribunal** - The Hague Calls 🔒
+      └─ **sanctions_escalation** - Maximum Pressure 🔒
     └─ **mobilization_announcement** - The Mobilization Speech 🔒
     └─ **elite_sons_fleeing** - The Patriotic Elite 🔒
     └─ **frozen_conflict** - The Forever War 🔒
@@ -351,6 +468,10 @@
     └─ **wagner_mutiny** - The Chef Rebels 🔒 [war_military]
       └─ **wagner_leader_death** - The Suspicious Plane Crash 🔒
   └─ **sanctions_incoming** - International Sanctions 🔒
+    └─ **asset_freeze_escalation** - The Oligarchs' Yachts 🔒
+    └─ **swift_disconnection** - Cut Off from SWIFT 🔒
+      └─ **china_bailout** - The Dragon's Terms 🔒
+    └─ **sanctions_relief_talks** - The Sanctions Off-Ramp 🔒
   └─ **military_corruption_exposed** - The Defense Ministry Scandal 🔒
   └─ ... and 2 more
 
@@ -371,12 +492,6 @@
   └─ **lng_terminal_race** - The LNG Gambit 🔒 [energy_politics]
     └─ **alternative_energy_routes** - The Chinese Pivot 🔒 [energy_politics]
   └─ **opec_plus_meeting** - The Cartel Convenes 🔒 [energy_politics]
-
-▶ **oligarch_exile** - The London Defector 🔒 [oligarch_intrigue]
-  └─ **rival_oligarch** - The Aluminum King's Ambition 🔒
-  └─ **oligarch_yacht_party** - The Yacht Incident 🔒
-  └─ **journalist_problem** - An Inconvenient Reporter 🔒
-  └─ **palace_construction** - The Black Sea Palace 🔒
 
 ▶ **ambitious_general** - The General's Ambition 🔒
   └─ **general_power_grows** - The General's Network 🔒
