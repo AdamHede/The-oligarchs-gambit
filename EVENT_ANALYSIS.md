@@ -1,29 +1,29 @@
 # Event Tree Structure
 
-*Generated: 11/11/2025, 8:46:08 AM*
+*Generated: 11/11/2025, 11:31:51 AM*
 
 ## Statistics
 
-- **Total Events:** 147
-- **Entry Points:** 90
-- **Once-Only Events:** 140
+- **Total Events:** 142
+- **Entry Points:** 85
+- **Once-Only Events:** 135
 - **Recurring Events:** 7
-- **Conditional Events:** 96
+- **Conditional Events:** 95
 
 ### Branching Analysis
 
-- **Dead Ends** (no new events): 101 (68.7%)
-- **Branching Events** (1+ new events): 46 (31.3%)
-- **Major Branches** (3+ new events): 8 (5.4%)
+- **Dead Ends** (no new events): 95 (66.9%)
+- **Branching Events** (1+ new events): 47 (33.1%)
+- **Major Branches** (3+ new events): 8 (5.6%)
 
 ### Chain Depth
 
 - **Longest Chain:** 7 events deep
-- **Average Depth:** 0.7
+- **Average Depth:** 0.8
 
 ### Events by Category
 
-- **misc:** 67 events
+- **misc:** 62 events
 - **war_military:** 22 events
 - **succession_power:** 13 events
 - **energy_pipeline:** 12 events
@@ -575,6 +575,7 @@
 - Event "tech_savvy_resistance" references non-existent event "great_firewall" in addToPool
 - Event "tech_savvy_resistance" references non-existent event "tech_sector_collapse" in addToPool
 - Event "tech_savvy_resistance" references non-existent event "vpn_wars" in addToPool
+- Event "tech_savvy_resistance" references non-existent event "brain_drain_tech" in addToPool
 - Event "tech_savvy_resistance" references non-existent event "startup_exodus" in addToPool
 - Event "tech_savvy_resistance" references non-existent event "innovation_killed" in addToPool
 - Event "tech_savvy_resistance" references non-existent event "tech_fear" in addToPool
@@ -737,8 +738,14 @@
 - Event "prison_riot" references non-existent event "human_rights_ignored" in addToPool
 - Event "prison_riot" references non-existent event "impunity_culture" in addToPool
 - Event "prison_riot" references non-existent event "repression_justified" in addToPool
+- Event "journalist_problem" references non-existent event "journalist_martyrdom" in addToPool
+- Event "journalist_problem" references non-existent event "press_fear" in addToPool
 - Event "journalist_problem" references non-existent event "international_sanctions" in addToPool
-- Event "palace_construction" references non-existent event "palace_scandal" in addToPool
+- Event "journalist_problem" references non-existent event "bought_journalist" in addToPool
+- Event "journalist_problem" references non-existent event "corruption_exposed" in addToPool
+- Event "journalist_problem" references non-existent event "disinformation_campaign" in addToPool
+- Event "palace_construction" references non-existent event "hidden_palace" in addToPool
+- Event "palace_construction" references non-existent event "offshore_expansion" in addToPool
 - Event "rival_oligarch" references non-existent event "oligarch_panic" in addToPool
 - Event "rival_oligarch" references non-existent event "asset_seizure_precedent" in addToPool
 - Event "rival_oligarch" references non-existent event "elite_fear" in addToPool
@@ -751,8 +758,18 @@
 - Event "rival_oligarch" references non-existent event "opposition_funded" in addToPool
 - Event "rival_oligarch" references non-existent event "power_sharing_uneasy" in addToPool
 - Event "rival_oligarch" references non-existent event "future_threat" in addToPool
+- Event "protest_movement" references non-existent event "crackdown_aftermath" in addToPool
 - Event "protest_movement" references non-existent event "international_sanctions" in addToPool
+- Event "protest_movement" references non-existent event "fake_counter_protest" in addToPool
+- Event "protest_movement" references non-existent event "broken_promises" in addToPool
 - Event "central_bank_governor" references non-existent event "economic_crisis" in addToPool
+- Event "central_bank_governor" references non-existent event "investor_flight" in addToPool
+- Event "central_bank_governor" references non-existent event "shadow_economy" in addToPool
+- Event "central_bank_governor" references non-existent event "economic_stability" in addToPool
+- Event "election_season" references non-existent event "election_protests" in addToPool
+- Event "election_season" references non-existent event "international_condemnation" in addToPool
+- Event "election_season" references non-existent event "narrow_victory" in addToPool
+- Event "election_season" references non-existent event "legitimacy_boost" in addToPool
 - Event "internet_control" references non-existent event "great_firewall" in addToPool
 - Event "internet_control" references non-existent event "tech_sector_collapse" in addToPool
 - Event "internet_control" references non-existent event "vpn_wars" in addToPool
@@ -1231,7 +1248,7 @@
 - **pension_crisis** (domestic_crisis): "The Pension Fund"
 - **ethnic_tensions_flare** (domestic_crisis): "Ethnic Violence"
 
-*... and 70 more*
+*... and 65 more*
 
 ## 🌳 Event Tree Visualization
 
@@ -1328,6 +1345,10 @@
       └─ **frozen_conflict** - The Forever War 🔒
       └─ ... and 4 more
 
+▶ **palace_construction** - The Black Sea Palace 🔒
+  └─ **palace_scandal_leak** - The Palace Plans 🔒
+    └─ **protest_movement** - The Growing Protests
+
 ▶ **constitutional_reform** - Constitutional Creativity 🔒
   └─ **protest_movement** - The Growing Protests
 
@@ -1350,7 +1371,4 @@
       └─ **elite_sons_fleeing** - The Patriotic Elite 🔒
       └─ **frozen_conflict** - The Forever War 🔒
       └─ ... and 4 more
-
-▶ **cyber_currency_scheme** - The State Crypto Scam 🔒
-  └─ **protest_movement** - The Growing Protests
 

@@ -18,30 +18,6 @@ const MISC_EVENTS = [
         ]
     },
     {
-        id: "oligarch_yacht_party",
-        title: "The Yacht Incident",
-        description: "Your aluminum magnate friend just acquired a 500-foot superyacht with a submarine dock and missile defense system. He's hosting a party in the Mediterranean. Half your cabinet will be there with their mistresses. Your PR team is panicking - bread lines are getting longer and social media is exploding with anger.",
-        weight: 5,
-        conditions: {},
-        onceOnly: true,
-        choices: [
-            {
-                text: "Go. Post photos. Let them seethe with envy.",
-                effects: { personalWealth: 1, treasury: 0, elite: 10, anger: 20 }
-            },
-            {
-                text: "Go, but pay trolls to flood social media with fake news.",
-                effects: { personalWealth: -1, treasury: -20, elite: 5, anger: -5 },
-                legacy: { icon: "🎭", name: "Master of Optics", weight: 4 }
-            },
-            {
-                text: "Decline. Seize his yacht for 'unpaid taxes.' Sell it.",
-                effects: { personalWealth: 8, treasury: 15, elite: -20, anger: -10 },
-                legacy: { icon: "🏴‍☠️", name: "Pirate King", weight: 7 }
-            }
-        ]
-    },
-    {
         id: "journalist_problem",
         title: "An Inconvenient Reporter",
         description: "An investigative journalist has documents proving you own 47 properties abroad, including a palace that cost more than your official salary for 200 years. She's publishing in 48 hours. Your FSB chief offers three options: novichok, a car accident, or we could just shoot her in the elevator. Your PR chief suggests buying her off.",
@@ -53,16 +29,18 @@ const MISC_EVENTS = [
                 text: "Eliminate her. Make it look like a robbery gone wrong.",
                 effects: { personalWealth: -1, treasury: -10, elite: 10, anger: 25 },
                 legacy: { icon: "🤐", name: "Silencer", weight: 8 },
-                addToPool: ["international_sanctions"]
+                addToPool: ["journalist_martyrdom", "press_fear", "international_sanctions"]
             },
             {
                 text: "Offer her $5M and a state TV anchor position.",
                 effects: { personalWealth: -2, treasury: -15, elite: 0, anger: -5 },
-                legacy: { icon: "📺", name: "Propagandist", weight: 5 }
+                legacy: { icon: "📺", name: "Propagandist", weight: 5 },
+                addToPool: ["bought_journalist"]
             },
             {
                 text: "Let it publish. Flood the zone with disinformation.",
-                effects: { personalWealth: 0, treasury: -30, elite: -10, anger: 10 }
+                effects: { personalWealth: 0, treasury: -30, elite: -10, anger: 10 },
+                addToPool: ["corruption_exposed", "disinformation_campaign"]
             }
         ]
     },
@@ -78,15 +56,17 @@ const MISC_EVENTS = [
                 text: "Build it. Caesar had palaces. Kings had palaces. I deserve this.",
                 effects: { personalWealth: -5, treasury: -300, elite: -5, anger: 30 },
                 legacy: { icon: "🏰", name: "Palace Builder", weight: 15 },
-                addToPool: ["palace_scandal"]
+                addToPool: ["palace_scandal_leak"]
             },
             {
                 text: "Scale it down. Build 'off the books' using state contractors.",
-                effects: { personalWealth: -3, treasury: -150, elite: 5, anger: 15 }
+                effects: { personalWealth: -3, treasury: -150, elite: 5, anger: 15 },
+                addToPool: ["hidden_palace"]
             },
             {
                 text: "Too risky. Invest offshore instead.",
-                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: -5 }
+                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: -5 },
+                addToPool: ["offshore_expansion"]
             }
         ]
     },
@@ -127,15 +107,17 @@ const MISC_EVENTS = [
                 text: "Clear the square. Beat them. Arrest thousands.",
                 effects: { personalWealth: 0, treasury: -30, elite: 10, anger: 35 },
                 legacy: { icon: "🛡️", name: "Iron Fist", weight: 6 },
-                addToPool: ["international_sanctions"]
+                addToPool: ["crackdown_aftermath", "international_sanctions"]
             },
             {
                 text: "Bus in 100k loyalists. Pay them $50 each. Drown them out.",
-                effects: { personalWealth: -2, treasury: -80, elite: 5, anger: 10 }
+                effects: { personalWealth: -2, treasury: -80, elite: 5, anger: 10 },
+                addToPool: ["fake_counter_protest"]
             },
             {
                 text: "Promise reforms. Release some political prisoners. Lie.",
-                effects: { personalWealth: 0, treasury: -20, elite: -10, anger: -15 }
+                effects: { personalWealth: 0, treasury: -20, elite: -10, anger: -15 },
+                addToPool: ["broken_promises"]
             }
         ]
     },
@@ -151,15 +133,17 @@ const MISC_EVENTS = [
                 text: "Fire her. Install your former bodyguard as replacement.",
                 effects: { personalWealth: 5, treasury: -100, elite: 5, anger: 15 },
                 legacy: { icon: "💀", name: "Economy Killer", weight: -8 },
-                addToPool: ["economic_crisis"]
+                addToPool: ["economic_crisis", "investor_flight"]
             },
             {
                 text: "Keep her as figurehead. Route around her decisions.",
-                effects: { personalWealth: 2, treasury: -40, elite: 0, anger: 5 }
+                effects: { personalWealth: 2, treasury: -40, elite: 0, anger: 5 },
+                addToPool: ["shadow_economy"]
             },
             {
                 text: "Actually listen to her. Tighten the belt.",
-                effects: { personalWealth: -2, treasury: 150, elite: -5, anger: -10 }
+                effects: { personalWealth: -2, treasury: 150, elite: -5, anger: -10 },
+                addToPool: ["economic_stability"]
             }
         ]
     },
@@ -173,38 +157,18 @@ const MISC_EVENTS = [
             {
                 text: "Full Belarus mode. Jail opponents. 87% victory.",
                 effects: { personalWealth: -3, treasury: -100, elite: 10, anger: 25 },
-                legacy: { icon: "📊", name: "Democratic Champion (87%)", weight: 10 }
+                legacy: { icon: "📊", name: "Democratic Champion (87%)", weight: 10 },
+                addToPool: ["election_protests", "international_condemnation"]
             },
             {
                 text: "Subtle rigging. Block main opponent. Win 52%.",
-                effects: { personalWealth: -2, treasury: -50, elite: 5, anger: 10 }
+                effects: { personalWealth: -2, treasury: -50, elite: 5, anger: 10 },
+                addToPool: ["narrow_victory"]
             },
             {
                 text: "Run a real campaign. Spend big. Risk everything.",
-                effects: { personalWealth: -8, treasury: -150, elite: -15, anger: -20 }
-            }
-        ]
-    },
-    {
-        id: "military_parade",
-        title: "Victory Day Parade",
-        description: "Victory Day is here. The generals want a massive show of strength: 15,000 troops, 200 tanks, nuclear ICBMs rolling through Red Square, fighter jet flyovers. Cost: $500 million. The same amount would rebuild 50 hospitals. Your image consultant says the people need bread and circuses. Heavy on the circuses.",
-        weight: 5,
-        conditions: {},
-        onceOnly: true,
-        choices: [
-            {
-                text: "Biggest parade in history. Show the West our strength!",
-                effects: { personalWealth: 0, treasury: -180, elite: 15, anger: 15 },
-                legacy: { icon: "🎖️", name: "Showman", weight: 6 }
-            },
-            {
-                text: "Modest display. Save money for actual defense.",
-                effects: { personalWealth: 0, treasury: -60, elite: 5, anger: 5 }
-            },
-            {
-                text: "Cancel. Redirect funds to hospitals. (The generals hate this)",
-                effects: { personalWealth: 0, treasury: -20, elite: -15, anger: -20 }
+                effects: { personalWealth: -8, treasury: -150, elite: -15, anger: -20 },
+                addToPool: ["legitimacy_boost"]
             }
         ]
     },
@@ -348,28 +312,6 @@ const MISC_EVENTS = [
             {
                 text: "Leave them alone. Academic freedom... within limits. Monitor them.",
                 effects: { personalWealth: 0, treasury: 0, elite: -5, anger: -5 }
-            }
-        ]
-    },
-    {
-        id: "arms_deal_offer",
-        title: "The Questionable Client",
-        description: "A military dictatorship wants to buy $8 billion in weapons. They have a horrible human rights record. The UN has an arms embargo. But your defense industry needs the money. The sale would be 'unofficial.' Western media would go crazy. Your military-industrial complex is lobbying hard.",
-        weight: 5,
-        conditions: {},
-        onceOnly: true,
-        choices: [
-            {
-                text: "Approve the sale. Route through shell companies. Plausible deniability.",
-                effects: { personalWealth: 12, treasury: 280, elite: 10, anger: 15 }
-            },
-            {
-                text: "Reject. Too risky. International reputation matters.",
-                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: 0 }
-            },
-            {
-                text: "Approve but leak it. Let opposition take the blame. Political trap.",
-                effects: { personalWealth: 8, treasury: 200, elite: 0, anger: 20 }
             }
         ]
     },
@@ -808,50 +750,6 @@ const MISC_EVENTS = [
                 text: "Shut down the operation. Too exposed. Find subtler methods.",
                 effects: { personalWealth: 0, treasury: 0, elite: -10, anger: 10 },
                 addToPool: ["intelligence_morale_drop", "new_tactics_needed", "propaganda_pivot", "tactical_retreat"]
-            }
-        ]
-    },
-    {
-        id: "brain_drain_tech",
-        title: "The AI Startup Exodus",
-        description: "Your best AI researchers are leaving for Silicon Valley. They're offered 10x salary, freedom to publish, stock options. Your tech sector is being hollowed out. You could restrict emigration, increase funding, or just accept that talent follows freedom and money. Keeping them requires real change.",
-        weight: 6,
-        conditions: {},
-        onceOnly: true,
-        choices: [
-            {
-                text: "Exit visa requirements for STEM graduates. Trap them here.",
-                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: 35 }
-            },
-            {
-                text: "Massive tech investment. $20B fund. Compete with Silicon Valley.",
-                effects: { personalWealth: -10, treasury: -800, elite: -5, anger: -15 }
-            },
-            {
-                text: "Let them go. Brain drain is real but forced retention is worse.",
-                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: 10 }
-            }
-        ]
-    },
-    {
-        id: "monument_controversy",
-        title: "The Statue",
-        description: "Your supporters want to erect a 40-meter statue of you in the capital. Cost: $180 million. They say it's about 'preserving your legacy.' Critics call it cult of personality. International media will mock it. But your ego... it would be impressive. Caesar had statues. Stalin had statues. Why not you?",
-        weight: 5,
-        conditions: { personalWealth: 40, year: 5 },
-        onceOnly: true,
-        choices: [
-            {
-                text: "Build it. 50 meters, even. Gold-plated. Biggest in the region.",
-                effects: { personalWealth: 0, treasury: -250, elite: 5, anger: 35 }
-            },
-            {
-                text: "More modest monument. 'Memorial to National Revival' (with your face on it).",
-                effects: { personalWealth: 0, treasury: -80, elite: 0, anger: 20 }
-            },
-            {
-                text: "Reject. 'I am but a humble servant.' (Wait until after death for statues)",
-                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: -10 }
             }
         ]
     },

@@ -1,8 +1,8 @@
 {
   "version": "1.6.0",
-  "generatedAt": "2025-11-11T08:46:08.914Z",
+  "generatedAt": "2025-11-11T11:31:51.342Z",
   "statistics": {
-    "total": 147,
+    "total": 142,
     "byCategory": {
       "war_military": 22,
       "energy_pipeline": 12,
@@ -10,26 +10,26 @@
       "succession_power": 13,
       "social_movements": 11,
       "domestic_crisis": 11,
-      "misc": 67
+      "misc": 62
     },
     "byStoryline": {
       "war_military": 7,
       "energy_politics": 12
     },
     "byType": {
-      "onceOnly": 140,
+      "onceOnly": 135,
       "recurring": 7,
-      "conditional": 96,
-      "entryPoint": 90
+      "conditional": 95,
+      "entryPoint": 85
     },
     "branching": {
-      "deadEnds": 101,
-      "branches": 46,
+      "deadEnds": 95,
+      "branches": 47,
       "majorBranches": 8
     },
     "chains": {
       "longest": 7,
-      "average": "0.7"
+      "average": "0.8"
     }
   },
   "events": [
@@ -1809,8 +1809,7 @@
         ]
       },
       "triggers": [
-        "internet_control",
-        "brain_drain_tech"
+        "internet_control"
       ],
       "triggeredBy": [
         {
@@ -2055,20 +2054,6 @@
       "chainDepth": 0
     },
     {
-      "id": "oligarch_yacht_party",
-      "title": "The Yacht Incident",
-      "category": "misc",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 5,
-      "conditions": {},
-      "triggers": [],
-      "triggeredBy": [],
-      "isEntryPoint": true,
-      "isOrphaned": false,
-      "chainDepth": 0
-    },
-    {
       "id": "journalist_problem",
       "title": "An Inconvenient Reporter",
       "category": "misc",
@@ -2098,11 +2083,13 @@
       "conditions": {
         "personalWealth": 15
       },
-      "triggers": [],
+      "triggers": [
+        "palace_scandal_leak"
+      ],
       "triggeredBy": [],
       "isEntryPoint": true,
       "isOrphaned": false,
-      "chainDepth": 0
+      "chainDepth": 2
     },
     {
       "id": "rival_oligarch",
@@ -2176,20 +2163,6 @@
       "storyline": null,
       "onceOnly": false,
       "weight": 8,
-      "conditions": {},
-      "triggers": [],
-      "triggeredBy": [],
-      "isEntryPoint": true,
-      "isOrphaned": false,
-      "chainDepth": 0
-    },
-    {
-      "id": "military_parade",
-      "title": "Victory Day Parade",
-      "category": "misc",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 5,
       "conditions": {},
       "triggers": [],
       "triggeredBy": [],
@@ -2299,20 +2272,6 @@
     {
       "id": "university_purge",
       "title": "Academic Freedom",
-      "category": "misc",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 5,
-      "conditions": {},
-      "triggers": [],
-      "triggeredBy": [],
-      "isEntryPoint": true,
-      "isOrphaned": false,
-      "chainDepth": 0
-    },
-    {
-      "id": "arms_deal_offer",
-      "title": "The Questionable Client",
       "category": "misc",
       "storyline": null,
       "onceOnly": true,
@@ -2602,43 +2561,6 @@
       "chainDepth": 0
     },
     {
-      "id": "brain_drain_tech",
-      "title": "The AI Startup Exodus",
-      "category": "misc",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 6,
-      "conditions": {},
-      "triggers": [],
-      "triggeredBy": [
-        {
-          "from": "tech_savvy_resistance",
-          "choice": 1,
-          "choiceText": "Arrest tech workers en masse. Intimidate the sector. Break their spirit."
-        }
-      ],
-      "isEntryPoint": true,
-      "isOrphaned": false,
-      "chainDepth": 0
-    },
-    {
-      "id": "monument_controversy",
-      "title": "The Statue",
-      "category": "misc",
-      "storyline": null,
-      "onceOnly": true,
-      "weight": 5,
-      "conditions": {
-        "personalWealth": 40,
-        "year": 5
-      },
-      "triggers": [],
-      "triggeredBy": [],
-      "isEntryPoint": true,
-      "isOrphaned": false,
-      "chainDepth": 0
-    },
-    {
       "id": "foreign_agent_law",
       "title": "Foreign Agent Registration",
       "category": "misc",
@@ -2713,7 +2635,13 @@
       "triggers": [
         "protest_movement"
       ],
-      "triggeredBy": [],
+      "triggeredBy": [
+        {
+          "from": "palace_construction",
+          "choice": 0,
+          "choiceText": "Build it. Caesar had palaces. Kings had palaces. I deserve this."
+        }
+      ],
       "isEntryPoint": true,
       "isOrphaned": false,
       "chainDepth": 1
@@ -3639,6 +3567,7 @@
     "Event \"tech_savvy_resistance\" references non-existent event \"great_firewall\" in addToPool",
     "Event \"tech_savvy_resistance\" references non-existent event \"tech_sector_collapse\" in addToPool",
     "Event \"tech_savvy_resistance\" references non-existent event \"vpn_wars\" in addToPool",
+    "Event \"tech_savvy_resistance\" references non-existent event \"brain_drain_tech\" in addToPool",
     "Event \"tech_savvy_resistance\" references non-existent event \"startup_exodus\" in addToPool",
     "Event \"tech_savvy_resistance\" references non-existent event \"innovation_killed\" in addToPool",
     "Event \"tech_savvy_resistance\" references non-existent event \"tech_fear\" in addToPool",
@@ -3801,8 +3730,14 @@
     "Event \"prison_riot\" references non-existent event \"human_rights_ignored\" in addToPool",
     "Event \"prison_riot\" references non-existent event \"impunity_culture\" in addToPool",
     "Event \"prison_riot\" references non-existent event \"repression_justified\" in addToPool",
+    "Event \"journalist_problem\" references non-existent event \"journalist_martyrdom\" in addToPool",
+    "Event \"journalist_problem\" references non-existent event \"press_fear\" in addToPool",
     "Event \"journalist_problem\" references non-existent event \"international_sanctions\" in addToPool",
-    "Event \"palace_construction\" references non-existent event \"palace_scandal\" in addToPool",
+    "Event \"journalist_problem\" references non-existent event \"bought_journalist\" in addToPool",
+    "Event \"journalist_problem\" references non-existent event \"corruption_exposed\" in addToPool",
+    "Event \"journalist_problem\" references non-existent event \"disinformation_campaign\" in addToPool",
+    "Event \"palace_construction\" references non-existent event \"hidden_palace\" in addToPool",
+    "Event \"palace_construction\" references non-existent event \"offshore_expansion\" in addToPool",
     "Event \"rival_oligarch\" references non-existent event \"oligarch_panic\" in addToPool",
     "Event \"rival_oligarch\" references non-existent event \"asset_seizure_precedent\" in addToPool",
     "Event \"rival_oligarch\" references non-existent event \"elite_fear\" in addToPool",
@@ -3815,8 +3750,18 @@
     "Event \"rival_oligarch\" references non-existent event \"opposition_funded\" in addToPool",
     "Event \"rival_oligarch\" references non-existent event \"power_sharing_uneasy\" in addToPool",
     "Event \"rival_oligarch\" references non-existent event \"future_threat\" in addToPool",
+    "Event \"protest_movement\" references non-existent event \"crackdown_aftermath\" in addToPool",
     "Event \"protest_movement\" references non-existent event \"international_sanctions\" in addToPool",
+    "Event \"protest_movement\" references non-existent event \"fake_counter_protest\" in addToPool",
+    "Event \"protest_movement\" references non-existent event \"broken_promises\" in addToPool",
     "Event \"central_bank_governor\" references non-existent event \"economic_crisis\" in addToPool",
+    "Event \"central_bank_governor\" references non-existent event \"investor_flight\" in addToPool",
+    "Event \"central_bank_governor\" references non-existent event \"shadow_economy\" in addToPool",
+    "Event \"central_bank_governor\" references non-existent event \"economic_stability\" in addToPool",
+    "Event \"election_season\" references non-existent event \"election_protests\" in addToPool",
+    "Event \"election_season\" references non-existent event \"international_condemnation\" in addToPool",
+    "Event \"election_season\" references non-existent event \"narrow_victory\" in addToPool",
+    "Event \"election_season\" references non-existent event \"legitimacy_boost\" in addToPool",
     "Event \"internet_control\" references non-existent event \"great_firewall\" in addToPool",
     "Event \"internet_control\" references non-existent event \"tech_sector_collapse\" in addToPool",
     "Event \"internet_control\" references non-existent event \"vpn_wars\" in addToPool",
