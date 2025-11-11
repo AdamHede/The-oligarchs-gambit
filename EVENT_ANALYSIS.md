@@ -1,6 +1,6 @@
 # Event Tree Structure
 
-*Generated: 11/11/2025, 7:43:42 AM*
+*Generated: 11/11/2025, 8:19:21 AM*
 
 ## Statistics
 
@@ -12,14 +12,14 @@
 
 ### Branching Analysis
 
-- **Dead Ends** (no new events): 113 (76.9%)
-- **Branching Events** (1+ new events): 34 (23.1%)
+- **Dead Ends** (no new events): 109 (74.1%)
+- **Branching Events** (1+ new events): 38 (25.9%)
 - **Major Branches** (3+ new events): 7 (4.8%)
 
 ### Chain Depth
 
-- **Longest Chain:** 6 events deep
-- **Average Depth:** 0.5
+- **Longest Chain:** 7 events deep
+- **Average Depth:** 0.6
 
 ### Events by Category
 
@@ -390,10 +390,116 @@
 - Event "sanctions_escalation" references non-existent event "pension_cuts" in addToPool
 - Event "sanctions_escalation" references non-existent event "social_collapse_risk" in addToPool
 - Event "sanctions_escalation" references non-existent event "survival_mode" in addToPool
+- Event "succession_question" references non-existent event "succession_anxiety" in addToPool
+- Event "succession_question" references non-existent event "elite_conspiracy" in addToPool
+- Event "succession_question" references non-existent event "health_crisis_rumors" in addToPool
+- Event "succession_question" references non-existent event "placeholder_ambitions" in addToPool
+- Event "succession_question" references non-existent event "power_behind_throne" in addToPool
+- Event "succession_question" references non-existent event "false_promises" in addToPool
+- Event "succession_question" references non-existent event "democratic_hopes" in addToPool
+- Event "ambitious_general" references non-existent event "ministry_takeover" in addToPool
+- Event "ambitious_general" references non-existent event "parallel_power" in addToPool
+- Event "ambitious_general" references non-existent event "general_martyrdom" in addToPool
+- Event "ambitious_general" references non-existent event "army_split" in addToPool
+- Event "ambitious_general" references non-existent event "general_exile" in addToPool
+- Event "ambitious_general" references non-existent event "veteran_anger" in addToPool
+- Event "ambitious_general" references non-existent event "quiet_resentment" in addToPool
 - Event "general_power_grows" references non-existent event "military_fragmentation" in addToPool
+- Event "general_power_grows" references non-existent event "purge_aftermath" in addToPool
+- Event "general_power_grows" references non-existent event "uneasy_alliance" in addToPool
+- Event "general_power_grows" references non-existent event "power_competition" in addToPool
+- Event "general_power_grows" references non-existent event "loyalty_bought" in addToPool
+- Event "general_power_grows" references non-existent event "general_isolated" in addToPool
+- Event "general_power_grows" references non-existent event "expensive_loyalty" in addToPool
+- Event "coup_attempt" references non-existent event "exile_planning" in addToPool
+- Event "coup_attempt" references non-existent event "government_in_exile" in addToPool
+- Event "coup_attempt" references non-existent event "loyalty_test" in addToPool
+- Event "coup_attempt" references non-existent event "desperate_promises" in addToPool
+- Event "coup_attempt" references non-existent event "negotiated_exit" in addToPool
+- Event "coup_attempt" references non-existent event "immunity_terms" in addToPool
+- Event "coup_attempt" references non-existent event "peaceful_transition" in addToPool
+- Event "military_loyalty_crisis" references non-existent event "humiliation" in addToPool
+- Event "military_loyalty_crisis" references non-existent event "weakness_exposed" in addToPool
 - Event "military_loyalty_crisis" references non-existent event "weakened_military" in addToPool
+- Event "military_loyalty_crisis" references non-existent event "incompetent_command" in addToPool
 - Event "military_loyalty_crisis" references non-existent event "military_fragmentation" in addToPool
+- Event "military_loyalty_crisis" references non-existent event "martyrdom_effect" in addToPool
+- Event "military_loyalty_crisis" references non-existent event "veteran_rage" in addToPool
+- Event "assassination_attempt" references non-existent event "great_purge" in addToPool
+- Event "assassination_attempt" references non-existent event "paranoia_spreads" in addToPool
+- Event "assassination_attempt" references non-existent event "loyalty_through_fear" in addToPool
+- Event "assassination_attempt" references non-existent event "false_flag_narrative" in addToPool
+- Event "assassination_attempt" references non-existent event "nationalist_rally" in addToPool
+- Event "assassination_attempt" references non-existent event "western_plot" in addToPool
+- Event "assassination_attempt" references non-existent event "bunker_mentality" in addToPool
+- Event "assassination_attempt" references non-existent event "conspiracy_theories" in addToPool
 - Event "rival_in_exile" references non-existent event "international_sanctions" in addToPool
+- Event "rival_in_exile" references non-existent event "assassination_blowback" in addToPool
+- Event "rival_in_exile" references non-existent event "martyrdom_created" in addToPool
+- Event "rival_in_exile" references non-existent event "kompromat_war" in addToPool
+- Event "rival_in_exile" references non-existent event "reputation_damage" in addToPool
+- Event "rival_in_exile" references non-existent event "propaganda_battle" in addToPool
+- Event "rival_in_exile" references non-existent event "opposition_grows" in addToPool
+- Event "rival_in_exile" references non-existent event "exile_community_forms" in addToPool
+- Event "rival_in_exile" references non-existent event "symbol_emerges" in addToPool
+- Event "tandem_rule" references non-existent event "constitutional_crisis" in addToPool
+- Event "tandem_rule" references non-existent event "pm_resistance" in addToPool
+- Event "tandem_rule" references non-existent event "stable_duumvirate" in addToPool
+- Event "tandem_rule" references non-existent event "competing_centers" in addToPool
+- Event "tandem_rule" references non-existent event "faction_formation" in addToPool
+- Event "tandem_rule" references non-existent event "gradual_purge" in addToPool
+- Event "tandem_rule" references non-existent event "resistance_builds" in addToPool
+- Event "power_struggle_escalates" references non-existent event "emergency_powers" in addToPool
+- Event "power_struggle_escalates" references non-existent event "final_showdown" in addToPool
+- Event "power_struggle_escalates" references non-existent event "forced_retirement" in addToPool
+- Event "power_struggle_escalates" references non-existent event "rival_victory" in addToPool
+- Event "power_struggle_escalates" references non-existent event "peaceful_exit" in addToPool
+- Event "power_struggle_escalates" references non-existent event "country_divided" in addToPool
+- Event "power_struggle_escalates" references non-existent event "dual_power" in addToPool
+- Event "power_struggle_escalates" references non-existent event "fragmentation_begins" in addToPool
+- Event "civil_war_brink" references non-existent event "internal_war" in addToPool
+- Event "civil_war_brink" references non-existent event "civilian_casualties" in addToPool
+- Event "civil_war_brink" references non-existent event "scorched_earth" in addToPool
+- Event "civil_war_brink" references non-existent event "victory_pyrrhic" in addToPool
+- Event "civil_war_brink" references non-existent event "partition_negotiations" in addToPool
+- Event "civil_war_brink" references non-existent event "border_disputes" in addToPool
+- Event "civil_war_brink" references non-existent event "two_states" in addToPool
+- Event "civil_war_brink" references non-existent event "population_transfers" in addToPool
+- Event "civil_war_brink" references non-existent event "peacekeepers_arrive" in addToPool
+- Event "civil_war_brink" references non-existent event "ceasefire_fragile" in addToPool
+- Event "civil_war_brink" references non-existent event "status_quo_limbo" in addToPool
+- Event "power_vacuum" references non-existent event "triumphant_return" in addToPool
+- Event "power_vacuum" references non-existent event "purge_disloyal" in addToPool
+- Event "power_vacuum" references non-existent event "authority_restored" in addToPool
+- Event "power_vacuum" references non-existent event "proxy_rule" in addToPool
+- Event "power_vacuum" references non-existent event "mystery_deepens" in addToPool
+- Event "power_vacuum" references non-existent event "control_slips" in addToPool
+- Event "power_vacuum" references non-existent event "succession_crisis" in addToPool
+- Event "power_vacuum" references non-existent event "power_vacuum_complete" in addToPool
+- Event "power_vacuum" references non-existent event "free_for_all" in addToPool
+- Event "military_coup_plot_discovered" references non-existent event "show_trials" in addToPool
+- Event "military_coup_plot_discovered" references non-existent event "public_executions" in addToPool
+- Event "military_coup_plot_discovered" references non-existent event "fear_spreads" in addToPool
+- Event "military_coup_plot_discovered" references non-existent event "underground_grows" in addToPool
+- Event "military_coup_plot_discovered" references non-existent event "disappeared" in addToPool
+- Event "military_coup_plot_discovered" references non-existent event "secret_prisons" in addToPool
+- Event "military_coup_plot_discovered" references non-existent event "rumors_spread" in addToPool
+- Event "military_coup_plot_discovered" references non-existent event "paranoia_culture" in addToPool
+- Event "military_coup_plot_discovered" references non-existent event "weakened_military" in addToPool
+- Event "military_coup_plot_discovered" references non-existent event "officer_exodus" in addToPool
+- Event "military_coup_plot_discovered" references non-existent event "incompetence_rises" in addToPool
+- Event "succession_grooming" references non-existent event "dynastic_succession" in addToPool
+- Event "succession_grooming" references non-existent event "son_incompetence" in addToPool
+- Event "succession_grooming" references non-existent event "elite_resentment" in addToPool
+- Event "succession_grooming" references non-existent event "family_kleptocracy" in addToPool
+- Event "succession_grooming" references non-existent event "pm_ambitions" in addToPool
+- Event "succession_grooming" references non-existent event "smooth_transition" in addToPool
+- Event "succession_grooming" references non-existent event "betrayal_risk" in addToPool
+- Event "succession_grooming" references non-existent event "successor_rises" in addToPool
+- Event "succession_grooming" references non-existent event "technocrat_puppet" in addToPool
+- Event "succession_grooming" references non-existent event "modernizer_facade" in addToPool
+- Event "succession_grooming" references non-existent event "behind_throne" in addToPool
+- Event "succession_grooming" references non-existent event "inexperience_shows" in addToPool
 - Event "university_occupation" references non-existent event "international_condemnation" in addToPool
 - Event "journalist_problem" references non-existent event "international_sanctions" in addToPool
 - Event "palace_construction" references non-existent event "palace_scandal" in addToPool
@@ -409,7 +515,6 @@
 - **brain_drain_sanctions** (sanctions_international): "The Exodus"
 - **financial_system_crisis** (sanctions_international): "Bank Run"
 - **economic_adaptation** (sanctions_international): "The New Normal"
-- **rival_in_exile** (succession_power): "The Pretender Abroad"
 - **university_occupation** (social_movements): "The Occupied Campus"
 - **social_media_viral** (social_movements): "The Viral Moment"
 - **general_strike** (social_movements): "The General Strike"
@@ -493,16 +598,27 @@
     └─ **alternative_energy_routes** - The Chinese Pivot 🔒 [energy_politics]
   └─ **opec_plus_meeting** - The Cartel Convenes 🔒 [energy_politics]
 
+▶ **succession_question** - The Successor Problem 🔒
+  └─ **succession_grooming** - The Chosen One 🔒
+
 ▶ **ambitious_general** - The General's Ambition 🔒
   └─ **general_power_grows** - The General's Network 🔒
     └─ **coup_attempt** - The Midnight Knock 🔒
+      └─ **rival_in_exile** - The Pretender Abroad 🔒
       └─ **civil_war_brink** - The Nation Fractures 🔒
     └─ **tandem_rule** - The Uneasy Partnership 🔒
       └─ **power_struggle_escalates** - The Breaking Point 🔒
   └─ **military_loyalty_crisis** - The Army Divided 🔒
+    └─ **general_power_grows** - The General's Network 🔒
+      └─ **coup_attempt** - The Midnight Knock 🔒
+      └─ **tandem_rule** - The Uneasy Partnership 🔒
+    └─ **military_disaster** - The Equipment Failure 🔒
 
 ▶ **assassination_attempt** - The Poisoned Cup 🔒
   └─ **power_vacuum** - The Invisible Leader 🔒
+
+▶ **military_coup_plot_discovered** - The Colonel's Plot 🔒
+  └─ **coup_risk_grows** - The Generals Whisper 🔒
 
 ▶ **student_protest_small** - The Campus Rebellion 🔒
   └─ **student_martyrdom** - The Martyr 🔒
