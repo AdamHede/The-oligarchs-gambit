@@ -284,15 +284,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Arrest him tonight. Seize his gas company. Restore monopoly.",
-                effects: { personalWealth: 18, treasury: 120, elite: -15, anger: 15 }
+                effects: { personalWealth: 18, treasury: 120, elite: -15, anger: 15 },
+                addToPool: ["oligarch_panic"]
             },
             {
                 text: "Force merger. 60/40 split in your favor. Absorb his network.",
-                effects: { personalWealth: 12, treasury: 80, elite: -5, anger: 10 }
+                effects: { personalWealth: 12, treasury: 80, elite: -5, anger: 10 },
+                addToPool: ["forced_partnership"]
             },
             {
                 text: "Let him operate. Two suppliers competing makes both stronger. (Risky)",
-                effects: { personalWealth: 0, treasury: 40, elite: 10, anger: 0 }
+                effects: { personalWealth: 0, treasury: 40, elite: 10, anger: 0 },
+                addToPool: ["rival_grows_stronger"]
             }
         ]
     },
@@ -306,15 +309,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Full purge. Fire them all. Education must serve the state.",
-                effects: { personalWealth: 0, treasury: -20, elite: 5, anger: 25 }
+                effects: { personalWealth: 0, treasury: -20, elite: 5, anger: 25 },
+                addToPool: ["academic_exodus"]
             },
             {
                 text: "Targeted dismissals. Fire 10 worst offenders. Warning to others.",
-                effects: { personalWealth: 0, treasury: -10, elite: 0, anger: 15 }
+                effects: { personalWealth: 0, treasury: -10, elite: 0, anger: 15 },
+                addToPool: ["self_censorship_spreads"]
             },
             {
                 text: "Leave them alone. Academic freedom... within limits. Monitor them.",
-                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: -5 }
+                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: -5 },
+                addToPool: ["intellectual_opposition"]
             }
         ]
     },
@@ -353,15 +359,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Full bid. Pay the bribes. Win the hosting rights. Glory!",
-                effects: { personalWealth: -5, treasury: -1000, elite: 10, anger: 25 }
+                effects: { personalWealth: -5, treasury: -1000, elite: 10, anger: 25 },
+                addToPool: ["fifa_world_cup_disaster"]
             },
             {
                 text: "Symbolic bid. No bribes. We won't win but we look principled.",
-                effects: { personalWealth: 0, treasury: -50, elite: -5, anger: 5 }
+                effects: { personalWealth: 0, treasury: -50, elite: -5, anger: 5 },
+                addToPool: ["bid_rejected"]
             },
             {
                 text: "Reject. $25B on stadiums while hospitals crumble? Insane.",
-                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -10 }
+                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -10 },
+                addToPool: ["pragmatic_choice"]
             }
         ]
     },
@@ -450,15 +459,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Escalate. Expel 50 more diplomats. We don't need them.",
-                effects: { personalWealth: 0, treasury: -40, elite: 10, anger: 15 }
+                effects: { personalWealth: 0, treasury: -40, elite: 10, anger: 15 },
+                addToPool: ["diplomatic_isolation"]
             },
             {
                 text: "Backchannel de-escalation. Both sides quietly restore ambassadors.",
-                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: 5 }
+                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: 5 },
+                addToPool: ["quiet_diplomacy"]
             },
             {
                 text: "Stand firm but pause. No more expulsions. Freeze the crisis.",
-                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 10 }
+                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 10 },
+                addToPool: ["frozen_relations"]
             }
         ]
     },
