@@ -1,6 +1,6 @@
 // The Oligarch's Gambit - v1.6.0
 // Succession & Power Struggles
-// 13 events
+// Redesigned for comprehensive branching
 
 const SUCCESSION_POWER_EVENTS = [
     {
@@ -13,16 +13,19 @@ const SUCCESSION_POWER_EVENTS = [
         choices: [
             {
                 text: "Succession? I'll rule until I'm 90. End of discussion.",
-                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: 10 }
+                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: 10 },
+                addToPool: ["succession_anxiety", "elite_conspiracy", "health_crisis_rumors"]
             },
             {
                 text: "Groom a weak placeholder. Putin-Medvedev switcheroo.",
                 effects: { personalWealth: 2, treasury: 0, elite: 10, anger: 5 },
-                legacy: { icon: "🎪", name: "Puppetmaster", weight: 8 }
+                legacy: { icon: "🎪", name: "Puppetmaster", weight: 8 },
+                addToPool: ["succession_grooming", "placeholder_ambitions", "power_behind_throne"]
             },
             {
                 text: "Promise free elections when I retire. (Total lie)",
-                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: -15 }
+                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: -15 },
+                addToPool: ["false_promises", "succession_grooming", "democratic_hopes"]
             }
         ]
     },
@@ -37,16 +40,17 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Promote him. Defense Minister. Keep him close. Control him from within.",
                 effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 0 },
-                addToPool: ["general_power_grows"]
+                addToPool: ["general_power_grows", "ministry_takeover", "parallel_power"]
             },
             {
                 text: "Arrest him tonight. Treason charges. Fake coup plot evidence.",
                 effects: { personalWealth: 0, treasury: -50, elite: -20, anger: 15 },
-                addToPool: ["military_loyalty_crisis"]
+                addToPool: ["military_loyalty_crisis", "general_martyrdom", "army_split"]
             },
             {
                 text: "Forced retirement. 'Health reasons.' Pension and a dacha. Neutralize quietly.",
-                effects: { personalWealth: -3, treasury: -20, elite: -5, anger: 5 }
+                effects: { personalWealth: -3, treasury: -20, elite: -5, anger: 5 },
+                addToPool: ["general_exile", "veteran_anger", "quiet_resentment"]
             }
         ]
     },
@@ -61,16 +65,17 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Strike first. Arrest him and 40 officers. Decapitate his network.",
                 effects: { personalWealth: 0, treasury: -80, elite: -25, anger: 20 },
-                addToPool: ["coup_attempt", "military_fragmentation"]
+                addToPool: ["coup_attempt", "military_fragmentation", "purge_aftermath"]
             },
             {
                 text: "Power-sharing. Make him Prime Minister. Co-rule. (Temporary truce)",
                 effects: { personalWealth: 0, treasury: 0, elite: 0, anger: 10 },
-                addToPool: ["tandem_rule"]
+                addToPool: ["tandem_rule", "uneasy_alliance", "power_competition"]
             },
             {
                 text: "Bribe his network. Offer them more than he can. Buy their loyalty.",
-                effects: { personalWealth: -15, treasury: -200, elite: -10, anger: 5 }
+                effects: { personalWealth: -15, treasury: -200, elite: -10, anger: 5 },
+                addToPool: ["loyalty_bought", "general_isolated", "expensive_loyalty"]
             }
         ]
     },
@@ -85,17 +90,19 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Flee. Take the helicopter. Dubai will grant asylum. Live to plot return.",
                 effects: { personalWealth: 0, treasury: -300, elite: -50, anger: -30 },
-                legacy: { icon: "🚁", name: "The Exile", weight: -22 }
+                legacy: { icon: "🚁", name: "The Exile", weight: -22 },
+                addToPool: ["exile_planning", "rival_in_exile", "government_in_exile"]
             },
             {
                 text: "Fight. Rally loyalists. Promise them everything. This is my country.",
                 effects: { personalWealth: -20, treasury: -400, elite: -30, anger: 40 },
-                addToPool: ["civil_war_brink"]
+                addToPool: ["civil_war_brink", "loyalty_test", "desperate_promises"]
             },
             {
                 text: "Negotiate surrender. Immunity for you and family. They won. Accept it.",
                 effects: { personalWealth: 0, treasury: -200, elite: -40, anger: -20 },
-                legacy: { icon: "🏳️", name: "Deposed", weight: -18 }
+                legacy: { icon: "🏳️", name: "Deposed", weight: -18 },
+                addToPool: ["negotiated_exit", "immunity_terms", "peaceful_transition"]
             }
         ]
     },
@@ -110,18 +117,19 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Release the general. Apologize. 'Misunderstanding.' Restore unity.",
                 effects: { personalWealth: 0, treasury: 0, elite: -25, anger: 10 },
-                legacy: { icon: "🫠", name: "Forced Retreat", weight: -12 }
+                legacy: { icon: "🫠", name: "Forced Retreat", weight: -12 },
+                addToPool: ["humiliation", "general_power_grows", "weakness_exposed"]
             },
             {
                 text: "Purge the military. Fire 200 officers. Install totally loyal (incompetent) ones.",
                 effects: { personalWealth: 0, treasury: -100, elite: -30, anger: 20 },
-                addToPool: ["weakened_military"]
+                addToPool: ["weakened_military", "incompetent_command", "military_disaster"]
             },
             {
                 text: "Execute the general. Televise it. Show what happens to traitors.",
                 effects: { personalWealth: 0, treasury: -50, elite: -35, anger: 25 },
                 legacy: { icon: "⚰️", name: "General Killer", weight: -15 },
-                addToPool: ["military_fragmentation"]
+                addToPool: ["military_fragmentation", "martyrdom_effect", "veteran_rage"]
             }
         ]
     },
@@ -135,16 +143,18 @@ const SUCCESSION_POWER_EVENTS = [
         choices: [
             {
                 text: "Massive purge. Cabinet, generals, oligarchs. Arrest 50 people. Find the traitor.",
-                effects: { personalWealth: -5, treasury: -80, elite: -40, anger: 20 }
+                effects: { personalWealth: -5, treasury: -80, elite: -40, anger: 20 },
+                addToPool: ["great_purge", "paranoia_spreads", "loyalty_through_fear"]
             },
             {
                 text: "Blame foreign intelligence. Rally the nation. Turn weakness into strength.",
-                effects: { personalWealth: 0, treasury: -40, elite: 10, anger: 15 }
+                effects: { personalWealth: 0, treasury: -40, elite: 10, anger: 15 },
+                addToPool: ["false_flag_narrative", "nationalist_rally", "western_plot"]
             },
             {
                 text: "Go silent. Disappear for months. Rule from an undisclosed bunker.",
                 effects: { personalWealth: 0, treasury: 0, elite: -20, anger: 30 },
-                addToPool: ["power_vacuum"]
+                addToPool: ["power_vacuum", "bunker_mentality", "conspiracy_theories"]
             }
         ]
     },
@@ -159,15 +169,17 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Assassination order. GRU team to Warsaw. Permanent solution.",
                 effects: { personalWealth: -3, treasury: -40, elite: 5, anger: 20 },
-                addToPool: ["international_sanctions"]
+                addToPool: ["international_sanctions", "assassination_blowback", "martyrdom_created"]
             },
             {
                 text: "Discredit him. Release kompromat. Corruption, affairs, scandal.",
-                effects: { personalWealth: 0, treasury: -30, elite: 0, anger: 10 }
+                effects: { personalWealth: 0, treasury: -30, elite: 0, anger: 10 },
+                addToPool: ["kompromat_war", "reputation_damage", "propaganda_battle"]
             },
             {
                 text: "Ignore him. He's powerless abroad. Don't make him a martyr.",
-                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: 15 }
+                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: 15 },
+                addToPool: ["opposition_grows", "exile_community_forms", "symbol_emerges"]
             }
         ]
     },
@@ -182,16 +194,17 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Strengthen presidency. Transfer powers from PM. Constitutional changes.",
                 effects: { personalWealth: 0, treasury: -60, elite: 5, anger: 15 },
-                addToPool: ["power_struggle_escalates"]
+                addToPool: ["power_struggle_escalates", "constitutional_crisis", "pm_resistance"]
             },
             {
                 text: "Accept it. Genuine power-sharing. He handles military, you handle money.",
-                effects: { personalWealth: -5, treasury: 0, elite: 10, anger: -10 }
+                effects: { personalWealth: -5, treasury: 0, elite: 10, anger: -10 },
+                addToPool: ["stable_duumvirate", "competing_centers", "faction_formation"]
             },
             {
                 text: "Slow coup. Remove his allies one by one. Year-long campaign to weaken him.",
                 effects: { personalWealth: -3, treasury: -80, elite: -5, anger: 10 },
-                addToPool: ["power_struggle_escalates"]
+                addToPool: ["power_struggle_escalates", "gradual_purge", "resistance_builds"]
             }
         ]
     },
@@ -206,16 +219,18 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Presidential coup. Arrest him. Declare emergency. Winner takes all.",
                 effects: { personalWealth: -10, treasury: -150, elite: -20, anger: 30 },
-                addToPool: ["coup_attempt"]
+                addToPool: ["coup_attempt", "emergency_powers", "final_showdown"]
             },
             {
                 text: "Resign. Step down. 'For the good of the nation.' (You lose)",
                 effects: { personalWealth: 0, treasury: 0, elite: -30, anger: -20 },
-                legacy: { icon: "📉", name: "Outmaneuvered", weight: -10 }
+                legacy: { icon: "📉", name: "Outmaneuvered", weight: -10 },
+                addToPool: ["forced_retirement", "rival_victory", "peaceful_exit"]
             },
             {
                 text: "Compromise. Divide the country into spheres. You take capital, he takes regions.",
-                effects: { personalWealth: -5, treasury: -100, elite: -15, anger: 20 }
+                effects: { personalWealth: -5, treasury: -100, elite: -15, anger: 20 },
+                addToPool: ["country_divided", "dual_power", "fragmentation_begins"]
             }
         ]
     },
@@ -230,17 +245,20 @@ const SUCCESSION_POWER_EVENTS = [
             {
                 text: "Full military assault. Crush the rebellion. One country, one leader.",
                 effects: { personalWealth: -20, treasury: -600, elite: -25, anger: 60 },
-                legacy: { icon: "⚔️", name: "Civil War Victor", weight: -28 }
+                legacy: { icon: "⚔️", name: "Civil War Victor", weight: -28 },
+                addToPool: ["internal_war", "civilian_casualties", "scorched_earth", "victory_pyrrhic"]
             },
             {
                 text: "Negotiate partition. Two countries. This federation is dead anyway.",
                 effects: { personalWealth: -15, treasury: -400, elite: -30, anger: 30 },
-                legacy: { icon: "🗺️", name: "Nation Divider", weight: -20 }
+                legacy: { icon: "🗺️", name: "Nation Divider", weight: -20 },
+                addToPool: ["partition_negotiations", "border_disputes", "two_states", "population_transfers"]
             },
             {
                 text: "International mediation. UN peacekeepers. Freeze the conflict.",
                 effects: { personalWealth: -10, treasury: -250, elite: -20, anger: 25 },
-                legacy: { icon: "🕊️", name: "Frozen Civil War", weight: -16 }
+                legacy: { icon: "🕊️", name: "Frozen Civil War", weight: -16 },
+                addToPool: ["frozen_conflict", "peacekeepers_arrive", "ceasefire_fragile", "status_quo_limbo"]
             }
         ]
     },
@@ -254,16 +272,19 @@ const SUCCESSION_POWER_EVENTS = [
         choices: [
             {
                 text: "Dramatic return. National address. Purge those who overstepped. Reassert control.",
-                effects: { personalWealth: -5, treasury: -100, elite: 10, anger: 20 }
+                effects: { personalWealth: -5, treasury: -100, elite: 10, anger: 20 },
+                addToPool: ["triumphant_return", "purge_disloyal", "authority_restored"]
             },
             {
                 text: "Stay hidden. Rule through proxies. The myth is more powerful than the man.",
-                effects: { personalWealth: 0, treasury: 0, elite: -15, anger: 30 }
+                effects: { personalWealth: 0, treasury: 0, elite: -15, anger: 30 },
+                addToPool: ["proxy_rule", "mystery_deepens", "control_slips"]
             },
             {
                 text: "Permanent retreat. Resign for 'health reasons.' The game is over.",
                 effects: { personalWealth: 0, treasury: 0, elite: -25, anger: -15 },
-                legacy: { icon: "👻", name: "The Vanished", weight: -14 }
+                legacy: { icon: "👻", name: "The Vanished", weight: -14 },
+                addToPool: ["succession_crisis", "power_vacuum_complete", "free_for_all"]
             }
         ]
     },
@@ -277,15 +298,18 @@ const SUCCESSION_POWER_EVENTS = [
         choices: [
             {
                 text: "Public show trials. Televise executions. Terror as deterrent.",
-                effects: { personalWealth: 0, treasury: -50, elite: -20, anger: 35 }
+                effects: { personalWealth: 0, treasury: -50, elite: -20, anger: 35 },
+                addToPool: ["show_trials", "public_executions", "fear_spreads", "underground_grows"]
             },
             {
                 text: "Quiet arrests. Disappear them. No publicity, no martyrs.",
-                effects: { personalWealth: 0, treasury: -30, elite: -10, anger: 15 }
+                effects: { personalWealth: 0, treasury: -30, elite: -10, anger: 15 },
+                addToPool: ["disappeared", "secret_prisons", "rumors_spread", "paranoia_culture"]
             },
             {
                 text: "Mass military purge. Fire 2,000 officers. Gut potential opposition.",
-                effects: { personalWealth: 0, treasury: -120, elite: -30, anger: 25 }
+                effects: { personalWealth: 0, treasury: -120, elite: -30, anger: 25 },
+                addToPool: ["weakened_military", "officer_exodus", "incompetence_rises", "coup_risk_grows"]
             }
         ]
     },
@@ -299,18 +323,19 @@ const SUCCESSION_POWER_EVENTS = [
         choices: [
             {
                 text: "Your son. Keep power in family. Incompetence is manageable.",
-                effects: { personalWealth: 0, treasury: 0, elite: -15, anger: 25 }
+                effects: { personalWealth: 0, treasury: 0, elite: -15, anger: 25 },
+                addToPool: ["dynastic_succession", "son_incompetence", "elite_resentment", "family_kleptocracy"]
             },
             {
                 text: "The Prime Minister. Competent governance. But he might betray you later.",
-                effects: { personalWealth: -5, treasury: 0, elite: 10, anger: -10 }
+                effects: { personalWealth: -5, treasury: 0, elite: 10, anger: -10 },
+                addToPool: ["pm_ambitions", "smooth_transition", "betrayal_risk", "successor_rises"]
             },
             {
                 text: "Young technocrat. Fresh face. You pull strings from behind.",
-                effects: { personalWealth: 0, treasury: 0, elite: 0, anger: 5 }
+                effects: { personalWealth: 0, treasury: 0, elite: 0, anger: 5 },
+                addToPool: ["technocrat_puppet", "modernizer_facade", "behind_throne", "inexperience_shows"]
             }
         ]
     }
 ];
-
-
