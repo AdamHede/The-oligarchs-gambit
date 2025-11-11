@@ -1,6 +1,6 @@
 # Event Tree Structure
 
-*Generated: 11/10/2025, 9:46:59 PM*
+*Generated: 11/11/2025, 7:41:08 AM*
 
 ## Statistics
 
@@ -12,8 +12,8 @@
 
 ### Branching Analysis
 
-- **Dead Ends** (no new events): 117 (79.6%)
-- **Branching Events** (1+ new events): 30 (20.4%)
+- **Dead Ends** (no new events): 116 (78.9%)
+- **Branching Events** (1+ new events): 31 (21.1%)
 - **Major Branches** (3+ new events): 7 (4.8%)
 
 ### Chain Depth
@@ -167,10 +167,108 @@
 - Event "coup_risk_grows" references non-existent event "bought_loyalty" in addToPool
 - Event "coup_risk_grows" references non-existent event "coup_plot_develops" in addToPool
 - Event "coup_risk_grows" references non-existent event "surveillance_intensifies" in addToPool
-- Event "gas_leverage" references non-existent event "international_sanctions" in addToPool
+- Event "gas_pipeline_deal" references non-existent event "nephew_incompetence" in addToPool
+- Event "gas_pipeline_deal" references non-existent event "corruption_investigation" in addToPool
+- Event "gas_pipeline_deal" references non-existent event "european_dependency" in addToPool
+- Event "gas_pipeline_deal" references non-existent event "western_leverage" in addToPool
+- Event "gas_pipeline_deal" references non-existent event "contract_disputes" in addToPool
+- Event "gas_leverage" references non-existent event "energy_retaliation" in addToPool
+- Event "gas_leverage" references non-existent event "price_backlash" in addToPool
+- Event "gas_leverage" references non-existent event "reliable_supplier_reputation" in addToPool
+- Event "gas_leverage" references non-existent event "missed_opportunity" in addToPool
+- Event "pipeline_sabotage" references non-existent event "un_investigation" in addToPool
+- Event "pipeline_sabotage" references non-existent event "anti_american_propaganda" in addToPool
+- Event "pipeline_sabotage" references non-existent event "diplomatic_crisis" in addToPool
+- Event "pipeline_sabotage" references non-existent event "conspiracy_theories" in addToPool
+- Event "pipeline_sabotage" references non-existent event "price_exploitation" in addToPool
+- Event "pipeline_sabotage" references non-existent event "european_distrust" in addToPool
+- Event "pipeline_sabotage" references non-existent event "extortion_accusations" in addToPool
+- Event "pipeline_sabotage" references non-existent event "rebuild_delays" in addToPool
+- Event "european_energy_crisis" references non-existent event "permanent_customer_loss" in addToPool
+- Event "european_energy_crisis" references non-existent event "lng_acceleration" in addToPool
+- Event "european_energy_crisis" references non-existent event "europe_breaks_free" in addToPool
+- Event "european_energy_crisis" references non-existent event "sanctions_relief_partial" in addToPool
+- Event "european_energy_crisis" references non-existent event "price_resentment" in addToPool
+- Event "european_energy_crisis" references non-existent event "trust_damaged" in addToPool
+- Event "european_energy_crisis" references non-existent event "reputation_salvage" in addToPool
+- Event "european_energy_crisis" references non-existent event "hardliner_backlash" in addToPool
+- Event "european_energy_crisis" references non-existent event "long_term_contracts" in addToPool
+- Event "opec_plus_meeting" references non-existent event "oil_price_spike" in addToPool
+- Event "opec_plus_meeting" references non-existent event "american_pressure" in addToPool
+- Event "opec_plus_meeting" references non-existent event "cartel_solidarity" in addToPool
+- Event "opec_plus_meeting" references non-existent event "consumer_rage" in addToPool
+- Event "opec_plus_meeting" references non-existent event "saudi_betrayal" in addToPool
+- Event "opec_plus_meeting" references non-existent event "market_war" in addToPool
+- Event "opec_plus_meeting" references non-existent event "price_collapse" in addToPool
+- Event "opec_plus_meeting" references non-existent event "share_gains" in addToPool
+- Event "opec_plus_meeting" references non-existent event "deception_exposed" in addToPool
+- Event "opec_plus_meeting" references non-existent event "trust_destroyed" in addToPool
+- Event "opec_plus_meeting" references non-existent event "cartel_chaos" in addToPool
+- Event "opec_plus_meeting" references non-existent event "short_term_windfall" in addToPool
+- Event "gas_for_rubles" references non-existent event "ruble_manipulation" in addToPool
+- Event "gas_for_rubles" references non-existent event "contract_violations" in addToPool
+- Event "gas_for_rubles" references non-existent event "eu_retaliation" in addToPool
+- Event "gas_for_rubles" references non-existent event "eu_splits" in addToPool
+- Event "gas_for_rubles" references non-existent event "preferred_partners" in addToPool
+- Event "gas_for_rubles" references non-existent event "resentment_builds" in addToPool
+- Event "gas_for_rubles" references non-existent event "credibility_questioned" in addToPool
+- Event "gas_for_rubles" references non-existent event "ruble_support_partial" in addToPool
+- Event "gas_for_rubles" references non-existent event "negotiating_leverage" in addToPool
 - Event "alternative_energy_routes" references non-existent event "chinese_dependence" in addToPool
+- Event "alternative_energy_routes" references non-existent event "unfavorable_terms" in addToPool
+- Event "alternative_energy_routes" references non-existent event "construction_nightmare" in addToPool
+- Event "alternative_energy_routes" references non-existent event "european_markets_lost" in addToPool
+- Event "alternative_energy_routes" references non-existent event "bidding_war" in addToPool
+- Event "alternative_energy_routes" references non-existent event "india_partnership" in addToPool
+- Event "alternative_energy_routes" references non-existent event "china_resentment" in addToPool
+- Event "alternative_energy_routes" references non-existent event "china_snubs_you" in addToPool
+- Event "alternative_energy_routes" references non-existent event "european_leverage" in addToPool
+- Event "alternative_energy_routes" references non-existent event "strategic_error" in addToPool
+- Event "lng_terminal_race" references non-existent event "lng_construction_delays" in addToPool
+- Event "lng_terminal_race" references non-existent event "technology_gaps" in addToPool
+- Event "lng_terminal_race" references non-existent event "american_opposition" in addToPool
+- Event "lng_terminal_race" references non-existent event "revenue_collapse" in addToPool
+- Event "lng_terminal_race" references non-existent event "market_share_retained" in addToPool
+- Event "lng_terminal_race" references non-existent event "unsustainable_pricing" in addToPool
+- Event "lng_terminal_race" references non-existent event "strategic_retreat" in addToPool
+- Event "lng_terminal_race" references non-existent event "european_independence" in addToPool
 - Event "arctic_oil_discovery" references non-existent event "arctic_militarization" in addToPool
 - Event "arctic_oil_discovery" references non-existent event "environmental_catastrophe" in addToPool
+- Event "arctic_oil_discovery" references non-existent event "american_confrontation" in addToPool
+- Event "arctic_oil_discovery" references non-existent event "oil_bonanza" in addToPool
+- Event "arctic_oil_discovery" references non-existent event "western_partnership" in addToPool
+- Event "arctic_oil_discovery" references non-existent event "technology_transfer" in addToPool
+- Event "arctic_oil_discovery" references non-existent event "revenue_sharing" in addToPool
+- Event "arctic_oil_discovery" references non-existent event "hardliner_rage" in addToPool
+- Event "arctic_oil_discovery" references non-existent event "lost_opportunity" in addToPool
+- Event "arctic_oil_discovery" references non-existent event "green_reputation" in addToPool
+- Event "climate_pressure" references non-existent event "denial_consequences" in addToPool
+- Event "climate_pressure" references non-existent event "international_isolation" in addToPool
+- Event "climate_pressure" references non-existent event "stranded_assets_future" in addToPool
+- Event "climate_pressure" references non-existent event "green_transition_struggles" in addToPool
+- Event "climate_pressure" references non-existent event "technology_deficit" in addToPool
+- Event "climate_pressure" references non-existent event "elite_opposition" in addToPool
+- Event "climate_pressure" references non-existent event "short_term_gains" in addToPool
+- Event "climate_pressure" references non-existent event "long_term_ruin" in addToPool
+- Event "climate_pressure" references non-existent event "next_generation_problem" in addToPool
+- Event "pipeline_construction_scandal" references non-existent event "corruption_exposed_international" in addToPool
+- Event "pipeline_construction_scandal" references non-existent event "investigator_martyrs" in addToPool
+- Event "pipeline_construction_scandal" references non-existent event "reputation_destroyed" in addToPool
+- Event "pipeline_construction_scandal" references non-existent event "family_resentment" in addToPool
+- Event "pipeline_construction_scandal" references non-existent event "temporary_victory" in addToPool
+- Event "pipeline_construction_scandal" references non-existent event "scapegoat_revenge" in addToPool
+- Event "pipeline_construction_scandal" references non-existent event "pipeline_completion" in addToPool
+- Event "pipeline_construction_scandal" references non-existent event "credibility_restored" in addToPool
+- Event "pipeline_construction_scandal" references non-existent event "elite_anger_wasted_grift" in addToPool
+- Event "strategic_reserve_depletion" references non-existent event "classified_coverup" in addToPool
+- Event "strategic_reserve_depletion" references non-existent event "whistleblower_risk" in addToPool
+- Event "strategic_reserve_depletion" references non-existent event "vulnerability_remains" in addToPool
+- Event "strategic_reserve_depletion" references non-existent event "reserve_restored" in addToPool
+- Event "strategic_reserve_depletion" references non-existent event "budget_crisis" in addToPool
+- Event "strategic_reserve_depletion" references non-existent event "oligarch_anger_cost" in addToPool
+- Event "strategic_reserve_depletion" references non-existent event "scapegoat_search" in addToPool
+- Event "strategic_reserve_depletion" references non-existent event "problem_persists" in addToPool
+- Event "strategic_reserve_depletion" references non-existent event "next_crisis_worse" in addToPool
 - Event "oligarch_exile" references non-existent event "international_sanctions" in addToPool
 - Event "general_power_grows" references non-existent event "military_fragmentation" in addToPool
 - Event "military_loyalty_crisis" references non-existent event "weakened_military" in addToPool
@@ -266,8 +364,10 @@
 
 ▶ **gas_leverage** - Energy Diplomacy 🔒 [energy_politics]
   └─ **european_energy_crisis** - Europe Shivers 🔒 [energy_politics]
+    └─ **alternative_energy_routes** - The Chinese Pivot 🔒 [energy_politics]
   └─ **gas_for_rubles** - The Currency Weapon 🔒 [energy_politics]
     └─ **european_energy_crisis** - Europe Shivers 🔒 [energy_politics]
+      └─ **alternative_energy_routes** - The Chinese Pivot 🔒 [energy_politics]
   └─ **lng_terminal_race** - The LNG Gambit 🔒 [energy_politics]
     └─ **alternative_energy_routes** - The Chinese Pivot 🔒 [energy_politics]
   └─ **opec_plus_meeting** - The Cartel Convenes 🔒 [energy_politics]
