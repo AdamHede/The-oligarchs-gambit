@@ -1,6 +1,6 @@
-// The Oligarch's Gambit - v1.3
+// The Oligarch's Gambit - v1.6.0
 // Domestic Crisis & Institutional Breakdown
-// 11 events
+// Redesigned for comprehensive branching
 
 const DOMESTIC_CRISIS_EVENTS = [
     {
@@ -12,16 +12,19 @@ const DOMESTIC_CRISIS_EVENTS = [
         choices: [
             {
                 text: "Price controls and subsidies. Keep the proles fed.",
-                effects: { personalWealth: 0, treasury: -220, elite: 0, anger: -20 }
+                effects: { personalWealth: 0, treasury: -220, elite: 0, anger: -20 },
+                addToPool: ["budget_crisis", "subsidy_trap", "fiscal_hemorrhage", "temporary_relief"]
             },
             {
                 text: "Blame the West. Sanctions caused this. (State media blitz)",
-                effects: { personalWealth: 0, treasury: -30, elite: 5, anger: 10 }
+                effects: { personalWealth: 0, treasury: -30, elite: 5, anger: 10 },
+                addToPool: ["propaganda_success", "western_scapegoat", "nationalist_unity", "blame_game"]
             },
             {
                 text: "Arrest supermarket CEOs. 'Profiteering.' Seize their assets.",
                 effects: { personalWealth: 4, treasury: 35, elite: -5, anger: 15 },
-                legacy: { icon: "🎯", name: "Scapegoat Master", weight: -5 }
+                legacy: { icon: "🎯", name: "Scapegoat Master", weight: -5 },
+                addToPool: ["business_elite_fear", "supply_chain_collapse", "scapegoat_tactic", "economic_uncertainty"]
             }
         ]
     },
@@ -35,16 +38,19 @@ const DOMESTIC_CRISIS_EVENTS = [
         choices: [
             {
                 text: "Peg to yuan. Abandon ruble independence. Chinese currency becomes de facto currency.",
-                effects: { personalWealth: -10, treasury: -150, elite: -15, anger: 35 }
+                effects: { personalWealth: -10, treasury: -150, elite: -15, anger: 35 },
+                addToPool: ["chinese_dependency", "sovereignty_lost", "currency_stabilization", "nationalist_shame"]
             },
             {
                 text: "Capital controls. Ban forex trading. Make ruble-dollar exchange illegal.",
-                effects: { personalWealth: 0, treasury: -100, elite: -10, anger: 40 }
+                effects: { personalWealth: 0, treasury: -100, elite: -10, anger: 40 },
+                addToPool: ["black_market_currency", "capital_flight", "enforcement_impossible", "economic_prison"]
             },
             {
                 text: "Default on debt. Hyperinflation. Economic chaos. But you survive.",
                 effects: { personalWealth: -5, treasury: -300, elite: -25, anger: 60 },
-                legacy: { icon: "📉", name: "Currency Destroyer", weight: -22 }
+                legacy: { icon: "📉", name: "Currency Destroyer", weight: -22 },
+                addToPool: ["hyperinflation_spiral", "savings_obliterated", "economic_meltdown", "sovereign_default"]
             }
         ]
     },
@@ -57,15 +63,18 @@ const DOMESTIC_CRISIS_EVENTS = [
         choices: [
             {
                 text: "Send riot police. Break the strike. Arrest union leaders.",
-                effects: { personalWealth: 0, treasury: -30, elite: 10, anger: 30 }
+                effects: { personalWealth: 0, treasury: -30, elite: 10, anger: 30 },
+                addToPool: ["labor_repression", "union_underground", "strike_wave", "worker_rage"]
             },
             {
                 text: "Force the owner to negotiate. 15% wage increase. They accept.",
-                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -15 }
+                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -15 },
+                addToPool: ["labor_precedent", "owner_resentment", "wage_spiral", "union_emboldened"]
             },
             {
                 text: "Nationalize the mine. Fire the owner. Workers now work for state.",
-                effects: { personalWealth: 5, treasury: -80, elite: -15, anger: -10 }
+                effects: { personalWealth: 5, treasury: -80, elite: -15, anger: -10 },
+                addToPool: ["nationalization_wave", "oligarch_panic", "state_enterprise_inefficiency", "expropriation_precedent"]
             }
         ]
     },
@@ -78,15 +87,18 @@ const DOMESTIC_CRISIS_EVENTS = [
         choices: [
             {
                 text: "Massive state response. Military rescue. Rebuild everything. Show you care.",
-                effects: { personalWealth: -5, treasury: -250, elite: 0, anger: -25 }
+                effects: { personalWealth: -5, treasury: -250, elite: 0, anger: -25 },
+                addToPool: ["legitimacy_restored", "budget_strain", "competence_shown", "compassion_politics"]
             },
             {
                 text: "Blame local officials. Fire the governor. Scapegoat and move on.",
-                effects: { personalWealth: 0, treasury: -80, elite: -5, anger: 15 }
+                effects: { personalWealth: 0, treasury: -80, elite: -5, anger: 15 },
+                addToPool: ["scapegoat_governor", "regional_resentment", "infrastructure_still_broken", "accountability_theater"]
             },
             {
                 text: "Minimal response. People should be self-reliant. Budget's tight.",
-                effects: { personalWealth: 0, treasury: -30, elite: 5, anger: 35 }
+                effects: { personalWealth: 0, treasury: -30, elite: 5, anger: 35 },
+                addToPool: ["legitimacy_crisis", "international_condemnation", "negligence_exposed", "callousness_revealed"]
             }
         ]
     },
@@ -100,15 +112,18 @@ const DOMESTIC_CRISIS_EVENTS = [
         choices: [
             {
                 text: "Cut pensions 40%. They'll adjust. Better than state bankruptcy.",
-                effects: { personalWealth: 0, treasury: 100, elite: 5, anger: 50 }
+                effects: { personalWealth: 0, treasury: 100, elite: 5, anger: 50 },
+                addToPool: ["pensioner_rage", "elderly_protests", "generational_betrayal", "social_explosion"]
             },
             {
                 text: "Raise retirement age to 70. Gradual implementation. Long-term fix.",
-                effects: { personalWealth: 0, treasury: 80, elite: 0, anger: 40 }
+                effects: { personalWealth: 0, treasury: 80, elite: 0, anger: 40 },
+                addToPool: ["retirement_rage", "work_until_death", "unpopular_reform", "youth_unemployment_worse"]
             },
             {
                 text: "Emergency fund injection. Print money. Deal with inflation later.",
-                effects: { personalWealth: 0, treasury: -200, elite: -10, anger: -15 }
+                effects: { personalWealth: 0, treasury: -200, elite: -10, anger: -15 },
+                addToPool: ["inflation_acceleration", "money_printing", "temporary_fix", "future_crisis_bigger"]
             }
         ]
     },
@@ -122,15 +137,18 @@ const DOMESTIC_CRISIS_EVENTS = [
         choices: [
             {
                 text: "Military crackdown. Martial law. Curfew. Arrest leaders from both sides.",
-                effects: { personalWealth: 0, treasury: -80, elite: 0, anger: 30 }
+                effects: { personalWealth: 0, treasury: -80, elite: 0, anger: 30 },
+                addToPool: ["martial_law", "ethnic_resentment", "authoritarian_control", "temporary_order"]
             },
             {
                 text: "Side with majority. They're 'defending themselves.' Minority caused this.",
-                effects: { personalWealth: 0, treasury: -30, elite: 10, anger: 35 }
+                effects: { personalWealth: 0, treasury: -30, elite: 10, anger: 35 },
+                addToPool: ["ethnic_cleansing", "minority_persecution", "separatist_movement", "international_condemnation"]
             },
             {
                 text: "Reconciliation commission. Dialogue. Power-sharing. (Slow, uncertain)",
-                effects: { personalWealth: -2, treasury: -60, elite: -10, anger: -15 }
+                effects: { personalWealth: -2, treasury: -60, elite: -10, anger: -15 },
+                addToPool: ["peace_process", "fragile_truce", "extremist_opposition", "long_term_solution"]
             }
         ]
     },
@@ -144,15 +162,18 @@ const DOMESTIC_CRISIS_EVENTS = [
         choices: [
             {
                 text: "Full privatization. Sell everything. Healthcare is now for profit.",
-                effects: { personalWealth: 10, treasury: 600, elite: 15, anger: 55 }
+                effects: { personalWealth: 10, treasury: 600, elite: 15, anger: 55 },
+                addToPool: ["healthcare_collapse", "oligarch_hospitals", "medical_access_crisis", "death_panels"]
             },
             {
                 text: "Partial. Keep basic care public, allow private premium services.",
-                effects: { personalWealth: 5, treasury: 300, elite: 5, anger: 30 }
+                effects: { personalWealth: 5, treasury: 300, elite: 5, anger: 30 },
+                addToPool: ["two_tier_healthcare", "quality_gap", "brain_drain_doctors", "inequality_health"]
             },
             {
                 text: "Reject. Healthcare is a human right. Keep it public.",
-                effects: { personalWealth: 0, treasury: -150, elite: -10, anger: -20 }
+                effects: { personalWealth: 0, treasury: -150, elite: -10, anger: -20 },
+                addToPool: ["budget_hemorrhage", "underfunded_hospitals", "doctor_exodus", "healthcare_crisis_continues"]
             }
         ]
     },
@@ -166,15 +187,18 @@ const DOMESTIC_CRISIS_EVENTS = [
         choices: [
             {
                 text: "Massive public works. $30B infrastructure program. Create 500k jobs.",
-                effects: { personalWealth: -5, treasury: -1200, elite: -5, anger: -30 }
+                effects: { personalWealth: -5, treasury: -1200, elite: -5, anger: -30 },
+                addToPool: ["jobs_created", "infrastructure_boom", "budget_crisis", "youth_satisfied"]
             },
             {
                 text: "Tax breaks for employers. Subsidize private sector hiring.",
-                effects: { personalWealth: 0, treasury: -300, elite: 10, anger: -15 }
+                effects: { personalWealth: 0, treasury: -300, elite: 10, anger: -15 },
+                addToPool: ["low_quality_jobs", "elite_subsidies", "marginal_improvement", "business_windfall"]
             },
             {
                 text: "Nothing. Market will correct itself. (It won't)",
-                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 30 }
+                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 30 },
+                addToPool: ["youth_radicalization", "brain_drain_accelerates", "lost_generation", "revolution_risk"]
             }
         ]
     },
@@ -188,15 +212,18 @@ const DOMESTIC_CRISIS_EVENTS = [
         choices: [
             {
                 text: "Default. Restructure debt. 10 years of economic pain.",
-                effects: { personalWealth: 0, treasury: 200, elite: -20, anger: 50 }
+                effects: { personalWealth: 0, treasury: 200, elite: -20, anger: 50 },
+                addToPool: ["sovereign_default", "international_pariah", "decade_of_pain", "economic_isolation"]
             },
             {
                 text: "Seize oligarch offshore accounts. Force them to 'donate' $150B.",
-                effects: { personalWealth: -20, treasury: 600, elite: -40, anger: -10 }
+                effects: { personalWealth: -20, treasury: 600, elite: -40, anger: -10 },
+                addToPool: ["oligarch_rebellion", "capital_flight", "elite_conspiracy", "expropriation"]
             },
             {
                 text: "Print money. Inflate the debt away. Savings destroyed but state survives.",
-                effects: { personalWealth: 0, treasury: 100, elite: -15, anger: 55 }
+                effects: { personalWealth: 0, treasury: 100, elite: -15, anger: 55 },
+                addToPool: ["hyperinflation_spiral", "currency_worthless", "savings_obliterated", "economic_chaos"]
             }
         ]
     },
@@ -210,15 +237,18 @@ const DOMESTIC_CRISIS_EVENTS = [
         choices: [
             {
                 text: "Massive immigration program. Open borders to Central Asia.",
-                effects: { personalWealth: 0, treasury: -100, elite: -15, anger: 45 }
+                effects: { personalWealth: 0, treasury: -100, elite: -15, anger: 45 },
+                addToPool: ["nationalist_backlash", "ethnic_tensions", "workforce_restored", "cultural_conflict"]
             },
             {
                 text: "Child subsidies. $30k per child. Encourage births with money.",
-                effects: { personalWealth: 0, treasury: -800, elite: 0, anger: -20 }
+                effects: { personalWealth: 0, treasury: -800, elite: 0, anger: -20 },
+                addToPool: ["birth_rate_boost", "budget_crisis", "long_term_investment", "family_support"]
             },
             {
                 text: "Do nothing. Natural population decline. Smaller is fine.",
-                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 20 }
+                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 20 },
+                addToPool: ["demographic_collapse", "workforce_shrinkage", "pension_crisis_worse", "economic_stagnation"]
             }
         ]
     },
@@ -232,18 +262,19 @@ const DOMESTIC_CRISIS_EVENTS = [
         choices: [
             {
                 text: "Full cover-up. Prisoners were dangerous terrorists. Justified response.",
-                effects: { personalWealth: 0, treasury: -30, elite: 10, anger: 25 }
+                effects: { personalWealth: 0, treasury: -30, elite: 10, anger: 25 },
+                addToPool: ["coverup_attempt", "evidence_leaks", "international_investigation", "human_rights_violations"]
             },
             {
                 text: "Admit excessive force. Fire prison warden. Compensate families.",
-                effects: { personalWealth: -2, treasury: -80, elite: -10, anger: -10 }
+                effects: { personalWealth: -2, treasury: -80, elite: -10, anger: -10 },
+                addToPool: ["admission_weakness", "prison_reform_demanded", "accountability_shown", "elite_anger"]
             },
             {
                 text: "Blame prisoners. They chose violence. No investigation needed.",
-                effects: { personalWealth: 0, treasury: -10, elite: 15, anger: 30 }
+                effects: { personalWealth: 0, treasury: -10, elite: 15, anger: 30 },
+                addToPool: ["prison_brutality_normalized", "human_rights_ignored", "impunity_culture", "repression_justified"]
             }
         ]
     }
 ];
-
-

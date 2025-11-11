@@ -321,6 +321,116 @@ body {
     display: block;
 }
 
+.debug-event-tree {
+    margin-top: 10px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-family: 'Courier New', monospace;
+}
+
+.debug-tree-stats {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+
+.debug-tree-stats h4 {
+    color: #d4af37;
+    margin: 0 0 8px 0;
+    font-size: 1.1em;
+}
+
+.debug-tree-stats p {
+    margin: 4px 0;
+    color: #e8e8e8;
+}
+
+.debug-tree-hint {
+    color: #888;
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+.debug-tree-stat-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 4px 0;
+}
+
+.debug-tree-stat-label {
+    color: #aaa;
+}
+
+.debug-tree-stat-value {
+    color: #d4af37;
+    font-weight: bold;
+}
+
+.debug-tree-warning {
+    background: rgba(255, 0, 0, 0.1);
+    border-left: 3px solid #ff4444;
+    padding: 8px;
+    margin: 8px 0;
+    border-radius: 4px;
+}
+
+.debug-tree-section {
+    margin: 16px 0;
+}
+
+.debug-tree-section h5 {
+    color: #d4af37;
+    margin: 0 0 8px 0;
+    font-size: 1em;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    padding-bottom: 4px;
+}
+
+.debug-tree-node {
+    margin: 4px 0;
+    padding: 4px 0;
+    color: #e8e8e8;
+    line-height: 1.6;
+}
+
+.debug-tree-node-id {
+    color: #ffaa00;
+    font-weight: bold;
+}
+
+.debug-tree-node-title {
+    color: #e8e8e8;
+}
+
+.debug-tree-node-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    margin-left: 6px;
+    border-radius: 3px;
+    font-size: 0.85em;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.debug-tree-node-badge.dead-end {
+    background: rgba(255, 100, 100, 0.2);
+    color: #ff6666;
+}
+
+.debug-tree-node-badge.branching {
+    background: rgba(100, 255, 100, 0.2);
+    color: #66ff66;
+}
+
+.debug-tree-node-badge.orphaned {
+    background: rgba(255, 165, 0, 0.2);
+    color: #ffaa55;
+}
+
 /* Event Card */
 .event-card {
     background: rgba(255, 255, 255, 0.1);

@@ -1,6 +1,6 @@
-// The Oligarch's Gambit - v1.3
+// The Oligarch's Gambit - v1.6.0
 // Energy & Pipeline Politics
-// 12 events
+// Redesigned for comprehensive branching
 
 const ENERGY_PIPELINE_EVENTS = [
     {
@@ -16,12 +16,17 @@ const ENERGY_PIPELINE_EVENTS = [
                 text: "Route it through the nephew. He 'earned' this.",
                 effects: { personalWealth: 12, treasury: -50, elite: 5, anger: 15 },
                 legacy: { icon: "👨‍👦", name: "Family First", weight: 3 },
-                addToPool: ["pipeline_sabotage", "pipeline_construction_scandal", "opec_plus_meeting"]
+                addToPool: ["pipeline_sabotage", "pipeline_construction_scandal", "nephew_incompetence", "corruption_investigation"]
             },
             {
                 text: "Take 10%, fill the treasury with the rest.",
                 effects: { personalWealth: 5, treasury: 200, elite: 10, anger: -5 },
-                addToPool: ["pipeline_sabotage", "opec_plus_meeting", "lng_terminal_race"]
+                addToPool: ["pipeline_sabotage", "opec_plus_meeting", "lng_terminal_race", "european_dependency"]
+            },
+            {
+                text: "International partnership. 60-40 split with Western partners.",
+                effects: { personalWealth: 3, treasury: 150, elite: -5, anger: 0 },
+                addToPool: ["lng_terminal_race", "western_leverage", "contract_disputes"]
             }
         ]
     },
@@ -38,17 +43,17 @@ const ENERGY_PIPELINE_EVENTS = [
                 text: "Cut the gas. Winter is coming. Let them beg.",
                 effects: { personalWealth: -5, treasury: -150, elite: 10, anger: 5 },
                 legacy: { icon: "❄️", name: "Ice King", weight: 8 },
-                addToPool: ["international_sanctions", "european_energy_crisis", "gas_for_rubles"]
+                addToPool: ["european_energy_crisis", "gas_for_rubles", "lng_terminal_race", "energy_retaliation"]
             },
             {
                 text: "Triple the price. $2,000 per cubic meter. Take it or freeze.",
                 effects: { personalWealth: 15, treasury: 300, elite: 10, anger: 5 },
-                addToPool: ["european_energy_crisis", "gas_for_rubles", "lng_terminal_race"]
+                addToPool: ["european_energy_crisis", "gas_for_rubles", "lng_terminal_race", "price_backlash"]
             },
             {
                 text: "Honor contracts. Maintain reliable supply. Long game.",
                 effects: { personalWealth: 5, treasury: 150, elite: 0, anger: 0 },
-                addToPool: ["lng_terminal_race", "opec_plus_meeting"]
+                addToPool: ["lng_terminal_race", "opec_plus_meeting", "reliable_supplier_reputation", "missed_opportunity"]
             }
         ]
     },
@@ -63,16 +68,18 @@ const ENERGY_PIPELINE_EVENTS = [
         choices: [
             {
                 text: "Blame the Americans. Demand UN investigation. Rally the nation.",
-                effects: { personalWealth: 0, treasury: -100, elite: 10, anger: 20 }
+                effects: { personalWealth: 0, treasury: -100, elite: 10, anger: 20 },
+                addToPool: ["un_investigation", "anti_american_propaganda", "diplomatic_crisis"]
             },
             {
                 text: "Stay silent. Let conspiracy theories flourish. Prices stay high.",
-                effects: { personalWealth: 12, treasury: 80, elite: 5, anger: 15 }
+                effects: { personalWealth: 12, treasury: 80, elite: 5, anger: 15 },
+                addToPool: ["conspiracy_theories", "price_exploitation", "european_distrust"]
             },
             {
                 text: "Offer to rebuild—for triple the original cost.",
                 effects: { personalWealth: 8, treasury: -200, elite: 0, anger: 10 },
-                addToPool: ["pipeline_construction_scandal"]
+                addToPool: ["pipeline_construction_scandal", "extortion_accusations", "rebuild_delays"]
             }
         ]
     },
@@ -88,15 +95,18 @@ const ENERGY_PIPELINE_EVENTS = [
             {
                 text: "Maximum extraction. Bleed them for every concession possible.",
                 effects: { personalWealth: 20, treasury: 350, elite: 15, anger: 5 },
-                legacy: { icon: "🔥", name: "Energy Weapon", weight: 16 }
+                legacy: { icon: "🔥", name: "Energy Weapon", weight: 16 },
+                addToPool: ["permanent_customer_loss", "lng_acceleration", "europe_breaks_free", "sanctions_relief_partial"]
             },
             {
                 text: "Partial relief. Turn gas back on at 3x price. No political concessions.",
-                effects: { personalWealth: 15, treasury: 280, elite: 10, anger: 0 }
+                effects: { personalWealth: 15, treasury: 280, elite: 10, anger: 0 },
+                addToPool: ["price_resentment", "alternative_energy_routes", "trust_damaged"]
             },
             {
                 text: "Humanitarian gesture. Restore 50% capacity for hospitals, heating. Long game.",
-                effects: { personalWealth: 5, treasury: 100, elite: 0, anger: -10 }
+                effects: { personalWealth: 5, treasury: 100, elite: 0, anger: -10 },
+                addToPool: ["reputation_salvage", "hardliner_backlash", "long_term_contracts"]
             }
         ]
     },
@@ -111,15 +121,18 @@ const ENERGY_PIPELINE_EVENTS = [
         choices: [
             {
                 text: "Side with Saudis. Production cuts. Take the $2B. Prices soar.",
-                effects: { personalWealth: 10, treasury: 220, elite: 10, anger: 20 }
+                effects: { personalWealth: 10, treasury: 220, elite: 10, anger: 20 },
+                addToPool: ["oil_price_spike", "american_pressure", "cartel_solidarity", "consumer_rage"]
             },
             {
                 text: "Flood the market. Undercut everyone. Grab market share.",
-                effects: { personalWealth: 8, treasury: 180, elite: 5, anger: 10 }
+                effects: { personalWealth: 8, treasury: 180, elite: 5, anger: 10 },
+                addToPool: ["saudi_betrayal", "market_war", "price_collapse", "share_gains"]
             },
             {
                 text: "Play both sides. Promise Saudis cuts, pump secretly, pocket difference.",
-                effects: { personalWealth: 15, treasury: 250, elite: 0, anger: 15 }
+                effects: { personalWealth: 15, treasury: 250, elite: 0, anger: 15 },
+                addToPool: ["deception_exposed", "trust_destroyed", "cartel_chaos", "short_term_windfall"]
             }
         ]
     },
@@ -135,15 +148,17 @@ const ENERGY_PIPELINE_EVENTS = [
             {
                 text: "Enforce it strictly. No rubles, no gas. Total currency warfare.",
                 effects: { personalWealth: 5, treasury: 280, elite: 15, anger: 10 },
-                addToPool: ["european_energy_crisis"]
+                addToPool: ["european_energy_crisis", "ruble_manipulation", "contract_violations", "eu_retaliation"]
             },
             {
                 text: "Carve out exceptions for 'friendly' countries. Divide them.",
-                effects: { personalWealth: 8, treasury: 200, elite: 10, anger: 5 }
+                effects: { personalWealth: 8, treasury: 200, elite: 10, anger: 5 },
+                addToPool: ["eu_splits", "preferred_partners", "resentment_builds"]
             },
             {
                 text: "Threaten but don't enforce. Psychological pressure, maintain flexibility.",
-                effects: { personalWealth: 3, treasury: 120, elite: 5, anger: 0 }
+                effects: { personalWealth: 3, treasury: 120, elite: 5, anger: 0 },
+                addToPool: ["credibility_questioned", "ruble_support_partial", "negotiating_leverage"]
             }
         ]
     },
@@ -160,15 +175,17 @@ const ENERGY_PIPELINE_EVENTS = [
                 text: "Sign it. China's the future anyway. Europe's finished.",
                 effects: { personalWealth: 12, treasury: -350, elite: 10, anger: 15 },
                 legacy: { icon: "🐉", name: "Dragon's Partner", weight: 8 },
-                addToPool: ["chinese_dependence"]
+                addToPool: ["chinese_dependence", "unfavorable_terms", "construction_nightmare", "european_markets_lost"]
             },
             {
                 text: "Negotiate hard. Play India against China for better terms.",
-                effects: { personalWealth: 8, treasury: -250, elite: 5, anger: 10 }
+                effects: { personalWealth: 8, treasury: -250, elite: 5, anger: 10 },
+                addToPool: ["bidding_war", "india_partnership", "china_resentment"]
             },
             {
                 text: "Reject. Keep Europe as primary customer despite tensions.",
-                effects: { personalWealth: 0, treasury: 50, elite: -10, anger: 5 }
+                effects: { personalWealth: 0, treasury: 50, elite: -10, anger: 5 },
+                addToPool: ["china_snubs_you", "european_leverage", "strategic_error"]
             }
         ]
     },
@@ -183,16 +200,18 @@ const ENERGY_PIPELINE_EVENTS = [
         choices: [
             {
                 text: "Massive LNG investment. Compete directly with US suppliers.",
-                effects: { personalWealth: -15, treasury: -350, elite: -5, anger: 15 }
+                effects: { personalWealth: -15, treasury: -350, elite: -5, anger: 15 },
+                addToPool: ["lng_construction_delays", "technology_gaps", "american_opposition"]
             },
             {
                 text: "Price war. Cut gas prices 40%. Bankrupt the LNG terminals.",
-                effects: { personalWealth: -8, treasury: -180, elite: 5, anger: 0 }
+                effects: { personalWealth: -8, treasury: -180, elite: 5, anger: 0 },
+                addToPool: ["revenue_collapse", "market_share_retained", "unsustainable_pricing"]
             },
             {
                 text: "Accept reduced market share. Focus on Asia. Europe's lost anyway.",
                 effects: { personalWealth: 0, treasury: -80, elite: -10, anger: 5 },
-                addToPool: ["alternative_energy_routes"]
+                addToPool: ["alternative_energy_routes", "strategic_retreat", "european_independence"]
             }
         ]
     },
@@ -209,15 +228,17 @@ const ENERGY_PIPELINE_EVENTS = [
                 text: "Full extraction. Militarize the Arctic. Plant the flag. Drill.",
                 effects: { personalWealth: 25, treasury: -450, elite: 15, anger: 20 },
                 legacy: { icon: "🛢️", name: "Arctic Baron", weight: 14 },
-                addToPool: ["arctic_militarization", "environmental_catastrophe"]
+                addToPool: ["arctic_militarization", "environmental_catastrophe", "american_confrontation", "oil_bonanza"]
             },
             {
                 text: "Limited extraction. Joint venture with Western oil companies.",
-                effects: { personalWealth: 15, treasury: -200, elite: 5, anger: 10 }
+                effects: { personalWealth: 15, treasury: -200, elite: 5, anger: 10 },
+                addToPool: ["western_partnership", "technology_transfer", "revenue_sharing"]
             },
             {
                 text: "Leave it in the ground. Too risky, too expensive, climate optics terrible.",
-                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -15 }
+                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -15 },
+                addToPool: ["hardliner_rage", "lost_opportunity", "green_reputation"]
             }
         ]
     },
@@ -232,16 +253,19 @@ const ENERGY_PIPELINE_EVENTS = [
         choices: [
             {
                 text: "Climate denial. Double down on oil. It's a hoax anyway.",
-                effects: { personalWealth: 5, treasury: 80, elite: 10, anger: 15 }
+                effects: { personalWealth: 5, treasury: 80, elite: 10, anger: 15 },
+                addToPool: ["denial_consequences", "international_isolation", "stranded_assets_future"]
             },
             {
                 text: "Massive green investment. Pivot to renewables, hydrogen, nuclear.",
-                effects: { personalWealth: -20, treasury: -600, elite: -15, anger: -20 }
+                effects: { personalWealth: -20, treasury: -600, elite: -15, anger: -20 },
+                addToPool: ["green_transition_struggles", "technology_deficit", "elite_opposition"]
             },
             {
                 text: "Milk the dying cow. Extract maximum profit before transition.",
                 effects: { personalWealth: 15, treasury: 120, elite: 5, anger: 10 },
-                legacy: { icon: "🛢️", name: "Stranded Assets", weight: -15 }
+                legacy: { icon: "🛢️", name: "Stranded Assets", weight: -15 },
+                addToPool: ["short_term_gains", "long_term_ruin", "next_generation_problem"]
             }
         ]
     },
@@ -256,15 +280,18 @@ const ENERGY_PIPELINE_EVENTS = [
         choices: [
             {
                 text: "Kill the investigation. Arrest the investigators. Complete the grift.",
-                effects: { personalWealth: 22, treasury: -200, elite: -10, anger: 25 }
+                effects: { personalWealth: 22, treasury: -200, elite: -10, anger: 25 },
+                addToPool: ["corruption_exposed_international", "investigator_martyrs", "reputation_destroyed"]
             },
             {
                 text: "Scapegoat the nephew. Jail him. Seize his assets. (Give them back later)",
-                effects: { personalWealth: 8, treasury: 60, elite: 5, anger: -10 }
+                effects: { personalWealth: 8, treasury: 60, elite: 5, anger: -10 },
+                addToPool: ["family_resentment", "temporary_victory", "scapegoat_revenge"]
             },
             {
                 text: "Actually finish the pipeline. Competent contractors. Salvage reputation.",
-                effects: { personalWealth: -5, treasury: -280, elite: -5, anger: -15 }
+                effects: { personalWealth: -5, treasury: -280, elite: -5, anger: -15 },
+                addToPool: ["pipeline_completion", "credibility_restored", "elite_anger_wasted_grift"]
             }
         ]
     },
@@ -279,18 +306,19 @@ const ENERGY_PIPELINE_EVENTS = [
         choices: [
             {
                 text: "Classify all reserve data. Kill the story. 'National security.'",
-                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 15 }
+                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 15 },
+                addToPool: ["classified_coverup", "whistleblower_risk", "vulnerability_remains"]
             },
             {
                 text: "Emergency refill. $80B purchase at current high prices. (Painful)",
-                effects: { personalWealth: -10, treasury: -350, elite: -10, anger: 5 }
+                effects: { personalWealth: -10, treasury: -350, elite: -10, anger: 5 },
+                addToPool: ["reserve_restored", "budget_crisis", "oligarch_anger_cost"]
             },
             {
                 text: "Blame the previous administration. Appoint investigation. Delay.",
-                effects: { personalWealth: 0, treasury: -40, elite: 0, anger: 10 }
+                effects: { personalWealth: 0, treasury: -40, elite: 0, anger: 10 },
+                addToPool: ["scapegoat_search", "problem_persists", "next_crisis_worse"]
             }
         ]
     }
 ];
-
-

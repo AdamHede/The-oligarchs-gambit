@@ -1,4 +1,4 @@
-// The Oligarch's Gambit - v1.6
+// The Oligarch's Gambit - v1.6.0
 // Main Events File - Combines all event categories
 
 // This file combines events from multiple categorized files for easier organization

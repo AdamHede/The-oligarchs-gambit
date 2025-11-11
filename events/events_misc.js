@@ -1,4 +1,4 @@
-// The Oligarch's Gambit - v1.3
+// The Oligarch's Gambit - v1.6.0
 // Corruption, Control, Tech & Cultural Events
 // 67 events (added A Quiet Quarter)
 
@@ -18,30 +18,6 @@ const MISC_EVENTS = [
         ]
     },
     {
-        id: "oligarch_yacht_party",
-        title: "The Yacht Incident",
-        description: "Your aluminum magnate friend just acquired a 500-foot superyacht with a submarine dock and missile defense system. He's hosting a party in the Mediterranean. Half your cabinet will be there with their mistresses. Your PR team is panicking - bread lines are getting longer and social media is exploding with anger.",
-        weight: 5,
-        conditions: {},
-        onceOnly: true,
-        choices: [
-            {
-                text: "Go. Post photos. Let them seethe with envy.",
-                effects: { personalWealth: 1, treasury: 0, elite: 10, anger: 20 }
-            },
-            {
-                text: "Go, but pay trolls to flood social media with fake news.",
-                effects: { personalWealth: -1, treasury: -20, elite: 5, anger: -5 },
-                legacy: { icon: "🎭", name: "Master of Optics", weight: 4 }
-            },
-            {
-                text: "Decline. Seize his yacht for 'unpaid taxes.' Sell it.",
-                effects: { personalWealth: 8, treasury: 15, elite: -20, anger: -10 },
-                legacy: { icon: "🏴‍☠️", name: "Pirate King", weight: 7 }
-            }
-        ]
-    },
-    {
         id: "journalist_problem",
         title: "An Inconvenient Reporter",
         description: "An investigative journalist has documents proving you own 47 properties abroad, including a palace that cost more than your official salary for 200 years. She's publishing in 48 hours. Your FSB chief offers three options: novichok, a car accident, or we could just shoot her in the elevator. Your PR chief suggests buying her off.",
@@ -53,16 +29,18 @@ const MISC_EVENTS = [
                 text: "Eliminate her. Make it look like a robbery gone wrong.",
                 effects: { personalWealth: -1, treasury: -10, elite: 10, anger: 25 },
                 legacy: { icon: "🤐", name: "Silencer", weight: 8 },
-                addToPool: ["international_sanctions"]
+                addToPool: ["journalist_martyrdom", "press_fear", "international_sanctions"]
             },
             {
                 text: "Offer her $5M and a state TV anchor position.",
                 effects: { personalWealth: -2, treasury: -15, elite: 0, anger: -5 },
-                legacy: { icon: "📺", name: "Propagandist", weight: 5 }
+                legacy: { icon: "📺", name: "Propagandist", weight: 5 },
+                addToPool: ["bought_journalist"]
             },
             {
                 text: "Let it publish. Flood the zone with disinformation.",
-                effects: { personalWealth: 0, treasury: -30, elite: -10, anger: 10 }
+                effects: { personalWealth: 0, treasury: -30, elite: -10, anger: 10 },
+                addToPool: ["corruption_exposed", "disinformation_campaign"]
             }
         ]
     },
@@ -78,15 +56,17 @@ const MISC_EVENTS = [
                 text: "Build it. Caesar had palaces. Kings had palaces. I deserve this.",
                 effects: { personalWealth: -5, treasury: -300, elite: -5, anger: 30 },
                 legacy: { icon: "🏰", name: "Palace Builder", weight: 15 },
-                addToPool: ["palace_scandal"]
+                addToPool: ["palace_scandal_leak"]
             },
             {
                 text: "Scale it down. Build 'off the books' using state contractors.",
-                effects: { personalWealth: -3, treasury: -150, elite: 5, anger: 15 }
+                effects: { personalWealth: -3, treasury: -150, elite: 5, anger: 15 },
+                addToPool: ["hidden_palace"]
             },
             {
                 text: "Too risky. Invest offshore instead.",
-                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: -5 }
+                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: -5 },
+                addToPool: ["offshore_expansion"]
             }
         ]
     },
@@ -101,15 +81,18 @@ const MISC_EVENTS = [
             {
                 text: "Arrest him. Seize everything. Send him to Siberia.",
                 effects: { personalWealth: 10, treasury: 80, elite: -15, anger: 5 },
-                legacy: { icon: "⚖️", name: "Kingbreaker", weight: 9 }
+                legacy: { icon: "⚖️", name: "Kingbreaker", weight: 9 },
+                addToPool: ["oligarch_panic", "asset_seizure_precedent", "elite_fear", "opposition_funding_cut"]
             },
             {
                 text: "Force him to 'sell' half his assets to your shell companies.",
-                effects: { personalWealth: 15, treasury: 20, elite: -10, anger: 10 }
+                effects: { personalWealth: 15, treasury: 20, elite: -10, anger: 10 },
+                addToPool: ["forced_sale_model", "oligarch_resentment", "wealth_consolidation", "power_demonstration"]
             },
             {
                 text: "Leave him alone. Better to have him inside the tent.",
-                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 0 }
+                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 0 },
+                addToPool: ["rival_strengthens", "opposition_funded", "power_sharing_uneasy", "future_threat"]
             }
         ]
     },
@@ -124,15 +107,17 @@ const MISC_EVENTS = [
                 text: "Clear the square. Beat them. Arrest thousands.",
                 effects: { personalWealth: 0, treasury: -30, elite: 10, anger: 35 },
                 legacy: { icon: "🛡️", name: "Iron Fist", weight: 6 },
-                addToPool: ["international_sanctions"]
+                addToPool: ["crackdown_aftermath", "international_sanctions"]
             },
             {
                 text: "Bus in 100k loyalists. Pay them $50 each. Drown them out.",
-                effects: { personalWealth: -2, treasury: -80, elite: 5, anger: 10 }
+                effects: { personalWealth: -2, treasury: -80, elite: 5, anger: 10 },
+                addToPool: ["fake_counter_protest"]
             },
             {
                 text: "Promise reforms. Release some political prisoners. Lie.",
-                effects: { personalWealth: 0, treasury: -20, elite: -10, anger: -15 }
+                effects: { personalWealth: 0, treasury: -20, elite: -10, anger: -15 },
+                addToPool: ["broken_promises"]
             }
         ]
     },
@@ -148,15 +133,17 @@ const MISC_EVENTS = [
                 text: "Fire her. Install your former bodyguard as replacement.",
                 effects: { personalWealth: 5, treasury: -100, elite: 5, anger: 15 },
                 legacy: { icon: "💀", name: "Economy Killer", weight: -8 },
-                addToPool: ["economic_crisis"]
+                addToPool: ["economic_crisis", "investor_flight"]
             },
             {
                 text: "Keep her as figurehead. Route around her decisions.",
-                effects: { personalWealth: 2, treasury: -40, elite: 0, anger: 5 }
+                effects: { personalWealth: 2, treasury: -40, elite: 0, anger: 5 },
+                addToPool: ["shadow_economy"]
             },
             {
                 text: "Actually listen to her. Tighten the belt.",
-                effects: { personalWealth: -2, treasury: 150, elite: -5, anger: -10 }
+                effects: { personalWealth: -2, treasury: 150, elite: -5, anger: -10 },
+                addToPool: ["economic_stability"]
             }
         ]
     },
@@ -170,38 +157,18 @@ const MISC_EVENTS = [
             {
                 text: "Full Belarus mode. Jail opponents. 87% victory.",
                 effects: { personalWealth: -3, treasury: -100, elite: 10, anger: 25 },
-                legacy: { icon: "📊", name: "Democratic Champion (87%)", weight: 10 }
+                legacy: { icon: "📊", name: "Democratic Champion (87%)", weight: 10 },
+                addToPool: ["election_protests", "international_condemnation"]
             },
             {
                 text: "Subtle rigging. Block main opponent. Win 52%.",
-                effects: { personalWealth: -2, treasury: -50, elite: 5, anger: 10 }
+                effects: { personalWealth: -2, treasury: -50, elite: 5, anger: 10 },
+                addToPool: ["narrow_victory"]
             },
             {
                 text: "Run a real campaign. Spend big. Risk everything.",
-                effects: { personalWealth: -8, treasury: -150, elite: -15, anger: -20 }
-            }
-        ]
-    },
-    {
-        id: "military_parade",
-        title: "Victory Day Parade",
-        description: "Victory Day is here. The generals want a massive show of strength: 15,000 troops, 200 tanks, nuclear ICBMs rolling through Red Square, fighter jet flyovers. Cost: $500 million. The same amount would rebuild 50 hospitals. Your image consultant says the people need bread and circuses. Heavy on the circuses.",
-        weight: 5,
-        conditions: {},
-        onceOnly: true,
-        choices: [
-            {
-                text: "Biggest parade in history. Show the West our strength!",
-                effects: { personalWealth: 0, treasury: -180, elite: 15, anger: 15 },
-                legacy: { icon: "🎖️", name: "Showman", weight: 6 }
-            },
-            {
-                text: "Modest display. Save money for actual defense.",
-                effects: { personalWealth: 0, treasury: -60, elite: 5, anger: 5 }
-            },
-            {
-                text: "Cancel. Redirect funds to hospitals. (The generals hate this)",
-                effects: { personalWealth: 0, treasury: -20, elite: -15, anger: -20 }
+                effects: { personalWealth: -8, treasury: -150, elite: -15, anger: -20 },
+                addToPool: ["legitimacy_boost"]
             }
         ]
     },
@@ -216,15 +183,18 @@ const MISC_EVENTS = [
             {
                 text: "Build it. Full Chinese model. Total information control.",
                 effects: { personalWealth: -2, treasury: -250, elite: 10, anger: 25 },
-                legacy: { icon: "🔒", name: "Digital Czar", weight: 7 }
+                legacy: { icon: "🔒", name: "Digital Czar", weight: 7 },
+                addToPool: ["great_firewall", "tech_sector_collapse", "vpn_wars", "chinese_dependency"]
             },
             {
                 text: "Selective censorship. Block opposition sites, allow cat videos.",
-                effects: { personalWealth: 0, treasury: -80, elite: 5, anger: 15 }
+                effects: { personalWealth: 0, treasury: -80, elite: 5, anger: 15 },
+                addToPool: ["censorship_escalation", "vpn_use_grows", "tech_cat_mouse", "partial_control"]
             },
             {
                 text: "Light touch. Monitor but don't block. Honey trap.",
-                effects: { personalWealth: 0, treasury: -30, elite: -5, anger: 0 }
+                effects: { personalWealth: 0, treasury: -30, elite: -5, anger: 0 },
+                addToPool: ["surveillance_subtle", "intelligence_gathering", "false_freedom", "monitoring_state"]
             }
         ]
     },
@@ -239,15 +209,18 @@ const MISC_EVENTS = [
             {
                 text: "Constitutional amendment. President for Life. Like Xi.",
                 effects: { personalWealth: 0, treasury: -80, elite: 15, anger: 35 },
-                legacy: { icon: "👑", name: "President for Life", weight: 18 }
+                legacy: { icon: "👑", name: "President for Life", weight: 18 },
+                addToPool: ["dictatorship_formalized", "protest_movement", "international_condemnation", "power_secured"]
             },
             {
                 text: "The switcheroo. President→PM→President. Musical chairs.",
-                effects: { personalWealth: 2, treasury: -50, elite: 10, anger: 25 }
+                effects: { personalWealth: 2, treasury: -50, elite: 10, anger: 25 },
+                addToPool: ["constitutional_charade", "tandem_power_struggles", "puppet_president", "cynicism_grows"]
             },
             {
                 text: "Reset the clock. 'New constitution, new me.' Referendum at 96%.",
-                effects: { personalWealth: 0, treasury: -40, elite: 5, anger: 20 }
+                effects: { personalWealth: 0, treasury: -40, elite: 5, anger: 20 },
+                addToPool: ["fake_referendum", "term_limits_reset", "democratic_facade", "opposition_frustrated"]
             }
         ]
     },
@@ -262,15 +235,18 @@ const MISC_EVENTS = [
             {
                 text: "Fund it! Soviet space glory returns! Mars or bust!",
                 effects: { personalWealth: 0, treasury: -280, elite: 10, anger: 20 },
-                legacy: { icon: "🚀", name: "Cosmic Dreamer", weight: 9 }
+                legacy: { icon: "🚀", name: "Cosmic Dreamer", weight: 9 },
+                addToPool: ["space_program_decline"]
             },
             {
                 text: "Fund it. But 50% goes to my nephew's 'consulting firm.'",
-                effects: { personalWealth: 16, treasury: -320, elite: 5, anger: 25 }
+                effects: { personalWealth: 16, treasury: -320, elite: 5, anger: 25 },
+                addToPool: ["space_corruption_exposed"]
             },
             {
                 text: "Reject. Fix pensions first. Earth before Mars.",
-                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -10 }
+                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -10 },
+                addToPool: ["pensioners_relieved"]
             }
         ]
     },
@@ -308,15 +284,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Arrest him tonight. Seize his gas company. Restore monopoly.",
-                effects: { personalWealth: 18, treasury: 120, elite: -15, anger: 15 }
+                effects: { personalWealth: 18, treasury: 120, elite: -15, anger: 15 },
+                addToPool: ["oligarch_panic"]
             },
             {
                 text: "Force merger. 60/40 split in your favor. Absorb his network.",
-                effects: { personalWealth: 12, treasury: 80, elite: -5, anger: 10 }
+                effects: { personalWealth: 12, treasury: 80, elite: -5, anger: 10 },
+                addToPool: ["forced_partnership"]
             },
             {
                 text: "Let him operate. Two suppliers competing makes both stronger. (Risky)",
-                effects: { personalWealth: 0, treasury: 40, elite: 10, anger: 0 }
+                effects: { personalWealth: 0, treasury: 40, elite: 10, anger: 0 },
+                addToPool: ["rival_grows_stronger"]
             }
         ]
     },
@@ -330,37 +309,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Full purge. Fire them all. Education must serve the state.",
-                effects: { personalWealth: 0, treasury: -20, elite: 5, anger: 25 }
+                effects: { personalWealth: 0, treasury: -20, elite: 5, anger: 25 },
+                addToPool: ["academic_exodus"]
             },
             {
                 text: "Targeted dismissals. Fire 10 worst offenders. Warning to others.",
-                effects: { personalWealth: 0, treasury: -10, elite: 0, anger: 15 }
+                effects: { personalWealth: 0, treasury: -10, elite: 0, anger: 15 },
+                addToPool: ["self_censorship_spreads"]
             },
             {
                 text: "Leave them alone. Academic freedom... within limits. Monitor them.",
-                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: -5 }
-            }
-        ]
-    },
-    {
-        id: "arms_deal_offer",
-        title: "The Questionable Client",
-        description: "A military dictatorship wants to buy $8 billion in weapons. They have a horrible human rights record. The UN has an arms embargo. But your defense industry needs the money. The sale would be 'unofficial.' Western media would go crazy. Your military-industrial complex is lobbying hard.",
-        weight: 5,
-        conditions: {},
-        onceOnly: true,
-        choices: [
-            {
-                text: "Approve the sale. Route through shell companies. Plausible deniability.",
-                effects: { personalWealth: 12, treasury: 280, elite: 10, anger: 15 }
-            },
-            {
-                text: "Reject. Too risky. International reputation matters.",
-                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: 0 }
-            },
-            {
-                text: "Approve but leak it. Let opposition take the blame. Political trap.",
-                effects: { personalWealth: 8, treasury: 200, elite: 0, anger: 20 }
+                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: -5 },
+                addToPool: ["intellectual_opposition"]
             }
         ]
     },
@@ -374,15 +334,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Raid and shut it down. 'Tax violations.' Seize the station.",
-                effects: { personalWealth: 3, treasury: 40, elite: 5, anger: 30 }
+                effects: { personalWealth: 3, treasury: 40, elite: 5, anger: 30 },
+                addToPool: ["media_monopoly", "press_freedom_dead", "oligarch_enemy_made", "information_control"]
             },
             {
                 text: "Force sale to a 'friendly' oligarch. Keep it on air but controlled.",
-                effects: { personalWealth: 2, treasury: 20, elite: 0, anger: 20 }
+                effects: { personalWealth: 2, treasury: 20, elite: 0, anger: 20 },
+                addToPool: ["controlled_opposition", "fake_pluralism", "editorial_control", "subtle_censorship"]
             },
             {
                 text: "Leave it. One critical voice makes you seem tolerant. Manageable risk.",
-                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: -10 }
+                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: -10 },
+                addToPool: ["limited_freedom", "safety_valve", "corruption_exposed", "tolerance_demonstrated"]
             }
         ]
     },
@@ -396,15 +359,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Full bid. Pay the bribes. Win the hosting rights. Glory!",
-                effects: { personalWealth: -5, treasury: -1000, elite: 10, anger: 25 }
+                effects: { personalWealth: -5, treasury: -1000, elite: 10, anger: 25 },
+                addToPool: ["fifa_world_cup_disaster"]
             },
             {
                 text: "Symbolic bid. No bribes. We won't win but we look principled.",
-                effects: { personalWealth: 0, treasury: -50, elite: -5, anger: 5 }
+                effects: { personalWealth: 0, treasury: -50, elite: -5, anger: 5 },
+                addToPool: ["bid_rejected"]
             },
             {
                 text: "Reject. $25B on stadiums while hospitals crumble? Insane.",
-                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -10 }
+                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -10 },
+                addToPool: ["pragmatic_choice"]
             }
         ]
     },
@@ -418,15 +384,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Defiant denial. Western plot. Arrest the journalist who published it locally.",
-                effects: { personalWealth: 0, treasury: -20, elite: 5, anger: 30 }
+                effects: { personalWealth: 0, treasury: -20, elite: 5, anger: 30 },
+                addToPool: ["journalist_problem", "press_crackdown", "western_sanctions_threat", "corruption_exposed"]
             },
             {
                 text: "Partial admission. 'Legal tax planning.' Promise reform. (Lie)",
-                effects: { personalWealth: -5, treasury: -40, elite: -10, anger: 20 }
+                effects: { personalWealth: -5, treasury: -40, elite: -10, anger: 20 },
+                addToPool: ["fake_reform_commission", "transparency_theater", "elite_resentment", "broken_promises"]
             },
             {
                 text: "Ignore it. What are they going to do? I control the courts.",
-                effects: { personalWealth: 0, treasury: 0, elite: 0, anger: 25 }
+                effects: { personalWealth: 0, treasury: 0, elite: 0, anger: 25 },
+                addToPool: ["impunity_culture", "international_isolation", "protest_movement", "legitimacy_crisis"]
             }
         ]
     },
@@ -440,15 +409,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Security crackdown. Raid mosques. Arrest 500 suspects. No tolerance.",
-                effects: { personalWealth: 0, treasury: -60, elite: 5, anger: 30 }
+                effects: { personalWealth: 0, treasury: -60, elite: 5, anger: 30 },
+                addToPool: ["extremist_underground", "martyrs_created", "radicalization_accelerates", "insurgency_risk"]
             },
             {
                 text: "Co-opt moderate clerics. State-funded mosques. Control the message.",
-                effects: { personalWealth: -3, treasury: -80, elite: 0, anger: -10 }
+                effects: { personalWealth: -3, treasury: -80, elite: 0, anger: -10 },
+                addToPool: ["controlled_religion", "moderate_clergy", "extremist_opposition", "religious_stability"]
             },
             {
                 text: "Ignore it. They're disorganized. No immediate threat.",
-                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: 20 }
+                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: 20 },
+                addToPool: ["extremism_spreads", "radicalization_grows", "future_crisis", "complacency_risk"]
             }
         ]
     },
@@ -462,15 +434,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Massive investigation. Arrest your nephew. Show you're serious about accountability.",
-                effects: { personalWealth: -3, treasury: -100, elite: -10, anger: -20 }
+                effects: { personalWealth: -3, treasury: -100, elite: -10, anger: -20 },
+                addToPool: ["family_betrayal", "accountability_precedent", "infrastructure_reform", "elite_nervousness"]
             },
             {
                 text: "Blame the contractor. Protect your nephew. Scapegoat engineers.",
-                effects: { personalWealth: 0, treasury: -50, elite: 5, anger: 25 }
+                effects: { personalWealth: 0, treasury: -50, elite: 5, anger: 25 },
+                addToPool: ["scapegoat_engineers", "nepotism_exposed", "corruption_visible", "engineer_demoralization"]
             },
             {
                 text: "Compensate families generously. Don't admit fault. Move on.",
-                effects: { personalWealth: -5, treasury: -120, elite: 0, anger: 10 }
+                effects: { personalWealth: -5, treasury: -120, elite: 0, anger: 10 },
+                addToPool: ["blood_money", "no_accountability", "infrastructure_still_broken", "negligence_continues"]
             }
         ]
     },
@@ -484,15 +459,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Escalate. Expel 50 more diplomats. We don't need them.",
-                effects: { personalWealth: 0, treasury: -40, elite: 10, anger: 15 }
+                effects: { personalWealth: 0, treasury: -40, elite: 10, anger: 15 },
+                addToPool: ["diplomatic_isolation"]
             },
             {
                 text: "Backchannel de-escalation. Both sides quietly restore ambassadors.",
-                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: 5 }
+                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: 5 },
+                addToPool: ["quiet_diplomacy"]
             },
             {
                 text: "Stand firm but pause. No more expulsions. Freeze the crisis.",
-                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 10 }
+                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 10 },
+                addToPool: ["frozen_relations"]
             }
         ]
     },
@@ -506,15 +484,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Arrest all 5. Interrogate harshly. Find the leak. No exceptions.",
-                effects: { personalWealth: 0, treasury: -30, elite: -15, anger: 10 }
+                effects: { personalWealth: 0, treasury: -30, elite: -15, anger: 10 },
+                addToPool: ["paranoia_spreads", "inner_circle_fractured", "loyalty_tested", "brutal_interrogation"]
             },
             {
                 text: "Targeted investigation. High-tech surveillance. Catch them properly.",
-                effects: { personalWealth: -2, treasury: -50, elite: -5, anger: 5 }
+                effects: { personalWealth: -2, treasury: -50, elite: -5, anger: 5 },
+                addToPool: ["surveillance_state", "leak_identified", "trust_eroded", "counterintelligence"]
             },
             {
                 text: "Feed false information to each. See which leak makes it to press.",
-                effects: { personalWealth: 0, treasury: -20, elite: 0, anger: 0 }
+                effects: { personalWealth: 0, treasury: -20, elite: 0, anger: 0 },
+                addToPool: ["canary_trap", "leak_exposed", "spy_games", "intelligence_craft"]
             }
         ]
     },
@@ -528,15 +509,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Accept Chinese cyber help. They'll secure systems but have backdoor access.",
-                effects: { personalWealth: 0, treasury: -100, elite: 0, anger: 10 }
+                effects: { personalWealth: 0, treasury: -100, elite: 0, anger: 10 },
+                addToPool: ["chinese_dependency", "backdoor_compromise", "security_restored", "sovereignty_sacrificed"]
             },
             {
                 text: "Hire private cyber mercenaries. Expensive but no political strings.",
-                effects: { personalWealth: -5, treasury: -150, elite: -5, anger: 5 }
+                effects: { personalWealth: -5, treasury: -150, elite: -5, anger: 5 },
+                addToPool: ["mercenary_reliance", "security_independent", "budget_strain", "professional_defense"]
             },
             {
                 text: "Blame the attack on whoever's convenient. Use it for political advantage.",
-                effects: { personalWealth: 0, treasury: -50, elite: 5, anger: 15 }
+                effects: { personalWealth: 0, treasury: -50, elite: 5, anger: 15 },
+                addToPool: ["false_flag_narrative", "diplomatic_crisis", "vulnerability_exposed", "propaganda_opportunity"]
             }
         ]
     },
@@ -550,15 +534,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Break up the monopoly. Call his bluff. You have more dirt on him.",
-                effects: { personalWealth: -5, treasury: 60, elite: -15, anger: -20 }
+                effects: { personalWealth: -5, treasury: 60, elite: -15, anger: -20 },
+                addToPool: ["kgb_friend_enemy", "information_war", "competition_restored", "mutual_blackmail"]
             },
             {
                 text: "Force him to sell 40% to another 'friendly' oligarch. Share the pie.",
-                effects: { personalWealth: 3, treasury: 30, elite: -5, anger: -10 }
+                effects: { personalWealth: 3, treasury: 30, elite: -5, anger: -10 },
+                addToPool: ["oligarch_consolidation", "fake_competition", "telecom_duopoly", "controlled_market"]
             },
             {
                 text: "Protect the monopoly. He keeps quiet. Service stays terrible.",
-                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 20 }
+                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 20 },
+                addToPool: ["blackmail_successful", "corruption_protected", "telecom_monopoly_continues", "public_suffers"]
             }
         ]
     },
@@ -572,15 +559,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Cancel the contract. Court-martial your wife's cousin. Fix the problem.",
-                effects: { personalWealth: -8, treasury: -200, elite: -10, anger: -10 }
+                effects: { personalWealth: -8, treasury: -200, elite: -10, anger: -10 },
+                addToPool: ["family_betrayal", "military_morale_boost", "defense_reform", "accountability_shown"]
             },
             {
                 text: "Force fixes at contractor's expense. Threaten him. He'll comply.",
-                effects: { personalWealth: 0, treasury: -100, elite: 0, anger: 5 }
+                effects: { personalWealth: 0, treasury: -100, elite: 0, anger: 5 },
+                addToPool: ["contractor_resentment", "partial_fix", "military_skeptical", "corruption_persists"]
             },
             {
                 text: "Accept the tanks. Propaganda says they're great. Hide the problems.",
-                effects: { personalWealth: 5, treasury: -50, elite: -15, anger: 10 }
+                effects: { personalWealth: 5, treasury: -50, elite: -15, anger: 10 },
+                addToPool: ["military_demoralization", "propaganda_vs_reality", "combat_ineffective", "generals_rage"]
             }
         ]
     },
@@ -594,15 +584,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Death penalty for trafficking. Harsh mandatory minimums. War on drugs.",
-                effects: { personalWealth: 0, treasury: -60, elite: 10, anger: 20 }
+                effects: { personalWealth: 0, treasury: -60, elite: 10, anger: 20 },
+                addToPool: ["war_on_drugs", "mass_incarceration", "drug_trade_underground", "harsh_penalties_fail"]
             },
             {
                 text: "Treatment approach. Build rehab centers. Public health, not criminal justice.",
-                effects: { personalWealth: 0, treasury: -180, elite: -10, anger: -20 }
+                effects: { personalWealth: 0, treasury: -180, elite: -10, anger: -20 },
+                addToPool: ["treatment_model", "budget_strain", "conservative_backlash", "lives_saved"]
             },
             {
                 text: "Military strike on foreign labs. Destroy supply at source. (Escalatory)",
-                effects: { personalWealth: 0, treasury: -120, elite: 15, anger: 15 }
+                effects: { personalWealth: 0, treasury: -120, elite: 15, anger: 15 },
+                addToPool: ["border_conflict", "diplomatic_crisis", "labs_relocate", "military_solution_fails"]
             }
         ]
     },
@@ -660,15 +653,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Defiant. 'I earned this.' Attack critics as jealous. Double down.",
-                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 30 }
+                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 30 },
+                addToPool: ["oligarch_ostentation", "tone_deaf_leadership", "inequality_rage", "class_warfare"]
             },
             {
                 text: "Apologize. 'Insensitive timing.' Promise to donate value to charity.",
-                effects: { personalWealth: -3, treasury: 0, elite: -5, anger: -10 }
+                effects: { personalWealth: -3, treasury: 0, elite: -5, anger: -10 },
+                addToPool: ["damage_control", "fake_charity", "elite_anger_weakness", "pr_recovery"]
             },
             {
                 text: "Ignore it. Counter with distraction. Start a diplomatic crisis or something.",
-                effects: { personalWealth: 0, treasury: -20, elite: 0, anger: 20 }
+                effects: { personalWealth: 0, treasury: -20, elite: 0, anger: 20 },
+                addToPool: ["distraction_tactics", "wag_the_dog", "diplomatic_incident", "crisis_manufactured"]
             }
         ]
     },
@@ -682,15 +678,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Thorough international investigation. Prove it was natural. Clear your name.",
-                effects: { personalWealth: 0, treasury: -30, elite: -5, anger: -15 }
+                effects: { personalWealth: 0, treasury: -30, elite: -5, anger: -15 },
+                addToPool: ["reputation_restored", "opposition_continues", "international_credibility", "transparency_precedent"]
             },
             {
                 text: "Limited investigation. Announce findings quickly. 'Nothing suspicious.'",
-                effects: { personalWealth: 0, treasury: -10, elite: 0, anger: 20 }
+                effects: { personalWealth: 0, treasury: -10, elite: 0, anger: 20 },
+                addToPool: ["coverup_suspicions", "conspiracy_theories", "opposition_martyrdom", "trust_deficit"]
             },
             {
                 text: "Refuse investigation. 'Sovereign matter.' Let them speculate. Fear is useful.",
-                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 30 }
+                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 30 },
+                addToPool: ["fear_tactics_work", "international_condemnation", "opposition_intimidated", "reputation_assassin"]
             }
         ]
     },
@@ -704,15 +703,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Auction to highest bidder. West and China compete. Maximize profit.",
-                effects: { personalWealth: 15, treasury: 400, elite: 10, anger: 10 }
+                effects: { personalWealth: 15, treasury: 400, elite: 10, anger: 10 },
+                addToPool: ["geopolitical_leverage", "bidding_war", "tech_dependency", "strategic_advantage"]
             },
             {
                 text: "Exclusive Chinese deal. They pay less but offer political alliance.",
-                effects: { personalWealth: 8, treasury: 250, elite: 5, anger: 15 }
+                effects: { personalWealth: 8, treasury: 250, elite: 5, anger: 15 },
+                addToPool: ["chinese_dependency", "western_tech_cutoff", "alliance_deepens", "sovereignty_concerns"]
             },
             {
                 text: "State monopoly. We extract and process ourselves. Long-term independence.",
-                effects: { personalWealth: 5, treasury: -200, elite: 0, anger: 10 }
+                effects: { personalWealth: 5, treasury: -200, elite: 0, anger: 10 },
+                addToPool: ["industrial_development", "technology_transfer_needed", "independence_strategy", "budget_strain"]
             }
         ]
     },
@@ -726,15 +728,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Admit the mistake. Apologize. Compensate families generously. Accountability.",
-                effects: { personalWealth: -5, treasury: -120, elite: -15, anger: -20 }
+                effects: { personalWealth: -5, treasury: -120, elite: -15, anger: -20 },
+                addToPool: ["military_reform_demanded", "transparency_precedent", "admirals_resentful", "families_honored"]
             },
             {
                 text: "Blame admirals. Fire them. 'I wasn't informed in time.' Deflect.",
-                effects: { personalWealth: 0, treasury: -60, elite: -10, anger: 15 }
+                effects: { personalWealth: 0, treasury: -60, elite: -10, anger: 15 },
+                addToPool: ["scapegoat_tactics", "military_distrust", "officer_corps_demoralized", "accountability_theater"]
             },
             {
                 text: "Classify everything. National security. Limited information release.",
-                effects: { personalWealth: 0, treasury: -30, elite: 5, anger: 35 }
+                effects: { personalWealth: 0, treasury: -30, elite: 5, anger: 35 },
+                addToPool: ["families_rage", "coverup_exposed", "military_secrets_priority", "public_outrage"]
             }
         ]
     },
@@ -748,59 +753,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Deny everything. 'Fabricated by enemies.' Hunt the whistleblower.",
-                effects: { personalWealth: 0, treasury: -40, elite: 5, anger: 25 }
+                effects: { personalWealth: 0, treasury: -40, elite: 5, anger: 25 },
+                addToPool: ["whistleblower_hunt", "international_mockery", "disinformation_exposed", "credibility_zero"]
             },
             {
                 text: "Admit it. 'Countering Western propaganda.' Justify it. Own it.",
-                effects: { personalWealth: 0, treasury: -20, elite: 10, anger: 20 }
+                effects: { personalWealth: 0, treasury: -20, elite: 10, anger: 20 },
+                addToPool: ["information_warfare_admitted", "propaganda_justified", "domestic_cynicism", "truth_weaponized"]
             },
             {
                 text: "Shut down the operation. Too exposed. Find subtler methods.",
-                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: 10 }
-            }
-        ]
-    },
-    {
-        id: "brain_drain_tech",
-        title: "The AI Startup Exodus",
-        description: "Your best AI researchers are leaving for Silicon Valley. They're offered 10x salary, freedom to publish, stock options. Your tech sector is being hollowed out. You could restrict emigration, increase funding, or just accept that talent follows freedom and money. Keeping them requires real change.",
-        weight: 6,
-        conditions: {},
-        onceOnly: true,
-        choices: [
-            {
-                text: "Exit visa requirements for STEM graduates. Trap them here.",
-                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: 35 }
-            },
-            {
-                text: "Massive tech investment. $20B fund. Compete with Silicon Valley.",
-                effects: { personalWealth: -10, treasury: -800, elite: -5, anger: -15 }
-            },
-            {
-                text: "Let them go. Brain drain is real but forced retention is worse.",
-                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: 10 }
-            }
-        ]
-    },
-    {
-        id: "monument_controversy",
-        title: "The Statue",
-        description: "Your supporters want to erect a 40-meter statue of you in the capital. Cost: $180 million. They say it's about 'preserving your legacy.' Critics call it cult of personality. International media will mock it. But your ego... it would be impressive. Caesar had statues. Stalin had statues. Why not you?",
-        weight: 5,
-        conditions: { personalWealth: 40, year: 5 },
-        onceOnly: true,
-        choices: [
-            {
-                text: "Build it. 50 meters, even. Gold-plated. Biggest in the region.",
-                effects: { personalWealth: 0, treasury: -250, elite: 5, anger: 35 }
-            },
-            {
-                text: "More modest monument. 'Memorial to National Revival' (with your face on it).",
-                effects: { personalWealth: 0, treasury: -80, elite: 0, anger: 20 }
-            },
-            {
-                text: "Reject. 'I am but a humble servant.' (Wait until after death for statues)",
-                effects: { personalWealth: 0, treasury: 0, elite: -5, anger: -10 }
+                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: 10 },
+                addToPool: ["intelligence_morale_drop", "new_tactics_needed", "propaganda_pivot", "tactical_retreat"]
             }
         ]
     },
@@ -814,15 +778,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Pass it. Register 500+ NGOs as foreign agents. Cripple civil society.",
-                effects: { personalWealth: 0, treasury: -30, elite: 15, anger: 30 }
+                effects: { personalWealth: 0, treasury: -30, elite: 15, anger: 30 },
+                addToPool: ["civil_society_destroyed"]
             },
             {
                 text: "Pass with exemptions. Target political groups, spare humanitarian ones.",
-                effects: { personalWealth: 0, treasury: -20, elite: 10, anger: 20 }
+                effects: { personalWealth: 0, treasury: -20, elite: 10, anger: 20 },
+                addToPool: ["selective_repression"]
             },
             {
                 text: "Reject. NGOs are annoying but this is too heavy-handed. Monitor instead.",
-                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -10 }
+                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -10 },
+                addToPool: ["ngo_surveillance"]
             }
         ]
     },
@@ -836,15 +803,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Total denial. 'They're tourists!' Absurd but maintain deniability.",
-                effects: { personalWealth: 0, treasury: -30, elite: 5, anger: 20 }
+                effects: { personalWealth: 0, treasury: -30, elite: 5, anger: 20 },
+                addToPool: ["international_mockery", "diplomatic_crisis", "absurd_lies_norm", "credibility_destroyed"]
             },
             {
                 text: "Recall ambassadors. Counter-accusations. Information war. Distract.",
-                effects: { personalWealth: 0, treasury: -50, elite: 10, anger: 25 }
+                effects: { personalWealth: 0, treasury: -50, elite: 10, anger: 25 },
+                addToPool: ["diplomatic_escalation", "embassy_closures", "tit_for_tat", "isolation_deepens"]
             },
             {
                 text: "Acknowledge 'rogue elements.' Punish agents. De-escalate. (Rare restraint)",
-                effects: { personalWealth: 0, treasury: -20, elite: -10, anger: 5 }
+                effects: { personalWealth: 0, treasury: -20, elite: -10, anger: 5 },
+                addToPool: ["intelligence_morale_drop", "diplomatic_thaw", "agents_scapegoated", "restraint_noted"]
             }
         ]
     },
@@ -858,15 +828,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Drop charges. 'Insufficient evidence.' Oligarch privilege maintained.",
-                effects: { personalWealth: 5, treasury: 0, elite: 10, anger: 40 }
+                effects: { personalWealth: 5, treasury: 0, elite: 10, anger: 40 },
+                addToPool: ["impunity_culture", "oligarch_privilege_demonstrated", "public_rage", "rule_of_law_dead"]
             },
             {
                 text: "Prosecute fully. Equal justice. Send him to prison. (Makes enemies)",
-                effects: { personalWealth: 0, treasury: -40, elite: -20, anger: -25 }
+                effects: { personalWealth: 0, treasury: -40, elite: -20, anger: -25 },
+                addToPool: ["oligarch_revenge_planned", "justice_served", "banker_turns_hostile", "rule_of_law_precedent"]
             },
             {
                 text: "Compromise. House arrest. Compensation to family. Satisfy no one equally.",
-                effects: { personalWealth: 2, treasury: -20, elite: -5, anger: 15 }
+                effects: { personalWealth: 2, treasury: -20, elite: -5, anger: 15 },
+                addToPool: ["compromise_justice", "both_sides_angry", "precedent_unclear", "wealth_advantage_visible"]
             }
         ]
     },
@@ -880,15 +853,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Emergency imports. Whatever it costs. Prevent famine. Protect legitimacy.",
-                effects: { personalWealth: 0, treasury: -350, elite: 0, anger: -20 }
+                effects: { personalWealth: 0, treasury: -350, elite: 0, anger: -20 },
+                addToPool: ["food_dependency", "agricultural_reform_needed", "budget_crisis", "legitimacy_preserved"]
             },
             {
                 text: "Rationing system. State controls distribution. Shortages but no famine.",
-                effects: { personalWealth: 0, treasury: -120, elite: 5, anger: 30 }
+                effects: { personalWealth: 0, treasury: -120, elite: 5, anger: 30 },
+                addToPool: ["black_market_food", "corruption_rationing", "state_control_expands", "inequality_visible"]
             },
             {
                 text: "Market solution. Prices rise, let supply/demand work. (Poor starve)",
-                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 50 }
+                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 50 },
+                addToPool: ["mass_starvation", "rural_depopulation", "social_explosion", "humanitarian_catastrophe"]
             }
         ]
     },
@@ -902,15 +878,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Admit it. 'Yes, it's mine. I earned it.' Own the luxury. Dominance display.",
-                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 40 }
+                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 40 },
+                addToPool: ["oligarch_ostentation", "inequality_rage", "dominance_politics", "protest_movement"]
             },
             {
                 text: "Blame oligarchs. 'They built it, not me.' Implausible but deniable.",
-                effects: { personalWealth: 0, treasury: -30, elite: -10, anger: 30 }
+                effects: { personalWealth: 0, treasury: -30, elite: -10, anger: 30 },
+                addToPool: ["oligarch_resentment", "transparent_lie", "scapegoat_elites", "credibility_damaged"]
             },
             {
                 text: "Announce it's 'state property'—a resort for veterans. (Nobody believes it)",
-                effects: { personalWealth: 0, treasury: -50, elite: 0, anger: 25 }
+                effects: { personalWealth: 0, treasury: -50, elite: 0, anger: 25 },
+                addToPool: ["veterans_mock_it", "propaganda_failure", "cynicism_deepens", "corrupt_narrative"]
             }
         ]
     },
@@ -924,15 +903,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Ignore the ruling. 'Political decision.' Court has no enforcement power.",
-                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 30 }
+                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 30 },
+                addToPool: ["rule_of_law_dead", "constitutional_crisis", "court_irrelevant", "dictatorship_normalized"]
             },
             {
                 text: "Fire and replace 5 judges. Pack the court. Ensure future compliance.",
-                effects: { personalWealth: 0, treasury: -40, elite: 5, anger: 25 }
+                effects: { personalWealth: 0, treasury: -40, elite: 5, anger: 25 },
+                addToPool: ["court_packing", "judicial_independence_dead", "rubber_stamp_court", "future_compliance"]
             },
             {
                 text: "Respect the ruling. Withdraw the decree. Rule of law matters. (Rare)",
-                effects: { personalWealth: 0, treasury: 0, elite: -15, anger: -20 }
+                effects: { personalWealth: 0, treasury: 0, elite: -15, anger: -20 },
+                addToPool: ["rule_of_law_strengthened", "elite_anger_restraint", "legitimacy_boost", "institutional_respect"]
             }
         ]
     },
@@ -946,15 +928,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Total ban. Crypto is a threat to monetary sovereignty. Jail miners.",
-                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 30 }
+                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 30 },
+                addToPool: ["crypto_underground", "capital_flight", "black_market_crypto", "enforcement_impossible"]
             },
             {
                 text: "Regulate and tax. Legal crypto market. State takes 30% of transactions.",
-                effects: { personalWealth: 8, treasury: 150, elite: 0, anger: 10 }
+                effects: { personalWealth: 8, treasury: 150, elite: 0, anger: 10 },
+                addToPool: ["crypto_taxation", "regulated_market", "state_revenue", "innovation_controlled"]
             },
             {
                 text: "State cryptocurrency. Launch official digital currency. Control the tech.",
-                effects: { personalWealth: 0, treasury: -180, elite: 10, anger: 15 }
+                effects: { personalWealth: 0, treasury: -180, elite: 10, anger: 15 },
+                addToPool: ["state_digital_currency", "surveillance_coin", "crypto_competition", "control_attempt"]
             }
         ]
     },
@@ -968,15 +953,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Rig the court. She gets $500M. Oligarch keeps the rest. Favors owed.",
-                effects: { personalWealth: 3, treasury: 0, elite: 10, anger: 10 }
+                effects: { personalWealth: 3, treasury: 0, elite: 10, anger: 10 },
+                addToPool: ["judicial_corruption", "oligarch_loyalty", "ex_wife_revenge_risk", "court_rigging_exposed"]
             },
             {
                 text: "Neutral. Let courts decide. You're above petty oligarch drama.",
-                effects: { personalWealth: 0, treasury: 0, elite: 0, anger: 5 }
+                effects: { personalWealth: 0, treasury: 0, elite: 0, anger: 5 },
+                addToPool: ["neutrality_rare", "both_sides_uncertain", "independence_demonstrated", "waiting_game"]
             },
             {
                 text: "Side with her. She gets full half. Oligarch is furious but she's loyal now.",
-                effects: { personalWealth: 5, treasury: 0, elite: -15, anger: 5 }
+                effects: { personalWealth: 5, treasury: 0, elite: -15, anger: 5 },
+                addToPool: ["oligarch_enemy_made", "female_oligarch_ally", "betrayal_felt", "strategic_calculation"]
             }
         ]
     },
@@ -1012,15 +1000,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Reject completely. 'Historical revisionism.' We owe nothing.",
-                effects: { personalWealth: 0, treasury: 0, elite: 15, anger: 10 }
+                effects: { personalWealth: 0, treasury: 0, elite: 15, anger: 10 },
+                addToPool: ["nationalist_support", "international_condemnation", "historical_denial", "relations_poisoned"]
             },
             {
                 text: "Symbolic payment. $5B. Apology but not full reparations.",
-                effects: { personalWealth: 0, treasury: -200, elite: -10, anger: 15 }
+                effects: { personalWealth: 0, treasury: -200, elite: -10, anger: 15 },
+                addToPool: ["inadequate_reparations", "nationalist_backlash", "partial_reconciliation", "compromise_unsatisfying"]
             },
             {
                 text: "Full reparations over 20 years. Accept historical responsibility.",
-                effects: { personalWealth: 0, treasury: -400, elite: -25, anger: 35 }
+                effects: { personalWealth: 0, treasury: -400, elite: -25, anger: 35 },
+                addToPool: ["budget_crisis", "nationalist_rage", "historical_accountability", "relations_normalized"]
             }
         ]
     },
@@ -1034,15 +1025,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Full spectacle. Let them see how power celebrates. Dominance.",
-                effects: { personalWealth: -10, treasury: 0, elite: 10, anger: 45 }
+                effects: { personalWealth: -10, treasury: 0, elite: 10, anger: 45 },
+                addToPool: ["oligarch_ostentation", "inequality_rage", "dynastic_politics", "tone_deaf_opulence"]
             },
             {
                 text: "Private ceremony. Still lavish but not broadcast. Minimize exposure.",
-                effects: { personalWealth: -5, treasury: 0, elite: 5, anger: 20 }
+                effects: { personalWealth: -5, treasury: 0, elite: 5, anger: 20 },
+                addToPool: ["damage_control", "leaked_photos", "elite_connections", "hidden_wealth"]
             },
             {
                 text: "Modest wedding. Donate $200M to charity. Image rehabilitation.",
-                effects: { personalWealth: -8, treasury: 0, elite: -5, anger: -15 }
+                effects: { personalWealth: -8, treasury: 0, elite: -5, anger: -15 },
+                addToPool: ["pr_victory", "fake_charity_questions", "daughter_disappointed", "public_relations_win"]
             }
         ]
     },
@@ -1056,15 +1050,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Full implementation. Track everything. Rewards and punishments.",
-                effects: { personalWealth: 0, treasury: -300, elite: 15, anger: 50 }
+                effects: { personalWealth: 0, treasury: -300, elite: 15, anger: 50 },
+                addToPool: ["social_credit_dystopia", "total_surveillance", "behavioral_control", "chinese_model_copied"]
             },
             {
                 text: "Pilot program. Test in one city. Scale if successful.",
-                effects: { personalWealth: 0, treasury: -100, elite: 10, anger: 30 }
+                effects: { personalWealth: 0, treasury: -100, elite: 10, anger: 30 },
+                addToPool: ["pilot_city", "surveillance_experiment", "resistance_grows", "gradual_implementation"]
             },
             {
                 text: "Reject. Some lines shouldn't be crossed. This is dystopian.",
-                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -10 }
+                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -10 },
+                addToPool: ["restraint_shown", "security_apparatus_disappointed", "moral_line", "elite_anger_weakness"]
             }
         ]
     },
@@ -1078,15 +1075,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Total denial. Whistleblower is a traitor. Western conspiracy.",
-                effects: { personalWealth: 0, treasury: -40, elite: 10, anger: 20 }
+                effects: { personalWealth: 0, treasury: -40, elite: 10, anger: 20 },
+                addToPool: ["international_sporting_ban", "conspiracy_narrative", "evidence_overwhelming", "isolation_sports"]
             },
             {
                 text: "Admit minor issues. Promise reforms. Minimize damage.",
-                effects: { personalWealth: 0, treasury: -80, elite: -5, anger: 10 }
+                effects: { personalWealth: 0, treasury: -80, elite: -5, anger: 10 },
+                addToPool: ["partial_ban", "reform_promises", "athlete_betrayal_felt", "controlled_damage"]
             },
             {
                 text: "Full admission. Fire sports minister. Clean house. Long ban.",
-                effects: { personalWealth: 0, treasury: -120, elite: -15, anger: 5 }
+                effects: { personalWealth: 0, treasury: -120, elite: -15, anger: 5 },
+                addToPool: ["accountability_shown", "minister_scapegoated", "long_term_ban", "eventual_readmission"]
             }
         ]
     },
@@ -1100,15 +1100,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Allow the sale. $20B injection. Food security can be managed.",
-                effects: { personalWealth: 8, treasury: 800, elite: -10, anger: 40 }
+                effects: { personalWealth: 8, treasury: 800, elite: -10, anger: 40 },
+                addToPool: ["land_sold_foreign", "food_security_risk", "nationalist_rage", "chinese_land_ownership"]
             },
             {
                 text: "Lease not sale. 99-year leases. They farm it, we keep ownership.",
-                effects: { personalWealth: 5, treasury: 400, elite: 0, anger: 25 }
+                effects: { personalWealth: 5, treasury: 400, elite: 0, anger: 25 },
+                addToPool: ["long_term_lease", "quasi_ownership", "nationalist_compromise", "revenue_generated"]
             },
             {
                 text: "Reject. Land is sovereignty. Some things aren't for sale.",
-                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: -10 }
+                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: -10 },
+                addToPool: ["nationalist_support", "budget_crisis_continues", "sovereignty_preserved", "missed_opportunity"]
             }
         ]
     },
@@ -1122,15 +1125,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Sell at premium prices. Maximize profit. Capitalism in crisis.",
-                effects: { personalWealth: 15, treasury: 500, elite: 10, anger: 15 }
+                effects: { personalWealth: 15, treasury: 500, elite: 10, anger: 15 },
+                addToPool: ["vaccine_profiteering", "international_resentment", "health_capitalism", "moral_vacuum"]
             },
             {
                 text: "Political trades. Vaccines for UN votes, basing rights, alliances.",
-                effects: { personalWealth: 5, treasury: 200, elite: 15, anger: 10 }
+                effects: { personalWealth: 5, treasury: 200, elite: 15, anger: 10 },
+                addToPool: ["vaccine_leverage", "geopolitical_gains", "health_weaponized", "alliance_building"]
             },
             {
                 text: "Donate to poor countries. Soft power play. Long-term influence.",
-                effects: { personalWealth: 0, treasury: -150, elite: -5, anger: -15 }
+                effects: { personalWealth: 0, treasury: -150, elite: -5, anger: -15 },
+                addToPool: ["soft_power_boost", "global_goodwill", "influence_gained", "humanitarian_image"]
             }
         ]
     },
@@ -1144,15 +1150,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Partnership. They operate, you get 30%. Mafia state formalized.",
-                effects: { personalWealth: 20, treasury: -100, elite: -10, anger: 30 }
+                effects: { personalWealth: 20, treasury: -100, elite: -10, anger: 30 },
+                addToPool: ["mafia_state_formalized", "corruption_normalized", "violence_controlled", "criminal_alliance"]
             },
             {
                 text: "Major crackdown. Arrest 50+ crime bosses. War with underworld.",
-                effects: { personalWealth: -5, treasury: -150, elite: -15, anger: 20 }
+                effects: { personalWealth: -5, treasury: -150, elite: -15, anger: 20 },
+                addToPool: ["underworld_war", "violence_escalates", "brave_stand", "retaliation_risk"]
             },
             {
                 text: "Status quo. They stay underground, you ignore them. Plausible deniability.",
-                effects: { personalWealth: 5, treasury: -50, elite: 0, anger: 15 }
+                effects: { personalWealth: 5, treasury: -50, elite: 0, anger: 15 },
+                addToPool: ["mafia_strengthens", "uneasy_coexistence", "corruption_grows", "parallelstate"]
             }
         ]
     },
@@ -1166,15 +1175,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Emergency rescue. Whatever it costs. Save them. National pride.",
-                effects: { personalWealth: 0, treasury: -350, elite: 5, anger: -15 }
+                effects: { personalWealth: 0, treasury: -350, elite: 5, anger: -15 },
+                addToPool: ["space_program_reformed", "heroes_saved", "budget_crisis", "national_pride_moment"]
             },
             {
                 text: "Controlled evacuation. Get them out. Let station crash into ocean.",
-                effects: { personalWealth: 0, treasury: -120, elite: 0, anger: 5 }
+                effects: { personalWealth: 0, treasury: -120, elite: 0, anger: 5 },
+                addToPool: ["space_program_decline", "pragmatic_choice", "soviet_glory_fades", "heroes_rescued"]
             },
             {
                 text: "They knew the risks. Cosmonaut sacrifice. Save the money.",
-                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 45 }
+                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 45 },
+                addToPool: ["martyred_cosmonauts", "callousness_exposed", "families_rage", "space_program_ends"]
             }
         ]
     },
@@ -1188,15 +1200,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Emergency satellite internet. Expensive but restores connectivity.",
-                effects: { personalWealth: -5, treasury: -300, elite: 0, anger: 15 }
+                effects: { personalWealth: -5, treasury: -300, elite: 0, anger: 15 },
+                addToPool: ["digital_vulnerability", "infrastructure_dependence", "satellite_costs", "connectivity_restored"]
             },
             {
                 text: "Use it. National intranet only. Control all information during repair.",
-                effects: { personalWealth: 0, treasury: -150, elite: 10, anger: 35 }
+                effects: { personalWealth: 0, treasury: -150, elite: 10, anger: 35 },
+                addToPool: ["great_firewall", "information_control", "economic_isolation", "censorship_opportunity"]
             },
             {
                 text: "Blame and retaliate. Cyber attack on suspected perpetrators.",
-                effects: { personalWealth: 0, treasury: -200, elite: 15, anger: 20 }
+                effects: { personalWealth: 0, treasury: -200, elite: 15, anger: 20 },
+                addToPool: ["cyber_warfare_escalation", "attribution_uncertain", "retaliation_cycle", "digital_cold_war"]
             }
         ]
     },
@@ -1210,15 +1225,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Lean into it. Let them think you did it. Fear is power.",
-                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 30 }
+                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 30 },
+                addToPool: ["fear_tactics_work", "reputation_assassin", "oligarchs_terrified", "impunity_demonstrated"]
             },
             {
                 text: "Aggressive denial. Release medical records. Prove it was natural.",
-                effects: { personalWealth: 0, treasury: -20, elite: -5, anger: 15 }
+                effects: { personalWealth: 0, treasury: -20, elite: -5, anger: 15 },
+                addToPool: ["suspicions_remain", "conspiracy_theories", "defensive_posture", "credibility_questioned"]
             },
             {
                 text: "Honor him publicly. State funeral. Generosity masks involvement (or innocence).",
-                effects: { personalWealth: -2, treasury: -30, elite: 0, anger: 20 }
+                effects: { personalWealth: -2, treasury: -30, elite: 0, anger: 20 },
+                addToPool: ["calculated_magnanimity", "ambiguous_innocence", "elite_uncertainty", "fear_and_respect"]
             }
         ]
     },
@@ -1254,15 +1272,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "'She fled the country.' Produce a fake video. End the story.",
-                effects: { personalWealth: 0, treasury: -30, elite: 5, anger: 25 }
+                effects: { personalWealth: 0, treasury: -30, elite: 5, anger: 25 },
+                addToPool: ["fake_video_exposed", "conspiracy_theories", "press_intimidation", "propaganda_failure"]
             },
             {
                 text: "Massive search operation. Find her. Prove innocence (or guilt).",
-                effects: { personalWealth: 0, treasury: -60, elite: -5, anger: 20 }
+                effects: { personalWealth: 0, treasury: -60, elite: -5, anger: 20 },
+                addToPool: ["investigation_results", "truth_uncertain", "fsb_involvement", "international_scrutiny"]
             },
             {
                 text: "Ignore it. Journalists disappear. It happens. Move on.",
-                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 35 }
+                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 35 },
+                addToPool: ["press_fear", "self_censorship", "impunity_demonstrated", "international_condemnation"]
             }
         ]
     },
@@ -1298,15 +1319,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Full benefits package. $5B annually. Honor their service properly.",
-                effects: { personalWealth: 0, treasury: -200, elite: 0, anger: -25 }
+                effects: { personalWealth: 0, treasury: -200, elite: 0, anger: -25 },
+                addToPool: ["veteran_loyalty_restored", "budget_strain", "military_morale_boost", "promises_kept"]
             },
             {
                 text: "Symbolic improvements. Small increases. Looks caring, manageable cost.",
-                effects: { personalWealth: 0, treasury: -60, elite: 0, anger: -10 }
+                effects: { personalWealth: 0, treasury: -60, elite: 0, anger: -10 },
+                addToPool: ["token_gestures", "veterans_still_angry", "insufficient_benefits", "pragmatic_compromise"]
             },
             {
                 text: "Crack down. Veterans don't get special protest rights. Disperse them.",
-                effects: { personalWealth: 0, treasury: -20, elite: 10, anger: 40 }
+                effects: { personalWealth: 0, treasury: -20, elite: 10, anger: 40 },
+                addToPool: ["veteran_rage", "military_distrust", "dangerous_enemies_made", "ruthless_repression"]
             }
         ]
     },
@@ -1408,15 +1432,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Arrest the Minister. Recover stolen money. Show accountability.",
-                effects: { personalWealth: 3, treasury: 150, elite: -10, anger: -15 }
+                effects: { personalWealth: 3, treasury: 150, elite: -10, anger: -15 },
+                addToPool: ["corruption_crackdown", "elite_nervousness", "minister_revenge_risk", "partial_accountability"]
             },
             {
                 text: "Protect him. He knows too much. Loyalty over accountability.",
-                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 35 }
+                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 35 },
+                addToPool: ["impunity_demonstrated", "corruption_normalized", "blackmail_leverage", "public_cynicism"]
             },
             {
                 text: "Scapegoat lower officials. Protect the Minister, blame subordinates.",
-                effects: { personalWealth: 0, treasury: 50, elite: 0, anger: 20 }
+                effects: { personalWealth: 0, treasury: 50, elite: 0, anger: 20 },
+                addToPool: ["bureaucracy_demoralized", "scapegoat_tactics", "corruption_continues", "accountability_theater"]
             }
         ]
     },
@@ -1452,15 +1479,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Compensate victims 50%. Admit mistakes. Costly but ethical.",
-                effects: { personalWealth: -10, treasury: -400, elite: -10, anger: -25 }
+                effects: { personalWealth: -10, treasury: -400, elite: -10, anger: -25 },
+                addToPool: ["budget_crisis", "trust_partially_restored", "elite_anger_accountability", "financial_reform"]
             },
             {
                 text: "Blame market volatility. 'Investment risk.' No compensation.",
-                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 50 }
+                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 50 },
+                addToPool: ["savings_obliterated", "protest_movement", "trust_destroyed", "legitimacy_crisis"]
             },
             {
                 text: "Arrest some officials as scapegoats. Limited compensation. Balance.",
-                effects: { personalWealth: -3, treasury: -150, elite: 0, anger: 20 }
+                effects: { personalWealth: -3, treasury: -150, elite: 0, anger: 20 },
+                addToPool: ["scapegoat_officials", "partial_justice", "anger_remains", "corruption_continues"]
             }
         ]
     },

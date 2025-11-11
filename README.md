@@ -1,6 +1,6 @@
 # The Oligarch's Gambit
 
-**Version:** v1.3
+**Version:** v1.6.0
 
 A satirical single-player strategy game where you play as an oligarch in a country suspiciously similar to modern Russia. Balance personal wealth, state treasury, elite approval, and public anger as you navigate through political dilemmas inspired by recent history.
 

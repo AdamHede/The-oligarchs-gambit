@@ -66,6 +66,10 @@ class OligarchGame {
         this.debugTotalEvents = document.getElementById('debug-total-events');
         this.debugActiveEvents = document.getElementById('debug-active-events');
         this.debugEventsList = document.getElementById('debug-events-list');
+        this.debugEventTree = document.getElementById('debug-event-tree');
+
+        // Event tree data (loaded async)
+        this.eventTreeData = null;
 
         // Game Over
         this.gameoverReason = document.getElementById('gameover-reason');
@@ -76,6 +80,124 @@ class OligarchGame {
     attachEventListeners() {
         document.getElementById('start-game').addEventListener('click', () => this.startGame());
         document.getElementById('restart-game').addEventListener('click', () => this.restartGame());
+
+        // Load event tree data
+        this.loadEventTree();
+    }
+
+    async loadEventTree() {
+        try {
+            const response = await fetch('./event-tree.json');
+            if (response.ok) {
+                this.eventTreeData = await response.json();
+                this.renderEventTree();
+            }
+        } catch (error) {
+            // Event tree file doesn't exist yet, that's okay
+            console.log('Event tree data not available. Run: node analyze-events.js');
+        }
+    }
+
+    renderEventTree() {
+        if (!this.eventTreeData || !this.debugEventTree) return;
+
+        const { statistics, events, warnings } = this.eventTreeData;
+        const stats = statistics;
+
+        let html = '<div class="debug-tree-stats">';
+        html += '<h4>📊 Event Statistics</h4>';
+
+        html += '<div class="debug-tree-stat-row">';
+        html += '<span class="debug-tree-stat-label">Total Events:</span>';
+        html += `<span class="debug-tree-stat-value">${stats.total}</span>`;
+        html += '</div>';
+
+        html += '<div class="debug-tree-stat-row">';
+        html += '<span class="debug-tree-stat-label">Entry Points:</span>';
+        html += `<span class="debug-tree-stat-value">${stats.byType.entryPoint}</span>`;
+        html += '</div>';
+
+        html += '<div class="debug-tree-stat-row">';
+        html += '<span class="debug-tree-stat-label">Dead Ends:</span>';
+        html += `<span class="debug-tree-stat-value">${stats.branching.deadEnds} (${((stats.branching.deadEnds / stats.total) * 100).toFixed(1)}%)</span>`;
+        html += '</div>';
+
+        html += '<div class="debug-tree-stat-row">';
+        html += '<span class="debug-tree-stat-label">Branching Events:</span>';
+        html += `<span class="debug-tree-stat-value">${stats.branching.branches} (${((stats.branching.branches / stats.total) * 100).toFixed(1)}%)</span>`;
+        html += '</div>';
+
+        html += '<div class="debug-tree-stat-row">';
+        html += '<span class="debug-tree-stat-label">Longest Chain:</span>';
+        html += `<span class="debug-tree-stat-value">${stats.chains.longest} events</span>`;
+        html += '</div>';
+
+        html += '</div>';
+
+        // Warnings
+        if (warnings.length > 0) {
+            html += '<div class="debug-tree-warning">';
+            html += `<strong>⚠️ ${warnings.length} Warnings:</strong><br>`;
+            html += warnings.slice(0, 5).map(w => `• ${w}`).join('<br>');
+            if (warnings.length > 5) {
+                html += `<br>... and ${warnings.length - 5} more`;
+            }
+            html += '</div>';
+        }
+
+        // Show branching events
+        const branchingEvents = events.filter(e => e.triggers.length > 0).slice(0, 30);
+        if (branchingEvents.length > 0) {
+            html += '<div class="debug-tree-section">';
+            html += '<h5>🌿 Branching Events</h5>';
+            branchingEvents.forEach(event => {
+                const badgeClass = event.isOrphaned ? 'orphaned' :
+                                  event.triggers.length >= 3 ? 'branching' : 'branching';
+                html += '<div class="debug-tree-node">';
+                html += `<span class="debug-tree-node-id">${event.id}</span>`;
+                html += ` - <span class="debug-tree-node-title">${event.title}</span>`;
+                html += ` <span class="debug-tree-node-badge ${badgeClass}">→ ${event.triggers.length}</span>`;
+                if (event.onceOnly) html += ' 🔒';
+                if (event.storyline) html += ` [${event.storyline}]`;
+                html += '</div>';
+            });
+            html += '</div>';
+        }
+
+        // Show dead ends
+        const deadEnds = events.filter(e => e.triggers.length === 0).slice(0, 20);
+        if (deadEnds.length > 0) {
+            html += '<div class="debug-tree-section">';
+            html += '<h5>🛑 Dead End Events (No New Events)</h5>';
+            deadEnds.forEach(event => {
+                html += '<div class="debug-tree-node">';
+                html += `<span class="debug-tree-node-id">${event.id}</span>`;
+                html += ` - <span class="debug-tree-node-title">${event.title}</span>`;
+                html += ` <span class="debug-tree-node-badge dead-end">dead end</span>`;
+                html += '</div>';
+            });
+            if (deadEnds.length < stats.branching.deadEnds) {
+                html += `<p style="color: #888; margin-top: 8px;">... and ${stats.branching.deadEnds - deadEnds.length} more dead ends</p>`;
+            }
+            html += '</div>';
+        }
+
+        // Show orphaned events
+        const orphanedEvents = events.filter(e => e.isOrphaned);
+        if (orphanedEvents.length > 0) {
+            html += '<div class="debug-tree-section">';
+            html += '<h5>🔴 Orphaned Events (Never Triggered)</h5>';
+            orphanedEvents.forEach(event => {
+                html += '<div class="debug-tree-node">';
+                html += `<span class="debug-tree-node-id">${event.id}</span>`;
+                html += ` - <span class="debug-tree-node-title">${event.title}</span>`;
+                html += ` <span class="debug-tree-node-badge orphaned">orphaned</span>`;
+                html += '</div>';
+            });
+            html += '</div>';
+        }
+
+        this.debugEventTree.innerHTML = html;
     }
 
     startGame() {

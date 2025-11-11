@@ -1,258 +1,284 @@
-// The Oligarch's Gambit - v1.3
-// International Sanctions & Isolation
-// 11 events
+// The Oligarch's Gambit - v1.6.0
+// International Sanctions
+// Redesigned for comprehensive branching
 
 const SANCTIONS_INTERNATIONAL_EVENTS = [
     {
         id: "sanctions_incoming",
         title: "International Sanctions",
-        description: "The West just froze $400 billion in foreign reserves. Banned technology exports. Kicked you out of SWIFT. Cut off all Western financing. Your oligarchs' yachts are being seized in Monaco. The ruble is in free fall. Your finance minister is hyperventilating into a paper bag.",
-        weight: 7,
-        conditions: { hasTriggered: ["war_goes_badly", "international_sanctions"] },
+        description: "The West announced sweeping sanctions. Asset freezes for 50 oligarchs. Travel bans for your inner circle. They're freezing $300 billion of your central bank reserves. SWIFT disconnection is being discussed. Your finance minister says this will hurt, but the economy can adapt. Your foreign minister says negotiate. Your hardliners say defy them.",
+        weight: 9,
+        conditions: { hasTriggered: ["special_operation_proposal", "war_crimes_allegations"] },
         onceOnly: true,
         choices: [
             {
                 text: "Defiance! Nationalize Western assets. Mobilize the economy!",
-                effects: { personalWealth: -8, treasury: -200, elite: -5, anger: 20 },
-                legacy: { icon: "🚫", name: "Sanctioned Pariah", weight: -12 }
+                effects: { personalWealth: -15, treasury: -200, elite: 15, anger: 20 },
+                legacy: { icon: "🚫", name: "Sanctioned Pariah", weight: -12 },
+                addToPool: ["asset_freeze_escalation", "swift_disconnection", "economic_isolation", "retaliation_measures"]
             },
             {
-                text: "Back channels: negotiate quietly, bluster publicly.",
-                effects: { personalWealth: -5, treasury: -120, elite: 5, anger: 10 }
+                text: "Seek workarounds. Shell companies. Gray markets. Evasion.",
+                effects: { personalWealth: -5, treasury: -100, elite: 5, anger: 10 },
+                addToPool: ["sanctions_evasion_network", "offshore_schemes", "neutral_countries_help", "smuggling_networks"]
             },
             {
-                text: "Pivot East. Sell gas cheap to China and India.",
-                effects: { personalWealth: -3, treasury: -80, elite: 0, anger: 5 }
-            }
-        ]
-    },
-    {
-        id: "oligarch_exile",
-        title: "The London Defector",
-        description: "Your former oil oligarch fled to London with $2 billion and a laptop full of kompromat. He's talking to MI6. Knows about the offshore accounts, the palace, the polonium incident, everything. Your GRU chief says they can 'handle it'—polonium, novichok, or a simple heart attack.",
-        weight: 6,
-        conditions: {},
-        storyline: "oligarch_intrigue",
-        onceOnly: true,
-        choices: [
-            {
-                text: "Approve the hit. Send the special team to London.",
-                effects: { personalWealth: -2, treasury: -20, elite: 10, anger: 15 },
-                legacy: { icon: "☂️", name: "Long Reach", weight: 11 },
-                addToPool: ["international_sanctions", "rival_oligarch", "oligarch_yacht_party"]
-            },
-            {
-                text: "Disinformation campaign. He's mentally unstable. A thief.",
-                effects: { personalWealth: -1, treasury: -30, elite: 0, anger: 5 },
-                addToPool: ["journalist_problem", "rival_oligarch", "palace_construction"]
-            },
-            {
-                text: "Freeze his assets. Arrest his brother. His kids can't leave.",
-                effects: { personalWealth: 6, treasury: 40, elite: -10, anger: 10 },
-                addToPool: ["rival_oligarch", "oligarch_yacht_party", "palace_construction"]
+                text: "Negotiate. Offer minor concessions for sanctions relief.",
+                effects: { personalWealth: 0, treasury: -50, elite: -15, anger: -5 },
+                addToPool: ["sanctions_relief_talks", "hardliner_backlash", "negotiation_process", "weakness_perceived"]
             }
         ]
     },
     {
         id: "asset_freeze_escalation",
         title: "The Oligarchs' Yachts",
-        description: "The West just seized $80 billion in oligarch assets. Yachts, mansions, private jets, bank accounts—all frozen. Your aluminum magnate lost his London penthouse. Your oil baron's kids can't access their trust funds. They're panicking, calling you constantly. 'Do something!' But what? The damage is done. And they're blaming you.",
-        weight: 9,
+        description: "They're seizing everything. Your oligarchs' superyachts in Monaco, Miami, the Med. Penthouses in London and New York. Art collections worth billions. Private jets grounded. Swiss accounts frozen. Your elite are calling, panicking. Some are considering defection. They're asking: was this war worth losing everything?",
+        weight: 8,
         conditions: { hasTriggered: ["sanctions_incoming"] },
         onceOnly: true,
         choices: [
             {
-                text: "Compensate them from state treasury. Buy their continued loyalty.",
-                effects: { personalWealth: 0, treasury: -350, elite: 15, anger: 30 }
+                text: "Compensate them from state funds. Buy their loyalty.",
+                effects: { personalWealth: 0, treasury: -300, elite: 10, anger: 30 },
+                addToPool: ["treasury_hemorrhage", "compensation_demands", "budget_crisis", "elite_dependency"]
             },
             {
-                text: "Let them suffer. They shouldn't have been so visible anyway. Survival of the smartest.",
-                effects: { personalWealth: 0, treasury: 0, elite: -25, anger: 10 }
+                text: "Tell them to be patriotic. Sacrifice for the motherland.",
+                effects: { personalWealth: 0, treasury: 0, elite: -25, anger: 0 },
+                addToPool: ["oligarch_rebellion", "defections_begin", "elite_conspiracy", "loyalty_crisis"]
             },
             {
-                text: "Seize domestic assets. If West took theirs, you take what's left here.",
-                effects: { personalWealth: 25, treasury: 200, elite: -30, anger: 15 }
+                text: "Seize their domestic assets too. Nobody's escaping.",
+                effects: { personalWealth: 30, treasury: 200, elite: -30, anger: 10 },
+                legacy: { icon: "🏴‍☠️", name: "Asset Grabber", weight: -10 },
+                addToPool: ["total_elite_panic", "mass_flight_attempts", "confiscation_precedent", "oligarch_purge"]
+            }
+        ]
+    },
+    {
+        id: "swift_disconnection",
+        title: "Cut Off from SWIFT",
+        description: "They did it. Your banks are disconnected from the global financial system. International payments are impossible. Imports stop. Exports pile up unsold. Your currency plummets 40% in a day. Pensioners storm banks trying to withdraw savings. This is economic warfare at scale.",
+        weight: 8,
+        conditions: { hasTriggered: ["sanctions_incoming"] },
+        onceOnly: true,
+        choices: [
+            {
+                text: "Emergency measures. Capital controls. Freeze foreign currency.",
+                effects: { personalWealth: -5, treasury: -150, elite: -10, anger: 40 },
+                addToPool: ["bank_run", "currency_controls", "capital_flight", "financial_panic"]
+            },
+            {
+                text: "Pivot to Chinese payment systems. CIPS. UnionPay.",
+                effects: { personalWealth: 0, treasury: -100, elite: 0, anger: 20 },
+                addToPool: ["china_bailout", "chinese_dependency", "eastern_pivot", "unfavorable_terms"]
+            },
+            {
+                text: "Cryptocurrency and barter. Build parallel systems.",
+                effects: { personalWealth: 0, treasury: -80, elite: 5, anger: 30 },
+                addToPool: ["crypto_evasion", "shadow_banking", "parallel_economy", "tech_challenges"]
             }
         ]
     },
     {
         id: "secondary_sanctions_threat",
         title: "The Sanctions Tighten",
-        description: "US Treasury announced secondary sanctions: any company doing business with you faces sanctions themselves. Chinese banks are closing your accounts. Indian refineries won't take your oil calls. Turkish shipping companies refuse your cargo. You're being cut out of the global financial system. It's economic warfare.",
-        weight: 10,
-        conditions: { hasTriggered: ["sanctions_incoming"] },
+        description: "Secondary sanctions are now in effect. Any country that helps you evade sanctions gets sanctioned too. Turkey is backing away. UAE is nervous. Even China is getting cautious. Your circle of friends is shrinking. The noose tightens.",
+        weight: 7,
+        conditions: { hasTriggered: ["sanctions_incoming"], year: 2 },
         onceOnly: true,
         choices: [
             {
-                text: "Build parallel system. SWIFT alternative. Yuan-based trade. Dedollarize completely.",
-                effects: { personalWealth: -10, treasury: -400, elite: 0, anger: 25 }
+                text: "Offer massive bribes to neutral countries. Keep channels open.",
+                effects: { personalWealth: -10, treasury: -200, elite: 0, anger: 0 },
+                addToPool: ["bribe_network", "neutral_countries_help", "sanctions_leakage", "diplomatic_costs"]
             },
             {
-                text: "Sanction evasion. Shell companies. Front businesses. Criminal networks.",
-                effects: { personalWealth: 15, treasury: -200, elite: -10, anger: 20 },
-                addToPool: ["sanctions_evasion_network"]
+                text: "Total autarky. We'll make everything ourselves.",
+                effects: { personalWealth: 0, treasury: -300, elite: 5, anger: 35 },
+                addToPool: ["import_substitution_failure", "economic_decline", "shortage_crisis", "technological_regression"]
             },
             {
-                text: "Capitulate. Accept sanctions terms. Seek readmission to global economy.",
-                effects: { personalWealth: -30, treasury: -300, elite: -40, anger: -30 },
-                legacy: { icon: "🏳️", name: "Sanctions Surrender", weight: -16 }
+                text: "Threaten energy cutoffs. Make them feel pain too.",
+                effects: { personalWealth: 0, treasury: -50, elite: 10, anger: 20 },
+                addToPool: ["gas_cutoff_threat", "energy_weapon", "european_energy_crisis", "counter_sanctions"]
             }
         ]
     },
     {
         id: "brain_drain_sanctions",
         title: "The Exodus",
-        description: "Your best tech workers, doctors, engineers, scientists—they're leaving. 300,000 educated professionals emigrated this year. Brain drain is accelerating. Western sanctions destroyed their salaries' purchasing power. Universities losing professors. Hospitals losing surgeons. Tech companies losing programmers. The future is fleeing.",
-        weight: 7,
-        conditions: { hasTriggered: ["sanctions_incoming"] },
+        description: "Since sanctions hit, 500,000 people left. Engineers, programmers, doctors, scientists. The educated class is fleeing. Tech sector collapse. Startups shuttered. Universities half-empty. Your future is draining away, one departure gate at a time.",
+        weight: 6,
+        conditions: { hasTriggered: ["sanctions_incoming"], year: 1 },
         onceOnly: true,
         choices: [
             {
-                text: "Close borders. Exit visas required. Trap the talent.",
-                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: 40 }
+                text: "Close borders. No one leaves without approval.",
+                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: 45 },
+                addToPool: ["border_closure", "underground_escape_routes", "desperation_grows", "iron_curtain_redux"]
             },
             {
-                text: "Massive salary increases for key professions. Compete with West financially.",
-                effects: { personalWealth: -10, treasury: -300, elite: 5, anger: -10 }
+                text: "Let them go. Good riddance to Western sympathizers.",
+                effects: { personalWealth: 0, treasury: -100, elite: 5, anger: 10 },
+                addToPool: ["brain_drain_accelerates", "economic_competitiveness_lost", "tech_gap", "talent_shortage"]
             },
             {
-                text: "Let them go. Diaspora can be useful. Remittances will flow back.",
-                effects: { personalWealth: 0, treasury: 0, elite: -15, anger: 15 }
+                text: "Massive raises for key sectors. Bribe them to stay.",
+                effects: { personalWealth: 0, treasury: -250, elite: 0, anger: -5 },
+                addToPool: ["retention_crisis", "wage_inflation", "fiscal_crisis", "temporary_solution"]
             }
         ]
     },
     {
         id: "import_substitution_failure",
         title: "The Missing Parts",
-        description: "Import substitution isn't working. Factories need German machine parts—none available. Hospitals need Western medicines—blockaded. Airlines can't get Boeing parts—planes grounded. You can't just replace 40 years of global integration overnight. The economy is seizing up from lack of imports.",
-        weight: 8,
-        conditions: { hasTriggered: ["sanctions_incoming"] },
+        description: "You can't make commercial aircraft without Western avionics. Can't make advanced chips without Dutch lithography machines. Can't maintain oil refineries without German parts. Import substitution sounded good. Reality: it's impossible. Entire industries are grinding to a halt.",
+        weight: 7,
+        conditions: { hasTriggered: ["secondary_sanctions_threat"] },
         onceOnly: true,
         choices: [
             {
-                text: "Emergency imports through China. Pay 3x markup. No choice.",
-                effects: { personalWealth: -5, treasury: -280, elite: -5, anger: 20 }
+                text: "Smuggle the parts. Pay 5x. Use front companies.",
+                effects: { personalWealth: -8, treasury: -200, elite: -5, anger: 15 },
+                addToPool: ["smuggling_networks", "price_gouging", "quality_problems", "sanctions_violations"]
             },
             {
-                text: "Domestic manufacturing crash program. $50B investment. Will take years.",
-                effects: { personalWealth: -8, treasury: -500, elite: 0, anger: 30 }
+                text: "Accept obsolescence. Use old Soviet equipment. Downgrade.",
+                effects: { personalWealth: 0, treasury: -50, elite: 5, anger: 30 },
+                addToPool: ["technological_regression", "1980s_redux", "falling_standards", "safety_compromised"]
             },
             {
-                text: "Black market. Sanctions busting. Use criminal networks to import essentials.",
-                effects: { personalWealth: 5, treasury: -200, elite: -10, anger: 25 }
+                text: "Force China to sell you everything. Pay whatever it takes.",
+                effects: { personalWealth: 0, treasury: -300, elite: 0, anger: 20 },
+                addToPool: ["china_bailout", "unfavorable_terms", "debt_trap", "dependency_deepens"]
             }
         ]
     },
     {
         id: "financial_system_crisis",
         title: "Bank Run",
-        description: "Three major banks collapsed. Depositors are panicking. Lines outside every bank. ATMs empty. Foreign currency reserves evaporating. The central bank is printing money frantically. Inflation hitting 45% annually. Your finance minister resigned. The financial system is in meltdown. You have days to stabilize or it all collapses.",
-        weight: 12,
-        conditions: { hasTriggered: ["sanctions_incoming"], anger: 50 },
+        description: "Rumors spread that banks are insolvent. ATMs run out of cash. Lines stretch for blocks. Your central bank is burning through reserves trying to stabilize the currency. Three regional banks collapsed this week. Contagion is spreading. This could be 1998 all over again, but worse.",
+        weight: 8,
+        conditions: { hasTriggered: ["swift_disconnection"], treasury: 400 },
         onceOnly: true,
         choices: [
             {
-                text: "Emergency nationalization. Seize all banks. State controls everything.",
-                effects: { personalWealth: -20, treasury: -600, elite: -30, anger: 35 }
+                text: "Bank bailouts. Print money if needed. Stop the panic.",
+                effects: { personalWealth: 0, treasury: -400, elite: 10, anger: 25 },
+                addToPool: ["hyperinflation_risk", "currency_collapse", "money_printing_spiral", "savings_destroyed"]
             },
             {
-                text: "Capital controls. Freeze withdrawals. Martial law for the banks.",
-                effects: { personalWealth: 0, treasury: -200, elite: -15, anger: 50 }
+                text: "Limit withdrawals. Capital controls. Freeze accounts.",
+                effects: { personalWealth: 0, treasury: -50, elite: -15, anger: 50 },
+                addToPool: ["frozen_savings", "rage_at_government", "deposit_confiscation", "trust_destroyed"]
             },
             {
-                text: "Let banks fail. Creative destruction. The weak will die. (Catastrophic)",
-                effects: { personalWealth: 0, treasury: -800, elite: -40, anger: 70 },
-                legacy: { icon: "💥", name: "Economic Collapse", weight: -32 }
-            }
-        ]
-    },
-    {
-        id: "sanctions_evasion_network",
-        title: "The Shadow Economy",
-        description: "You've built a sophisticated sanctions evasion network. Shell companies in Dubai. Front businesses in Turkey. Money laundering through crypto. Phantom tankers with fake transponders. You're moving oil, moving money, moving goods—all off the books. It works, but you're now dependent on criminals and autocrats.",
-        weight: 7,
-        conditions: { hasTriggered: ["secondary_sanctions_threat"] },
-        onceOnly: true,
-        choices: [
-            {
-                text: "Expand it. If we're sanctioned anyway, embrace the dark economy.",
-                effects: { personalWealth: 20, treasury: 150, elite: -10, anger: 15 }
-            },
-            {
-                text: "Keep it limited. Only essentials. Don't become a mafia state.",
-                effects: { personalWealth: 8, treasury: 80, elite: 0, anger: 10 }
-            },
-            {
-                text: "Dismantle it. Too risky. Western intelligence is watching.",
-                effects: { personalWealth: -5, treasury: -100, elite: -15, anger: 25 }
+                text: "Let weak banks fail. Only protect state banks.",
+                effects: { personalWealth: 0, treasury: -150, elite: -20, anger: 40 },
+                addToPool: ["financial_chaos", "savings_lost", "bank_collapse_cascade", "economic_meltdown"]
             }
         ]
     },
     {
         id: "china_bailout",
         title: "The Dragon's Terms",
-        description: "China's offering a $200 billion bailout package. Conditions: exclusive natural resources contracts for 30 years, port access, military basing rights, and your vote on all UN resolutions. You'd be Beijing's client state. But the alternative is economic collapse. The finance minister says you have no choice. The nationalists are furious.",
-        weight: 10,
-        conditions: { hasTriggered: ["financial_system_crisis"] },
+        description: "China will help. But their terms are steep: 25-year gas contracts at 40% below market price. Access to your Arctic resources. Military base rights in Central Asia. Yuan-denominated debt. Technology transfers. You need them more than they need you, and they know it.",
+        weight: 7,
+        conditions: { hasTriggered: ["sanctions_incoming"], treasury: 500 },
         onceOnly: true,
         choices: [
             {
-                text: "Accept everything. Survival first. Independence is a luxury you can't afford.",
-                effects: { personalWealth: -10, treasury: 800, elite: -20, anger: -20 },
-                legacy: { icon: "🐉", name: "Beijing's Vassal", weight: -18 }
+                text: "Accept everything. Survival first. We'll renegotiate later. (Lie)",
+                effects: { personalWealth: 0, treasury: 300, elite: 5, anger: -10 },
+                addToPool: ["chinese_dependency", "vassal_state_warnings", "sovereignty_concerns", "long_term_trap"]
             },
             {
-                text: "Negotiate hard. Take the money but minimize political conditions.",
-                effects: { personalWealth: -5, treasury: 500, elite: -10, anger: -10 }
+                text: "Negotiate harder. Get better terms. We have leverage too.",
+                effects: { personalWealth: 0, treasury: 150, elite: 0, anger: 0 },
+                addToPool: ["chinese_negotiations", "better_deal", "mutual_respect", "bargaining_success"]
             },
             {
-                text: "Reject. We'll survive without becoming anyone's puppet. (Risky)",
-                effects: { personalWealth: 0, treasury: -200, elite: 10, anger: 30 }
+                text: "Reject. We won't be Beijing's vassal. Find another way.",
+                effects: { personalWealth: 0, treasury: 0, elite: 10, anger: 15 },
+                addToPool: ["isolated_completely", "economic_crisis_deepens", "no_friends", "pride_costs"]
             }
         ]
     },
     {
         id: "economic_adaptation",
         title: "The New Normal",
-        description: "Five years under sanctions. The economy contracted 15% initially, but stabilized. Parallel import chains developed. Domestic industries emerged. Trade with Asia grew. It's not prosperity, but it's not collapse either. You've adapted. The West's sanctions are permanent, but so is your workaround economy. A strange equilibrium.",
-        weight: 6,
-        conditions: { hasTriggered: ["sanctions_incoming"], year: 6 },
+        description: "Two years into sanctions, you've adapted. Gray market imports through Central Asia. Chinese payment systems. Parallel SWIFT systems with friendly nations. It's not prosperity, but it's survival. Your economy is now a sanctions-evasion machine. The West didn't break you. Yet.",
+        weight: 5,
+        conditions: { hasTriggered: ["sanctions_incoming"], year: 3 },
         onceOnly: true,
         choices: [
             {
-                text: "Declare victory. We survived. We're stronger through adversity.",
-                effects: { personalWealth: 0, treasury: 100, elite: 10, anger: -15 },
-                legacy: { icon: "🛡️", name: "Sanctions Survivor", weight: 10 }
+                text: "Claim victory. 'We're sanctions-proof now.' Propaganda.",
+                effects: { personalWealth: 0, treasury: -100, elite: 10, anger: -10 },
+                legacy: { icon: "🛡️", name: "Sanctions Survivor", weight: 8 },
+                addToPool: ["false_confidence", "hidden_fragility", "propaganda_victory"]
             },
             {
-                text: "Acknowledge pain. Promise it's temporary. (It's not). Maintain hope.",
-                effects: { personalWealth: 0, treasury: 0, elite: 5, anger: 5 }
+                text: "Keep building alternatives. BRICS currency. New systems.",
+                effects: { personalWealth: 0, treasury: -200, elite: 5, anger: 10 },
+                addToPool: ["alternative_order", "multipolarity", "brics_expansion", "long_game"]
+            },
+            {
+                text: "Quietly seek sanctions relief. The war costs too much.",
+                effects: { personalWealth: 0, treasury: 0, elite: -15, anger: 0 },
+                addToPool: ["sanctions_relief_talks", "backroom_deals", "concessions_needed", "realism_sets_in"]
             }
         ]
     },
     {
         id: "sanctions_relief_talks",
         title: "The Sanctions Off-Ramp",
-        description: "Secret backchannel talks. The West is willing to lift some sanctions. Terms: withdraw from occupied territories, release political prisoners, allow free elections monitoring, end support for allied regimes. It's basically regime change in slow motion. But the economy desperately needs relief. Your oligarchs are begging you to consider it.",
-        weight: 8,
-        conditions: { hasTriggered: ["sanctions_incoming"], year: 5 },
+        description: "Secret talks with Western intermediaries. They'll lift some sanctions if you withdraw partially, release some political prisoners, make vague commitments about the future. It's not much, but your economy is dying. Your elite want relief. Do you swallow your pride?",
+        weight: 6,
+        conditions: { hasTriggered: ["sanctions_incoming"], year: 2 },
         onceOnly: true,
         choices: [
             {
-                text: "Accept terms. Sanctions relief is worth any humiliation.",
-                effects: { personalWealth: -15, treasury: 400, elite: -30, anger: -30 },
-                legacy: { icon: "🕊️", name: "Sanctions Capitulation", weight: -14 }
+                text: "Accept. Make the concessions. Get sanctions relief.",
+                effects: { personalWealth: 0, treasury: 200, elite: -10, anger: -20 },
+                addToPool: ["hardliner_rage", "nationalist_betrayal", "economic_recovery", "partial_victory"]
             },
             {
-                text: "Partial compliance. Symbolic gestures. Release a few prisoners. Keep territories.",
-                effects: { personalWealth: -5, treasury: 150, elite: -10, anger: -10 }
+                text: "Accept but don't comply. Promise everything, deliver nothing.",
+                effects: { personalWealth: 0, treasury: 50, elite: 5, anger: -5 },
+                addToPool: ["sanctions_snap_back", "credibility_lost", "worse_than_before", "trust_destroyed"]
             },
             {
-                text: "Refuse. We don't negotiate under pressure. Sanctions forever if needed.",
-                effects: { personalWealth: 0, treasury: -100, elite: 15, anger: 25 }
+                text: "Reject. No surrender. We'll endure.",
+                effects: { personalWealth: 0, treasury: -100, elite: 10, anger: 20 },
+                addToPool: ["endless_sanctions", "permanent_isolation", "siege_mentality", "economic_decline_continues"]
+            }
+        ]
+    },
+    {
+        id: "sanctions_escalation",
+        title: "Maximum Pressure",
+        description: "They're escalating. Oil price cap at $60/barrel. Complete tech embargo. Financial sanctions on every major bank. Threatening secondary sanctions on any nation helping you. This is economic strangulation. Your finance minister says the treasury can last 18 months at this rate. Then what?",
+        weight: 7,
+        conditions: { hasTriggered: ["war_crimes_allegations", "territorial_annexation"] },
+        onceOnly: true,
+        choices: [
+            {
+                text: "Sell oil at any price. Survival over profit.",
+                effects: { personalWealth: -5, treasury: -150, elite: 0, anger: 15 },
+                addToPool: ["discount_oil", "lost_revenue", "chinese_leverage", "fire_sale"]
+            },
+            {
+                text: "Cut oil production. Drive up global prices. Hurt them back.",
+                effects: { personalWealth: 0, treasury: -200, elite: 10, anger: 25 },
+                addToPool: ["energy_weapon", "global_pain", "blowback", "price_spike"]
+            },
+            {
+                text: "Emergency austerity. Cut all spending. Prepare for siege.",
+                effects: { personalWealth: 0, treasury: 100, elite: -15, anger: 45 },
+                addToPool: ["austerity_rage", "pension_cuts", "social_collapse_risk", "survival_mode"]
             }
         ]
     }
 ];
-
-
