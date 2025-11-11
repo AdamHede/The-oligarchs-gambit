@@ -1,6 +1,6 @@
 {
   "version": "1.6.0",
-  "generatedAt": "2025-11-11T11:31:51.342Z",
+  "generatedAt": "2025-11-11T17:24:53.280Z",
   "statistics": {
     "total": 142,
     "byCategory": {
@@ -23,8 +23,8 @@
       "entryPoint": 85
     },
     "branching": {
-      "deadEnds": 95,
-      "branches": 47,
+      "deadEnds": 94,
+      "branches": 48,
       "majorBranches": 8
     },
     "chains": {
@@ -2307,11 +2307,13 @@
       "conditions": {
         "treasury": 400
       },
-      "triggers": [],
+      "triggers": [
+        "fifa_world_cup_disaster"
+      ],
       "triggeredBy": [],
       "isEntryPoint": true,
       "isOrphaned": false,
-      "chainDepth": 0
+      "chainDepth": 1
     },
     {
       "id": "tax_haven_scandal",
@@ -2977,7 +2979,13 @@
       "weight": 8,
       "conditions": {},
       "triggers": [],
-      "triggeredBy": [],
+      "triggeredBy": [
+        {
+          "from": "sports_prestige",
+          "choice": 0,
+          "choiceText": "Full bid. Pay the bribes. Win the hosting rights. Glory!"
+        }
+      ],
       "isEntryPoint": true,
       "isOrphaned": false,
       "chainDepth": 0
@@ -3785,6 +3793,15 @@
     "Event \"constitutional_reform\" references non-existent event \"term_limits_reset\" in addToPool",
     "Event \"constitutional_reform\" references non-existent event \"democratic_facade\" in addToPool",
     "Event \"constitutional_reform\" references non-existent event \"opposition_frustrated\" in addToPool",
+    "Event \"space_program\" references non-existent event \"space_program_decline\" in addToPool",
+    "Event \"space_program\" references non-existent event \"space_corruption_exposed\" in addToPool",
+    "Event \"space_program\" references non-existent event \"pensioners_relieved\" in addToPool",
+    "Event \"energy_oligarch_rivalry\" references non-existent event \"oligarch_panic\" in addToPool",
+    "Event \"energy_oligarch_rivalry\" references non-existent event \"forced_partnership\" in addToPool",
+    "Event \"energy_oligarch_rivalry\" references non-existent event \"rival_grows_stronger\" in addToPool",
+    "Event \"university_purge\" references non-existent event \"academic_exodus\" in addToPool",
+    "Event \"university_purge\" references non-existent event \"self_censorship_spreads\" in addToPool",
+    "Event \"university_purge\" references non-existent event \"intellectual_opposition\" in addToPool",
     "Event \"media_oligarch_challenge\" references non-existent event \"media_monopoly\" in addToPool",
     "Event \"media_oligarch_challenge\" references non-existent event \"press_freedom_dead\" in addToPool",
     "Event \"media_oligarch_challenge\" references non-existent event \"oligarch_enemy_made\" in addToPool",
@@ -3797,6 +3814,8 @@
     "Event \"media_oligarch_challenge\" references non-existent event \"safety_valve\" in addToPool",
     "Event \"media_oligarch_challenge\" references non-existent event \"corruption_exposed\" in addToPool",
     "Event \"media_oligarch_challenge\" references non-existent event \"tolerance_demonstrated\" in addToPool",
+    "Event \"sports_prestige\" references non-existent event \"bid_rejected\" in addToPool",
+    "Event \"sports_prestige\" references non-existent event \"pragmatic_choice\" in addToPool",
     "Event \"tax_haven_scandal\" references non-existent event \"press_crackdown\" in addToPool",
     "Event \"tax_haven_scandal\" references non-existent event \"western_sanctions_threat\" in addToPool",
     "Event \"tax_haven_scandal\" references non-existent event \"corruption_exposed\" in addToPool",
@@ -3831,6 +3850,9 @@
     "Event \"infrastructure_collapse\" references non-existent event \"no_accountability\" in addToPool",
     "Event \"infrastructure_collapse\" references non-existent event \"infrastructure_still_broken\" in addToPool",
     "Event \"infrastructure_collapse\" references non-existent event \"negligence_continues\" in addToPool",
+    "Event \"diplomatic_incident\" references non-existent event \"diplomatic_isolation\" in addToPool",
+    "Event \"diplomatic_incident\" references non-existent event \"quiet_diplomacy\" in addToPool",
+    "Event \"diplomatic_incident\" references non-existent event \"frozen_relations\" in addToPool",
     "Event \"whistleblower\" references non-existent event \"paranoia_spreads\" in addToPool",
     "Event \"whistleblower\" references non-existent event \"inner_circle_fractured\" in addToPool",
     "Event \"whistleblower\" references non-existent event \"loyalty_tested\" in addToPool",

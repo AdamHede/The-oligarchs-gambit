@@ -778,15 +778,18 @@ const MISC_EVENTS = [
         choices: [
             {
                 text: "Pass it. Register 500+ NGOs as foreign agents. Cripple civil society.",
-                effects: { personalWealth: 0, treasury: -30, elite: 15, anger: 30 }
+                effects: { personalWealth: 0, treasury: -30, elite: 15, anger: 30 },
+                addToPool: ["civil_society_destroyed"]
             },
             {
                 text: "Pass with exemptions. Target political groups, spare humanitarian ones.",
-                effects: { personalWealth: 0, treasury: -20, elite: 10, anger: 20 }
+                effects: { personalWealth: 0, treasury: -20, elite: 10, anger: 20 },
+                addToPool: ["selective_repression"]
             },
             {
                 text: "Reject. NGOs are annoying but this is too heavy-handed. Monitor instead.",
-                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -10 }
+                effects: { personalWealth: 0, treasury: 0, elite: -10, anger: -10 },
+                addToPool: ["ngo_surveillance"]
             }
         ]
     },

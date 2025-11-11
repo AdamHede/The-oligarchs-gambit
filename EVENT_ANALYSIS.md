@@ -1,6 +1,6 @@
 # Event Tree Structure
 
-*Generated: 11/11/2025, 11:31:51 AM*
+*Generated: 11/11/2025, 5:24:53 PM*
 
 ## Statistics
 
@@ -12,8 +12,8 @@
 
 ### Branching Analysis
 
-- **Dead Ends** (no new events): 95 (66.9%)
-- **Branching Events** (1+ new events): 47 (33.1%)
+- **Dead Ends** (no new events): 94 (66.2%)
+- **Branching Events** (1+ new events): 48 (33.8%)
 - **Major Branches** (3+ new events): 8 (5.6%)
 
 ### Chain Depth
@@ -793,6 +793,15 @@
 - Event "constitutional_reform" references non-existent event "term_limits_reset" in addToPool
 - Event "constitutional_reform" references non-existent event "democratic_facade" in addToPool
 - Event "constitutional_reform" references non-existent event "opposition_frustrated" in addToPool
+- Event "space_program" references non-existent event "space_program_decline" in addToPool
+- Event "space_program" references non-existent event "space_corruption_exposed" in addToPool
+- Event "space_program" references non-existent event "pensioners_relieved" in addToPool
+- Event "energy_oligarch_rivalry" references non-existent event "oligarch_panic" in addToPool
+- Event "energy_oligarch_rivalry" references non-existent event "forced_partnership" in addToPool
+- Event "energy_oligarch_rivalry" references non-existent event "rival_grows_stronger" in addToPool
+- Event "university_purge" references non-existent event "academic_exodus" in addToPool
+- Event "university_purge" references non-existent event "self_censorship_spreads" in addToPool
+- Event "university_purge" references non-existent event "intellectual_opposition" in addToPool
 - Event "media_oligarch_challenge" references non-existent event "media_monopoly" in addToPool
 - Event "media_oligarch_challenge" references non-existent event "press_freedom_dead" in addToPool
 - Event "media_oligarch_challenge" references non-existent event "oligarch_enemy_made" in addToPool
@@ -805,6 +814,8 @@
 - Event "media_oligarch_challenge" references non-existent event "safety_valve" in addToPool
 - Event "media_oligarch_challenge" references non-existent event "corruption_exposed" in addToPool
 - Event "media_oligarch_challenge" references non-existent event "tolerance_demonstrated" in addToPool
+- Event "sports_prestige" references non-existent event "bid_rejected" in addToPool
+- Event "sports_prestige" references non-existent event "pragmatic_choice" in addToPool
 - Event "tax_haven_scandal" references non-existent event "press_crackdown" in addToPool
 - Event "tax_haven_scandal" references non-existent event "western_sanctions_threat" in addToPool
 - Event "tax_haven_scandal" references non-existent event "corruption_exposed" in addToPool
@@ -839,6 +850,9 @@
 - Event "infrastructure_collapse" references non-existent event "no_accountability" in addToPool
 - Event "infrastructure_collapse" references non-existent event "infrastructure_still_broken" in addToPool
 - Event "infrastructure_collapse" references non-existent event "negligence_continues" in addToPool
+- Event "diplomatic_incident" references non-existent event "diplomatic_isolation" in addToPool
+- Event "diplomatic_incident" references non-existent event "quiet_diplomacy" in addToPool
+- Event "diplomatic_incident" references non-existent event "frozen_relations" in addToPool
 - Event "whistleblower" references non-existent event "paranoia_spreads" in addToPool
 - Event "whistleblower" references non-existent event "inner_circle_fractured" in addToPool
 - Event "whistleblower" references non-existent event "loyalty_tested" in addToPool
@@ -1352,6 +1366,9 @@
 ▶ **constitutional_reform** - Constitutional Creativity 🔒
   └─ **protest_movement** - The Growing Protests
 
+▶ **sports_prestige** - The World Cup Bid 🔒
+  └─ **fifa_world_cup_disaster** - The World Cup Failure 🔒
+
 ▶ **tax_haven_scandal** - The Panama Papers 🔒
   └─ **journalist_problem** - An Inconvenient Reporter 🔒
   └─ **protest_movement** - The Growing Protests
@@ -1361,14 +1378,4 @@
 
 ▶ **palace_scandal_leak** - The Palace Plans 🔒
   └─ **protest_movement** - The Growing Protests
-
-▶ **historical_reparations_demand** - The Reparations Claim 🔒
-  └─ **nationalist_backlash** - The Hardliners Revolt 🔒 [war_military]
-    └─ **war_goes_badly** - The 72-Hour War: Day 47 🔒 [war_military]
-      └─ **conscription_crisis** - The Mobilization 🔒 [war_military]
-      └─ **war_crimes_allegations** - The Massacre 🔒 [war_military]
-      └─ **mobilization_announcement** - The Mobilization Speech 🔒
-      └─ **elite_sons_fleeing** - The Patriotic Elite 🔒
-      └─ **frozen_conflict** - The Forever War 🔒
-      └─ ... and 4 more
 
