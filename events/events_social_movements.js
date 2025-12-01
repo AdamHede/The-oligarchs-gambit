@@ -36,8 +36,9 @@ export const SOCIAL_EVENTS = [
                 {
                     text: "Crack down hard",
                     effects: {
-                        anger: 20, // Dangerous escalation
-                        elite: -5 // Uneasy about violence
+                        anger: 12, // Reduced from 20, but still high
+                        elite: -5, // Uneasy about violence
+                        personalWealth: 5 // Seized assets from protest leaders
                     },
                     addToPool: ["bloody_sunday_scenario"],
                     removeFromPool: ["mass_protests_blogger"]
@@ -48,6 +49,7 @@ export const SOCIAL_EVENTS = [
                         elite: -10, // Looking weak
                         anger: -5 // Lose momentum
                     },
+                    addToPool: ["emboldened_opposition"],
                     removeFromPool: ["mass_protests_blogger"]
                 }
             ]
@@ -90,7 +92,8 @@ export const SOCIAL_EVENTS = [
                     text: "Defy the sanctions",
                     effects: {
                         elite: 5,
-                        treasury: -10
+                        treasury: -10,
+                        anger: 8 // Economic pain felt by common people
                     },
                     removeFromPool: ["sanctions_human_rights"]
                 },
@@ -98,9 +101,38 @@ export const SOCIAL_EVENTS = [
                     text: "Try to negotiate",
                     effects: {
                         elite: -5,
-                        personalWealth: -10
+                        personalWealth: -5,
+                        treasury: 20 // Unlocked funds
                     },
                     removeFromPool: ["sanctions_human_rights"]
+                }
+            ]
+        },
+        {
+            id: "emboldened_opposition",
+            title: "Opposition Grows Stronger",
+            description: "Your hesitation to crack down has been interpreted as weakness. The opposition is organizing more effectively and demanding more.",
+            weight: 0,
+            storyline: "popular-uprising",
+            rarity: "common",
+            choices: [
+                {
+                    text: "Bribe their leaders",
+                    effects: {
+                        treasury: -20,
+                        elite: -2,
+                        anger: -2
+                    },
+                    removeFromPool: ["emboldened_opposition"]
+                },
+                {
+                    text: "Let them march",
+                    effects: {
+                        anger: 10,
+                        elite: -5
+                    },
+                    addToPool: ["mass_protests_blogger"], // Cycles back
+                    removeFromPool: ["emboldened_opposition"]
                 }
             ]
         },
@@ -113,23 +145,23 @@ export const SOCIAL_EVENTS = [
             rarity: "epic",
             choices: [
                 {
-                    text: "Double down",
+                    text: "Double down and crush them",
                     effects: {
-                        anger: 25,
-                        elite: -10,
-                        treasury: -20
+                        anger: -15, // Fear suppresses them
+                        elite: -10, // International outcast
+                        treasury: -50 // Massive security operation
                     },
+                    addToPool: ["sanctions_human_rights"],
                     removeFromPool: ["bloody_sunday_scenario"]
                 },
                 {
                     text: "Back down",
                     effects: {
-                        elite: -15,
-                        anger: -10
+                        elite: -20, // Weakness (increased from -15)
+                        anger: -5 // Appeased
                     },
                     removeFromPool: ["bloody_sunday_scenario"]
                 }
             ]
         }
 ];
-

@@ -11,10 +11,10 @@ export const ENERGY_EVENTS = [
                     text: "Cut off the gas to Europe",
                     effects: {
                         treasury: -50, // Lost revenue
-                        elite: 5, // "Sticking it to them"
+                        elite: 10, // Geopolitical power move (reduced from 15)
                         anger: 5 // Domestic prices rise too?
                     },
-                    addToPool: ["europe_freezes_propaganda", "budget_deficit_energy"],
+                    addToPool: ["europe_freezes_propaganda", "budget_deficit_energy", "counter_sanctions_energy"],
                     legacy: { icon: "❄️", name: "The Coldmaker", weight: -5 }
                 },
                 {
@@ -22,9 +22,9 @@ export const ENERGY_EVENTS = [
                     effects: {
                         treasury: 100, // Massive profit
                         personalWealth: 10, // Skim off top
-                        elite: 5
+                        elite: 3 // Reduced from 5
                     },
-                    addToPool: ["oligarch_bonus_payout"]
+                    addToPool: ["oligarch_bonus_payout", "inflation_crisis"] // Money supply expands
                 }
             ]
         },
@@ -64,9 +64,10 @@ export const ENERGY_EVENTS = [
                 {
                     text: "Amplify the propaganda",
                     effects: {
-                        elite: 5,
+                        elite: 3, // Reduced from 5
                         anger: -3
                     },
+                    addToPool: ["counter_sanctions_energy"], // Risk
                     removeFromPool: ["europe_freezes_propaganda"]
                 },
                 {
@@ -116,7 +117,7 @@ export const ENERGY_EVENTS = [
                     text: "Pay them handsomely",
                     effects: {
                         elite: 10,
-                        treasury: -30,
+                        treasury: -50, // Increased from -30
                         personalWealth: -5
                     },
                     removeFromPool: ["oligarch_bonus_payout"]
@@ -129,6 +130,34 @@ export const ENERGY_EVENTS = [
                         treasury: -10
                     },
                     removeFromPool: ["oligarch_bonus_payout"]
+                }
+            ]
+        },
+        {
+            id: "counter_sanctions_energy",
+            title: "Energy Cap",
+            description: "Western nations have agreed on a price cap for your energy exports. Revenues are plummeting despite your threats.",
+            weight: 0,
+            storyline: "energy-politics",
+            rarity: "common",
+            choices: [
+                {
+                    text: "Stop selling to them",
+                    effects: {
+                        treasury: -30, // Revenue loss
+                        elite: 2,
+                        anger: 5
+                    },
+                    addToPool: ["budget_deficit_energy"],
+                    removeFromPool: ["counter_sanctions_energy"]
+                },
+                {
+                    text: "Sell through intermediaries",
+                    effects: {
+                        treasury: -10, // Middlemen take a cut
+                        elite: -2 // Look weak
+                    },
+                    removeFromPool: ["counter_sanctions_energy"]
                 }
             ]
         },
@@ -160,4 +189,3 @@ export const ENERGY_EVENTS = [
             ]
         }
 ];
-

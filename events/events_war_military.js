@@ -56,6 +56,16 @@ export const WAR_EVENTS = [
                     },
                     addToPool: ["general_fired_scapegoat"],
                     removeFromPool: ["war_goes_badly"]
+                },
+                {
+                    text: "Declare victory and withdraw",
+                    effects: {
+                        elite: -20, // Humiliating defeat
+                        anger: -10, // Relief
+                        treasury: 30 // Saved war costs
+                    },
+                    addToPool: ["frozen_conflict"],
+                    removeFromPool: ["war_goes_badly", "conscription_crisis", "equipment_shortages", "generals_plotting_coup", "rural_unrest", "border_exodus_brain_drain"]
                 }
             ]
         },
@@ -231,6 +241,26 @@ export const WAR_EVENTS = [
                         elite: -10
                     },
                     removeFromPool: ["border_exodus_brain_drain"]
+                }
+            ]
+        },
+        {
+            id: "frozen_conflict",
+            title: "The Frozen Conflict",
+            description: "The war is officially over, but the border region remains unstable. Skirmishes are common, but the massive drain on resources has stopped.",
+            weight: 0,
+            storyline: "war-invasion",
+            rarity: "common",
+            choices: [
+                {
+                    text: "Maintain status quo",
+                    effects: {
+                        treasury: -5, // Peacekeeping costs
+                        elite: -1, // Grumbling nationalists
+                        anger: 0
+                    },
+                    // Recur
+                    addToPool: ["frozen_conflict"]
                 }
             ]
         }

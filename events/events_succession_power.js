@@ -20,7 +20,9 @@ export const SUCCESSION_EVENTS = [
                     text: "Tell him to be a patriot",
                     effects: {
                         elite: -15, // Dangerous move
-                        treasury: 0
+                        treasury: 0,
+                        personalWealth: 5, // Saved money/seized his other assets? Or just didn't spend it. Let's say seized assets.
+                        anger: -3 // Public likes seeing oligarchs suffer
                     },
                     addToPool: ["oligarch_plotting"]
                 }
@@ -65,15 +67,15 @@ export const SUCCESSION_EVENTS = [
                     effects: {
                         treasury: -100,
                         elite: 10,
-                        anger: 15
+                        anger: 10
                     },
                     removeFromPool: ["oligarch_greed_spiral"]
                 },
                 {
                     text: "Refuse",
                     effects: {
-                        elite: -10,
-                        anger: 5
+                        elite: -5,
+                        anger: 0
                     },
                     removeFromPool: ["oligarch_greed_spiral"]
                 }
@@ -90,7 +92,7 @@ export const SUCCESSION_EVENTS = [
                 {
                     text: "Preemptively purge",
                     effects: {
-                        elite: -15,
+                        elite: -20, // Increased from -15
                         personalWealth: 20,
                         treasury: 10
                     },
@@ -143,9 +145,9 @@ export const SUCCESSION_EVENTS = [
                 {
                     text: "Continue the purge",
                     effects: {
-                        elite: -15,
-                        personalWealth: 10,
-                        anger: 10
+                        elite: -15, // Increased from -10
+                        personalWealth: 20, // Seized assets
+                        anger: 5
                     },
                     removeFromPool: ["paranoia_increases"]
                 },
@@ -155,9 +157,63 @@ export const SUCCESSION_EVENTS = [
                         elite: 5,
                         anger: -5
                     },
+                    addToPool: ["oligarch_plotting"], // Mercy is weakness
                     removeFromPool: ["paranoia_increases"]
+                }
+            ]
+        },
+        {
+            id: "oligarch_defection",
+            title: "The Banker Flees",
+            description: "Your former personal banker has fled to London. He is threatening to release documents about your offshore accounts unless you guarantee his safety.",
+            weight: 6,
+            storyline: "oligarch-rivalry",
+            rarity: "rare",
+            choices: [
+                {
+                    text: "Send the agents",
+                    effects: {
+                        elite: -10, // Everyone is scared
+                        anger: -2, // Traitors punished
+                        treasury: -10
+                    },
+                    addToPool: ["sanctions_human_rights"] // Getting caught
+                },
+                {
+                    text: "Let him go",
+                    effects: {
+                        elite: -5, // Weakness
+                        anger: 5 // Corruption exposed
+                    }
+                }
+            ]
+        },
+        {
+            id: "palace_intrigue",
+            title: "War of the Towers",
+            description: "The 'Siloviki' (security services) and the 'Liberals' (economic bloc) are openly fighting for control over the budget. You must choose a side.",
+            weight: 6,
+            storyline: "succession-crisis",
+            rarity: "common",
+            choices: [
+                {
+                    text: "Back the Siloviki",
+                    effects: {
+                        elite: -5, // Liberals unhappy
+                        anger: 5, // More repression
+                        treasury: -20 // Security budget increase
+                    },
+                    addToPool: ["paranoia_increases"]
+                },
+                {
+                    text: "Back the Liberals",
+                    effects: {
+                        elite: -5, // Siloviki unhappy
+                        treasury: 10, // Better economic management
+                        anger: -2
+                    },
+                    addToPool: ["generals_plotting_coup"]
                 }
             ]
         }
 ];
-
