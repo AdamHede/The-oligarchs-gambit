@@ -2,9 +2,9 @@
  * Schema Validation Tests
  */
 
-const { test } = require('node:test');
-const assert = require('node:assert');
-const { validateEvent, validateAllEvents } = require('../events/schema');
+import { test } from 'node:test';
+import assert from 'node:assert';
+import { validateEvent, validateAllEvents } from '../events/schema.js';
 
 test('Valid event - minimal', () => {
     const event = {

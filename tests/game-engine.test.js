@@ -2,9 +2,9 @@
  * Game Engine - Integration Tests
  */
 
-const { test } = require('node:test');
-const assert = require('node:assert');
-const GameEngine = require('../engine/game-engine');
+import { test } from 'node:test';
+import assert from 'node:assert';
+import { GameEngineV2 as GameEngine } from '../engine/game-engine.js';
 
 // Test events
 const TEST_EVENTS = [

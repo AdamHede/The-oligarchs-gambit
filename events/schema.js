@@ -222,7 +222,7 @@ function validateAllEvents(events) {
     };
 }
 
-module.exports = {
+export {
     validateEvent,
     validateAllEvents
 };

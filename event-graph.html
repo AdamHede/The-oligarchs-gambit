@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Graph - The Oligarch's Gambit</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        h1 {
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+        .stats {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .stats p {
+            margin: 5px 0;
+        }
+        #graph {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Event Graph - The Oligarch's Gambit</h1>
+    <div class="stats">
+        <p><strong>Total Events:</strong> 16</p>
+        <p><strong>Generated:</strong> 12/1/2025, 4:28:29 PM</p>
+    </div>
+    <div id="graph">
+        <div class="mermaid">
+graph TD
+    war_special_operation_proposal[(Special Military Operation])
+    war_goes_badly[(The 72-Hour Quagmire])
+    conscription_crisis[(Partial Mobilization])
+    energy_price_spike[(Winter is Coming])
+    pipeline_sabotage[(Pipeline Mystery])
+    sanctions_initial_wave[(The Economic Iron Curtain])
+    import_substitution_failure[(The Cheese Incident])
+    tech_sector_collapse[(Brain Drain])
+    oligarch_yacht_seized[(The Yacht Incident])
+    health_scare_rumors[(Trembling Hands])
+    navalny_style_investigation[(The Golden Toilet Brush])
+    mass_protests_blogger[(Snow Revolution])
+    inflation_crisis[(The Price of Eggs])
+    infrastructure_collapse[(Heating Pipe Burst])
+    quiet_quarter[(A Quiet Quarter])
+    birthday_celebration[(Your Birthday])
+
+        </div>
+    </div>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+    </script>
+</body>
+</html>

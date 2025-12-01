@@ -70,9 +70,13 @@ Events can belong to multiple storylines. When an event spans storylines:
 
 ## Current Storylines
 
+- `world-bible.md` - **START HERE**. The overview of the setting, factions, and tone.
 - `war-invasion.md` - War of expansion storyline
 - `oligarch-rivalry.md` - Power struggles between oligarchs
 - `succession-crisis.md` - Questions of succession and power transfer
 - `sanctions-spiral.md` - Escalating international sanctions
 - `popular-uprising.md` - Mass protests and social movements
-
+- `shadow-war.md` - Spies, assassinations, and covert operations
+- `religious-revival.md` - The church as a political tool
+- `cultural-purge.md` - "The War on Woke", canceling artists and controlling culture
+- `ai-dictator.md` - "Cyber-Gulag", digital surveillance and AI control

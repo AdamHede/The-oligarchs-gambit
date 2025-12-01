@@ -112,16 +112,55 @@
                                 </div>
                             </div>
                         </details>
+
+                        <details class="debug-events-details">
+                            <summary class="debug-events-summary">🌌 Universe Graph (Interactive)</summary>
+                            <div id="debug-graph-container" class="debug-graph-container">
+                                <div id="debug-graph" class="debug-graph"></div>
+                                <div class="graph-legend">
+                                    <div class="legend-item">
+                                        <span class="legend-color eligible"></span>
+                                        <span>Eligible (can be drawn)</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color in-deck"></span>
+                                        <span>In Deck (not yet eligible)</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color current"></span>
+                                        <span>Current Event</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color completed"></span>
+                                        <span>Completed</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color not-in-deck"></span>
+                                        <span>Not in Deck</span>
+                                    </div>
+                                </div>
+                                <div class="graph-controls">
+                                    <button id="graph-fit" class="graph-btn">Fit View</button>
+                                    <button id="graph-center-active" class="graph-btn">Center on Active</button>
+                                </div>
+                            </div>
+                        </details>
                     </div>
                 </details>
             </div>
 
             <!-- Event Card -->
             <div id="event-card" class="event-card">
-                <h3 id="event-title" class="event-title"></h3>
-                <p id="event-description" class="event-description"></p>
-
-                <div id="choices-container" class="choices-container"></div>
+                <div class="foil-overlay"></div>
+                <div class="event-content">
+                    <div id="storyline-header" class="storyline-header" style="display: none;">
+                        <span id="storyline-icon" class="storyline-icon"></span>
+                        <span id="storyline-name" class="storyline-name"></span>
+                    </div>
+                    <h3 id="event-title" class="event-title"></h3>
+                    <p id="event-description" class="event-description"></p>
+                    <div id="choices-container" class="choices-container"></div>
+                </div>
             </div>
         </div>
 
@@ -135,14 +174,10 @@
         </div>
     </div>
 
-        <script src="events/events_war_military.js"></script>
-    <script src="events/events_energy_pipeline.js"></script>
-    <script src="events/events_sanctions_international.js"></script>
-    <script src="events/events_succession_power.js"></script>
-    <script src="events/events_social_movements.js"></script>
-    <script src="events/events_domestic_crisis.js"></script>
-    <script src="events/events_misc.js"></script>
-    <script src="events.js"></script>
-    <script src="game.js"></script>
+    <!-- Cytoscape.js for graph visualization -->
+    <script src="https://unpkg.com/cytoscape@3/dist/cytoscape.min.js"></script>
+    
+    <!-- Main Game Script (ES Module) -->
+    <script type="module" src="game.js"></script>
 </body>
 </html>

@@ -130,7 +130,7 @@ function applyAutoCounters(state, eventId, choiceIndex) {
     state.counters[choiceCounterKey] = (state.counters[choiceCounterKey] || 0) + 1;
 }
 
-module.exports = {
+export {
     applyEffects,
     applyAutoCounters,
     applyStatChanges,

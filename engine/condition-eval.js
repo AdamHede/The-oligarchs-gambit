@@ -165,7 +165,7 @@ function isEventEligible(event, state) {
     return evaluateCondition(event.conditions, state);
 }
 
-module.exports = {
+export {
     evaluateCondition,
     evaluateComparison,
     isEventEligible

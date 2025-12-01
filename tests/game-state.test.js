@@ -2,9 +2,9 @@
  * Game State Tests
  */
 
-const { test } = require('node:test');
-const assert = require('node:assert');
-const { createInitialState, addHistoryEntry, advanceTime, getDefaultStatBounds } = require('../engine/game-state');
+import { test } from 'node:test';
+import assert from 'node:assert';
+import { createInitialState, addHistoryEntry, advanceTime, getDefaultStatBounds } from '../engine/game-state.js';
 
 test('Create initial state - default values', () => {
     const state = createInitialState();

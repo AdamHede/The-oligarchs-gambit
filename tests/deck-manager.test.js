@@ -2,10 +2,10 @@
  * Deck Manager Tests
  */
 
-const { test } = require('node:test');
-const assert = require('node:assert');
-const { addToDeck, removeFromDeck, drawEvent, processChoiceDeckOperations } = require('../engine/deck-manager');
-const { isEventEligible } = require('../engine/condition-eval');
+import { test } from 'node:test';
+import assert from 'node:assert';
+import { addToDeck, removeFromDeck, drawEvent, processChoiceDeckOperations } from '../engine/deck-manager.js';
+import { isEventEligible } from '../engine/condition-eval.js';
 
 test('Add to deck - single event', () => {
     const deck = ["event_a", "event_b"];

@@ -6,7 +6,9 @@
  * Analyzes events for statistics, branching, and potential issues
  */
 
-const { loadAllEvents } = require('./validate');
+import { loadAllEvents } from './validate.js';
+import { fileURLToPath } from 'url';
+import { resolve } from 'path';
 
 /**
  * Builds event relationship graph
@@ -223,8 +225,11 @@ function main() {
     console.log('═══════════════════════════════════════════\n');
 }
 
-if (require.main === module) {
+// Check if running directly (not imported)
+const __filename = fileURLToPath(import.meta.url);
+const isMainModule = process.argv[1] && resolve(__filename) === resolve(process.argv[1]);
+if (isMainModule) {
     main();
 }
 
-module.exports = { buildEventGraph, generateStatistics, findOrphanedEvents };
+export { buildEventGraph, generateStatistics, findOrphanedEvents };

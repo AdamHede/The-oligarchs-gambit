@@ -5,7 +5,7 @@
  * New events should follow this structure.
  */
 
-const EXAMPLE_EVENTS = [
+export const EXAMPLE_EVENTS = [
     {
         id: "political_opponent_criticizes",
         title: "Political Opponent Criticizes You",
@@ -264,6 +264,4 @@ const EXAMPLE_EVENTS = [
         ]
     }
 ];
-
-module.exports = EXAMPLE_EVENTS;
 

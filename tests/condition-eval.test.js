@@ -2,9 +2,9 @@
  * Condition Evaluator Tests
  */
 
-const { test } = require('node:test');
-const assert = require('node:assert');
-const { evaluateCondition, isEventEligible } = require('../engine/condition-eval');
+import { test } from 'node:test';
+import assert from 'node:assert';
+import { evaluateCondition, isEventEligible } from '../engine/condition-eval.js';
 
 // Test state fixture
 const createTestState = (overrides = {}) => ({
