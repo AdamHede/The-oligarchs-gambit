@@ -11,7 +11,7 @@ export const ENERGY_EVENTS = [
                     text: "Cut off the gas to Europe",
                     effects: {
                         treasury: -50, // Lost revenue
-                        elite: 5, // "Sticking it to them"
+                        elite: 15, // Geopolitical power move
                         anger: 5 // Domestic prices rise too?
                     },
                     addToPool: ["europe_freezes_propaganda", "budget_deficit_energy"],
@@ -24,7 +24,7 @@ export const ENERGY_EVENTS = [
                         personalWealth: 10, // Skim off top
                         elite: 5
                     },
-                    addToPool: ["oligarch_bonus_payout"]
+                    addToPool: ["oligarch_bonus_payout", "inflation_crisis"] // Money supply expands
                 }
             ]
         },

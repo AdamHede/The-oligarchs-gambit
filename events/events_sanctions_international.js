@@ -12,17 +12,18 @@ export const SANCTIONS_EVENTS = [
                     effects: {
                         personalWealth: 20, // Steal the factories
                         treasury: 10,
-                        elite: 5
+                        elite: -5, // International isolation hurts them
+                        anger: 5
                     },
-                    addToPool: ["import_substitution_failure", "tech_sector_collapse"],
+                    addToPool: ["import_substitution_failure", "tech_sector_collapse", "sanctions_human_rights"],
                     removeFromPool: ["sanctions_initial_wave"]
                 },
                 {
                     text: "Try to negotiate secretly",
                     effects: {
                         personalWealth: -5,
-                        elite: -5, // Look weak
-                        treasury: -5
+                        elite: 2, // Business community relieved
+                        treasury: -20 // Cost of lobbyists/bribes
                     },
                     addToPool: ["sanctions_loophole_found"],
                     removeFromPool: ["sanctions_initial_wave"]
@@ -66,16 +67,16 @@ export const SANCTIONS_EVENTS = [
                     text: "Close the borders for IT workers",
                     effects: {
                         anger: 15,
-                        elite: -5, // Even they need IT support
-                        treasury: 0
+                        elite: -10, // Draconian measures scare investors
+                        treasury: -10 // Enforcement costs
                     },
                     addToPool: ["underground_railroad"]
                 },
                 {
-                    text: "Offer tax breaks to stay",
+                    text: "Offer massive tax breaks to stay",
                     effects: {
-                        treasury: -30,
-                        elite: 2,
+                        treasury: -100, // Real cost of subsidies
+                        elite: 5,
                         anger: -5
                     },
                     addToPool: ["loyal_tech_giant"]
@@ -182,6 +183,14 @@ export const SANCTIONS_EVENTS = [
                     effects: {
                         treasury: -15,
                         elite: 2
+                    },
+                    removeFromPool: ["loyal_tech_giant"]
+                },
+                {
+                    text: "Reject the request",
+                    effects: {
+                        elite: -2, // Disappointed
+                        treasury: 0
                     },
                     removeFromPool: ["loyal_tech_giant"]
                 }

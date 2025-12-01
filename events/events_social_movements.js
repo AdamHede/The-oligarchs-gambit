@@ -113,19 +113,20 @@ export const SOCIAL_EVENTS = [
             rarity: "epic",
             choices: [
                 {
-                    text: "Double down",
+                    text: "Double down and crush them",
                     effects: {
-                        anger: 25,
-                        elite: -10,
-                        treasury: -20
+                        anger: -15, // Fear suppresses them
+                        elite: -10, // International outcast
+                        treasury: -50 // Massive security operation
                     },
+                    addToPool: ["sanctions_human_rights"],
                     removeFromPool: ["bloody_sunday_scenario"]
                 },
                 {
                     text: "Back down",
                     effects: {
-                        elite: -15,
-                        anger: -10
+                        elite: -15, // Weakness
+                        anger: -5 // Appeased
                     },
                     removeFromPool: ["bloody_sunday_scenario"]
                 }

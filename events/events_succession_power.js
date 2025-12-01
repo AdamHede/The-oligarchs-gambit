@@ -65,15 +65,15 @@ export const SUCCESSION_EVENTS = [
                     effects: {
                         treasury: -100,
                         elite: 10,
-                        anger: 15
+                        anger: 10
                     },
                     removeFromPool: ["oligarch_greed_spiral"]
                 },
                 {
                     text: "Refuse",
                     effects: {
-                        elite: -10,
-                        anger: 5
+                        elite: -5,
+                        anger: 0
                     },
                     removeFromPool: ["oligarch_greed_spiral"]
                 }
@@ -143,9 +143,9 @@ export const SUCCESSION_EVENTS = [
                 {
                     text: "Continue the purge",
                     effects: {
-                        elite: -15,
-                        personalWealth: 10,
-                        anger: 10
+                        elite: -10, // Fear keeps them in line (for now)
+                        personalWealth: 20, // Seized assets
+                        anger: 5
                     },
                     removeFromPool: ["paranoia_increases"]
                 },
@@ -155,6 +155,7 @@ export const SUCCESSION_EVENTS = [
                         elite: 5,
                         anger: -5
                     },
+                    addToPool: ["oligarch_plotting"], // Mercy is weakness
                     removeFromPool: ["paranoia_increases"]
                 }
             ]
