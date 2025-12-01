@@ -2,13 +2,29 @@
 
 > **Status**: Living Document
 > **Last Updated**: Dec 1, 2025
-> **Based On**: `reports/balance-2025-12-01T19-10-12.json`, `reports/simulate-2025-12-01T19-10-15.json`
+> **Based On**: `reports/balance-2025-12-01T19-42-30.json`, `reports/simulate-2025-12-01T19-42-30.json`
 
 This guide bridges the gap between our narrative ideals (see `WRITING_GUIDE.md`) and the mathematical reality of the game engine. It provides actionable data for tuning events to ensure the game is challenging, fair, and fun.
 
 ---
 
-## 1. Balance Philosophy
+## 1. Event Content Summary
+
+**Total Events: 39**
+
+| File | Count | Theme |
+|------|-------|-------|
+| `events_war_military.js` | 9 | War, invasion, military coups |
+| `events_sanctions_international.js` | 7 | Sanctions, diplomacy, trade wars |
+| `events_energy_pipeline.js` | 6 | Gas exports, price shocks, infrastructure |
+| `events_succession_power.js` | 6 | Health crises, heirs, internal power struggles |
+| `events_social_movements.js` | 5 | Protests, opposition, media control |
+| `events_domestic_crisis.js` | 4 | Economy, shortages, disasters |
+| `events_misc.js` | 2 | Random flavor events |
+
+---
+
+## 2. Balance Philosophy
 
 The game is designed to be **winnable but difficult**, with a constant downward pressure. Balance does not mean "fairness" in the traditional sense—it means **meaningful tradeoffs**.
 
@@ -28,42 +44,44 @@ Players should feel they are "managing the decline."
 
 ---
 
-## 2. Current State Analysis (Dec 2025)
+## 3. Current State Analysis (Dec 2025)
 
-Our simulation data reveals the current balance reality:
+Our simulation data (1000 games) reveals the current balance reality:
 
 ### Failure Modes
 | Strategy | Avg Turns | Primary Death Cause | Analysis |
 |----------|-----------|---------------------|----------|
-| **Random** | ~35 | **Revolution (85%)** | Anger accumulates too fast for random choices to mitigate. |
-| **Greedy** | ~18 | **Revolution (100%)** | Maximizing wealth kills the regime immediately. Anger is the bottleneck. |
-| **Conservative** | ~80 | **Bankruptcy (100%)** | Survival is possible but leads to fiscal collapse. |
-| **Balanced** | ~90 | **Bankruptcy (100%)** | The longest games end because the Treasury runs dry. |
+| **Random** | ~43 | **Revolution (75%)** | Anger is manageable but eventually lethal. |
+| **Greedy** | ~20 | **Revolution (100%)** | Maximizing wealth kills the regime quickly. |
+| **Conservative** | ~67 | **Bankruptcy (100%)** | Survival is possible but leads to fiscal collapse. |
+| **Balanced** | ~78 | **Bankruptcy (100%)** | Skilled play extends life, but Treasury is the hard limit. |
 
 ### Key Takeaway
-**Anger is currently the most lethal stat.** It accumulates faster than players can reduce it, leading to early revolutions. Once players survive the anger (Conservative/Balanced strategies), they run out of money (Treasury) because costs are high and revenue sources are scarce.
+**The game has two distinct phases based on skill:**
+1.  **Novice/Greedy**: Dies to **Anger (Revolution)**. The early game challenge is managing public unrest.
+2.  **Expert/Conservative**: Dies to **Bankruptcy**. Once anger is managed, the long-term treasury drain becomes the inescapable killer.
 
 ### Top Killer Events
 These events appear most frequently in the final 3 turns before a game over:
-1.  `tech_sector_collapse` (Brain Drain)
-2.  `oligarch_greed_spiral` (Compensation Spiral)
+1.  `tech_sector_collapse` (Brain Drain) - *Top Killer*
+2.  `sanctions_initial_wave` (The Economic Iron Curtain)
 3.  `import_substitution_failure` (The Cheese Incident)
-4.  `war_goes_badly` (The 72-Hour Quagmire)
-5.  `loyal_tech_giant` (The Homegrown Tech Champion) - *Surprisingly lethal due to high treasury costs*
+4.  `loyal_tech_giant` (The Homegrown Tech Champion)
+5.  `underground_railroad` (The Escape Network)
 
 ---
 
-## 3. Effect Magnitude Reference
+## 4. Effect Magnitude Reference
 
-When designing events, use these ranges. Note the discrepancy between our targets and current actuals.
+When designing events, use these ranges.
 
 ### Statistical Norms (Per Choice)
 | Stat | Current Mean | Target Mean | Note |
 |------|--------------|-------------|------|
-| **Personal Wealth** | +5.3 | +5.0 | Slightly generous, but okay. |
-| **Treasury** | -16.9 | -25.0 | Costs are a bit low, but revenue is also scarce. |
-| **Elite** | -1.3 | -2.0 | Elite loyalty is sticky; hard to lose, hard to gain. |
-| **Anger** | +4.1 | +3.0 | **TOO HIGH**. Anger gain is aggressive. |
+| **Personal Wealth** | +6.0 | +5.0 | Slightly generous. |
+| **Treasury** | -19.4 | -25.0 | Costs are rising towards target, but still a bit low. |
+| **Elite** | -1.1 | -2.0 | Elite loyalty is too stable; needs more volatility. |
+| **Anger** | +3.2 | +3.0 | **Perfect**. Anger gain is right on target. |
 
 ### Scale Reference
 | Magnitude | Wealth (B) | Treasury (B) | Elite/Anger (%) |
@@ -74,11 +92,9 @@ When designing events, use these ranges. Note the discrepancy between our target
 | **Large** | ±11-20 | ±160-250 | ±16-25 |
 | **Extreme** | ±20-50 | ±260-400 | ±26-35 |
 
-**Correction needed**: Many treasury effects currently use single/double digits (e.g., -10, -20) which map to "Tiny" or smaller. We need to scale treasury numbers up to match the narrative stakes (billions, not millions).
-
 ---
 
-## 4. Choice Balance Guidelines
+## 5. Choice Balance Guidelines
 
 A choice is "balanced" if there is no mathematical "no-brainer."
 - **Dominant Choice**: One option is mathematically superior in almost all game states.
@@ -103,30 +119,30 @@ If a choice is too good immediately, make the player pay later.
 ### Dominant Choices to Fix
 These events have a Score Delta > 15, meaning one choice is almost always taken by the Balanced strategy.
 
-1.  `sanctions_initial_wave` (Delta: 35.3) - "Seize assets" is vastly superior to negotiating.
-2.  `bloody_sunday_scenario` (Delta: 30.4) - "Back down" is much safer than "Double down" (which is a death sentence).
-3.  `tech_sector_collapse` (Delta: 26.4) - "Tax breaks" is far better than closing borders.
-4.  `paranoia_increases` (Delta: 25.0) - "Stop purge" is safe; "Continue purge" is self-destructive.
+1.  `tech_sector_collapse` (Delta: 33.2) - "Tax breaks" is vastly superior to closing borders.
+2.  `internet_censorship_tightens` (Delta: 20.0) - "Ease restrictions" is much safer than tightening them.
+3.  `mass_protests_blogger` (Delta: 20.0) - "Wait it out" is the only viable option.
+4.  `sanctions_human_rights` (Delta: 19.8) - "Defy sanctions" is surprisingly better mathematically than compliance.
+5.  `oligarch_yacht_seized` (Delta: 19.0) - "Compensate fully" is the clear winner.
 
 ---
 
-## 5. Storyline Balance Matrix
+## 6. Storyline Balance Matrix
 
 Storylines have different "flavors" of difficulty. Use this to ensure a mix of threats.
 
 | Storyline | Avg Treasury | Avg Anger | Avg Elite | Character |
 |-----------|--------------|-----------|-----------|-----------|
 | **war-invasion** | **-34.1** | **+5.0** | -1.9 | **High Risk**. Drains treasury fast and spikes anger. |
-| **oligarch-rivalry** | **-38.0** | **+8.3** | -2.5 | **Expensive**. Massive wealth transfers (-Treasury, +Wealth). |
-| **popular-uprising** | -15.0 | **+8.1** | **-3.7** | **Lethal**. High anger + elite dissatisfaction = Game Over risk. |
-| **sanctions-spiral** | -5.6 | +4.3 | -0.3 | **Grind**. Slow bleeding of resources. |
-| **energy-politics** | -3.3 | +1.7 | **+2.1** | **Reward**. Often positive for the player (high elite gain). |
-
-**Design Note**: `energy-politics` is currently too safe. It should have higher variance or risks (e.g., fluctuating prices causing budget holes).
+| **oligarch-rivalry** | **-38.0** | **+5.0** | -1.7 | **Expensive**. Massive wealth transfers. |
+| **popular-uprising** | -30.0 | +3.8 | **-3.7** | **Lethal**. Drains everything: money, elite support, and stability. |
+| **sanctions-spiral** | -14.5 | +4.3 | -0.8 | **Grind**. Moderate drain but persistent. |
+| **energy-politics** | -3.3 | +1.7 | **+3.2** | **Safe Haven**. Low risk, helps rebuild Elite loyalty. |
+| **domestic-crisis** | -10.0 | +1.1 | -1.8 | **Minor nuisance**. Needs more bite. |
 
 ---
 
-## 6. Death Spiral Prevention
+## 7. Death Spiral Prevention
 
 A "Death Spiral" occurs when a severe choice adds *more* events that cause severe choices, creating an inescapable loop.
 
@@ -143,7 +159,7 @@ A "Death Spiral" occurs when a severe choice adds *more* events that cause sever
 
 ---
 
-## 7. Testing Workflow
+## 8. Testing Workflow
 
 Designers should run these tools after editing events to verify impact.
 
@@ -165,12 +181,10 @@ node tools/simulate.js 1000
 
 ---
 
-## Appendix: Rebalancing Targets
+## Appendix: Rebalancing Targets (Dec Update)
 
-### Events Needing Adjustment (Priority)
-
-1.  **`sanctions_initial_wave`**: Buff "Negotiate" or nerf "Seize Assets".
-2.  **`bloody_sunday_scenario`**: Reduce the anger penalty for "Double down" (make it effectively suppress protests but hurt Elite/International standing instead).
-3.  **`tech_sector_collapse`**: Closing borders should stop the Brain Drain event chain, making it a viable (if draconian) strategic choice.
-4.  **`energy_price_spike`**: "Sell at max price" is too good (+100 Treasury). Add an inflation/anger risk.
-
+### Priority Fixes
+1.  **Nerf `tech_sector_collapse`**: The "Tax breaks" option is too good. It should cost significant Treasury or Elite loyalty.
+2.  **Buff `domestic-crisis`**: These events are currently too weak (-10 Treasury). Scale them up to -50 to -100 to threaten the mid-game economy.
+3.  **Fix Dominant Choices**: Rebalance the top 5 dominant choices listed in Section 5 to make the alternative options more viable.
+4.  **Increase Elite Volatility**: Add more events that directly target Elite loyalty (both positive and negative) to break the 100% Bankruptcy meta for skilled players.
