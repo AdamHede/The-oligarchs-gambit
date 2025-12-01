@@ -1,0 +1,20 @@
+{
+  "name": "the-oligarchs-gambit",
+  "version": "2.0.0",
+  "description": "A story-driven game with Event System 2.0",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "test:watch": "node --test --watch tests/*.test.js",
+    "validate": "node tools/validate.js",
+    "analyze": "node tools/analyze.js",
+    "visualize": "node tools/visualize.js"
+  },
+  "keywords": [
+    "game",
+    "events",
+    "narrative"
+  ],
+  "author": "",
+  "license": "ISC"
+}
+

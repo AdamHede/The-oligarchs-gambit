@@ -354,7 +354,6 @@ Could affect:
 
 ### Do Instead:
 - ✓ Events that create interesting dilemmas
-- ✓ Chains of 2-3 events maximum
 - ✓ Events that can trigger in multiple ways
 - ✓ Consequences that emerge organically from decisions
 - ✓ Grounded, realistic scenarios
