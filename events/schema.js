@@ -146,8 +146,8 @@ function validateEvent(event, allEventIds = new Set()) {
     }
 
     // Validate optional fields
-    if (event.weight !== undefined && (typeof event.weight !== 'number' || event.weight <= 0)) {
-        errors.push(`Event "${event.id || 'unknown'}" weight must be a positive number`);
+    if (event.weight !== undefined && (typeof event.weight !== 'number' || event.weight < 0)) {
+        errors.push(`Event "${event.id || 'unknown'}" weight must be a non-negative number`);
     }
 
     if (event.storylines !== undefined && !Array.isArray(event.storylines)) {

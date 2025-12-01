@@ -81,6 +81,111 @@ export const SANCTIONS_EVENTS = [
                     addToPool: ["loyal_tech_giant"]
                 }
             ]
+        },
+        {
+            id: "sanctions_loophole_found",
+            title: "Creative Accounting",
+            description: "Your financial advisors have found ways to circumvent some sanctions through shell companies and third-party intermediaries.",
+            weight: 0,
+            storyline: "sanctions-spiral",
+            rarity: "rare",
+            choices: [
+                {
+                    text: "Exploit the loopholes",
+                    effects: {
+                        treasury: 30,
+                        personalWealth: 5,
+                        elite: 3
+                    },
+                    removeFromPool: ["sanctions_loophole_found"]
+                },
+                {
+                    text: "Be cautious",
+                    effects: {
+                        treasury: 10
+                    },
+                    removeFromPool: ["sanctions_loophole_found"]
+                }
+            ]
+        },
+        {
+            id: "internet_censorship_tightens",
+            title: "The Great Firewall Expands",
+            description: "Your internet censorship has been expanded. Social media platforms are blocked, VPNs are being hunted down.",
+            weight: 0,
+            storyline: "sanctions-spiral",
+            rarity: "common",
+            choices: [
+                {
+                    text: "Tighten control further",
+                    effects: {
+                        anger: 10,
+                        elite: -3
+                    },
+                    removeFromPool: ["internet_censorship_tightens"]
+                },
+                {
+                    text: "Ease restrictions slightly",
+                    effects: {
+                        anger: -5,
+                        elite: 2
+                    },
+                    removeFromPool: ["internet_censorship_tightens"]
+                }
+            ]
+        },
+        {
+            id: "underground_railroad",
+            title: "The Escape Network",
+            description: "An underground network has formed to help people flee the country. It's becoming harder to stop the brain drain.",
+            weight: 0,
+            storyline: "sanctions-spiral",
+            rarity: "rare",
+            choices: [
+                {
+                    text: "Crack down hard",
+                    effects: {
+                        anger: 15,
+                        elite: -5
+                    },
+                    removeFromPool: ["underground_railroad"]
+                },
+                {
+                    text: "Turn a blind eye",
+                    effects: {
+                        elite: -3,
+                        treasury: -10
+                    },
+                    removeFromPool: ["underground_railroad"]
+                }
+            ]
+        },
+        {
+            id: "loyal_tech_giant",
+            title: "The Homegrown Tech Champion",
+            description: "One major tech company has stayed loyal, developing local alternatives to Western software. They're asking for more support.",
+            weight: 0,
+            storyline: "sanctions-spiral",
+            rarity: "rare",
+            choices: [
+                {
+                    text: "Invest heavily",
+                    effects: {
+                        treasury: -40,
+                        elite: 5,
+                        anger: -3
+                    },
+                    removeFromPool: ["loyal_tech_giant"]
+                },
+                {
+                    text: "Offer modest support",
+                    effects: {
+                        treasury: -15,
+                        elite: 2
+                    },
+                    removeFromPool: ["loyal_tech_giant"]
+                }
+            ]
         }
 ];
 

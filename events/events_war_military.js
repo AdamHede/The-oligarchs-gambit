@@ -88,6 +88,151 @@ export const WAR_EVENTS = [
                     removeFromPool: ["conscription_crisis"]
                 }
             ]
+        },
+        {
+            id: "rally_around_flag",
+            title: "Patriotic Surge",
+            description: "The initial operation has sparked a wave of nationalist sentiment. State media is flooded with patriotic programming.",
+            weight: 3,
+            storyline: "war-invasion",
+            rarity: "common",
+            choices: [
+                {
+                    text: "Capitalize on the momentum",
+                    effects: {
+                        elite: 5,
+                        anger: -5
+                    }
+                }
+            ]
+        },
+        {
+            id: "generals_plotting_coup",
+            title: "The Generals Are Restless",
+            description: "Your rejection of the military operation has angered the top brass. Whispers of discontent are spreading through the officer corps.",
+            weight: 5,
+            storyline: "war-invasion",
+            rarity: "rare",
+            choices: [
+                {
+                    text: "Purge the disloyal",
+                    effects: {
+                        elite: -10,
+                        treasury: -20
+                    }
+                },
+                {
+                    text: "Offer them concessions",
+                    effects: {
+                        treasury: -30,
+                        elite: 5
+                    }
+                }
+            ]
+        },
+        {
+            id: "equipment_shortages",
+            title: "The Supply Crisis",
+            description: "Your forces are running low on everything: ammunition, fuel, spare parts. The logistics chain has completely broken down.",
+            weight: 0,
+            storyline: "war-invasion",
+            rarity: "common",
+            choices: [
+                {
+                    text: "Scramble to find supplies",
+                    effects: {
+                        treasury: -50,
+                        anger: 5
+                    },
+                    removeFromPool: ["equipment_shortages"]
+                },
+                {
+                    text: "Accept the shortages",
+                    effects: {
+                        elite: -10,
+                        anger: 10
+                    },
+                    removeFromPool: ["equipment_shortages"]
+                }
+            ]
+        },
+        {
+            id: "general_fired_scapegoat",
+            title: "A Scapegoat is Found",
+            description: "You've publicly blamed a senior general for the military failures. He's been removed, but the problems remain.",
+            weight: 0,
+            storyline: "war-invasion",
+            rarity: "common",
+            choices: [
+                {
+                    text: "Continue the operation",
+                    effects: {
+                        elite: -5,
+                        treasury: -30
+                    },
+                    removeFromPool: ["general_fired_scapegoat"]
+                },
+                {
+                    text: "Reassess strategy",
+                    effects: {
+                        elite: 5,
+                        anger: -5
+                    },
+                    removeFromPool: ["general_fired_scapegoat"]
+                }
+            ]
+        },
+        {
+            id: "rural_unrest",
+            title: "The Countryside Rises",
+            description: "Rural communities are protesting the selective mobilization. They feel unfairly targeted by your policies.",
+            weight: 0,
+            storyline: "war-invasion",
+            rarity: "common",
+            choices: [
+                {
+                    text: "Suppress the protests",
+                    effects: {
+                        anger: 10,
+                        elite: 2
+                    },
+                    removeFromPool: ["rural_unrest"]
+                },
+                {
+                    text: "Promise fair treatment",
+                    effects: {
+                        anger: -5,
+                        treasury: -10
+                    },
+                    removeFromPool: ["rural_unrest"]
+                }
+            ]
+        },
+        {
+            id: "border_exodus_brain_drain",
+            title: "The Great Exodus",
+            description: "Massive numbers of educated professionals are fleeing across the borders. Universities and tech companies are emptying out.",
+            weight: 0,
+            storyline: "war-invasion",
+            rarity: "rare",
+            choices: [
+                {
+                    text: "Close the borders",
+                    effects: {
+                        anger: 15,
+                        elite: -5
+                    },
+                    removeFromPool: ["border_exodus_brain_drain"]
+                },
+                {
+                    text: "Let them go",
+                    effects: {
+                        treasury: -20,
+                        elite: -10
+                    },
+                    removeFromPool: ["border_exodus_brain_drain"]
+                }
+            ]
         }
 ];
 

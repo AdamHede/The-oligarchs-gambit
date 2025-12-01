@@ -51,6 +51,85 @@ export const SOCIAL_EVENTS = [
                     removeFromPool: ["mass_protests_blogger"]
                 }
             ]
+        },
+        {
+            id: "palace_denial_memes",
+            title: "Internet Memes",
+            description: "The internet has turned your palace denial into a viral meme. Every social media platform is flooded with jokes about your 'friend's' golden toilet brush.",
+            weight: 0,
+            storyline: "popular-uprising",
+            rarity: "common",
+            choices: [
+                {
+                    text: "Ignore the memes",
+                    effects: {
+                        anger: 5,
+                        elite: -2
+                    },
+                    removeFromPool: ["palace_denial_memes"]
+                },
+                {
+                    text: "Try to suppress them",
+                    effects: {
+                        anger: 10,
+                        elite: -5
+                    },
+                    removeFromPool: ["palace_denial_memes"]
+                }
+            ]
+        },
+        {
+            id: "sanctions_human_rights",
+            title: "Human Rights Sanctions",
+            description: "Western nations have imposed personal sanctions on you and your inner circle. Your foreign assets are frozen, and travel bans are in place.",
+            weight: 0,
+            storyline: "popular-uprising",
+            rarity: "rare",
+            choices: [
+                {
+                    text: "Defy the sanctions",
+                    effects: {
+                        elite: 5,
+                        treasury: -10
+                    },
+                    removeFromPool: ["sanctions_human_rights"]
+                },
+                {
+                    text: "Try to negotiate",
+                    effects: {
+                        elite: -5,
+                        personalWealth: -10
+                    },
+                    removeFromPool: ["sanctions_human_rights"]
+                }
+            ]
+        },
+        {
+            id: "bloody_sunday_scenario",
+            title: "The Crackdown",
+            description: "Your security forces have used excessive force against the protesters. Images of violence are spreading globally, sparking international condemnation.",
+            weight: 0,
+            storyline: "popular-uprising",
+            rarity: "epic",
+            choices: [
+                {
+                    text: "Double down",
+                    effects: {
+                        anger: 25,
+                        elite: -10,
+                        treasury: -20
+                    },
+                    removeFromPool: ["bloody_sunday_scenario"]
+                },
+                {
+                    text: "Back down",
+                    effects: {
+                        elite: -15,
+                        anger: -10
+                    },
+                    removeFromPool: ["bloody_sunday_scenario"]
+                }
+            ]
         }
 ];
 

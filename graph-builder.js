@@ -5,6 +5,9 @@
  */
 
 export function buildGraphData(events) {
+    // Create a Set of valid event IDs for quick lookup
+    const validEventIds = new Set(events.map(event => event.id));
+
     const nodes = events.map(event => ({
         data: {
             id: event.id,
@@ -24,6 +27,12 @@ export function buildGraphData(events) {
             event.choices.forEach((choice, choiceIndex) => {
                 const addEvents = choice.add || choice.addToPool || [];
                 addEvents.forEach(targetId => {
+                    // Only create edge if target event exists
+                    if (!validEventIds.has(targetId)) {
+                        // Silently skip invalid references - they'll be caught by validation tests
+                        return;
+                    }
+                    
                     // Create unique edge key
                     const edgeKey = `${event.id}->${targetId}`;
                     if (!edgeMap.has(edgeKey)) {

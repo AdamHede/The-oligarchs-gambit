@@ -50,6 +50,58 @@ export const DOMESTIC_EVENTS = [
                     }
                 }
             ]
+        },
+        {
+            id: "shortages_black_market",
+            title: "The Black Market Boom",
+            description: "Price controls have created shortages. A thriving black market has emerged, selling everything at triple the official price.",
+            weight: 0,
+            storyline: "domestic-crisis",
+            rarity: "common",
+            choices: [
+                {
+                    text: "Crack down on the black market",
+                    effects: {
+                        anger: 10,
+                        elite: -3
+                    },
+                    removeFromPool: ["shortages_black_market"]
+                },
+                {
+                    text: "Turn a blind eye",
+                    effects: {
+                        anger: -3,
+                        treasury: -5
+                    },
+                    removeFromPool: ["shortages_black_market"]
+                }
+            ]
+        },
+        {
+            id: "tv_propaganda_blame",
+            title: "The Blame Game",
+            description: "State TV is running 24/7 coverage blaming foreign saboteurs for the inflation. The narrative is taking hold.",
+            weight: 0,
+            storyline: "domestic-crisis",
+            rarity: "common",
+            choices: [
+                {
+                    text: "Amplify the blame",
+                    effects: {
+                        anger: -5,
+                        elite: 2
+                    },
+                    removeFromPool: ["tv_propaganda_blame"]
+                },
+                {
+                    text: "Focus on solutions",
+                    effects: {
+                        anger: -3,
+                        treasury: -15
+                    },
+                    removeFromPool: ["tv_propaganda_blame"]
+                }
+            ]
         }
 ];
 
