@@ -1,840 +1,234 @@
-// The Oligarch's Gambit - Main Game Engine
+/**
+ * The Oligarch's Gambit - Main Game Controller
+ * 
+ * Uses V2 Engine and UI Adapter
+ */
 
-// Version tracking
-const GAME_VERSION = "1.6.0";
-const VERSION_SUMMARY = "Fix event chain system, add storylines, 'A Quiet Quarter' always available";
-const TOTAL_EVENTS = 154;
+import { GameEngineV2 } from './engine/game-engine.js';
+import { GameUI } from './ui-adapter.js';
+import { DebugGraph } from './debug-graph.js';
+import ALL_EVENTS from './events/index.js';
 
 class OligarchGame {
     constructor() {
-        this.state = {
-            personalWealth: 10, // In billions
-            treasury: 1000, // In billions
-            elite: 90, // Percentage
-            anger: 10, // Percentage
-            year: 1,
-            quarter: 1,
-            legacy: [],
-            triggeredEvents: new Set(),
-            completedEvents: new Set(),
-            eventWeightModifiers: {},
-            activeEventPool: [], // Events currently in the active pool
-            decisionCounts: {}, // Track recurring decision choices
-            activeStorylines: [], // Currently active storylines
-            completedStorylines: [] // Finished storylines
-        };
-
-        // Maximum values for wealth metrics (for display bars)
-        this.maxPersonalWealth = 200; // 200 billion
-        this.maxTreasury = 2000; // 2000 billion
-
-        this.currentEvent = null;
-        this.isGameOver = false;
-
-        this.initializeElements();
-        this.attachEventListeners();
-    }
-
-    initializeElements() {
+        // Convert old event format to new format if needed
+        this.allEvents = this.convertEvents(ALL_EVENTS);
+        
+        // Create engine instance
+        this.engine = new GameEngineV2(this.allEvents);
+        
+        // Create UI adapter
+        this.ui = new GameUI(this.engine, this.allEvents);
+        
+        // Initialize debug graph (will be created when container is available)
+        this.debugGraph = null;
+        
         // Screens
         this.titleScreen = document.getElementById('title-screen');
         this.gameScreen = document.getElementById('game-screen');
         this.gameoverScreen = document.getElementById('gameover-screen');
 
-        // UI Elements
-        this.currentPeriod = document.getElementById('current-period');
-        this.personalWealthBar = document.getElementById('personal-wealth-bar');
-        this.personalWealthValue = document.getElementById('personal-wealth-value');
-        this.treasuryBar = document.getElementById('treasury-bar');
-        this.treasuryValue = document.getElementById('treasury-value');
-        this.eliteBar = document.getElementById('elite-bar');
-        this.eliteValue = document.getElementById('elite-value');
-        this.angerBar = document.getElementById('anger-bar');
-        this.angerValue = document.getElementById('anger-value');
+        this.attachEventListeners();
+        
+        // Initialize graph after a short delay to ensure DOM is ready
+        setTimeout(() => {
+            this.initGraph();
+        }, 100);
+    }
 
-        // Event Card
-        this.eventTitle = document.getElementById('event-title');
-        this.eventDescription = document.getElementById('event-description');
-        this.choicesContainer = document.getElementById('choices-container');
+    initGraph() {
+        try {
+            this.debugGraph = new DebugGraph('debug-graph', this.engine, this.allEvents);
+            this.ui.setDebugGraph(this.debugGraph);
+            
+            // Attach graph control buttons
+            const fitBtn = document.getElementById('graph-fit');
+            const centerBtn = document.getElementById('graph-center-active');
+            
+            if (fitBtn) {
+                fitBtn.addEventListener('click', () => {
+                    if (this.debugGraph) this.debugGraph.fitView();
+                });
+            }
+            
+            if (centerBtn) {
+                centerBtn.addEventListener('click', () => {
+                    if (this.debugGraph) this.debugGraph.centerOnActive();
+                });
+            }
+        } catch (error) {
+            console.warn('Could not initialize debug graph:', error);
+        }
+    }
 
-        // Legacy
-        this.legacyContainer = document.getElementById('legacy-container');
-
-        // Debug
-        this.debugVersion = document.getElementById('debug-version');
-        this.debugSummary = document.getElementById('debug-summary');
-        this.debugTotalEvents = document.getElementById('debug-total-events');
-        this.debugActiveEvents = document.getElementById('debug-active-events');
-        this.debugEventsList = document.getElementById('debug-events-list');
-        this.debugEventTree = document.getElementById('debug-event-tree');
-
-        // Event tree data (loaded async)
-        this.eventTreeData = null;
-
-        // Game Over
-        this.gameoverReason = document.getElementById('gameover-reason');
-        this.finalStats = document.getElementById('final-stats');
-        this.finalLegacy = document.getElementById('final-legacy');
+    /**
+     * Converts old event format to new v2 format
+     * Old format: effects: { personalWealth: 5, treasury: -10 }
+     * New format: effects: { stats: { personalWealth: 5, treasury: -10 } }
+     */
+    convertEvents(events) {
+        return events.map(event => {
+            const converted = { ...event };
+            
+            // Convert choices
+            if (converted.choices) {
+                converted.choices = converted.choices.map(choice => {
+                    const newChoice = { ...choice };
+                    
+                    // Convert effects format
+                    if (newChoice.effects) {
+                        // Check if it's already in new format
+                        if (newChoice.effects.stats || newChoice.effects.counters || newChoice.effects.flags) {
+                            // Already new format
+                            return newChoice;
+                        }
+                        
+                        // Old format - convert to new format
+                        const stats = {};
+                        const counters = {};
+                        const flags = {};
+                        let legacy = null;
+                        
+                        for (const [key, value] of Object.entries(newChoice.effects)) {
+                            if (key === 'legacy') {
+                                legacy = value;
+                            } else if (typeof value === 'boolean') {
+                                flags[key] = value;
+                            } else if (typeof value === 'number') {
+                                // Check if it's a stat or counter
+                                if (['personalWealth', 'treasury', 'elite', 'anger'].includes(key)) {
+                                    stats[key] = value;
+        } else {
+                                    counters[key] = value;
+                                }
+                            }
+                        }
+                        
+                        newChoice.effects = {};
+                        if (Object.keys(stats).length > 0) newChoice.effects.stats = stats;
+                        if (Object.keys(counters).length > 0) newChoice.effects.counters = counters;
+                        if (Object.keys(flags).length > 0) newChoice.effects.flags = flags;
+                        if (legacy) newChoice.effects.legacy = legacy;
+                    }
+                    
+                    // Convert addToPool/removeFromPool to add/remove
+                    if (newChoice.addToPool) {
+                        newChoice.add = newChoice.addToPool;
+                        delete newChoice.addToPool;
+                    }
+                    if (newChoice.removeFromPool) {
+                        newChoice.remove = newChoice.removeFromPool;
+                        delete newChoice.removeFromPool;
+                    }
+                    
+                    return newChoice;
+                });
+            }
+            
+            // Convert storyline (singular) to storylines (array)
+            if (converted.storyline && !converted.storylines) {
+                converted.storylines = [converted.storyline];
+                delete converted.storyline;
+            }
+            
+            // Convert conditions format if needed
+            if (converted.conditions) {
+                // Old format might have hasTriggered, personalWealth, etc. directly
+                // New format uses stats, flags, counters objects
+                const newConditions = {};
+                
+                if (converted.conditions.hasTriggered) {
+                    // Convert hasTriggered to flags or counters
+                    // For now, we'll skip this complex conversion
+                    // Events with hasTriggered will need manual conversion
+                }
+                
+                if (converted.conditions.personalWealth !== undefined ||
+                    converted.conditions.treasury !== undefined ||
+                    converted.conditions.elite !== undefined ||
+                    converted.conditions.anger !== undefined) {
+                    newConditions.stats = {};
+                    if (converted.conditions.personalWealth !== undefined) {
+                        newConditions.stats.personalWealth = { gte: converted.conditions.personalWealth };
+                    }
+                    if (converted.conditions.treasury !== undefined) {
+                        newConditions.stats.treasury = { gte: converted.conditions.treasury };
+                    }
+                    if (converted.conditions.elite !== undefined) {
+                        newConditions.stats.elite = { gte: converted.conditions.elite };
+                    }
+                    if (converted.conditions.anger !== undefined) {
+                        newConditions.stats.anger = { gte: converted.conditions.anger };
+                    }
+                }
+                
+                if (converted.conditions.year !== undefined) {
+                    if (!newConditions.stats) newConditions.stats = {};
+                    // Year is not a stat in v2, we'll need to handle this differently
+                    // For now, skip year conditions
+                }
+                
+                if (Object.keys(newConditions).length > 0) {
+                    converted.conditions = newConditions;
+                } else if (Object.keys(converted.conditions).length === 0) {
+                    // Empty conditions = no conditions
+                    delete converted.conditions;
+                }
+            }
+            
+            return converted;
+        });
     }
 
     attachEventListeners() {
         document.getElementById('start-game').addEventListener('click', () => this.startGame());
         document.getElementById('restart-game').addEventListener('click', () => this.restartGame());
-
-        // Load event tree data
-        this.loadEventTree();
-    }
-
-    async loadEventTree() {
-        try {
-            const response = await fetch('./event-tree.json');
-            if (response.ok) {
-                this.eventTreeData = await response.json();
-                this.renderEventTree();
-            }
-        } catch (error) {
-            // Event tree file doesn't exist yet, that's okay
-            console.log('Event tree data not available. Run: node analyze-events.js');
-        }
-    }
-
-    renderEventTree() {
-        if (!this.eventTreeData || !this.debugEventTree) return;
-
-        const { statistics, events, warnings } = this.eventTreeData;
-        const stats = statistics;
-
-        let html = '<div class="debug-tree-stats">';
-        html += '<h4>📊 Event Statistics</h4>';
-
-        html += '<div class="debug-tree-stat-row">';
-        html += '<span class="debug-tree-stat-label">Total Events:</span>';
-        html += `<span class="debug-tree-stat-value">${stats.total}</span>`;
-        html += '</div>';
-
-        html += '<div class="debug-tree-stat-row">';
-        html += '<span class="debug-tree-stat-label">Entry Points:</span>';
-        html += `<span class="debug-tree-stat-value">${stats.byType.entryPoint}</span>`;
-        html += '</div>';
-
-        html += '<div class="debug-tree-stat-row">';
-        html += '<span class="debug-tree-stat-label">Dead Ends:</span>';
-        html += `<span class="debug-tree-stat-value">${stats.branching.deadEnds} (${((stats.branching.deadEnds / stats.total) * 100).toFixed(1)}%)</span>`;
-        html += '</div>';
-
-        html += '<div class="debug-tree-stat-row">';
-        html += '<span class="debug-tree-stat-label">Branching Events:</span>';
-        html += `<span class="debug-tree-stat-value">${stats.branching.branches} (${((stats.branching.branches / stats.total) * 100).toFixed(1)}%)</span>`;
-        html += '</div>';
-
-        html += '<div class="debug-tree-stat-row">';
-        html += '<span class="debug-tree-stat-label">Longest Chain:</span>';
-        html += `<span class="debug-tree-stat-value">${stats.chains.longest} events</span>`;
-        html += '</div>';
-
-        html += '</div>';
-
-        // Warnings
-        if (warnings.length > 0) {
-            html += '<div class="debug-tree-warning">';
-            html += `<strong>⚠️ ${warnings.length} Warnings:</strong><br>`;
-            html += warnings.slice(0, 5).map(w => `• ${w}`).join('<br>');
-            if (warnings.length > 5) {
-                html += `<br>... and ${warnings.length - 5} more`;
-            }
-            html += '</div>';
-        }
-
-        // Show branching events
-        const branchingEvents = events.filter(e => e.triggers.length > 0).slice(0, 30);
-        if (branchingEvents.length > 0) {
-            html += '<div class="debug-tree-section">';
-            html += '<h5>🌿 Branching Events</h5>';
-            branchingEvents.forEach(event => {
-                const badgeClass = event.isOrphaned ? 'orphaned' :
-                                  event.triggers.length >= 3 ? 'branching' : 'branching';
-                html += '<div class="debug-tree-node">';
-                html += `<span class="debug-tree-node-id">${event.id}</span>`;
-                html += ` - <span class="debug-tree-node-title">${event.title}</span>`;
-                html += ` <span class="debug-tree-node-badge ${badgeClass}">→ ${event.triggers.length}</span>`;
-                if (event.onceOnly) html += ' 🔒';
-                if (event.storyline) html += ` [${event.storyline}]`;
-                html += '</div>';
-            });
-            html += '</div>';
-        }
-
-        // Show dead ends
-        const deadEnds = events.filter(e => e.triggers.length === 0).slice(0, 20);
-        if (deadEnds.length > 0) {
-            html += '<div class="debug-tree-section">';
-            html += '<h5>🛑 Dead End Events (No New Events)</h5>';
-            deadEnds.forEach(event => {
-                html += '<div class="debug-tree-node">';
-                html += `<span class="debug-tree-node-id">${event.id}</span>`;
-                html += ` - <span class="debug-tree-node-title">${event.title}</span>`;
-                html += ` <span class="debug-tree-node-badge dead-end">dead end</span>`;
-                html += '</div>';
-            });
-            if (deadEnds.length < stats.branching.deadEnds) {
-                html += `<p style="color: #888; margin-top: 8px;">... and ${stats.branching.deadEnds - deadEnds.length} more dead ends</p>`;
-            }
-            html += '</div>';
-        }
-
-        // Show orphaned events
-        const orphanedEvents = events.filter(e => e.isOrphaned);
-        if (orphanedEvents.length > 0) {
-            html += '<div class="debug-tree-section">';
-            html += '<h5>🔴 Orphaned Events (Never Triggered)</h5>';
-            orphanedEvents.forEach(event => {
-                html += '<div class="debug-tree-node">';
-                html += `<span class="debug-tree-node-id">${event.id}</span>`;
-                html += ` - <span class="debug-tree-node-title">${event.title}</span>`;
-                html += ` <span class="debug-tree-node-badge orphaned">orphaned</span>`;
-                html += '</div>';
-            });
-            html += '</div>';
-        }
-
-        this.debugEventTree.innerHTML = html;
     }
 
     startGame() {
         this.titleScreen.classList.remove('active');
         this.gameScreen.classList.add('active');
-        this.initializeEventPool();
-        this.updateUI();
-        this.nextTurn();
+        
+        // Draw initial event
+        const event = this.engine.drawNextEvent();
+        if (event) {
+            this.ui.displayEvent(event);
+                } else {
+            this.ui.displayFallbackEvent();
+        }
+        
+        this.ui.updateDisplay();
     }
 
     restartGame() {
-        this.state = {
-            personalWealth: 10, // In billions
-            treasury: 1000, // In billions
-            elite: 90, // Percentage
-            anger: 10, // Percentage
-            year: 1,
-            quarter: 1,
-            legacy: [],
-            triggeredEvents: new Set(),
-            completedEvents: new Set(),
-            eventWeightModifiers: {},
-            activeEventPool: [],
-            decisionCounts: {},
-            activeStorylines: [],
-            completedStorylines: []
-        };
-
+        // Create new engine instance
+        this.engine = new GameEngineV2(this.allEvents);
+        this.ui = new GameUI(this.engine, this.allEvents);
+        this.ui.setDebugGraph(this.debugGraph);
+        
         this.isGameOver = false;
         this.gameoverScreen.classList.remove('active');
         this.gameScreen.classList.add('active');
-        this.initializeEventPool();
-        this.updateUI();
-        this.nextTurn();
-    }
-
-    updateUI() {
-        // Update period
-        this.currentPeriod.textContent = `Quarter ${this.state.quarter}, Year ${this.state.year}`;
-
-        // Update metrics
-        this.updateMetric('personalWealth', this.personalWealthBar, this.personalWealthValue);
-        this.updateMetric('treasury', this.treasuryBar, this.treasuryValue);
-        this.updateMetric('elite', this.eliteBar, this.eliteValue);
-        this.updateMetric('anger', this.angerBar, this.angerValue);
-
-        // Update legacy
-        this.updateLegacy();
-
-        // Update debug info
-        this.updateDebugInfo();
-    }
-
-    updateMetric(metricName, barElement, valueElement) {
-        const value = this.state[metricName];
-
-        // Calculate bar width and display text based on metric type
-        let barWidth, displayText;
-
-        if (metricName === 'personalWealth') {
-            barWidth = Math.max(0, Math.min(100, (value / this.maxPersonalWealth) * 100));
-            displayText = `$${Math.round(value)}B`;
-        } else if (metricName === 'treasury') {
-            barWidth = Math.max(0, Math.min(100, (value / this.maxTreasury) * 100));
-            displayText = `$${Math.round(value)}B`;
-        } else {
-            // Elite and anger are percentages
-            barWidth = Math.max(0, Math.min(100, value));
-            displayText = `${Math.round(value)}%`;
+        
+        // Reset graph completed events
+        if (this.debugGraph) {
+            this.debugGraph.completedEventIds.clear();
         }
-
-        barElement.style.width = `${barWidth}%`;
-        valueElement.textContent = displayText;
-
-        // Add warning colors for critical levels
-        if (metricName === 'treasury' || metricName === 'elite') {
-            if ((metricName === 'treasury' && value <= 100) ||
-                (metricName === 'elite' && value <= 10)) {
-                barElement.style.filter = 'brightness(0.6) saturate(2)';
-            } else {
-                barElement.style.filter = 'brightness(1) saturate(1)';
-            }
-        }
-
-        if (metricName === 'anger') {
-            if (value >= 90) {
-                barElement.style.filter = 'brightness(1.3) saturate(1.5)';
-            } else {
-                barElement.style.filter = 'brightness(1) saturate(1)';
-            }
-        }
-    }
-
-    updateLegacy() {
-        this.legacyContainer.innerHTML = '';
-        this.state.legacy.forEach(legacy => {
-            const badge = document.createElement('div');
-            badge.className = 'legacy-badge';
-            // Add negative styling for negative weights
-            if (legacy.weight && legacy.weight < 0) {
-                badge.style.backgroundColor = 'rgba(231, 76, 60, 0.3)';
-                badge.style.borderColor = '#e74c3c';
-            }
-            badge.innerHTML = `<span>${legacy.icon}</span><span>${legacy.name}</span>`;
-
-            // Make badge clickable with explanation
-            const weight = legacy.weight || 5;
-            const explanation = legacy.explanation || `${legacy.name}`;
-            badge.title = `${explanation} (${weight > 0 ? '+' : ''}${weight}% on Oligarch Score)`;
-            badge.style.cursor = 'pointer';
-
-            // Add click handler for modal/tooltip
-            badge.addEventListener('click', () => {
-                alert(`${legacy.icon} ${legacy.name}\n\n${explanation}\n\nEffect on Oligarch Score: ${weight > 0 ? '+' : ''}${weight}%`);
-            });
-
-            this.legacyContainer.appendChild(badge);
-        });
-    }
-
-    updateDebugInfo() {
-        // Update version and summary
-        this.debugVersion.textContent = GAME_VERSION;
-        this.debugSummary.textContent = VERSION_SUMMARY;
-        this.debugTotalEvents.textContent = TOTAL_EVENTS;
-
-        // Count active events (events in the active pool that are eligible)
-        const activeEventIds = this.state.activeEventPool;
-        this.debugActiveEvents.textContent = activeEventIds.length;
-
-        // Update active events list
-        this.debugEventsList.innerHTML = '';
-
-        if (activeEventIds.length === 0) {
-            this.debugEventsList.innerHTML = '<div style="color: #888; font-style: italic;">No active events in pool</div>';
-        } else {
-            activeEventIds.forEach(eventId => {
-                const event = EVENTS.find(e => e.id === eventId);
-                if (event) {
-                    const eventItem = document.createElement('div');
-                    eventItem.className = 'debug-event-item';
-
-                    const eligible = this.isEventEligible(event);
-                    const eligibleText = eligible ? '✓' : '✗';
-                    const eligibleColor = eligible ? '#00ff00' : '#ff6b6b';
-
-                    eventItem.innerHTML = `
-                        <span class="debug-event-id" style="color: ${eligibleColor};">${eligibleText} ${event.id}</span>
-                        <span class="debug-event-title">${event.title}</span>
-                    `;
-
-                    this.debugEventsList.appendChild(eventItem);
-                }
-            });
-        }
-    }
-
-    initializeEventPool() {
-        // Start with a SMALL pool of 3-4 events for more focused storytelling
-        const initialPool = EVENTS.filter(event => {
-            // Include basic events (no storyline tag) or storyline initiators
-            return !event.conditions ||
-                   ((!event.conditions.hasTriggered || event.conditions.hasTriggered.length === 0) &&
-                    !event.conditions.personalWealth &&
-                    !event.conditions.year);
-        }).map(e => e.id);
-
-        // Take only first 3-4 events - much smaller pool for less repetition
-        this.state.activeEventPool = initialPool.slice(0, 4);
-
-        // Always ensure "quiet_quarter" is available as a fallback
-        if (!this.state.activeEventPool.includes("quiet_quarter")) {
-            this.state.activeEventPool.push("quiet_quarter");
-        }
-    }
-
-    addToEventPool(eventIds) {
-        if (!Array.isArray(eventIds)) {
-            eventIds = [eventIds];
-        }
-
-        eventIds.forEach(eventId => {
-            // Check if it's a storyline pattern like "*storyline:name"
-            if (eventId.startsWith('*storyline:')) {
-                const storylineName = eventId.substring(11);
-                const storylineEvents = EVENTS
-                    .filter(e => e.storyline === storylineName)
-                    .map(e => e.id);
-                storylineEvents.forEach(id => {
-                    if (!this.state.activeEventPool.includes(id)) {
-                        this.state.activeEventPool.push(id);
-                    }
-                });
-            } else {
-                // Regular event ID
-                if (!this.state.activeEventPool.includes(eventId)) {
-                    this.state.activeEventPool.push(eventId);
-                }
-            }
-        });
-    }
-
-    removeFromEventPool(eventIds) {
-        if (!Array.isArray(eventIds)) {
-            eventIds = [eventIds];
-        }
-
-        eventIds.forEach(eventId => {
-            // Check if it's a storyline pattern
-            if (eventId.startsWith('*storyline:')) {
-                const storylineName = eventId.substring(11);
-                this.state.activeEventPool = this.state.activeEventPool.filter(id => {
-                    const event = EVENTS.find(e => e.id === id);
-                    return !event || event.storyline !== storylineName;
-                });
-            } else {
-                // Regular event ID
-                this.state.activeEventPool = this.state.activeEventPool.filter(id => id !== eventId);
-            }
-        });
-    }
-
-    trackDecision(eventId, choiceIndex) {
-        // Create a unique key for this decision
-        const decisionKey = `${eventId}_choice_${choiceIndex}`;
-
-        if (!this.state.decisionCounts[decisionKey]) {
-            this.state.decisionCounts[decisionKey] = 0;
-        }
-
-        this.state.decisionCounts[decisionKey]++;
-
-        // Return the count for conditional logic
-        return this.state.decisionCounts[decisionKey];
-    }
-
-    checkDecisionThresholds(eventId, choiceIndex) {
-        // Check if decision tracking triggers new events
-        const event = EVENTS.find(e => e.id === eventId);
-        if (!event || !event.choices || !event.choices[choiceIndex]) {
-            return;
-        }
-
-        const choice = event.choices[choiceIndex];
-        if (choice.decisionThreshold) {
-            const decisionKey = `${eventId}_choice_${choiceIndex}`;
-            const count = this.state.decisionCounts[decisionKey] || 0;
-
-            if (count >= choice.decisionThreshold.count) {
-                // Trigger the threshold events
-                if (choice.decisionThreshold.addToPool) {
-                    this.addToEventPool(choice.decisionThreshold.addToPool);
-                }
-                if (choice.decisionThreshold.removeFromPool) {
-                    this.removeFromEventPool(choice.decisionThreshold.removeFromPool);
-                }
-            }
-        }
-    }
-
-    nextTurn() {
-        // Check game over conditions
-        if (this.checkGameOver()) {
-            return;
-        }
-
-        // Select and display next event
-        const event = this.selectEvent();
+        
+        // Draw initial event
+        const event = this.engine.drawNextEvent();
         if (event) {
-            this.displayEvent(event);
+            this.ui.displayEvent(event);
         } else {
-            // Fallback generic event if no events are available
-            this.displayFallbackEvent();
+            this.ui.displayFallbackEvent();
         }
-
-        // Advance time
-        this.state.quarter++;
-        if (this.state.quarter > 4) {
-            this.state.quarter = 1;
-            this.state.year++;
+        
+        this.ui.updateDisplay();
+        
+        // Update graph
+        if (this.debugGraph) {
+            this.debugGraph.update();
         }
-    }
-
-    isEventEligible(event) {
-        // Skip if already completed and onceOnly
-        if (event.onceOnly && this.state.completedEvents.has(event.id)) {
-            return false;
-        }
-
-        // Check conditions
-        if (event.conditions) {
-            // Check metric conditions
-            if (event.conditions.personalWealth !== undefined &&
-                this.state.personalWealth < event.conditions.personalWealth) {
-                return false;
-            }
-            if (event.conditions.treasury !== undefined &&
-                this.state.treasury < event.conditions.treasury) {
-                return false;
-            }
-            if (event.conditions.elite !== undefined &&
-                this.state.elite < event.conditions.elite) {
-                return false;
-            }
-            if (event.conditions.anger !== undefined &&
-                this.state.anger < event.conditions.anger) {
-                return false;
-            }
-            if (event.conditions.year !== undefined &&
-                this.state.year < event.conditions.year) {
-                return false;
-            }
-
-            // Check if required events have been triggered
-            if (event.conditions.hasTriggered) {
-                const hasAll = event.conditions.hasTriggered.some(eventId =>
-                    this.state.triggeredEvents.has(eventId)
-                );
-                if (!hasAll) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    selectEvent() {
-        // Filter to events in active pool first
-        const poolEvents = EVENTS.filter(event =>
-            this.state.activeEventPool.includes(event.id)
-        );
-
-        // Then filter by eligibility using the helper method
-        const eligibleEvents = poolEvents.filter(event => this.isEventEligible(event));
-
-        if (eligibleEvents.length === 0) {
-            return null;
-        }
-
-        // Calculate weights with modifiers
-        const weightedEvents = eligibleEvents.map(event => {
-            let weight = event.weight || 1;
-            if (this.state.eventWeightModifiers[event.id]) {
-                weight *= this.state.eventWeightModifiers[event.id];
-            }
-            return { event, weight };
-        });
-
-        // Select random event based on weights
-        const totalWeight = weightedEvents.reduce((sum, item) => sum + item.weight, 0);
-        let random = Math.random() * totalWeight;
-
-        for (const item of weightedEvents) {
-            random -= item.weight;
-            if (random <= 0) {
-                return item.event;
-            }
-        }
-
-        return weightedEvents[0].event;
-    }
-
-    formatEffects(effects) {
-        if (!effects) return '';
-
-        const effectStrings = [];
-        const effectIcons = {
-            personalWealth: '💰',
-            treasury: '🏛️',
-            elite: '👔',
-            anger: '😤'
-        };
-
-        for (const [key, value] of Object.entries(effects)) {
-            if (value !== 0 && effectIcons[key]) {
-                // Determine magnitude indicator
-                let indicator = '';
-                const absValue = Math.abs(value);
-                const direction = value > 0 ? '↑' : '↓';
-
-                if (absValue <= 10) {
-                    indicator = direction;
-                } else if (absValue <= 20) {
-                    indicator = direction + direction;
-                } else {
-                    indicator = direction + direction + direction;
-                }
-
-                const color = value > 0 ? '#2ecc71' : '#e74c3c';
-                effectStrings.push(`<span style="color: ${color};">${effectIcons[key]} ${indicator}</span>`);
-            }
-        }
-
-        return effectStrings.length > 0 ? `<div class="choice-effects">${effectStrings.join(' ')}</div>` : '';
-    }
-
-    displayEvent(event) {
-        this.currentEvent = event;
-
-        // Add storyline tag if present
-        if (event.storyline) {
-            const storylineTag = this.formatStorylineTag(event.storyline);
-            this.eventTitle.innerHTML = `${storylineTag} ${event.title}`;
-        } else {
-            this.eventTitle.textContent = event.title;
-        }
-
-        this.eventDescription.textContent = event.description;
-
-        // Clear and populate choices
-        this.choicesContainer.innerHTML = '';
-        event.choices.forEach((choice, index) => {
-            const button = document.createElement('button');
-            button.className = 'choice-btn';
-
-            // Create choice text with effects preview
-            const effectsHTML = this.formatEffects(choice.effects);
-            button.innerHTML = `
-                <div class="choice-text">${choice.text}</div>
-                ${effectsHTML}
-            `;
-
-            button.addEventListener('click', () => this.makeChoice(choice, event.id, index));
-            this.choicesContainer.appendChild(button);
-        });
-    }
-
-    formatStorylineTag(storyline) {
-        // Create a small colored tag to indicate storyline
-        const tagNames = {
-            'war_military': '⚔️ War',
-            'energy_politics': '⚡ Energy',
-            'oligarch_intrigue': '👑 Intrigue',
-            'sanctions': '🚫 Sanctions'
-        };
-
-        const tagName = tagNames[storyline] || storyline;
-        return `<span style="display: inline-block; background: rgba(212, 175, 55, 0.3); color: #d4af37; padding: 2px 8px; border-radius: 4px; font-size: 0.75em; margin-right: 8px; font-weight: normal;">${tagName}</span>`;
-    }
-
-    displayFallbackEvent() {
-        // Generic event when no specific events match
-        this.currentEvent = null;
-        this.eventTitle.textContent = "A Quiet Quarter";
-        this.eventDescription.textContent = "Nothing particularly dramatic happens this quarter. Your administration continues its usual... operations.";
-
-        this.choicesContainer.innerHTML = '';
-        const button = document.createElement('button');
-        button.className = 'choice-btn';
-        button.textContent = "Continue business as usual";
-        button.addEventListener('click', () => {
-            this.applyEffects({ personalWealth: 1, treasury: -10, elite: 0, anger: 5 });
-            this.updateUI();
-            this.nextTurn();
-        });
-        this.choicesContainer.appendChild(button);
-    }
-
-    makeChoice(choice, eventId, choiceIndex) {
-        // Apply effects
-        this.applyEffects(choice.effects);
-
-        // Add legacy if present
-        if (choice.legacy) {
-            this.state.legacy.push(choice.legacy);
-        }
-
-        // Trigger new events (legacy system)
-        if (choice.eventTriggers) {
-            choice.eventTriggers.forEach(triggerId => {
-                this.state.triggeredEvents.add(triggerId);
-            });
-        }
-
-        // Pool management - add events
-        if (choice.addToPool) {
-            this.addToEventPool(choice.addToPool);
-        }
-
-        // Pool management - remove events
-        if (choice.removeFromPool) {
-            this.removeFromEventPool(choice.removeFromPool);
-        }
-
-        // Track decision for recurring events
-        const event = EVENTS.find(e => e.id === eventId);
-        if (event && !event.onceOnly) {
-            this.trackDecision(eventId, choiceIndex);
-            this.checkDecisionThresholds(eventId, choiceIndex);
-        }
-
-        // Mark event as completed and triggered (for hasTriggered conditions)
-        this.state.completedEvents.add(eventId);
-        this.state.triggeredEvents.add(eventId);
-        if (event && event.onceOnly) {
-            this.removeFromEventPool(eventId);
-        }
-
-        // Handle storyline activation/completion
-        if (event && event.storyline) {
-            if (!this.state.activeStorylines.includes(event.storyline)) {
-                this.state.activeStorylines.push(event.storyline);
-            }
-
-            // Check if this completes the storyline
-            if (choice.completeStoryline) {
-                this.state.completedStorylines.push(event.storyline);
-                this.state.activeStorylines = this.state.activeStorylines.filter(
-                    s => s !== event.storyline
-                );
-                // Remove all remaining events from this storyline
-                this.removeFromEventPool(`*storyline:${event.storyline}`);
-            }
-        }
-
-        // Update UI
-        this.updateUI();
-
-        // Small delay before next turn for better UX
-        setTimeout(() => {
-            this.nextTurn();
-        }, 500);
-    }
-
-    applyEffects(effects) {
-        if (effects.personalWealth) {
-            this.state.personalWealth += effects.personalWealth;
-        }
-        if (effects.treasury) {
-            this.state.treasury += effects.treasury;
-        }
-        if (effects.elite) {
-            this.state.elite += effects.elite;
-        }
-        if (effects.anger) {
-            this.state.anger += effects.anger;
-        }
-
-        // Clamp values to appropriate ranges
-        this.state.personalWealth = Math.max(0, Math.min(this.maxPersonalWealth, this.state.personalWealth));
-        this.state.treasury = Math.max(0, Math.min(this.maxTreasury, this.state.treasury));
-        this.state.elite = Math.max(0, Math.min(100, this.state.elite));
-        this.state.anger = Math.max(0, Math.min(100, this.state.anger));
-    }
-
-    checkGameOver() {
-        let gameOverReason = null;
-
-        if (this.state.elite <= 0) {
-            gameOverReason = "🗡️ The Elite Have Turned Against You\n\nYour fellow oligarchs and generals have lost all confidence. A palace coup is inevitable. You flee to a non-extradition country with whatever wealth you could grab.";
-        } else if (this.state.anger >= 100) {
-            gameOverReason = "🔥 Revolution!\n\nThe people have had enough. Millions flood the streets. The military refuses to fire. Your regime crumbles as you desperately search for a helicopter.";
-        } else if (this.state.treasury <= 0) {
-            gameOverReason = "💸 State Bankruptcy\n\nThe treasury is empty. Government employees aren't paid. Services collapse. The elite abandon you. The state implodes as rival factions fight over the scraps.";
-        }
-
-        if (gameOverReason) {
-            this.gameOver(gameOverReason);
-            return true;
-        }
-
-        return false;
-    }
-
-    gameOver(reason) {
-        this.isGameOver = true;
-        this.gameScreen.classList.remove('active');
-        this.gameoverScreen.classList.add('active');
-
-        this.gameoverReason.textContent = reason;
-
-        // Display final stats
-        this.finalStats.innerHTML = `
-            <h3 style="color: #d4af37; margin-bottom: 15px;">Final Statistics</h3>
-            <div class="stat-line">
-                <span>💰 Personal Wealth:</span>
-                <span style="color: #d4af37; font-weight: bold;">$${Math.round(this.state.personalWealth)}B</span>
-            </div>
-            <div class="stat-line">
-                <span>🏛️ State Treasury:</span>
-                <span style="color: #3498db; font-weight: bold;">$${Math.round(this.state.treasury)}B</span>
-            </div>
-            <div class="stat-line">
-                <span>👔 Elite Approval:</span>
-                <span style="color: #9b59b6; font-weight: bold;">${Math.round(this.state.elite)}%</span>
-            </div>
-            <div class="stat-line">
-                <span>😤 Public Anger:</span>
-                <span style="color: #e74c3c; font-weight: bold;">${Math.round(this.state.anger)}%</span>
-            </div>
-            <div class="stat-line">
-                <span>📅 Time in Power:</span>
-                <span style="color: #e8e8e8; font-weight: bold;">${this.state.year} years, ${this.state.quarter - 1} quarters</span>
-            </div>
-        `;
-
-        // Display legacy achievements
-        if (this.state.legacy.length > 0) {
-            const legacyHTML = this.state.legacy.map(legacy =>
-                `<div class="legacy-badge" style="margin: 5px;">${legacy.icon} ${legacy.name}</div>`
-            ).join('');
-            this.finalLegacy.innerHTML = `
-                <h3 style="color: #d4af37; margin-bottom: 15px;">Your Legacy</h3>
-                <div style="display: flex; flex-wrap: wrap; justify-content: center;">
-                    ${legacyHTML}
-                </div>
-            `;
-        } else {
-            this.finalLegacy.innerHTML = `
-                <h3 style="color: #d4af37; margin-bottom: 15px;">Your Legacy</h3>
-                <p style="color: #b8b8b8; font-style: italic;">You left no particular mark on history...</p>
-            `;
-        }
-
-        // Calculate weighted legacy score
-        const legacyMultiplier = this.state.legacy.reduce((sum, legacy) => {
-            return sum + (legacy.weight || 5); // Default weight of 5 if not specified
-        }, 0);
-
-        // Calculate and display score
-        const score = Math.round(this.state.personalWealth *
-                                 (this.state.year + this.state.quarter / 4) *
-                                 (1 + legacyMultiplier / 100));
-
-        const scoreElement = document.createElement('div');
-        scoreElement.style.cssText = 'margin-top: 20px; padding: 20px; background: rgba(212, 175, 55, 0.2); border-radius: 8px;';
-        scoreElement.innerHTML = `
-            <h3 style="color: #d4af37;">Oligarch Score: ${score}</h3>
-            <p style="color: #b8b8b8; margin-top: 10px; font-size: 0.9em;">
-                (Wealth × Time × Legacy Multiplier)
-            </p>
-            <p style="color: #b8b8b8; margin-top: 5px; font-size: 0.85em;">
-                Legacy Impact: ${legacyMultiplier > 0 ? '+' : ''}${legacyMultiplier}%
-            </p>
-        `;
-        this.finalStats.appendChild(scoreElement);
     }
 }
 

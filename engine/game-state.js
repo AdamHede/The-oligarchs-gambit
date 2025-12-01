@@ -71,7 +71,7 @@ function getDefaultStatBounds() {
     };
 }
 
-module.exports = {
+export {
     createInitialState,
     addHistoryEntry,
     advanceTime,

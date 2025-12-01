@@ -2,9 +2,9 @@
  * Effect Applier Tests
  */
 
-const { test } = require('node:test');
-const assert = require('node:assert');
-const { applyEffects, applyAutoCounters } = require('../engine/effect-applier');
+import { test } from 'node:test';
+import assert from 'node:assert';
+import { applyEffects, applyAutoCounters } from '../engine/effect-applier.js';
 
 test('Stat changes - positive', () => {
     const state = {

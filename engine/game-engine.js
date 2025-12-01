@@ -4,10 +4,10 @@
  * Wires together all components: state, deck, conditions, effects
  */
 
-const { createInitialState, addHistoryEntry, advanceTime, getDefaultStatBounds } = require('./game-state');
-const { isEventEligible } = require('./condition-eval');
-const { drawEvent, processChoiceDeckOperations } = require('./deck-manager');
-const { applyEffects, applyAutoCounters } = require('./effect-applier');
+import { createInitialState, addHistoryEntry, advanceTime, getDefaultStatBounds } from './game-state.js';
+import { isEventEligible } from './condition-eval.js';
+import { drawEvent, processChoiceDeckOperations } from './deck-manager.js';
+import { applyEffects, applyAutoCounters } from './effect-applier.js';
 
 class GameEngineV2 {
     /**
@@ -101,7 +101,8 @@ class GameEngineV2 {
             eventTitle: event.title,
             choice: choiceIndex,
             choiceText: choice.text,
-            effects: choice.effects || {}
+            effects: choice.effects || {},
+            legacy: legacy || null
         });
 
         // Advance time
@@ -174,5 +175,5 @@ class GameEngineV2 {
     }
 }
 
-module.exports = GameEngineV2;
+export { GameEngineV2 };
 

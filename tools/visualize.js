@@ -6,9 +6,11 @@
  * Generates visual graph representation of event relationships
  */
 
-const fs = require('fs');
-const { loadAllEvents } = require('./validate');
-const { buildEventGraph } = require('./analyze');
+import fs from 'fs';
+import { loadAllEvents } from './validate.js';
+import { buildEventGraph } from './analyze.js';
+import { fileURLToPath } from 'url';
+import { resolve } from 'path';
 
 /**
  * Generates Mermaid diagram syntax
@@ -136,8 +138,11 @@ function main() {
     console.log('   Open in a web browser to view the graph.\n');
 }
 
-if (require.main === module) {
+// Check if running directly (not imported)
+const __filename = fileURLToPath(import.meta.url);
+const isMainModule = process.argv[1] && resolve(__filename) === resolve(process.argv[1]);
+if (isMainModule) {
     main();
 }
 
-module.exports = { generateMermaidDiagram, generateHTMLVisualization };
+export { generateMermaidDiagram, generateHTMLVisualization };

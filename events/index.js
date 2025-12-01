@@ -5,23 +5,30 @@
  * When creating new events, import them here.
  */
 
-// Example events (for reference and testing)
-const EXAMPLE_EVENTS = require('./example');
+// Import all event files
+import { WAR_EVENTS } from './events_war_military.js';
+import { ENERGY_EVENTS } from './events_energy_pipeline.js';
+import { SANCTIONS_EVENTS } from './events_sanctions_international.js';
+import { SUCCESSION_EVENTS } from './events_succession_power.js';
+import { SOCIAL_EVENTS } from './events_social_movements.js';
+import { DOMESTIC_EVENTS } from './events_domestic_crisis.js';
+import { MISC_EVENTS } from './events_misc.js';
 
-// TODO: Import actual event files as they are created
-// const WAR_INVASION_EVENTS = require('./war-invasion');
-// const OLIGARCH_RIVALRY_EVENTS = require('./oligarch-rivalry');
-// etc.
+// Example events (for reference and testing)
+import { EXAMPLE_EVENTS } from './example.js';
 
 /**
  * All events in the game
  */
 const ALL_EVENTS = [
-    ...EXAMPLE_EVENTS,
-    // ...WAR_INVASION_EVENTS,
-    // ...OLIGARCH_RIVALRY_EVENTS,
-    // Add more as they are created
+    ...WAR_EVENTS,
+    ...ENERGY_EVENTS,
+    ...SANCTIONS_EVENTS,
+    ...SUCCESSION_EVENTS,
+    ...SOCIAL_EVENTS,
+    ...DOMESTIC_EVENTS,
+    ...MISC_EVENTS,
+    // ...EXAMPLE_EVENTS // Optional: exclude examples in production
 ];
 
-module.exports = ALL_EVENTS;
-
+export default ALL_EVENTS;

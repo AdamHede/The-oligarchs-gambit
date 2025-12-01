@@ -6,16 +6,17 @@
  * Validates all events against schema and checks for common issues
  */
 
-const path = require('path');
-const { validateAllEvents } = require('../events/schema');
+import { validateAllEvents } from '../events/schema.js';
+import ALL_EVENTS from '../events/index.js';
+import { fileURLToPath } from 'url';
+import { resolve } from 'path';
 
 /**
  * Loads all events from the events index
  */
 function loadAllEvents() {
     try {
-        const events = require('../events/index');
-        return events;
+        return ALL_EVENTS;
     } catch (error) {
         console.error('Error loading events:', error.message);
         return [];
@@ -73,8 +74,11 @@ function main() {
     }
 }
 
-if (require.main === module) {
+// Check if running directly (not imported)
+const __filename = fileURLToPath(import.meta.url);
+const isMainModule = process.argv[1] && resolve(__filename) === resolve(process.argv[1]);
+if (isMainModule) {
     main();
 }
 
-module.exports = { loadAllEvents };
+export { loadAllEvents };

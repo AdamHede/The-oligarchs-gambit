@@ -132,7 +132,7 @@ function processChoiceDeckOperations(choice, eventId, isRecurring, currentDeck) 
     return newDeck;
 }
 
-module.exports = {
+export {
     addToDeck,
     removeFromDeck,
     drawEvent,
