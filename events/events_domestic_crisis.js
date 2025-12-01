@@ -10,11 +10,11 @@ export const DOMESTIC_EVENTS = [
                 {
                     text: "Price controls",
                     effects: {
-                        treasury: -10,
+                        treasury: -50, // Increased cost from -10
                         anger: -5, // Short term relief
                         elite: -5 // Business owners mad
                     },
-                    addToPool: ["shortages_black_market"]
+                    addToPool: ["shortages_black_market", "pension_crisis"]
                 },
                 {
                     text: "Blame foreign saboteurs",
@@ -38,8 +38,10 @@ export const DOMESTIC_EVENTS = [
                     text: "Fly there and yell at the Governor",
                     effects: {
                         anger: -5, // "The Tsar is good"
-                        elite: -5 // "The Boyars are bad"
+                        elite: -5, // "The Boyars are bad"
+                        treasury: -60 // Emergency repairs are expensive
                     },
+                    addToPool: ["infrastructure_decay"],
                     legacy: { icon: "📢", name: "The Micro-Manager", weight: 2 }
                 },
                 {
@@ -63,7 +65,8 @@ export const DOMESTIC_EVENTS = [
                     text: "Crack down on the black market",
                     effects: {
                         anger: 10,
-                        elite: -3
+                        elite: -3,
+                        treasury: -10 // Policing costs
                     },
                     removeFromPool: ["shortages_black_market"]
                 },
@@ -71,9 +74,63 @@ export const DOMESTIC_EVENTS = [
                     text: "Turn a blind eye",
                     effects: {
                         anger: -3,
-                        treasury: -5
+                        treasury: -15 // Lost tax revenue
                     },
                     removeFromPool: ["shortages_black_market"]
+                }
+            ]
+        },
+        {
+            id: "pension_crisis",
+            title: "The Pension Fund is Empty",
+            description: "Decades of mismanagement and recent emergency spending have drained the pension fund. The elderly are starting to gather in city squares.",
+            weight: 0,
+            storyline: "domestic-crisis",
+            rarity: "common",
+            choices: [
+                {
+                    text: "Print money to pay them",
+                    effects: {
+                        treasury: -20,
+                        anger: -5,
+                        elite: -5 // Inflation fears
+                    },
+                    addToPool: ["inflation_crisis"] // Loop back to inflation
+                },
+                {
+                    text: "Raise retirement age",
+                    effects: {
+                        anger: 15,
+                        treasury: 30, // Savings
+                        elite: 5 // Fiscal responsibility
+                    }
+                }
+            ]
+        },
+        {
+            id: "infrastructure_decay",
+            title: "Rust and Ruin",
+            description: "The heating pipe burst was just a symptom. Bridges are crumbling, dams are leaking, and the power grid is failing across the country.",
+            weight: 0,
+            storyline: "domestic-crisis",
+            rarity: "common",
+            choices: [
+                {
+                    text: "Massive modernization program",
+                    effects: {
+                        treasury: -100,
+                        elite: 10, // Contracts for friends
+                        anger: -5
+                    },
+                    removeFromPool: ["infrastructure_decay"]
+                },
+                {
+                    text: "Patch it up cheaply",
+                    effects: {
+                        treasury: -20,
+                        anger: 5
+                    },
+                    addToPool: ["infrastructure_decay"]
                 }
             ]
         },
@@ -104,4 +161,3 @@ export const DOMESTIC_EVENTS = [
             ]
         }
 ];
-
