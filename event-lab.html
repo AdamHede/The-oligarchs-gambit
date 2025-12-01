@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Lab - The Oligarch's Gambit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e8e8e8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lab-header {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .lab-header h1 {
+            color: #d4af37;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .lab-header p {
+            color: #b8b8b8;
+            font-style: italic;
+        }
+
+        .lab-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .graph-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        #event-graph {
+            flex: 1;
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            min-height: 0;
+        }
+
+        .graph-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            color: #e8e8e8;
+        }
+
+        .legend-color {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 2px solid;
+        }
+
+        .legend-color.eligible {
+            background-color: #d4af37;
+            border-color: #f4d03f;
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+        }
+
+        .legend-color.in-deck {
+            background-color: #aa8c2c;
+            border-color: #d4af37;
+        }
+
+        .legend-color.current {
+            background-color: #e74c3c;
+            border-color: #c0392b;
+        }
+
+        .legend-color.completed {
+            background-color: #444;
+            border-color: #666;
+            opacity: 0.4;
+        }
+
+        .legend-color.not-in-deck {
+            background-color: #2a2a2a;
+            border-color: #555;
+            opacity: 0.2;
+        }
+
+        .graph-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .graph-btn {
+            padding: 10px 20px;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid #d4af37;
+            border-radius: 6px;
+            color: #d4af37;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .graph-btn:hover {
+            background: rgba(212, 175, 55, 0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(212, 175, 55, 0.3);
+        }
+
+        .graph-btn:active {
+            transform: translateY(0);
+        }
+
+        .lab-info {
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            color: #b8b8b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="lab-header">
+        <h1>Event Lab - The Oligarch's Gambit</h1>
+        <p>Interactive visualization of the event universe</p>
+    </div>
+
+    <div class="lab-content">
+        <div class="lab-info">
+            <p><strong>Note:</strong> This lab shows the complete event graph. For real-time game state tracking, use the debug section in the main game.</p>
+        </div>
+
+        <div class="graph-container">
+            <div class="graph-legend">
+                <div class="legend-item">
+                    <span class="legend-color eligible"></span>
+                    <span>Eligible (can be drawn)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color in-deck"></span>
+                    <span>In Deck (not yet eligible)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color current"></span>
+                    <span>Current Event</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color completed"></span>
+                    <span>Completed</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color not-in-deck"></span>
+                    <span>Not in Deck</span>
+                </div>
+            </div>
+
+            <div id="event-graph"></div>
+
+            <div class="graph-controls">
+                <button id="graph-fit" class="graph-btn">Fit View</button>
+                <button id="graph-center-active" class="graph-btn">Center on Active</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cytoscape.js for graph visualization -->
+    <script src="https://unpkg.com/cytoscape@3/dist/cytoscape.min.js"></script>
+    
+    <!-- Main Lab Script -->
+    <script type="module">
+        import { GameEngineV2 } from './engine/game-engine.js';
+        import { DebugGraph } from './debug-graph.js';
+        import ALL_EVENTS from './events/index.js';
+
+        // Convert events format if needed (same as game.js)
+        function convertEvents(events) {
+            return events.map(event => {
+                const converted = { ...event };
+                
+                if (converted.choices) {
+                    converted.choices = converted.choices.map(choice => {
+                        const newChoice = { ...choice };
+                        
+                        if (newChoice.effects) {
+                            if (newChoice.effects.stats || newChoice.effects.counters || newChoice.effects.flags) {
+                                return newChoice;
+                            }
+                            
+                            const stats = {};
+                            const counters = {};
+                            const flags = {};
+                            let legacy = null;
+                            
+                            for (const [key, value] of Object.entries(newChoice.effects)) {
+                                if (key === 'legacy') {
+                                    legacy = value;
+                                } else if (typeof value === 'boolean') {
+                                    flags[key] = value;
+                                } else if (typeof value === 'number') {
+                                    if (['personalWealth', 'treasury', 'elite', 'anger'].includes(key)) {
+                                        stats[key] = value;
+                                    } else {
+                                        counters[key] = value;
+                                    }
+                                }
+                            }
+                            
+                            newChoice.effects = {};
+                            if (Object.keys(stats).length > 0) newChoice.effects.stats = stats;
+                            if (Object.keys(counters).length > 0) newChoice.effects.counters = counters;
+                            if (Object.keys(flags).length > 0) newChoice.effects.flags = flags;
+                            if (legacy) newChoice.effects.legacy = legacy;
+                        }
+                        
+                        if (newChoice.addToPool) {
+                            newChoice.add = newChoice.addToPool;
+                            delete newChoice.addToPool;
+                        }
+                        if (newChoice.removeFromPool) {
+                            newChoice.remove = newChoice.removeFromPool;
+                            delete newChoice.removeFromPool;
+                        }
+                        
+                        return newChoice;
+                    });
+                }
+                
+                if (converted.storyline && !converted.storylines) {
+                    converted.storylines = [converted.storyline];
+                    delete converted.storyline;
+                }
+                
+                if (converted.conditions) {
+                    const newConditions = {};
+                    
+                    if (converted.conditions.personalWealth !== undefined ||
+                        converted.conditions.treasury !== undefined ||
+                        converted.conditions.elite !== undefined ||
+                        converted.conditions.anger !== undefined) {
+                        newConditions.stats = {};
+                        if (converted.conditions.personalWealth !== undefined) {
+                            newConditions.stats.personalWealth = { gte: converted.conditions.personalWealth };
+                        }
+                        if (converted.conditions.treasury !== undefined) {
+                            newConditions.stats.treasury = { gte: converted.conditions.treasury };
+                        }
+                        if (converted.conditions.elite !== undefined) {
+                            newConditions.stats.elite = { gte: converted.conditions.elite };
+                        }
+                        if (converted.conditions.anger !== undefined) {
+                            newConditions.stats.anger = { gte: converted.conditions.anger };
+                        }
+                    }
+                    
+                    if (Object.keys(newConditions).length > 0) {
+                        converted.conditions = newConditions;
+                    } else if (Object.keys(converted.conditions).length === 0) {
+                        delete converted.conditions;
+                    }
+                }
+                
+                return converted;
+            });
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const allEvents = convertEvents(ALL_EVENTS);
+                const engine = new GameEngineV2(allEvents);
+                const debugGraph = new DebugGraph('event-graph', engine, allEvents);
+                
+                // Attach graph control buttons
+                const fitBtn = document.getElementById('graph-fit');
+                const centerBtn = document.getElementById('graph-center-active');
+                
+                if (fitBtn) {
+                    fitBtn.addEventListener('click', () => {
+                        debugGraph.fitView();
+                    });
+                }
+                
+                if (centerBtn) {
+                    centerBtn.addEventListener('click', () => {
+                        debugGraph.centerOnActive();
+                    });
+                }
+            } catch (error) {
+                console.error('Failed to initialize event lab:', error);
+                document.getElementById('event-graph').innerHTML = 
+                    '<div style="padding: 20px; text-align: center; color: #e74c3c;">Error loading graph: ' + error.message + '</div>';
+            }
+        });
+    </script>
+</body>
+</html>
+
