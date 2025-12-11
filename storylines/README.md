@@ -17,6 +17,20 @@ When creating a new storyline:
 4. Reference event IDs that will implement this storyline
 5. Note overlaps with other storylines
 
+## Designing for the Event Pool
+
+Our event system is unique: events are drawn from a shared pool, meaning multiple storylines happen in parallel. When designing your storyline, use these patterns to create depth:
+
+### Pattern 1: Parallel Consequences
+One decision triggers multiple events that *all* happen eventually, but in random order.
+*   **Example**: Execution of a prisoner adds `international_outrage` AND `domestic_fear`.
+*   **Use for**: Ripple effects, complex fallout.
+
+### Pattern 2: Competing Outcomes
+One decision triggers multiple events, but only *one* happens (the first one drawn removes the others).
+*   **Example**: Risky operation adds `operation_success` AND `operation_failure`.
+*   **Use for**: Risk, uncertainty, "rolling the dice".
+
 ## Storyline Markdown Template
 
 ```markdown

@@ -1,163 +1,194 @@
 export const DOMESTIC_EVENTS = [
-        {
-            id: "inflation_crisis",
-            title: "The Price of Eggs",
-            description: "Inflation has hit 20%. The price of eggs has tripled. Grandmothers are fighting in supermarkets.",
-            weight: 8,
-            storyline: "domestic-crisis",
-            rarity: "common",
-            choices: [
-                {
-                    text: "Price controls",
-                    effects: {
-                        treasury: -50, // Increased cost from -10
-                        anger: -5, // Short term relief
-                        elite: -5 // Business owners mad
-                    },
-                    addToPool: ["shortages_black_market", "pension_crisis"]
-                },
-                {
-                    text: "Blame foreign saboteurs",
-                    effects: {
-                        anger: 5,
-                        elite: 0
-                    },
-                    addToPool: ["tv_propaganda_blame"]
-                }
-            ]
+    {
+        id: "inflation_crisis",
+        title: "The Price of Eggs",
+        description: "Inflation has hit 20%. The price of eggs has tripled. Grandmothers are fighting in supermarkets.",
+        weight: 8,
+        storyline: "domestic-crisis",
+        rarity: "common",
+        meta: {
+            depth: 2,
+            impact: 4,
+            sentiment: "negative"
         },
-        {
-            id: "infrastructure_collapse",
-            title: "Heating Pipe Burst",
-            description: "In -30C weather, the central heating pipes in a major city have burst. 50,000 people are freezing.",
-            weight: 6,
-            storyline: "domestic-crisis",
-            rarity: "rare",
-            choices: [
-                {
-                    text: "Fly there and yell at the Governor",
-                    effects: {
-                        anger: -5, // "The Tsar is good"
-                        elite: -5, // "The Boyars are bad"
-                        treasury: -60 // Emergency repairs are expensive
-                    },
-                    addToPool: ["infrastructure_decay"],
-                    legacy: { icon: "📢", name: "The Micro-Manager", weight: 2 }
+        choices: [
+            {
+                text: "Price controls",
+                effects: {
+                    treasury: -20, // Reduced from -50 (then -30)
+                    anger: -5,
+                    elite: -2
                 },
-                {
-                    text: "Ignore it",
-                    effects: {
-                        anger: 15,
-                        elite: 0
-                    }
-                }
-            ]
+                addToPool: ["shortages_black_market", "pension_crisis"]
+            },
+            {
+                text: "Blame foreign saboteurs",
+                effects: {
+                    anger: 5,
+                    elite: 0
+                },
+                addToPool: ["tv_propaganda_blame"]
+            }
+        ]
+    },
+    {
+        id: "infrastructure_collapse",
+        title: "Heating Pipe Burst",
+        description: "In -30C weather, the central heating pipes in a major city have burst. 50,000 people are freezing.",
+        weight: 6,
+        storyline: "domestic-crisis",
+        rarity: "rare",
+        meta: {
+            depth: 1,
+            impact: 4,
+            sentiment: "negative"
         },
-        {
-            id: "shortages_black_market",
-            title: "The Black Market Boom",
-            description: "Price controls have created shortages. A thriving black market has emerged, selling everything at triple the official price.",
-            weight: 0,
-            storyline: "domestic-crisis",
-            rarity: "common",
-            choices: [
-                {
-                    text: "Crack down on the black market",
-                    effects: {
-                        anger: 10,
-                        elite: -3,
-                        treasury: -10 // Policing costs
-                    },
-                    removeFromPool: ["shortages_black_market"]
+        choices: [
+            {
+                text: "Fly there and yell at the Governor",
+                effects: {
+                    anger: -5, // "The Tsar is good"
+                    elite: -5, // "The Boyars are bad"
+                    treasury: -60 // Emergency repairs are expensive
                 },
-                {
-                    text: "Turn a blind eye",
-                    effects: {
-                        anger: -3,
-                        treasury: -15 // Lost tax revenue
-                    },
-                    removeFromPool: ["shortages_black_market"]
+                addToPool: ["infrastructure_decay"],
+                legacy: { icon: "📢", name: "The Micro-Manager", weight: 2 }
+            },
+            {
+                text: "Ignore it",
+                effects: {
+                    anger: 15,
+                    elite: 0
                 }
-            ]
+            }
+        ]
+    },
+    {
+        id: "shortages_black_market",
+        title: "The Black Market Boom",
+        description: "Price controls have created shortages. A thriving black market has emerged, selling everything at triple the official price.",
+        weight: 0,
+        storyline: "domestic-crisis",
+        rarity: "common",
+        meta: {
+            depth: 3,
+            impact: 2,
+            sentiment: "negative"
         },
-        {
-            id: "pension_crisis",
-            title: "The Pension Fund is Empty",
-            description: "Decades of mismanagement and recent emergency spending have drained the pension fund. The elderly are starting to gather in city squares.",
-            weight: 0,
-            storyline: "domestic-crisis",
-            rarity: "common",
-            choices: [
-                {
-                    text: "Print money to pay them",
-                    effects: {
-                        treasury: -20,
-                        anger: -5,
-                        elite: -5 // Inflation fears
-                    },
-                    addToPool: ["inflation_crisis"] // Loop back to inflation
+        choices: [
+            {
+                text: "Crack down on the black market",
+                effects: {
+                    anger: 10,
+                    elite: -3,
+                    treasury: -10 // Policing costs
                 },
-                {
-                    text: "Raise retirement age",
-                    effects: {
-                        anger: 15,
-                        treasury: 30, // Savings
-                        elite: 5 // Fiscal responsibility
-                    }
-                }
-            ]
+                removeFromPool: ["shortages_black_market"]
+            },
+            {
+                text: "Turn a blind eye",
+                effects: {
+                    anger: -3,
+                    treasury: -15 // Lost tax revenue
+                },
+                removeFromPool: ["shortages_black_market"]
+            }
+        ]
+    },
+    {
+        id: "pension_crisis",
+        title: "The Pension Fund is Empty",
+        description: "Decades of mismanagement and recent emergency spending have drained the pension fund. The elderly are starting to gather in city squares.",
+        weight: 0,
+        storyline: "domestic-crisis",
+        rarity: "common",
+        meta: {
+            depth: 3,
+            impact: 4,
+            sentiment: "negative"
         },
-        {
-            id: "infrastructure_decay",
-            title: "Rust and Ruin",
-            description: "The heating pipe burst was just a symptom. Bridges are crumbling, dams are leaking, and the power grid is failing across the country.",
-            weight: 0,
-            storyline: "domestic-crisis",
-            rarity: "common",
-            choices: [
-                {
-                    text: "Massive modernization program",
-                    effects: {
-                        treasury: -100,
-                        elite: 10, // Contracts for friends
-                        anger: -5
-                    },
-                    removeFromPool: ["infrastructure_decay"]
+        choices: [
+            {
+                text: "Print money to pay them",
+                effects: {
+                    treasury: -10, // Reduced from -20
+                    anger: -5,
+                    elite: -2
                 },
-                {
-                    text: "Patch it up cheaply",
-                    effects: {
-                        treasury: -20,
-                        anger: 5
-                    },
-                    addToPool: ["infrastructure_decay"]
+                // Removed explicit loop back to inflation_crisis to break the death spiral
+                // addToPool: ["inflation_crisis"] 
+            },
+            {
+                text: "Raise retirement age",
+                effects: {
+                    anger: 10, // Reduced from 15
+                    treasury: 40, // Increased from 30
+                    elite: 5
                 }
-            ]
+            }
+        ]
+    },
+    {
+        id: "infrastructure_decay",
+        title: "Rust and Ruin",
+        description: "The heating pipe burst was just a symptom. Bridges are crumbling, dams are leaking, and the power grid is failing across the country.",
+        weight: 0,
+        storyline: "domestic-crisis",
+        rarity: "common",
+        meta: {
+            depth: 2,
+            impact: 5,
+            sentiment: "negative"
         },
-        {
-            id: "tv_propaganda_blame",
-            title: "The Blame Game",
-            description: "State TV is running 24/7 coverage blaming foreign saboteurs for the inflation. The narrative is taking hold.",
-            weight: 0,
-            storyline: "domestic-crisis",
-            rarity: "common",
-            choices: [
-                {
-                    text: "Amplify the blame",
-                    effects: {
-                        anger: -5,
-                        elite: 2
-                    },
-                    removeFromPool: ["tv_propaganda_blame"]
+        choices: [
+            {
+                text: "Massive modernization program",
+                effects: {
+                    treasury: -100,
+                    elite: 10, // Contracts for friends
+                    anger: -5
                 },
-                {
-                    text: "Focus on solutions",
-                    effects: {
-                        anger: -3,
-                        treasury: -15
-                    },
-                    removeFromPool: ["tv_propaganda_blame"]
-                }
-            ]
-        }
+                removeFromPool: ["infrastructure_decay"]
+            },
+            {
+                text: "Patch it up cheaply",
+                effects: {
+                    treasury: -20,
+                    anger: 5
+                },
+                addToPool: ["infrastructure_decay"]
+            }
+        ]
+    },
+    {
+        id: "tv_propaganda_blame",
+        title: "The Blame Game",
+        description: "State TV is running 24/7 coverage blaming foreign saboteurs for the inflation. The narrative is taking hold.",
+        weight: 0,
+        storyline: "domestic-crisis",
+        rarity: "common",
+        meta: {
+            depth: 3,
+            impact: 2,
+            sentiment: "positive"
+        },
+        choices: [
+            {
+                text: "Amplify the blame",
+                effects: {
+                    anger: -5,
+                    elite: 2
+                },
+                removeFromPool: ["tv_propaganda_blame"]
+            },
+            {
+                text: "Focus on solutions",
+                effects: {
+                    anger: -3,
+                    treasury: -15
+                },
+                removeFromPool: ["tv_propaganda_blame"]
+            }
+        ]
+    }
 ];

@@ -12,7 +12,10 @@ import { SANCTIONS_EVENTS } from './events_sanctions_international.js';
 import { SUCCESSION_EVENTS } from './events_succession_power.js';
 import { SOCIAL_EVENTS } from './events_social_movements.js';
 import { DOMESTIC_EVENTS } from './events_domestic_crisis.js';
+import { RELIGIOUS_EVENTS } from './events_religious_revival.js';
+import { SHADOW_WAR_EVENTS } from './events_shadow_war.js';
 import { MISC_EVENTS } from './events_misc.js';
+import { BASIC_RECURRING_EVENTS } from './events_basic_recurring.js';
 
 // Example events (for reference and testing)
 import { EXAMPLE_EVENTS } from './example.js';
@@ -27,7 +30,10 @@ const ALL_EVENTS = [
     ...SUCCESSION_EVENTS,
     ...SOCIAL_EVENTS,
     ...DOMESTIC_EVENTS,
+    ...RELIGIOUS_EVENTS,
+    ...SHADOW_WAR_EVENTS,
     ...MISC_EVENTS,
+    ...BASIC_RECURRING_EVENTS,
     // ...EXAMPLE_EVENTS // Optional: exclude examples in production
 ];
 
