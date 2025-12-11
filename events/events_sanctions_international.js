@@ -20,8 +20,8 @@ export const SANCTIONS_EVENTS = [
                     elite: -5, // International isolation hurts them
                     anger: 5
                 },
-                addToPool: ["import_substitution_failure", "tech_sector_collapse", "sanctions_human_rights"],
-                removeFromPool: ["sanctions_initial_wave"]
+                add: ["import_substitution_failure", "tech_sector_collapse", "sanctions_human_rights"],
+                remove: ["sanctions_initial_wave"]
             },
             {
                 text: "Try to negotiate secretly",
@@ -30,8 +30,8 @@ export const SANCTIONS_EVENTS = [
                     elite: 2, // Business community relieved
                     treasury: -20 // Cost of lobbyists/bribes
                 },
-                addToPool: ["sanctions_loophole_found"],
-                removeFromPool: ["sanctions_initial_wave"]
+                add: ["sanctions_loophole_found"],
+                remove: ["sanctions_initial_wave"]
             }
         ]
     },
@@ -54,14 +54,15 @@ export const SANCTIONS_EVENTS = [
                     anger: 5,
                     elite: 0
                 },
-                addToPool: ["internet_censorship_tightens"]
+                add: ["internet_censorship_tightens"]
             },
             {
                 text: "Ignore it",
                 effects: {
                     elite: -2, // You look silly
                     anger: 2
-                }
+                },
+                legacy: { icon: "🤡", name: "The Laughing Stock", weight: -5 }
             }
         ]
     },
@@ -86,7 +87,7 @@ export const SANCTIONS_EVENTS = [
                     treasury: -10, // Enforcement costs
                     personalWealth: 5 // Seized assets from fleeing traitors
                 },
-                addToPool: ["underground_railroad"]
+                add: ["underground_railroad"]
             },
             {
                 text: "Offer massive tax breaks to stay",
@@ -95,7 +96,7 @@ export const SANCTIONS_EVENTS = [
                     elite: 5,
                     anger: -5
                 },
-                addToPool: ["loyal_tech_giant", "subsidy_dependency"]
+                add: ["loyal_tech_giant", "subsidy_dependency"]
             }
         ]
     },
@@ -119,14 +120,14 @@ export const SANCTIONS_EVENTS = [
                     personalWealth: 5,
                     elite: 3
                 },
-                removeFromPool: ["sanctions_loophole_found"]
+                remove: ["sanctions_loophole_found"]
             },
             {
                 text: "Be cautious",
                 effects: {
                     treasury: 10
                 },
-                removeFromPool: ["sanctions_loophole_found"]
+                remove: ["sanctions_loophole_found"]
             }
         ]
     },
@@ -149,7 +150,7 @@ export const SANCTIONS_EVENTS = [
                     anger: 10,
                     elite: -3
                 },
-                removeFromPool: ["internet_censorship_tightens"]
+                remove: ["internet_censorship_tightens"]
             },
             {
                 text: "Ease restrictions slightly",
@@ -158,8 +159,8 @@ export const SANCTIONS_EVENTS = [
                     elite: 2,
                     treasury: -30 // Cost of monitoring instead of blocking
                 },
-                addToPool: ["foreign_influence_creeping"],
-                removeFromPool: ["internet_censorship_tightens"]
+                add: ["foreign_influence_creeping"],
+                remove: ["internet_censorship_tightens"]
             }
         ]
     },
@@ -182,7 +183,7 @@ export const SANCTIONS_EVENTS = [
                     anger: 15,
                     elite: -5
                 },
-                removeFromPool: ["underground_railroad"]
+                remove: ["underground_railroad"]
             },
             {
                 text: "Turn a blind eye",
@@ -190,7 +191,7 @@ export const SANCTIONS_EVENTS = [
                     elite: -3,
                     treasury: -10
                 },
-                removeFromPool: ["underground_railroad"]
+                remove: ["underground_railroad"]
             }
         ]
     },
@@ -214,7 +215,7 @@ export const SANCTIONS_EVENTS = [
                     elite: 5,
                     anger: -3
                 },
-                removeFromPool: ["loyal_tech_giant"]
+                remove: ["loyal_tech_giant"]
             },
             {
                 text: "Offer modest support",
@@ -222,7 +223,7 @@ export const SANCTIONS_EVENTS = [
                     treasury: -15,
                     elite: 2
                 },
-                removeFromPool: ["loyal_tech_giant"]
+                remove: ["loyal_tech_giant"]
             },
             {
                 text: "Reject the request",
@@ -230,7 +231,7 @@ export const SANCTIONS_EVENTS = [
                     elite: -2, // Disappointed
                     treasury: 0
                 },
-                removeFromPool: ["loyal_tech_giant"]
+                remove: ["loyal_tech_giant"]
             }
         ]
     },
@@ -255,7 +256,7 @@ export const SANCTIONS_EVENTS = [
                 },
                 // Keeps the event in the pool? Or maybe it's a one-off that might recur if we add it back? 
                 // For now, let's make it one-off but painful.
-                removeFromPool: ["subsidy_dependency"]
+                remove: ["subsidy_dependency"]
             },
             {
                 text: "Cut them off",
@@ -264,8 +265,8 @@ export const SANCTIONS_EVENTS = [
                     anger: 5, // Jobs lost
                     treasury: 0
                 },
-                addToPool: ["tech_sector_collapse"], // Risk of it happening again
-                removeFromPool: ["subsidy_dependency"]
+                add: ["tech_sector_collapse"], // Risk of it happening again
+                remove: ["subsidy_dependency"]
             }
         ]
     },
@@ -288,8 +289,8 @@ export const SANCTIONS_EVENTS = [
                     anger: -2,
                     elite: -5 // Weakness
                 },
-                addToPool: ["mass_protests_blogger"], // Lead to protests
-                removeFromPool: ["foreign_influence_creeping"]
+                add: ["mass_protests_blogger"], // Lead to protests
+                remove: ["foreign_influence_creeping"]
             },
             {
                 text: "Clamp down again",
@@ -297,7 +298,7 @@ export const SANCTIONS_EVENTS = [
                     anger: 10,
                     elite: 2
                 },
-                removeFromPool: ["foreign_influence_creeping"]
+                remove: ["foreign_influence_creeping"]
             }
         ]
     }

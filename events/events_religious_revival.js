@@ -19,7 +19,7 @@ export const RELIGIOUS_EVENTS = [
                     elite: 5,
                     treasury: -5 // Donation to church
                 },
-                addToPool: ["cathedral_construction", "anti_lgbt_law_church_demand"],
+                add: ["cathedral_construction", "anti_lgbt_law_church_demand"],
                 legacy: { icon: "🙏", name: "The Pious", weight: 5 }
             },
             {
@@ -52,8 +52,9 @@ export const RELIGIOUS_EVENTS = [
                     elite: 10, // Generals + Priests happy
                     anger: 8 // Increased from 5 - waste of money
                 },
-                addToPool: ["patriarch_blessing_nukes"],
-                removeFromPool: ["cathedral_construction"]
+                add: ["patriarch_blessing_nukes"],
+                remove: ["cathedral_construction"],
+                legacy: { icon: "⛪", name: "The Architect of Faith", weight: 10 }
             },
             {
                 text: "Build a hospital instead",
@@ -62,7 +63,7 @@ export const RELIGIOUS_EVENTS = [
                     anger: -10,
                     elite: -10 // Church unhappy
                 },
-                removeFromPool: ["cathedral_construction"]
+                remove: ["cathedral_construction"]
             }
         ]
     },
@@ -85,8 +86,8 @@ export const RELIGIOUS_EVENTS = [
                     anger: -5, // Conservative base happy
                     elite: 5
                 },
-                addToPool: ["church_western_backlash", "patriarch_scandal"],
-                removeFromPool: ["anti_lgbt_law_church_demand"]
+                add: ["church_western_backlash", "patriarch_scandal"],
+                remove: ["anti_lgbt_law_church_demand"]
             },
             {
                 text: "Shelve the proposal",
@@ -94,7 +95,7 @@ export const RELIGIOUS_EVENTS = [
                     elite: -5,
                     anger: 0
                 },
-                removeFromPool: ["anti_lgbt_law_church_demand"]
+                remove: ["anti_lgbt_law_church_demand"]
             }
         ]
     },
@@ -117,15 +118,15 @@ export const RELIGIOUS_EVENTS = [
                     anger: 5, // World thinks you are crazy
                     elite: 5
                 },
-                addToPool: ["holy_war_declaration"],
-                removeFromPool: ["patriarch_blessing_nukes"]
+                add: ["holy_war_declaration"],
+                remove: ["patriarch_blessing_nukes"]
             },
             {
                 text: "Too crazy, even for us",
                 effects: {
                     elite: -5
                 },
-                removeFromPool: ["patriarch_blessing_nukes"]
+                remove: ["patriarch_blessing_nukes"]
             }
         ]
     },
@@ -148,14 +149,14 @@ export const RELIGIOUS_EVENTS = [
                     treasury: -10,
                     anger: 10
                 },
-                removeFromPool: ["patriarch_scandal"]
+                remove: ["patriarch_scandal"]
             },
             {
                 text: "Ignore it",
                 effects: {
                     elite: -5 // Church looks weak
                 },
-                removeFromPool: ["patriarch_scandal"]
+                remove: ["patriarch_scandal"]
             }
         ]
     },
@@ -178,15 +179,15 @@ export const RELIGIOUS_EVENTS = [
                     anger: 5,
                     elite: 5
                 },
-                addToPool: ["inquisition_cultural_purge"],
-                removeFromPool: ["church_western_backlash"]
+                add: ["inquisition_cultural_purge"],
+                remove: ["church_western_backlash"]
             },
             {
                 text: "Try to reconcile",
                 effects: {
                     elite: -10 // Patriarch furious at weakness
                 },
-                removeFromPool: ["church_western_backlash"]
+                remove: ["church_western_backlash"]
             }
         ]
     },
@@ -210,14 +211,14 @@ export const RELIGIOUS_EVENTS = [
                     elite: 10
                 },
                 legacy: { icon: "✝️", name: "The Crusader", weight: 10 },
-                removeFromPool: ["holy_war_declaration"]
+                remove: ["holy_war_declaration"]
             },
             {
                 text: "Tone it down",
                 effects: {
                     elite: -10
                 },
-                removeFromPool: ["holy_war_declaration"]
+                remove: ["holy_war_declaration"]
             }
         ]
     },
@@ -241,14 +242,14 @@ export const RELIGIOUS_EVENTS = [
                     elite: 5
                 },
                 legacy: { icon: "🔥", name: "The Inquisitor", weight: 15 },
-                removeFromPool: ["inquisition_cultural_purge"]
+                remove: ["inquisition_cultural_purge"]
             },
             {
                 text: "Protect the culture",
                 effects: {
                     elite: -15 // Zealots turn on you
                 },
-                removeFromPool: ["inquisition_cultural_purge"]
+                remove: ["inquisition_cultural_purge"]
             }
         ]
     }

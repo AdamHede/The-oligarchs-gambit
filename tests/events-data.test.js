@@ -11,7 +11,7 @@ import ALL_EVENTS from '../events/index.js';
 
 test('All events pass schema validation', () => {
     const result = validateAllEvents(ALL_EVENTS);
-    
+
     assert.strictEqual(result.valid, true, `Validation failed: ${result.errors.join('; ')}`);
     assert.strictEqual(result.errors.length, 0);
 });
@@ -19,42 +19,50 @@ test('All events pass schema validation', () => {
 test('All event IDs are unique', () => {
     const ids = ALL_EVENTS.map(e => e.id);
     const uniqueIds = new Set(ids);
-    
+
     assert.strictEqual(ids.length, uniqueIds.size, 'Duplicate event IDs found');
 });
 
 test('All event references point to existing events', () => {
     const allEventIds = new Set(ALL_EVENTS.map(e => e.id));
     const brokenRefs = [];
-    
+
     ALL_EVENTS.forEach(event => {
         if (event.choices) {
             event.choices.forEach((choice, choiceIndex) => {
-                // Check add/addToPool references
-                const addRefs = choice.add || choice.addToPool || [];
+                // Check add references
+                const addRefs = choice.add || [];
+                if (choice.addToPool) {
+                    brokenRefs.push(`Event "${event.id}" choice ${choiceIndex} uses legacy "addToPool" - rename to "add"`);
+                }
+
                 addRefs.forEach(refId => {
                     if (!allEventIds.has(refId)) {
-                        brokenRefs.push(`Event "${event.id}" choice ${choiceIndex} references missing event "${refId}" in add/addToPool`);
+                        brokenRefs.push(`Event "${event.id}" choice ${choiceIndex} references missing event "${refId}" in add`);
                     }
                 });
-                
-                // Check remove/removeFromPool references
-                const removeRefs = choice.remove || choice.removeFromPool || [];
+
+                // Check remove references
+                const removeRefs = choice.remove || [];
+                if (choice.removeFromPool) {
+                    brokenRefs.push(`Event "${event.id}" choice ${choiceIndex} uses legacy "removeFromPool" - rename to "remove"`);
+                }
+
                 removeRefs.forEach(refId => {
                     if (!allEventIds.has(refId)) {
-                        brokenRefs.push(`Event "${event.id}" choice ${choiceIndex} references missing event "${refId}" in remove/removeFromPool`);
+                        brokenRefs.push(`Event "${event.id}" choice ${choiceIndex} references missing event "${refId}" in remove`);
                     }
                 });
             });
         }
     });
-    
+
     assert.strictEqual(brokenRefs.length, 0, `Broken references found:\n${brokenRefs.join('\n')}`);
 });
 
 test('All events have required fields', () => {
     const missingFields = [];
-    
+
     ALL_EVENTS.forEach(event => {
         if (!event.id) missingFields.push(`Event missing id`);
         if (!event.title) missingFields.push(`Event "${event.id || 'unknown'}" missing title`);
@@ -63,13 +71,13 @@ test('All events have required fields', () => {
             missingFields.push(`Event "${event.id || 'unknown'}" missing choices`);
         }
     });
-    
+
     assert.strictEqual(missingFields.length, 0, `Missing required fields:\n${missingFields.join('\n')}`);
 });
 
 test('All choices have text field', () => {
     const missingText = [];
-    
+
     ALL_EVENTS.forEach(event => {
         if (event.choices) {
             event.choices.forEach((choice, choiceIndex) => {
@@ -79,25 +87,25 @@ test('All choices have text field', () => {
             });
         }
     });
-    
+
     assert.strictEqual(missingText.length, 0, `Choices missing text:\n${missingText.join('\n')}`);
 });
 
 test('No events have weight < 0', () => {
     const invalidWeights = [];
-    
+
     ALL_EVENTS.forEach(event => {
         if (event.weight !== undefined && (typeof event.weight !== 'number' || event.weight < 0)) {
             invalidWeights.push(`Event "${event.id}" has invalid weight: ${event.weight}`);
         }
     });
-    
+
     assert.strictEqual(invalidWeights.length, 0, `Invalid weights:\n${invalidWeights.join('\n')}`);
 });
 
 test('All events have valid storylines array (if present)', () => {
     const invalidStorylines = [];
-    
+
     ALL_EVENTS.forEach(event => {
         if (event.storylines !== undefined && !Array.isArray(event.storylines)) {
             invalidStorylines.push(`Event "${event.id}" has invalid storylines (not an array)`);
@@ -107,7 +115,7 @@ test('All events have valid storylines array (if present)', () => {
             invalidStorylines.push(`Event "${event.id}" has invalid storyline (should be string, null, or array)`);
         }
     });
-    
+
     assert.strictEqual(invalidStorylines.length, 0, `Invalid storylines:\n${invalidStorylines.join('\n')}`);
 });
 

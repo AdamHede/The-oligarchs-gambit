@@ -18,7 +18,7 @@ export const SOCIAL_EVENTS = [
                     elite: 5, // Friend takes the fall (and a favor)
                     anger: 5 // Nobody believes you
                 },
-                addToPool: ["palace_denial_memes"]
+                add: ["palace_denial_memes"]
             },
             {
                 text: "Arrest the blogger",
@@ -26,7 +26,7 @@ export const SOCIAL_EVENTS = [
                     anger: 15, // Martyrdom
                     elite: 5 // Strength
                 },
-                addToPool: ["mass_protests_blogger", "sanctions_human_rights"]
+                add: ["mass_protests_blogger", "sanctions_human_rights"]
             }
         ]
     },
@@ -50,8 +50,8 @@ export const SOCIAL_EVENTS = [
                     elite: -5,
                     personalWealth: 5
                 },
-                addToPool: ["bloody_sunday_scenario"],
-                removeFromPool: ["mass_protests_blogger"]
+                add: ["bloody_sunday_scenario"],
+                remove: ["mass_protests_blogger"]
             },
             {
                 text: "Wait it out",
@@ -59,8 +59,8 @@ export const SOCIAL_EVENTS = [
                     elite: -10, // Looking weak
                     anger: -5 // Lose momentum
                 },
-                addToPool: ["emboldened_opposition"],
-                removeFromPool: ["mass_protests_blogger"]
+                add: ["emboldened_opposition"],
+                remove: ["mass_protests_blogger"]
             }
         ]
     },
@@ -83,7 +83,7 @@ export const SOCIAL_EVENTS = [
                     anger: 5,
                     elite: -2
                 },
-                removeFromPool: ["palace_denial_memes"]
+                remove: ["palace_denial_memes"]
             },
             {
                 text: "Try to suppress them",
@@ -91,7 +91,7 @@ export const SOCIAL_EVENTS = [
                     anger: 10,
                     elite: -5
                 },
-                removeFromPool: ["palace_denial_memes"]
+                remove: ["palace_denial_memes"]
             }
         ]
     },
@@ -115,7 +115,7 @@ export const SOCIAL_EVENTS = [
                     treasury: -10,
                     anger: 8 // Economic pain felt by common people
                 },
-                removeFromPool: ["sanctions_human_rights"]
+                remove: ["sanctions_human_rights"]
             },
             {
                 text: "Try to negotiate",
@@ -124,7 +124,7 @@ export const SOCIAL_EVENTS = [
                     personalWealth: -5,
                     treasury: 20 // Unlocked funds
                 },
-                removeFromPool: ["sanctions_human_rights"]
+                remove: ["sanctions_human_rights"]
             }
         ]
     },
@@ -148,7 +148,7 @@ export const SOCIAL_EVENTS = [
                     elite: -2,
                     anger: -2
                 },
-                removeFromPool: ["emboldened_opposition"]
+                remove: ["emboldened_opposition"]
             },
             {
                 text: "Let them march",
@@ -156,8 +156,8 @@ export const SOCIAL_EVENTS = [
                     anger: 10,
                     elite: -5
                 },
-                addToPool: ["mass_protests_blogger"], // Cycles back
-                removeFromPool: ["emboldened_opposition"]
+                add: ["mass_protests_blogger"], // Cycles back
+                remove: ["emboldened_opposition"]
             }
         ]
     },
@@ -181,8 +181,8 @@ export const SOCIAL_EVENTS = [
                     elite: -15, // Increased from -10 (depth 3 = 1.5x)
                     treasury: -75 // Increased from -50
                 },
-                addToPool: ["sanctions_human_rights"],
-                removeFromPool: ["bloody_sunday_scenario"]
+                add: ["sanctions_human_rights"],
+                remove: ["bloody_sunday_scenario"]
             },
             {
                 text: "Back down",
@@ -190,7 +190,7 @@ export const SOCIAL_EVENTS = [
                     elite: -20, // Weakness (increased from -15)
                     anger: -5 // Appeased
                 },
-                removeFromPool: ["bloody_sunday_scenario"]
+                remove: ["bloody_sunday_scenario"]
             }
         ]
     }

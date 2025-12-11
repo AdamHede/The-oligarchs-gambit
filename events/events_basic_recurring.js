@@ -30,7 +30,7 @@ export const BASIC_RECURRING_EVENTS = [
                     elite: -2, // "Going legitimate?"
                     anger: -2 // "Patriotic act"
                 },
-                removeFromPool: ["tax_haven_crackdown"]
+                remove: ["tax_haven_crackdown"]
             }
         ]
     },
@@ -38,7 +38,7 @@ export const BASIC_RECURRING_EVENTS = [
         id: "brain_drain",
         title: "The Exodus",
         description: "Young IT specialists and engineers are leaving the country in droves, citing lack of improving prospects.",
-        weight: 3, // Reduced from 10
+        weight: 2, // Reduced from 3 to prevent repetition
         storyline: null,
         rarity: "common",
         meta: {
@@ -103,7 +103,7 @@ export const BASIC_RECURRING_EVENTS = [
                     anger: 5,
                     elite: 1 // "Strong hand"
                 },
-                addToPool: ["university_protests"]
+                // Removed self-add loop: add: ["university_protests"]
             },
             {
                 text: "Meet with student leaders",
@@ -163,10 +163,10 @@ export const BASIC_RECURRING_EVENTS = [
             {
                 text: "Approve (Rotenberg gets the contract)",
                 effects: {
-                    treasury: -60,
+                    treasury: -100, // Massive national project
                     elite: 10,
                     anger: 5 // Reduced - public doesn't care as much about infrastructure graft
-                }
+                },
                 // Removed self-add to break loop
             },
             {
@@ -195,11 +195,12 @@ export const BASIC_RECURRING_EVENTS = [
             {
                 text: "Spare no expense",
                 effects: {
-                    treasury: -10, // State budget pays
+                    treasury: -35, // Increased from -10 (Luxury scale correction)
                     personalWealth: 0,
                     elite: 2,
                     anger: 5 // Anti-corruption investigation fodder
-                }
+                },
+                legacy: { icon: "🏒", name: "The Hockey Player", weight: 0 }
             },
             {
                 text: "Modest repairs only",

@@ -3,7 +3,7 @@ export const MISC_EVENTS = [
         id: "quiet_quarter",
         title: "A Quiet Quarter",
         description: "Nothing particularly dramatic happens this quarter. Your administration continues its usual... operations.",
-        weight: 10, // Standard common weight
+        weight: 1, // Drastically reduced from 5 to prevent repetition
         storyline: null,
         rarity: "common",
         meta: {
@@ -21,7 +21,7 @@ export const MISC_EVENTS = [
                     anger: 0 // Changed from +1 - status quo is neutral
                 },
                 // Reload basic events if the deck gets thin
-                addToPool: ["tax_haven_crackdown", "brain_drain", "university_protests", "arms_deal_opportunity", "infrastructure_project"]
+                add: ["tax_haven_crackdown", "brain_drain", "university_protests", "arms_deal_opportunity", "infrastructure_project"]
             }
         ]
     },

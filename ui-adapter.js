@@ -52,7 +52,7 @@ export class GameUI {
         this.updateMetrics(state.stats);
         this.updateLegacy(state);
         this.updateDebugInfo(state);
-        
+
         // Update graph if available
         if (this.debugGraph) {
             this.debugGraph.update();
@@ -102,9 +102,9 @@ export class GameUI {
 
     updateLegacy(state) {
         if (!this.legacyContainer) return;
-        
+
         this.legacyContainer.innerHTML = '';
-        
+
         // Legacy is stored in history entries (from makeChoice result)
         const legacyItems = state.history
             .filter(entry => entry.legacy)
@@ -123,12 +123,12 @@ export class GameUI {
         uniqueLegacy.forEach(legacy => {
             const badge = document.createElement('div');
             badge.className = 'legacy-badge';
-            
+
             if (legacy.weight && legacy.weight < 0) {
                 badge.style.backgroundColor = 'rgba(231, 76, 60, 0.3)';
                 badge.style.borderColor = '#e74c3c';
             }
-            
+
             badge.innerHTML = `<span>${legacy.icon}</span><span>${legacy.name}</span>`;
 
             const weight = legacy.weight || 5;
@@ -148,9 +148,9 @@ export class GameUI {
         if (!this.debugVersion || !this.debugSummary || !this.debugTotalEvents || !this.debugActiveEvents) return;
 
         // Version info (could be moved to a config)
-        this.debugVersion.textContent = '2.0.0';
+        this.debugVersion.textContent = '2.0.1';
         this.debugSummary.textContent = 'V2 Engine Integration';
-        
+
         // Count total events
         const totalEvents = this.engine.allEvents.length;
         this.debugTotalEvents.textContent = totalEvents;
@@ -224,7 +224,7 @@ export class GameUI {
             button.addEventListener('click', () => this.handleChoice(index));
             this.choicesContainer.appendChild(button);
         });
-        
+
         // Update graph with current event
         if (this.debugGraph) {
             this.debugGraph.setCurrentEvent(event.id);
@@ -302,14 +302,14 @@ export class GameUI {
         try {
             const currentEvent = this.engine.currentEvent;
             const result = this.engine.makeChoice(choiceIndex);
-            
+
             // Mark event as completed in graph
             if (currentEvent && this.debugGraph) {
                 this.debugGraph.markCompleted(currentEvent.id);
             }
-            
+
             this.updateDisplay();
-            
+
             // Check for game over
             const gameOver = this.engine.checkGameOver();
             if (gameOver) {
@@ -391,8 +391,8 @@ export class GameUI {
         }
 
         const score = Math.round(state.stats.personalWealth *
-                                 (state.year + state.quarter / 4) *
-                                 (1 + legacyMultiplier / 100));
+            (state.year + state.quarter / 4) *
+            (1 + legacyMultiplier / 100));
 
         const scoreElement = document.createElement('div');
         scoreElement.style.cssText = 'margin-top: 20px; padding: 20px; background: rgba(212, 175, 55, 0.2); border-radius: 8px;';

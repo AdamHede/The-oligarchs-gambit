@@ -19,7 +19,7 @@ export const ENERGY_EVENTS = [
                     elite: 10, // Geopolitical power move (reduced from 15)
                     anger: 5 // Domestic prices rise too?
                 },
-                addToPool: ["europe_freezes_propaganda", "budget_deficit_energy", "counter_sanctions_energy"],
+                add: ["europe_freezes_propaganda", "budget_deficit_energy", "counter_sanctions_energy"],
                 legacy: { icon: "❄️", name: "The Coldmaker", weight: -5 }
             },
             {
@@ -30,7 +30,7 @@ export const ENERGY_EVENTS = [
                     elite: 3,
                     anger: 15 // Increased from 8 - people pay more too, prices spike
                 },
-                addToPool: ["oligarch_bonus_payout", "inflation_crisis"] // Money supply expands
+                add: ["oligarch_bonus_payout", "inflation_crisis"] // Money supply expands
             }
         ]
     },
@@ -53,7 +53,7 @@ export const ENERGY_EVENTS = [
                     anger: -5, // Rally effect
                     elite: 2
                 },
-                addToPool: ["shadow_war_escalation"]
+                add: ["shadow_war_escalation"]
             },
             {
                 text: "Quietly repair it",
@@ -83,15 +83,15 @@ export const ENERGY_EVENTS = [
                     elite: 3, // Reduced from 5
                     anger: -3
                 },
-                addToPool: ["counter_sanctions_energy"], // Risk
-                removeFromPool: ["europe_freezes_propaganda"]
+                add: ["counter_sanctions_energy"], // Risk
+                remove: ["europe_freezes_propaganda"]
             },
             {
                 text: "Focus on domestic issues",
                 effects: {
                     anger: -2
                 },
-                removeFromPool: ["europe_freezes_propaganda"]
+                remove: ["europe_freezes_propaganda"]
             }
         ]
     },
@@ -114,7 +114,7 @@ export const ENERGY_EVENTS = [
                     treasury: 20,
                     anger: 10
                 },
-                removeFromPool: ["budget_deficit_energy"]
+                remove: ["budget_deficit_energy"]
             },
             {
                 text: "Cut other spending",
@@ -122,7 +122,7 @@ export const ENERGY_EVENTS = [
                     treasury: 10,
                     elite: -5
                 },
-                removeFromPool: ["budget_deficit_energy"]
+                remove: ["budget_deficit_energy"]
             }
         ]
     },
@@ -147,7 +147,7 @@ export const ENERGY_EVENTS = [
                     personalWealth: -5,
                     anger: 5 // Added - public sees favoritism
                 },
-                removeFromPool: ["oligarch_bonus_payout"]
+                remove: ["oligarch_bonus_payout"]
             },
             {
                 text: "Keep more for yourself",
@@ -157,7 +157,7 @@ export const ENERGY_EVENTS = [
                     treasury: -10,
                     anger: 8 // Added - word gets out
                 },
-                removeFromPool: ["oligarch_bonus_payout"]
+                remove: ["oligarch_bonus_payout"]
             }
         ]
     },
@@ -181,8 +181,8 @@ export const ENERGY_EVENTS = [
                     elite: 2,
                     anger: 5
                 },
-                addToPool: ["budget_deficit_energy"],
-                removeFromPool: ["counter_sanctions_energy"]
+                add: ["budget_deficit_energy"],
+                remove: ["counter_sanctions_energy"]
             },
             {
                 text: "Sell through intermediaries",
@@ -190,7 +190,7 @@ export const ENERGY_EVENTS = [
                     treasury: -10, // Middlemen take a cut
                     elite: -2 // Look weak
                 },
-                removeFromPool: ["counter_sanctions_energy"]
+                remove: ["counter_sanctions_energy"]
             }
         ]
     },
@@ -214,7 +214,7 @@ export const ENERGY_EVENTS = [
                     treasury: -20,
                     anger: 5
                 },
-                removeFromPool: ["shadow_war_escalation"]
+                remove: ["shadow_war_escalation"]
             },
             {
                 text: "De-escalate",
@@ -222,7 +222,7 @@ export const ENERGY_EVENTS = [
                     elite: -3,
                     treasury: -10
                 },
-                removeFromPool: ["shadow_war_escalation"]
+                remove: ["shadow_war_escalation"]
             }
         ]
     }

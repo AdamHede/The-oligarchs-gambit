@@ -20,7 +20,7 @@ export const WAR_EVENTS = [
                     elite: 10, // Generals are happy
                     anger: 5
                 },
-                addToPool: ["war_goes_badly", "sanctions_initial_wave", "rally_around_flag"],
+                add: ["war_goes_badly", "sanctions_initial_wave", "rally_around_flag"],
                 legacy: { icon: "⚔️", name: "The Invader", weight: -10 }
             },
             {
@@ -30,7 +30,7 @@ export const WAR_EVENTS = [
                     treasury: 5, // Saved money
                     anger: -5
                 },
-                addToPool: ["generals_plotting_coup"],
+                add: ["generals_plotting_coup"],
                 legacy: { icon: "🕊️", name: "The Peacemaker", weight: 5 }
             }
         ]
@@ -55,8 +55,8 @@ export const WAR_EVENTS = [
                     anger: 15, // Reduced from 20 - still harsh
                     elite: 5
                 },
-                addToPool: ["conscription_crisis", "equipment_shortages"],
-                removeFromPool: ["war_goes_badly"]
+                add: ["conscription_crisis", "equipment_shortages"],
+                remove: ["war_goes_badly"]
             },
             {
                 text: "Pull back and regroup",
@@ -64,8 +64,8 @@ export const WAR_EVENTS = [
                     elite: -15, // Perceived weakness
                     anger: -5
                 },
-                addToPool: ["general_fired_scapegoat"],
-                removeFromPool: ["war_goes_badly"]
+                add: ["general_fired_scapegoat"],
+                remove: ["war_goes_badly"]
             },
             {
                 text: "Declare victory and withdraw",
@@ -74,8 +74,9 @@ export const WAR_EVENTS = [
                     anger: -10, // Relief
                     treasury: 30 // Saved war costs
                 },
-                addToPool: ["frozen_conflict"],
-                removeFromPool: ["war_goes_badly", "conscription_crisis", "equipment_shortages", "generals_plotting_coup", "rural_unrest", "border_exodus_brain_drain"]
+                add: ["frozen_conflict"],
+                remove: ["war_goes_badly", "conscription_crisis", "equipment_shortages", "generals_plotting_coup", "rural_unrest", "border_exodus_brain_drain"],
+                legacy: { icon: "🐈", name: "The Paper Tiger", weight: -10 }
             }
         ]
     },
@@ -99,8 +100,8 @@ export const WAR_EVENTS = [
                     anger: 5, // Urban elite don't care
                     elite: 0
                 },
-                addToPool: ["rural_unrest"],
-                removeFromPool: ["conscription_crisis"]
+                add: ["rural_unrest"],
+                remove: ["conscription_crisis"]
             },
             {
                 text: "General mobilization",
@@ -109,8 +110,8 @@ export const WAR_EVENTS = [
                     anger: 25, // Reduced from 30 - still extremely harsh
                     elite: 5
                 },
-                addToPool: ["border_exodus_brain_drain"],
-                removeFromPool: ["conscription_crisis"]
+                add: ["border_exodus_brain_drain"],
+                remove: ["conscription_crisis"]
             }
         ]
     },
@@ -184,7 +185,7 @@ export const WAR_EVENTS = [
                     treasury: -80, // Increased from -50 (depth 5 = 1.6x)
                     anger: 8 // Increased from 5
                 },
-                removeFromPool: ["equipment_shortages"]
+                remove: ["equipment_shortages"]
             },
             {
                 text: "Accept the shortages",
@@ -192,7 +193,7 @@ export const WAR_EVENTS = [
                     elite: -10,
                     anger: 10
                 },
-                removeFromPool: ["equipment_shortages"]
+                remove: ["equipment_shortages"]
             }
         ]
     },
@@ -215,7 +216,7 @@ export const WAR_EVENTS = [
                     elite: -5,
                     treasury: -30
                 },
-                removeFromPool: ["general_fired_scapegoat"]
+                remove: ["general_fired_scapegoat"]
             },
             {
                 text: "Reassess strategy",
@@ -223,7 +224,7 @@ export const WAR_EVENTS = [
                     elite: 5,
                     anger: -5
                 },
-                removeFromPool: ["general_fired_scapegoat"]
+                remove: ["general_fired_scapegoat"]
             }
         ]
     },
@@ -246,7 +247,7 @@ export const WAR_EVENTS = [
                     anger: 10,
                     elite: 2
                 },
-                removeFromPool: ["rural_unrest"]
+                remove: ["rural_unrest"]
             },
             {
                 text: "Promise fair treatment",
@@ -254,7 +255,7 @@ export const WAR_EVENTS = [
                     anger: -5,
                     treasury: -10
                 },
-                removeFromPool: ["rural_unrest"]
+                remove: ["rural_unrest"]
             }
         ]
     },
@@ -277,7 +278,7 @@ export const WAR_EVENTS = [
                     anger: 15,
                     elite: -5
                 },
-                removeFromPool: ["border_exodus_brain_drain"]
+                remove: ["border_exodus_brain_drain"]
             },
             {
                 text: "Let them go",
@@ -285,7 +286,7 @@ export const WAR_EVENTS = [
                     treasury: -20,
                     elite: -10
                 },
-                removeFromPool: ["border_exodus_brain_drain"]
+                remove: ["border_exodus_brain_drain"]
             }
         ]
     },
@@ -310,7 +311,7 @@ export const WAR_EVENTS = [
                     anger: 2 // Added - war drags on
                 },
                 // Recur
-                addToPool: ["frozen_conflict"]
+                add: ["frozen_conflict"]
             }
         ]
     }

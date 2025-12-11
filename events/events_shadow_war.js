@@ -19,7 +19,7 @@ export const SHADOW_WAR_EVENTS = [
                     elite: 5, // Siloviki happy
                     anger: 0
                 },
-                addToPool: ["assassination_attempt_botched", "shadow_war_ultimatum"],
+                add: ["assassination_attempt_botched", "shadow_war_ultimatum"],
                 legacy: { icon: "☂️", name: "The Silencer", weight: 5 }
             },
             {
@@ -36,7 +36,7 @@ export const SHADOW_WAR_EVENTS = [
         id: "cyber_attack_grid",
         title: "Winter is Coming",
         description: "Your cyber-warfare unit proposes a massive attack on a rival nation's power grid during a cold snap. It would cause chaos and send a strong message.",
-        weight: 0,
+        weight: 5, // Increased from 0 to make accessible
         storyline: "shadow-war",
         rarity: "rare",
         meta: {
@@ -51,15 +51,15 @@ export const SHADOW_WAR_EVENTS = [
                     treasury: -10,
                     elite: 5
                 },
-                addToPool: ["election_interference_exposure", "shadow_war_ultimatum"],
-                removeFromPool: ["cyber_attack_grid"]
+                add: ["election_interference_exposure", "shadow_war_ultimatum"],
+                remove: ["cyber_attack_grid"]
             },
             {
                 text: "Too risky",
                 effects: {
                     elite: -2
                 },
-                removeFromPool: ["cyber_attack_grid"]
+                remove: ["cyber_attack_grid"]
             }
         ]
     },
@@ -67,7 +67,7 @@ export const SHADOW_WAR_EVENTS = [
         id: "mercenaries_africa",
         title: "Gold for Guns",
         description: "A strapped African dictatorship needs help crushing rebels. They offer gold mining rights in exchange for your 'private military contractors'.",
-        weight: 0,
+        weight: 5, // Increased from 0 to make accessible
         storyline: "shadow-war",
         rarity: "common",
         meta: {
@@ -82,15 +82,15 @@ export const SHADOW_WAR_EVENTS = [
                     treasury: 20, // Gold!
                     elite: 5 // PMC owner happy
                 },
-                addToPool: ["assassination_attempt_botched"], // Risk of exposure
-                removeFromPool: ["mercenaries_africa"]
+                add: ["assassination_attempt_botched"], // Risk of exposure
+                remove: ["mercenaries_africa"]
             },
             {
                 text: "Focus on domestic issues",
                 effects: {
                     treasury: -5 // Missed opportunity
                 },
-                removeFromPool: ["mercenaries_africa"]
+                remove: ["mercenaries_africa"]
             }
         ]
     },
@@ -113,8 +113,9 @@ export const SHADOW_WAR_EVENTS = [
                     anger: 5, // Everyone knows you're lying
                     elite: 0
                 },
-                addToPool: ["shadow_war_ultimatum"],
-                removeFromPool: ["assassination_attempt_botched"]
+                add: ["shadow_war_ultimatum"],
+                remove: ["assassination_attempt_botched"],
+                legacy: { icon: "🕵️‍♂️", name: "The Bumbling Assassin", weight: -5 }
             },
             {
                 text: "Make a joke of it",
@@ -122,8 +123,8 @@ export const SHADOW_WAR_EVENTS = [
                     anger: -2, // Base loves the trolling
                     elite: 2
                 },
-                addToPool: ["shadow_war_ultimatum"],
-                removeFromPool: ["assassination_attempt_botched"]
+                add: ["shadow_war_ultimatum"],
+                remove: ["assassination_attempt_botched"]
             }
         ]
     },
@@ -146,14 +147,14 @@ export const SHADOW_WAR_EVENTS = [
                     anger: -5, // Propaganda works
                     elite: 2
                 },
-                removeFromPool: ["election_interference_exposure"]
+                remove: ["election_interference_exposure"]
             },
             {
                 text: "Admit 'patriotic hackers'",
                 effects: {
                     elite: 5
                 },
-                removeFromPool: ["election_interference_exposure"]
+                remove: ["election_interference_exposure"]
             }
         ]
     },
@@ -176,7 +177,8 @@ export const SHADOW_WAR_EVENTS = [
                     elite: -15, // Betrayal of services
                     anger: -5 // War avoided
                 },
-                removeFromPool: ["shadow_war_ultimatum", "assassination_attempt_botched", "cyber_attack_grid"]
+                remove: ["shadow_war_ultimatum", "assassination_attempt_botched", "cyber_attack_grid"],
+                legacy: { icon: "🐀", name: "The Betrayer", weight: -15 }
             },
             {
                 text: "Escalate to open conflict",
@@ -185,8 +187,8 @@ export const SHADOW_WAR_EVENTS = [
                     anger: 15, // Increased from 10
                     treasury: -80 // Increased from -50 (depth 2 = 1.6x)
                 },
-                addToPool: ["war_special_operation_proposal"], // Triggers actual war storyline
-                removeFromPool: ["shadow_war_ultimatum"]
+                add: ["war_special_operation_proposal"], // Triggers actual war storyline
+                remove: ["shadow_war_ultimatum"]
             }
         ]
     }

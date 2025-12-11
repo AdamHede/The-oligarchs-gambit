@@ -15,11 +15,11 @@ export const SUCCESSION_EVENTS = [
             {
                 text: "Compensate him fully",
                 effects: {
-                    treasury: -70,
+                    treasury: -25, // Adjusted from -70 based on coherence application
                     elite: 10,
                     anger: 3 // Reduced from 8 - this is the balanced choice
                 },
-                addToPool: ["oligarch_greed_spiral"]
+                add: ["oligarch_greed_spiral"]
             },
             {
                 text: "Tell him to be a patriot",
@@ -29,7 +29,7 @@ export const SUCCESSION_EVENTS = [
                     personalWealth: 10, // Greedy bait
                     anger: 8 // High - greedy penalty
                 },
-                addToPool: ["oligarch_plotting"]
+                add: ["oligarch_plotting"]
             }
         ]
     },
@@ -52,7 +52,7 @@ export const SUCCESSION_EVENTS = [
                     elite: 5, // Show strength
                     anger: -2
                 },
-                addToPool: ["body_double_auditions"]
+                add: ["body_double_auditions"]
             },
             {
                 text: "Purge the 'disloyal' gossipers",
@@ -60,7 +60,7 @@ export const SUCCESSION_EVENTS = [
                     elite: -10, // Fear
                     personalWealth: 5 // Seize their assets
                 },
-                addToPool: ["paranoia_increases"]
+                add: ["paranoia_increases"]
             }
         ]
     },
@@ -84,7 +84,7 @@ export const SUCCESSION_EVENTS = [
                     elite: 10,
                     anger: 15 // Increased from 10
                 },
-                removeFromPool: ["oligarch_greed_spiral"]
+                remove: ["oligarch_greed_spiral"]
             },
             {
                 text: "Refuse",
@@ -92,7 +92,7 @@ export const SUCCESSION_EVENTS = [
                     elite: -5,
                     anger: 0
                 },
-                removeFromPool: ["oligarch_greed_spiral"]
+                remove: ["oligarch_greed_spiral"]
             }
         ]
     },
@@ -117,7 +117,8 @@ export const SUCCESSION_EVENTS = [
                     treasury: 10,
                     anger: 10 // Added - purges create fear and resentment
                 },
-                removeFromPool: ["oligarch_plotting"]
+                remove: ["oligarch_plotting"],
+                legacy: { icon: "🔪", name: "The Survivor", weight: 10 }
             },
             {
                 text: "Try to buy loyalty",
@@ -125,7 +126,7 @@ export const SUCCESSION_EVENTS = [
                     treasury: -70, // Increased from -50 (depth 2 = 1.4x)
                     elite: 5
                 },
-                removeFromPool: ["oligarch_plotting"]
+                remove: ["oligarch_plotting"]
             }
         ]
     },
@@ -148,7 +149,7 @@ export const SUCCESSION_EVENTS = [
                     elite: -5,
                     anger: 5
                 },
-                removeFromPool: ["body_double_auditions"]
+                remove: ["body_double_auditions"]
             },
             {
                 text: "Use them sparingly",
@@ -156,7 +157,7 @@ export const SUCCESSION_EVENTS = [
                     elite: 2,
                     treasury: -10
                 },
-                removeFromPool: ["body_double_auditions"]
+                remove: ["body_double_auditions"]
             }
         ]
     },
@@ -180,7 +181,8 @@ export const SUCCESSION_EVENTS = [
                     personalWealth: 20, // Seized assets
                     anger: 12 // Increased from 5 - fear and resentment spread
                 },
-                removeFromPool: ["paranoia_increases"]
+                remove: ["paranoia_increases"],
+                legacy: { icon: "👑", name: "The Mad King", weight: 15 }
             },
             {
                 text: "Stop the purge",
@@ -188,8 +190,8 @@ export const SUCCESSION_EVENTS = [
                     elite: 5,
                     anger: -5
                 },
-                addToPool: ["oligarch_plotting"], // Mercy is weakness
-                removeFromPool: ["paranoia_increases"]
+                add: ["oligarch_plotting"], // Mercy is weakness
+                remove: ["paranoia_increases"]
             }
         ]
     },
@@ -213,7 +215,7 @@ export const SUCCESSION_EVENTS = [
                     anger: -2, // Traitors punished
                     treasury: -10
                 },
-                addToPool: ["sanctions_human_rights"] // Getting caught
+                add: ["sanctions_human_rights"] // Getting caught
             },
             {
                 text: "Let him go",
@@ -244,7 +246,8 @@ export const SUCCESSION_EVENTS = [
                     anger: 5, // More repression
                     treasury: -20 // Security budget increase
                 },
-                addToPool: ["paranoia_increases"]
+                add: ["paranoia_increases"],
+                legacy: { icon: "👮", name: "The Strongman", weight: 5 }
             },
             {
                 text: "Back the Liberals",
@@ -253,7 +256,8 @@ export const SUCCESSION_EVENTS = [
                     treasury: 10, // Better economic management
                     anger: -2
                 },
-                addToPool: ["generals_plotting_coup"]
+                add: ["generals_plotting_coup"],
+                legacy: { icon: "📈", name: "The Reformer", weight: 2 }
             }
         ]
     }

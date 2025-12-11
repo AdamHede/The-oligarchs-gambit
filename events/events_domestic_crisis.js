@@ -19,7 +19,7 @@ export const DOMESTIC_EVENTS = [
                     anger: -5,
                     elite: -3 // Increased from -2
                 },
-                addToPool: ["shortages_black_market", "pension_crisis"]
+                add: ["shortages_black_market", "pension_crisis"]
             },
             {
                 text: "Blame foreign saboteurs",
@@ -27,7 +27,7 @@ export const DOMESTIC_EVENTS = [
                     anger: 5,
                     elite: 0
                 },
-                addToPool: ["tv_propaganda_blame"]
+                add: ["tv_propaganda_blame"]
             }
         ]
     },
@@ -49,9 +49,9 @@ export const DOMESTIC_EVENTS = [
                 effects: {
                     anger: -5, // "The Tsar is good"
                     elite: -5, // "The Boyars are bad"
-                    treasury: -90 // Increased from -60 (emergency repairs)
+                    treasury: -30 // Reduced from -90 (emergency repair vs national project)
                 },
-                addToPool: ["infrastructure_decay"],
+                add: ["infrastructure_decay"],
                 legacy: { icon: "📢", name: "The Micro-Manager", weight: 2 }
             },
             {
@@ -83,7 +83,7 @@ export const DOMESTIC_EVENTS = [
                     elite: -3,
                     treasury: -10 // Policing costs
                 },
-                removeFromPool: ["shortages_black_market"]
+                remove: ["shortages_black_market"]
             },
             {
                 text: "Turn a blind eye",
@@ -91,7 +91,7 @@ export const DOMESTIC_EVENTS = [
                     anger: -3,
                     treasury: -15 // Lost tax revenue
                 },
-                removeFromPool: ["shortages_black_market"]
+                remove: ["shortages_black_market"]
             }
         ]
     },
@@ -111,20 +111,23 @@ export const DOMESTIC_EVENTS = [
             {
                 text: "Print money to pay them",
                 effects: {
-                    treasury: -30, // Increased from -10 (depth 3 = 1.3x)
+                    treasury: -50, // Increased from -30 (Systemic failure is expensive)
                     anger: -5,
                     elite: -3 // Increased from -2
                 },
                 // Removed explicit loop back to inflation_crisis to break the death spiral
                 // addToPool: ["inflation_crisis"] 
+                legacy: { icon: "💸", name: "The Money Printer", weight: 0 }
             },
             {
                 text: "Raise retirement age",
                 effects: {
                     anger: 10, // Reduced from 15
                     treasury: 40, // Increased from 30
-                    elite: 5
-                }
+                    elite: 5,
+                    treasury: 40 // Increased from 30
+                },
+                legacy: { icon: "📉", name: "The Iron Accountant", weight: 5 }
             }
         ]
     },
@@ -148,7 +151,8 @@ export const DOMESTIC_EVENTS = [
                     elite: 10, // Contracts for friends
                     anger: -5
                 },
-                removeFromPool: ["infrastructure_decay"]
+                remove: ["infrastructure_decay"],
+                legacy: { icon: "🏗️", name: "The Builder", weight: 10 }
             },
             {
                 text: "Patch it up cheaply",
@@ -156,7 +160,7 @@ export const DOMESTIC_EVENTS = [
                     treasury: -20,
                     anger: 5
                 },
-                addToPool: ["infrastructure_decay"]
+                add: ["infrastructure_decay"]
             }
         ]
     },
@@ -179,7 +183,7 @@ export const DOMESTIC_EVENTS = [
                     anger: -5,
                     elite: 2
                 },
-                removeFromPool: ["tv_propaganda_blame"]
+                remove: ["tv_propaganda_blame"]
             },
             {
                 text: "Focus on solutions",
@@ -187,7 +191,7 @@ export const DOMESTIC_EVENTS = [
                     anger: -3,
                     treasury: -15
                 },
-                removeFromPool: ["tv_propaganda_blame"]
+                remove: ["tv_propaganda_blame"]
             }
         ]
     }
