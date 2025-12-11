@@ -54,6 +54,12 @@ function drawEvent(allEvents, deck, isEligibleFn, state) {
         .filter(e => e !== undefined);
 
     if (deckEvents.length === 0) {
+        // Fallback: If deck is empty, add quiet_quarter to keep game going
+        if (state.deck.length === 0) {
+            state.deck.push('quiet_quarter');
+            // Recursive call to draw the newly added event
+            return drawEvent(allEvents, state.deck, isEligibleFn, state);
+        }
         return null;
     }
 
@@ -117,8 +123,8 @@ function processChoiceDeckOperations(choice, eventId, isRecurring, currentDeck) 
     }
 
     // Handle self-removal/add
-    const shouldRemoveSelf = choice.removeSelf !== undefined 
-        ? choice.removeSelf 
+    const shouldRemoveSelf = choice.removeSelf !== undefined
+        ? choice.removeSelf
         : !isRecurring; // Default: remove if not recurring
 
     const shouldAddSelf = choice.addSelf === true;

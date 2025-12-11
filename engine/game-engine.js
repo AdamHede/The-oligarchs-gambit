@@ -17,14 +17,14 @@ class GameEngineV2 {
     constructor(allEvents, initialState = {}) {
         this.allEvents = allEvents;
         this.eventMap = new Map(allEvents.map(e => [e.id, e]));
-        
+
         // Create initial state
         const initialDeck = initialState.deck || this.getInitialDeck();
         this.state = createInitialState(initialState.stats, initialDeck);
-        
+
         // Merge any additional state properties
         Object.assign(this.state, initialState);
-        
+
         this.statBounds = getDefaultStatBounds();
         this.currentEvent = null;
         this.isGameOver = false;
@@ -35,17 +35,59 @@ class GameEngineV2 {
      * @returns {string[]}
      */
     getInitialDeck() {
-        return this.allEvents
-            .filter(event => {
-                // Include events with no conditions or only basic stat conditions
-                if (!event.conditions) return true;
-                
-                const cond = event.conditions;
-                // Exclude events that require flags, counters, or hasTriggered
-                return !cond.flags && !cond.counters && !cond.all && !cond.any && !cond.not;
-            })
-            .map(e => e.id)
-            .slice(0, 4); // Start with small pool
+        const eligible = this.allEvents.filter(event => {
+            // Exclude triggered-only events (weight <= 0)
+            if (event.weight !== undefined && event.weight <= 0) return false;
+
+            // Include events with no conditions or only basic stat conditions
+            if (!event.conditions) return true;
+            const cond = event.conditions;
+            // Exclude events that require flags, counters, or hasTriggered
+            return !cond.flags && !cond.counters && !cond.all && !cond.any && !cond.not;
+        });
+
+        const deck = [];
+
+        // Always include quiet_quarter if available (pacing event)
+        const quiet = eligible.find(e => e.id === 'quiet_quarter');
+        if (quiet) {
+            deck.push(quiet.id);
+        }
+
+        // Pool for remaining selection (exclude already added)
+        let pool = eligible.filter(e => !deck.includes(e.id));
+        const targetSize = 7; // Reduced from 12 to ensure Rarity works (pool is small)
+
+        // Weighted random selection without replacement
+        while (deck.length < targetSize && pool.length > 0) {
+            // Calculate weights based on rarity
+            const weights = pool.map(e => {
+                const rarity = e.rarity || 'common';
+                if (rarity === 'common') return 10;
+                if (rarity === 'rare') return 2;
+                return 1; // epic/legendary
+            });
+
+            const totalWeight = weights.reduce((a, b) => a + b, 0);
+            let random = Math.random() * totalWeight;
+
+            let selectedIndex = -1;
+            for (let i = 0; i < pool.length; i++) {
+                random -= weights[i];
+                if (random <= 0) {
+                    selectedIndex = i;
+                    break;
+                }
+            }
+
+            // Fallback for floating point errors
+            if (selectedIndex === -1) selectedIndex = pool.length - 1;
+
+            deck.push(pool[selectedIndex].id);
+            pool.splice(selectedIndex, 1);
+        }
+
+        return deck;
     }
 
     /**

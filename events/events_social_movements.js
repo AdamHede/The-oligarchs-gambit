@@ -1,167 +1,197 @@
 export const SOCIAL_EVENTS = [
-        {
-            id: "navalny_style_investigation",
-            title: "The Golden Toilet Brush",
-            description: "A popular opposition blogger has released a drone video of your secret palace. It features an aqua-disco, a hookah lounge, and a $700 toilet brush. It has 100 million views.",
-            weight: 8,
-            storyline: "popular-uprising",
-            rarity: "legendary",
-            choices: [
-                {
-                    text: "Claim it belongs to your friend",
-                    effects: {
-                        elite: 5, // Friend takes the fall (and a favor)
-                        anger: 5 // Nobody believes you
-                    },
-                    addToPool: ["palace_denial_memes"]
-                },
-                {
-                    text: "Arrest the blogger",
-                    effects: {
-                        anger: 15, // Martyrdom
-                        elite: 5 // Strength
-                    },
-                    addToPool: ["mass_protests_blogger", "sanctions_human_rights"]
-                }
-            ]
+    {
+        id: "navalny_style_investigation",
+        title: "The Golden Toilet Brush",
+        description: "A popular opposition blogger has released a drone video of your secret palace. It features an aqua-disco, a hookah lounge, and a $700 toilet brush. It has 100 million views.",
+        weight: 8,
+        storyline: "popular-uprising",
+        rarity: "legendary",
+        meta: {
+            depth: 1,
+            impact: 4,
+            sentiment: "negative"
         },
-        {
-            id: "mass_protests_blogger",
-            title: "Snow Revolution",
-            description: "Thousands are in the streets demanding your resignation. They are throwing snowballs at the riot police.",
-            weight: 0, // Triggered
-            storyline: "popular-uprising",
-            rarity: "epic",
-            choices: [
-                {
-                    text: "Crack down hard",
-                    effects: {
-                        anger: 12, // Reduced from 20, but still high
-                        elite: -5, // Uneasy about violence
-                        personalWealth: 5 // Seized assets from protest leaders
-                    },
-                    addToPool: ["bloody_sunday_scenario"],
-                    removeFromPool: ["mass_protests_blogger"]
+        choices: [
+            {
+                text: "Claim it belongs to your friend",
+                effects: {
+                    elite: 5, // Friend takes the fall (and a favor)
+                    anger: 5 // Nobody believes you
                 },
-                {
-                    text: "Wait it out",
-                    effects: {
-                        elite: -10, // Looking weak
-                        anger: -5 // Lose momentum
-                    },
-                    addToPool: ["emboldened_opposition"],
-                    removeFromPool: ["mass_protests_blogger"]
-                }
-            ]
+                add: ["palace_denial_memes"]
+            },
+            {
+                text: "Arrest the blogger",
+                effects: {
+                    anger: 15, // Martyrdom
+                    elite: 5 // Strength
+                },
+                add: ["mass_protests_blogger", "sanctions_human_rights"]
+            }
+        ]
+    },
+    {
+        id: "mass_protests_blogger",
+        title: "Snow Revolution",
+        description: "Thousands are in the streets demanding your resignation. They are throwing snowballs at the riot police.",
+        weight: 0, // Triggered
+        storyline: "popular-uprising",
+        rarity: "epic",
+        meta: {
+            depth: 2,
+            impact: 5,
+            sentiment: "negative"
         },
-        {
-            id: "palace_denial_memes",
-            title: "Internet Memes",
-            description: "The internet has turned your palace denial into a viral meme. Every social media platform is flooded with jokes about your 'friend's' golden toilet brush.",
-            weight: 0,
-            storyline: "popular-uprising",
-            rarity: "common",
-            choices: [
-                {
-                    text: "Ignore the memes",
-                    effects: {
-                        anger: 5,
-                        elite: -2
-                    },
-                    removeFromPool: ["palace_denial_memes"]
+        choices: [
+            {
+                text: "Crack down hard",
+                effects: {
+                    anger: 8, // Reduced from 12 - harsh but manageable
+                    elite: -5,
+                    personalWealth: 5
                 },
-                {
-                    text: "Try to suppress them",
-                    effects: {
-                        anger: 10,
-                        elite: -5
-                    },
-                    removeFromPool: ["palace_denial_memes"]
-                }
-            ]
+                add: ["bloody_sunday_scenario"],
+                remove: ["mass_protests_blogger"]
+            },
+            {
+                text: "Wait it out",
+                effects: {
+                    elite: -10, // Looking weak
+                    anger: -5 // Lose momentum
+                },
+                add: ["emboldened_opposition"],
+                remove: ["mass_protests_blogger"]
+            }
+        ]
+    },
+    {
+        id: "palace_denial_memes",
+        title: "Internet Memes",
+        description: "The internet has turned your palace denial into a viral meme. Every social media platform is flooded with jokes about your 'friend's' golden toilet brush.",
+        weight: 0,
+        storyline: "popular-uprising",
+        rarity: "common",
+        meta: {
+            depth: 2,
+            impact: 2,
+            sentiment: "positive"
         },
-        {
-            id: "sanctions_human_rights",
-            title: "Human Rights Sanctions",
-            description: "Western nations have imposed personal sanctions on you and your inner circle. Your foreign assets are frozen, and travel bans are in place.",
-            weight: 0,
-            storyline: "popular-uprising",
-            rarity: "rare",
-            choices: [
-                {
-                    text: "Defy the sanctions",
-                    effects: {
-                        elite: 5,
-                        treasury: -10,
-                        anger: 8 // Economic pain felt by common people
-                    },
-                    removeFromPool: ["sanctions_human_rights"]
+        choices: [
+            {
+                text: "Ignore the memes",
+                effects: {
+                    anger: 5,
+                    elite: -2
                 },
-                {
-                    text: "Try to negotiate",
-                    effects: {
-                        elite: -5,
-                        personalWealth: -5,
-                        treasury: 20 // Unlocked funds
-                    },
-                    removeFromPool: ["sanctions_human_rights"]
-                }
-            ]
+                remove: ["palace_denial_memes"]
+            },
+            {
+                text: "Try to suppress them",
+                effects: {
+                    anger: 10,
+                    elite: -5
+                },
+                remove: ["palace_denial_memes"]
+            }
+        ]
+    },
+    {
+        id: "sanctions_human_rights",
+        title: "Human Rights Sanctions",
+        description: "Western nations have imposed personal sanctions on you and your inner circle. Your foreign assets are frozen, and travel bans are in place.",
+        weight: 0,
+        storyline: "popular-uprising",
+        rarity: "rare",
+        meta: {
+            depth: 2,
+            impact: 3,
+            sentiment: "negative"
         },
-        {
-            id: "emboldened_opposition",
-            title: "Opposition Grows Stronger",
-            description: "Your hesitation to crack down has been interpreted as weakness. The opposition is organizing more effectively and demanding more.",
-            weight: 0,
-            storyline: "popular-uprising",
-            rarity: "common",
-            choices: [
-                {
-                    text: "Bribe their leaders",
-                    effects: {
-                        treasury: -20,
-                        elite: -2,
-                        anger: -2
-                    },
-                    removeFromPool: ["emboldened_opposition"]
+        choices: [
+            {
+                text: "Defy the sanctions",
+                effects: {
+                    elite: 5,
+                    treasury: -10,
+                    anger: 8 // Economic pain felt by common people
                 },
-                {
-                    text: "Let them march",
-                    effects: {
-                        anger: 10,
-                        elite: -5
-                    },
-                    addToPool: ["mass_protests_blogger"], // Cycles back
-                    removeFromPool: ["emboldened_opposition"]
-                }
-            ]
+                remove: ["sanctions_human_rights"]
+            },
+            {
+                text: "Try to negotiate",
+                effects: {
+                    elite: -5,
+                    personalWealth: -5,
+                    treasury: 20 // Unlocked funds
+                },
+                remove: ["sanctions_human_rights"]
+            }
+        ]
+    },
+    {
+        id: "emboldened_opposition",
+        title: "Opposition Grows Stronger",
+        description: "Your hesitation to crack down has been interpreted as weakness. The opposition is organizing more effectively and demanding more.",
+        weight: 0,
+        storyline: "popular-uprising",
+        rarity: "common",
+        meta: {
+            depth: 3,
+            impact: 3,
+            sentiment: "negative"
         },
-        {
-            id: "bloody_sunday_scenario",
-            title: "The Crackdown",
-            description: "Your security forces have used excessive force against the protesters. Images of violence are spreading globally, sparking international condemnation.",
-            weight: 0,
-            storyline: "popular-uprising",
-            rarity: "epic",
-            choices: [
-                {
-                    text: "Double down and crush them",
-                    effects: {
-                        anger: -15, // Fear suppresses them
-                        elite: -10, // International outcast
-                        treasury: -50 // Massive security operation
-                    },
-                    addToPool: ["sanctions_human_rights"],
-                    removeFromPool: ["bloody_sunday_scenario"]
+        choices: [
+            {
+                text: "Bribe their leaders",
+                effects: {
+                    treasury: -20,
+                    elite: -2,
+                    anger: -2
                 },
-                {
-                    text: "Back down",
-                    effects: {
-                        elite: -20, // Weakness (increased from -15)
-                        anger: -5 // Appeased
-                    },
-                    removeFromPool: ["bloody_sunday_scenario"]
-                }
-            ]
-        }
+                remove: ["emboldened_opposition"]
+            },
+            {
+                text: "Let them march",
+                effects: {
+                    anger: 10,
+                    elite: -5
+                },
+                add: ["mass_protests_blogger"], // Cycles back
+                remove: ["emboldened_opposition"]
+            }
+        ]
+    },
+    {
+        id: "bloody_sunday_scenario",
+        title: "The Crackdown",
+        description: "Your security forces have used excessive force against the protesters. Images of violence are spreading globally, sparking international condemnation.",
+        weight: 0,
+        storyline: "popular-uprising",
+        rarity: "epic",
+        meta: {
+            depth: 3,
+            impact: 5,
+            sentiment: "negative"
+        },
+        choices: [
+            {
+                text: "Double down and crush them",
+                effects: {
+                    anger: -15, // Fear suppresses them
+                    elite: -15, // Increased from -10 (depth 3 = 1.5x)
+                    treasury: -75 // Increased from -50
+                },
+                add: ["sanctions_human_rights"],
+                remove: ["bloody_sunday_scenario"]
+            },
+            {
+                text: "Back down",
+                effects: {
+                    elite: -20, // Weakness (increased from -15)
+                    anger: -5 // Appeased
+                },
+                remove: ["bloody_sunday_scenario"]
+            }
+        ]
+    }
 ];

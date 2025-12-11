@@ -33,9 +33,13 @@ function buildEventGraph(events) {
 
         if (event.choices) {
             event.choices.forEach((choice, idx) => {
+                // Normalize choice properties
+                const add = choice.add || choice.addToPool || [];
+                const remove = choice.remove || choice.removeFromPool || [];
+
                 // Add relationships
-                if (choice.add) {
-                    choice.add.forEach(eventId => {
+                if (add.length > 0) {
+                    add.forEach(eventId => {
                         if (allEventIds.has(eventId)) {
                             node.triggers.push(eventId);
                             graph[eventId].triggeredBy.push({
@@ -48,8 +52,8 @@ function buildEventGraph(events) {
                 }
 
                 // Remove relationships
-                if (choice.remove) {
-                    choice.remove.forEach(eventId => {
+                if (remove.length > 0) {
+                    remove.forEach(eventId => {
                         if (allEventIds.has(eventId)) {
                             node.removes.push(eventId);
                         }
@@ -135,7 +139,7 @@ function generateStatistics(events, graph) {
  */
 function findOrphanedEvents(events, graph) {
     const eventsAddedByChoices = new Set();
-    
+
     events.forEach(event => {
         if (event.choices) {
             event.choices.forEach(choice => {

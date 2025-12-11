@@ -2,9 +2,23 @@
 
 ## Overview
 
-The event system models events as a **directed graph** where:
+The event system is a **card-based narrative engine** where events ("cards") are drawn randomly from a shared pool. This creates a unique gameplay feel:
+
+- **Within each storyline**: Events branch like a tree. Player choices unlock new events in that storyline.
+- **Across storylines**: Multiple storylines unfold **in parallel**. The player doesn't know when they'll return to a particular storyline.
+- **The pool/deck**: All available events from all active storylines live in a shared pool. Each turn, one card is drawn randomly based on weight.
+
+### Why This Design?
+
+1. **Tension through unpredictability**: You make a choice in the War storyline, but you don't know when the consequences will arrive. Other storylines (sanctions, oligarch rivalries) keep happening in between.
+2. **Interleaved narratives**: Real crises don't wait in line. While dealing with a popular uprising, you might suddenly have to handle a sanctions deadline.
+3. **Branching with randomness**: A choice can trigger multiple possible outcomes, but the player experiences them in a random order—or only experiences some of them.
+
+### Core Concepts
+
 - **Nodes** = Events (fixed content "cards")
-- **Edges** = Decision outcomes that introduce/remove events from the deck
+- **Edges** = Decision outcomes that add/remove events from the pool
+- **Pool/Deck** = The set of events that can be drawn next turn
 
 ## Architecture
 
@@ -206,11 +220,128 @@ choices: [{
 }
 ```
 
+## Multi-Event Patterns
+
+When a single choice adds multiple events to the pool, there are two distinct patterns. **Understanding these is critical for good game design.**
+
+### Pattern 1: Parallel Consequences
+
+A single action triggers **multiple independent consequences** that all unfold over time.
+
+**Example: Killing a hostage**
+```javascript
+{
+    id: "hostage_situation",
+    choices: [{
+        text: "Execute the hostage to send a message",
+        add: [
+            "international_outrage",      // Foreign leaders condemn you
+            "hostage_family_revenge",     // The family seeks vengeance
+            "domestic_fear_spreads"       // Your own people grow afraid
+        ]
+    }]
+}
+```
+
+All three events will eventually be drawn. The player doesn't know the order—maybe they deal with international sanctions first, then the family's revenge plot shows up weeks later. This creates **layered storytelling** where consequences unfold unpredictably.
+
+**When to use:**
+- An action has multiple real-world ripple effects
+- You want the player to experience all consequences, just not all at once
+- Different factions react to the same event
+
+### Pattern 2: Competing Outcomes (Random Fork)
+
+A single action has **multiple possible outcomes**, but only one will occur. This adds uncertainty to player decisions.
+
+**Example: Send idiot nephew to summit**
+```javascript
+{
+    id: "climate_summit_invitation",
+    choices: [{
+        text: "Send your incompetent nephew as delegation head",
+        add: [
+            "nephew_surprising_success",  // He actually does well
+            "nephew_embarrasses_regime"   // He's a disaster
+        ]
+    }]
+}
+
+// In nephew_surprising_success:
+{
+    id: "nephew_surprising_success",
+    title: "The Idiot Savant",
+    description: "Against all odds, your nephew charmed the EU delegates...",
+    choices: [{
+        text: "Promote him",
+        remove: ["nephew_embarrasses_regime"]  // Cancel the bad outcome
+    }]
+}
+
+// In nephew_embarrasses_regime:
+{
+    id: "nephew_embarrasses_regime", 
+    title: "The Diplomatic Disaster",
+    description: "Your nephew got drunk and insulted the German chancellor...",
+    choices: [{
+        text: "Recall him immediately",
+        remove: ["nephew_surprising_success"]  // Cancel the good outcome
+    }]
+}
+```
+
+**Key mechanic:** Whichever event is drawn first removes the other from the pool. The player made one decision but experiences one of two random outcomes.
+
+**When to use:**
+- Actions with uncertain outcomes (gambling, diplomacy, military operations)
+- You want to create "what if" moments
+- The player should feel they're rolling dice with consequences
+
+### Combining Both Patterns
+
+A single choice can use both patterns:
+
+```javascript
+{
+    id: "start_war",
+    choices: [{
+        text: "Launch the special military operation",
+        add: [
+            // Parallel consequences (all will happen):
+            "sanctions_incoming",
+            "war_casualties_mount",
+            
+            // Competing outcomes (only one will happen):
+            "quick_victory",        // 72-hour special operation
+            "war_becomes_quagmire"  // Years of conflict
+        ]
+    }]
+}
+```
+
+The sanctions and casualties are guaranteed. But the war's outcome is uncertain until one of those cards is drawn.
+
 ## Storylines
+
+### Parallel Storylines
+
+Multiple storylines unfold **simultaneously**. The player doesn't control which storyline they engage with next—it's determined by the random draw.
+
+**Why this matters:**
+- You're managing a war, but suddenly an oligarch rivalry demands attention
+- Real crises don't wait in line; neither do game events
+- Creates the feeling of being an overwhelmed autocrat juggling multiple fires
+
+**In practice:**
+1. The player starts the War storyline by authorizing an invasion
+2. That adds `war_goes_badly`, `sanctions_incoming`, `rally_around_flag` to the pool
+3. But the pool also contains events from other storylines (economic crises, oligarch plots)
+4. The player might draw `pension_crisis` before they draw `war_goes_badly`
+5. When they finally draw a war event, it feels like "oh right, that's still happening"
 
 ### Multi-Storyline Events
 
-Events can belong to multiple storylines:
+Events can belong to multiple storylines when they bridge narratives:
 
 ```javascript
 {
