@@ -46,9 +46,9 @@ export const SOCIAL_EVENTS = [
             {
                 text: "Crack down hard",
                 effects: {
-                    anger: 12, // Reduced from 20, but still high
-                    elite: -5, // Uneasy about violence
-                    personalWealth: 5 // Seized assets from protest leaders
+                    anger: 8, // Reduced from 12 - harsh but manageable
+                    elite: -5,
+                    personalWealth: 5
                 },
                 addToPool: ["bloody_sunday_scenario"],
                 removeFromPool: ["mass_protests_blogger"]
@@ -178,8 +178,8 @@ export const SOCIAL_EVENTS = [
                 text: "Double down and crush them",
                 effects: {
                     anger: -15, // Fear suppresses them
-                    elite: -10, // International outcast
-                    treasury: -50 // Massive security operation
+                    elite: -15, // Increased from -10 (depth 3 = 1.5x)
+                    treasury: -75 // Increased from -50
                 },
                 addToPool: ["sanctions_human_rights"],
                 removeFromPool: ["bloody_sunday_scenario"]

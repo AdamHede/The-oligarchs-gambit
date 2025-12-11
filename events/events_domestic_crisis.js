@@ -15,9 +15,9 @@ export const DOMESTIC_EVENTS = [
             {
                 text: "Price controls",
                 effects: {
-                    treasury: -20, // Reduced from -50 (then -30)
+                    treasury: -35, // Increased from -20 (depth 2 = 1.3x)
                     anger: -5,
-                    elite: -2
+                    elite: -3 // Increased from -2
                 },
                 addToPool: ["shortages_black_market", "pension_crisis"]
             },
@@ -49,7 +49,7 @@ export const DOMESTIC_EVENTS = [
                 effects: {
                     anger: -5, // "The Tsar is good"
                     elite: -5, // "The Boyars are bad"
-                    treasury: -60 // Emergency repairs are expensive
+                    treasury: -90 // Increased from -60 (emergency repairs)
                 },
                 addToPool: ["infrastructure_decay"],
                 legacy: { icon: "📢", name: "The Micro-Manager", weight: 2 }
@@ -111,9 +111,9 @@ export const DOMESTIC_EVENTS = [
             {
                 text: "Print money to pay them",
                 effects: {
-                    treasury: -10, // Reduced from -20
+                    treasury: -30, // Increased from -10 (depth 3 = 1.3x)
                     anger: -5,
-                    elite: -2
+                    elite: -3 // Increased from -2
                 },
                 // Removed explicit loop back to inflation_crisis to break the death spiral
                 // addToPool: ["inflation_crisis"] 
@@ -144,7 +144,7 @@ export const DOMESTIC_EVENTS = [
             {
                 text: "Massive modernization program",
                 effects: {
-                    treasury: -100,
+                    treasury: -150, // Increased from -100 (depth 2 = 1.5x)
                     elite: 10, // Contracts for friends
                     anger: -5
                 },

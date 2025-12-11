@@ -3,7 +3,7 @@ export const BASIC_RECURRING_EVENTS = [
         id: "tax_haven_crackdown",
         title: "Offshore Crackdown",
         description: "European regulators are tightening control on offshore accounts. Your assets in Cyprus are under scrutiny.",
-        weight: 10,
+        weight: 3, // Reduced from 10
         storyline: null,
         rarity: "common",
         meta: {
@@ -19,8 +19,8 @@ export const BASIC_RECURRING_EVENTS = [
                     treasury: 0,
                     elite: 0,
                     anger: 0
-                },
-                addToPool: ["tax_haven_crackdown"]
+                }
+                // Removed self-add to break loop
             },
             {
                 text: "Repatriate funds (Tax Amnesty)",
@@ -38,7 +38,7 @@ export const BASIC_RECURRING_EVENTS = [
         id: "brain_drain",
         title: "The Exodus",
         description: "Young IT specialists and engineers are leaving the country in droves, citing lack of improving prospects.",
-        weight: 10,
+        weight: 3, // Reduced from 10
         storyline: null,
         rarity: "common",
         meta: {
@@ -50,20 +50,20 @@ export const BASIC_RECURRING_EVENTS = [
             {
                 text: "Increase IT sector subsidies",
                 effects: {
-                    treasury: -15,
+                    treasury: -25, // Increased from -15
                     anger: -2,
                     elite: 2 // Tech oligarchs happy
-                },
-                addToPool: ["brain_drain"]
+                }
+                // Removed self-add to break loop
             },
             {
                 text: "Close the borders for 'specialists'",
                 effects: {
-                    anger: 10,
-                    elite: -5, // Business suffers
+                    anger: 10, // Reduced from 15 - still harsh but survivable
+                    elite: -5,
                     treasury: 0
-                },
-                addToPool: ["brain_drain"]
+                }
+                // Removed self-add to break loop
             },
             {
                 text: "Institute strict 'Exit Visa' requirements",
@@ -81,7 +81,7 @@ export const BASIC_RECURRING_EVENTS = [
         id: "university_protests",
         title: "Student Unrest",
         description: "Students at the capital's top university are protesting against curriculum changes and lack of freedom.",
-        weight: 8,
+        weight: 3, // Reduced from 8
         storyline: null,
         rarity: "common",
         meta: {
@@ -118,7 +118,7 @@ export const BASIC_RECURRING_EVENTS = [
         id: "arms_deal_opportunity",
         title: "The African Market",
         description: "A regime in Central Africa wants to buy our older military hardware. They pay in gold and diamonds.",
-        weight: 6,
+        weight: 3, // Reduced from 6
         storyline: null,
         rarity: "common",
         meta: {
@@ -131,11 +131,11 @@ export const BASIC_RECURRING_EVENTS = [
                 text: "Authorize the sale",
                 effects: {
                     treasury: 20,
-                    personalWealth: 5, // Commission
-                    elite: 5, // Defense lobby happy
-                    anger: 0
-                },
-                addToPool: ["arms_deal_opportunity"]
+                    personalWealth: 8, // Increased from 5 - greedy bait
+                    elite: 5,
+                    anger: 15 // High - greedy trap
+                }
+                // Removed self-add to break loop
             },
             {
                 text: "Decline (International image)",
@@ -151,7 +151,7 @@ export const BASIC_RECURRING_EVENTS = [
         id: "infrastructure_project",
         title: "The New Highway",
         description: "The Ministry of Transport proposes a new highway connecting the capital to the Urals. A massive project.",
-        weight: 8,
+        weight: 3, // Reduced from 8
         storyline: null,
         rarity: "common",
         meta: {
@@ -163,11 +163,11 @@ export const BASIC_RECURRING_EVENTS = [
             {
                 text: "Approve (Rotenberg gets the contract)",
                 effects: {
-                    treasury: -40,
+                    treasury: -60,
                     elite: 10,
-                    anger: -5
-                },
-                addToPool: ["infrastructure_project"]
+                    anger: 5 // Reduced - public doesn't care as much about infrastructure graft
+                }
+                // Removed self-add to break loop
             },
             {
                 text: "Delay for budget reasons",

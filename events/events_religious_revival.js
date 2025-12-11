@@ -48,9 +48,9 @@ export const RELIGIOUS_EVENTS = [
             {
                 text: "Build it. Make it grand.",
                 effects: {
-                    treasury: -50,
+                    treasury: -75, // Increased from -50 (depth 2 = 1.5x)
                     elite: 10, // Generals + Priests happy
-                    anger: 5 // Waste of money?
+                    anger: 8 // Increased from 5 - waste of money
                 },
                 addToPool: ["patriarch_blessing_nukes"],
                 removeFromPool: ["cathedral_construction"]

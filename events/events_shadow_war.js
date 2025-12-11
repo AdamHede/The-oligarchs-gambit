@@ -182,8 +182,8 @@ export const SHADOW_WAR_EVENTS = [
                 text: "Escalate to open conflict",
                 effects: {
                     elite: 10,
-                    anger: 10,
-                    treasury: -50
+                    anger: 15, // Increased from 10
+                    treasury: -80 // Increased from -50 (depth 2 = 1.6x)
                 },
                 addToPool: ["war_special_operation_proposal"], // Triggers actual war storyline
                 removeFromPool: ["shadow_war_ultimatum"]

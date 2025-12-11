@@ -51,8 +51,8 @@ export const WAR_EVENTS = [
             {
                 text: "Double down: Mobilize more troops",
                 effects: {
-                    treasury: -100,
-                    anger: 15, // Unpopular
+                    treasury: -150,
+                    anger: 15, // Reduced from 20 - still harsh
                     elite: 5
                 },
                 addToPool: ["conscription_crisis", "equipment_shortages"],
@@ -105,8 +105,8 @@ export const WAR_EVENTS = [
             {
                 text: "General mobilization",
                 effects: {
-                    treasury: -50,
-                    anger: 25, // Everyone is mad
+                    treasury: -80,
+                    anger: 25, // Reduced from 30 - still extremely harsh
                     elite: 5
                 },
                 addToPool: ["border_exodus_brain_drain"],
@@ -181,8 +181,8 @@ export const WAR_EVENTS = [
             {
                 text: "Scramble to find supplies",
                 effects: {
-                    treasury: -50,
-                    anger: 5
+                    treasury: -80, // Increased from -50 (depth 5 = 1.6x)
+                    anger: 8 // Increased from 5
                 },
                 removeFromPool: ["equipment_shortages"]
             },
@@ -305,9 +305,9 @@ export const WAR_EVENTS = [
             {
                 text: "Maintain status quo",
                 effects: {
-                    treasury: -2, // Reduced from -5
-                    elite: 0, // Removed penalty (was -1)
-                    anger: 0
+                    treasury: -8, // Increased from -2 - ongoing conflict is expensive
+                    elite: -1, // Added - war fatigue
+                    anger: 2 // Added - war drags on
                 },
                 // Recur
                 addToPool: ["frozen_conflict"]

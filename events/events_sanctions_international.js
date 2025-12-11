@@ -91,7 +91,7 @@ export const SANCTIONS_EVENTS = [
             {
                 text: "Offer massive tax breaks to stay",
                 effects: {
-                    treasury: -100, // Real cost of subsidies
+                    treasury: -150, // Increased from -100 (depth 5 = 1.5x)
                     elite: 5,
                     anger: -5
                 },
@@ -250,7 +250,7 @@ export const SANCTIONS_EVENTS = [
             {
                 text: "Keep paying",
                 effects: {
-                    treasury: -50,
+                    treasury: -80, // Increased from -50 (depth 6 = 1.6x)
                     elite: 2
                 },
                 // Keeps the event in the pool? Or maybe it's a one-off that might recur if we add it back? 

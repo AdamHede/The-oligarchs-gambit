@@ -15,10 +15,10 @@ export const MISC_EVENTS = [
             {
                 text: "Continue business as usual",
                 effects: {
-                    personalWealth: 1,
-                    treasury: 1,
+                    personalWealth: 0,
+                    treasury: -5, // Slight drain - maintenance costs
                     elite: 0,
-                    anger: -1
+                    anger: 0 // Changed from +1 - status quo is neutral
                 },
                 // Reload basic events if the deck gets thin
                 addToPool: ["tax_haven_crackdown", "brain_drain", "university_protests", "arms_deal_opportunity", "infrastructure_project"]

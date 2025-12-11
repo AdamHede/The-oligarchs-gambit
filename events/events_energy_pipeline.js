@@ -27,7 +27,8 @@ export const ENERGY_EVENTS = [
                 effects: {
                     treasury: 100, // Massive profit
                     personalWealth: 10, // Skim off top
-                    elite: 3 // Reduced from 5
+                    elite: 3,
+                    anger: 15 // Increased from 8 - people pay more too, prices spike
                 },
                 addToPool: ["oligarch_bonus_payout", "inflation_crisis"] // Money supply expands
             }
@@ -142,8 +143,9 @@ export const ENERGY_EVENTS = [
                 text: "Pay them handsomely",
                 effects: {
                     elite: 10,
-                    treasury: -50, // Increased from -30
-                    personalWealth: -5
+                    treasury: -70, // Increased from -50
+                    personalWealth: -5,
+                    anger: 5 // Added - public sees favoritism
                 },
                 removeFromPool: ["oligarch_bonus_payout"]
             },
@@ -151,8 +153,9 @@ export const ENERGY_EVENTS = [
                 text: "Keep more for yourself",
                 effects: {
                     personalWealth: 15,
-                    elite: -5,
-                    treasury: -10
+                    elite: -8, // Increased from -5
+                    treasury: -10,
+                    anger: 8 // Added - word gets out
                 },
                 removeFromPool: ["oligarch_bonus_payout"]
             }

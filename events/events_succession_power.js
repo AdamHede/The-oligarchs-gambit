@@ -15,19 +15,19 @@ export const SUCCESSION_EVENTS = [
             {
                 text: "Compensate him fully",
                 effects: {
-                    treasury: -50, // Expensive
-                    elite: 10, // Buying loyalty
-                    anger: 5 // People are hungry
+                    treasury: -70,
+                    elite: 10,
+                    anger: 3 // Reduced from 8 - this is the balanced choice
                 },
                 addToPool: ["oligarch_greed_spiral"]
             },
             {
                 text: "Tell him to be a patriot",
                 effects: {
-                    elite: -15, // Dangerous move
+                    elite: -15,
                     treasury: 0,
-                    personalWealth: 5, // Saved money/seized his other assets? Or just didn't spend it. Let's say seized assets.
-                    anger: -3 // Public likes seeing oligarchs suffer
+                    personalWealth: 10, // Greedy bait
+                    anger: 8 // High - greedy penalty
                 },
                 addToPool: ["oligarch_plotting"]
             }
@@ -80,9 +80,9 @@ export const SUCCESSION_EVENTS = [
             {
                 text: "Pay them all",
                 effects: {
-                    treasury: -100,
+                    treasury: -150, // Increased from -100 (depth 2 = 1.5x)
                     elite: 10,
-                    anger: 10
+                    anger: 15 // Increased from 10
                 },
                 removeFromPool: ["oligarch_greed_spiral"]
             },
@@ -114,14 +114,15 @@ export const SUCCESSION_EVENTS = [
                 effects: {
                     elite: -20, // Increased from -15
                     personalWealth: 20,
-                    treasury: 10
+                    treasury: 10,
+                    anger: 10 // Added - purges create fear and resentment
                 },
                 removeFromPool: ["oligarch_plotting"]
             },
             {
                 text: "Try to buy loyalty",
                 effects: {
-                    treasury: -50,
+                    treasury: -70, // Increased from -50 (depth 2 = 1.4x)
                     elite: 5
                 },
                 removeFromPool: ["oligarch_plotting"]
@@ -177,7 +178,7 @@ export const SUCCESSION_EVENTS = [
                 effects: {
                     elite: -15, // Increased from -10
                     personalWealth: 20, // Seized assets
-                    anger: 5
+                    anger: 12 // Increased from 5 - fear and resentment spread
                 },
                 removeFromPool: ["paranoia_increases"]
             },
