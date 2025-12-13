@@ -20,7 +20,7 @@ export const RELIGIOUS_EVENTS = [
                     treasury: -5 // Donation to church
                 },
                 add: ["cathedral_construction", "anti_lgbt_law_church_demand"],
-                legacy: { icon: "🙏", name: "The Pious", weight: 5 }
+                legacy: { icon: "🙏", name: "The Pious", weight: 5, explanation: "You publicly embraced the faith. God and the Patriarch are on your side." }
             },
             {
                 text: "Decline, keep state secular",
@@ -50,11 +50,12 @@ export const RELIGIOUS_EVENTS = [
                 effects: {
                     treasury: -75, // Increased from -50 (depth 2 = 1.5x)
                     elite: 10, // Generals + Priests happy
-                    anger: 8 // Increased from 5 - waste of money
+                    anger: 8, // Increased from 5 - waste of money
+                    personalWealth: 10 // Construction kickbacks - holy graft
                 },
                 add: ["patriarch_blessing_nukes"],
                 remove: ["cathedral_construction"],
-                legacy: { icon: "⛪", name: "The Architect of Faith", weight: 10 }
+                legacy: { icon: "⛪", name: "The Architect of Faith", weight: 10, explanation: "You built grand churches to glorify... yourself, mostly." }
             },
             {
                 text: "Build a hospital instead",
@@ -208,9 +209,10 @@ export const RELIGIOUS_EVENTS = [
                 text: "Embrace the Holy War",
                 effects: {
                     anger: 15, // Educated people flee
-                    elite: 10
+                    elite: 10,
+                    personalWealth: 8 // "Holy war bonds" - zealous donations funneled your way
                 },
-                legacy: { icon: "✝️", name: "The Crusader", weight: 10 },
+                legacy: { icon: "✝️", name: "The Crusader", weight: 10, explanation: "You weaponized religion for the state. The Patriarch approves." },
                 remove: ["holy_war_declaration"]
             },
             {
@@ -239,9 +241,10 @@ export const RELIGIOUS_EVENTS = [
                 text: "Let them purge",
                 effects: {
                     anger: 20, // Brain drain max
-                    elite: 5
+                    elite: 5,
+                    personalWealth: 15 // Seized "decadent" art and property
                 },
-                legacy: { icon: "🔥", name: "The Inquisitor", weight: 15 },
+                legacy: { icon: "🔥", name: "The Inquisitor", weight: 15, explanation: "You burned the heretics. Medieval, but effective." },
                 remove: ["inquisition_cultural_purge"]
             },
             {

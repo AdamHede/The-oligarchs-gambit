@@ -10,6 +10,7 @@ export class GameUI {
         this.allEvents = allEvents;
         this.debugGraph = null;
         this.bindElements();
+        this.bindLegacyModal();
         this.maxPersonalWealth = 200;
         this.maxTreasury = 2000;
     }
@@ -137,11 +138,50 @@ export class GameUI {
             badge.style.cursor = 'pointer';
 
             badge.addEventListener('click', () => {
-                alert(`${legacy.icon} ${legacy.name}\n\n${explanation}\n\nEffect on Oligarch Score: ${weight > 0 ? '+' : ''}${weight}%`);
+                this.showLegacyModal(legacy);
             });
 
             this.legacyContainer.appendChild(badge);
         });
+    }
+
+    bindLegacyModal() {
+        this.legacyModal = document.getElementById('legacy-modal');
+        this.legacyModalClose = document.getElementById('legacy-modal-close');
+        this.legacyModalIcon = document.getElementById('legacy-modal-icon');
+        this.legacyModalTitle = document.getElementById('legacy-modal-title');
+        this.legacyModalDescription = document.getElementById('legacy-modal-description');
+        this.legacyModalImpact = document.getElementById('legacy-modal-impact');
+
+        if (this.legacyModalClose) {
+            this.legacyModalClose.addEventListener('click', () => {
+                this.legacyModal.classList.remove('active');
+            });
+        }
+
+        if (this.legacyModal) {
+            this.legacyModal.addEventListener('click', (e) => {
+                if (e.target === this.legacyModal) {
+                    this.legacyModal.classList.remove('active');
+                }
+            });
+        }
+    }
+
+    showLegacyModal(legacy) {
+        if (!this.legacyModal) return;
+
+        this.legacyModalIcon.textContent = legacy.icon;
+        this.legacyModalTitle.textContent = legacy.name;
+        this.legacyModalDescription.textContent = legacy.explanation || "No description available.";
+
+        const weight = legacy.weight || 0;
+        const impactText = weight > 0 ? `+${weight}% Oligarch Score` : `${weight}% Oligarch Score`;
+        this.legacyModalImpact.textContent = impactText;
+        this.legacyModalImpact.style.color = weight > 0 ? '#2ecc71' : '#e74c3c';
+        this.legacyModalImpact.style.background = weight > 0 ? 'rgba(46, 204, 113, 0.1)' : 'rgba(231, 76, 60, 0.1)';
+
+        this.legacyModal.classList.add('active');
     }
 
     updateDebugInfo(state) {

@@ -93,6 +93,17 @@ export const SUCCESSION_EVENTS = [
                     anger: 0
                 },
                 remove: ["oligarch_greed_spiral"]
+            },
+            {
+                text: "Pay them... from their own frozen assets abroad",
+                effects: {
+                    treasury: -50,
+                    elite: 5,
+                    personalWealth: 15, // You keep the difference
+                    anger: 5
+                },
+                legacy: { icon: "🎩", name: "The Middleman", weight: 10 },
+                remove: ["oligarch_greed_spiral"]
             }
         ]
     },
@@ -118,7 +129,7 @@ export const SUCCESSION_EVENTS = [
                     anger: 10 // Added - purges create fear and resentment
                 },
                 remove: ["oligarch_plotting"],
-                legacy: { icon: "🔪", name: "The Survivor", weight: 10 }
+                legacy: { icon: "🔪", name: "The Survivor", weight: 10, explanation: "You struck first against the plotters. Ruthless, but effective." }
             },
             {
                 text: "Try to buy loyalty",
@@ -182,7 +193,7 @@ export const SUCCESSION_EVENTS = [
                     anger: 12 // Increased from 5 - fear and resentment spread
                 },
                 remove: ["paranoia_increases"],
-                legacy: { icon: "👑", name: "The Mad King", weight: 15 }
+                legacy: { icon: "👑", name: "The Mad King", weight: 15, explanation: "Your paranoia consumed all reason. The purges will be remembered." }
             },
             {
                 text: "Stop the purge",
@@ -244,10 +255,11 @@ export const SUCCESSION_EVENTS = [
                 effects: {
                     elite: -5, // Liberals unhappy
                     anger: 5, // More repression
-                    treasury: -20 // Security budget increase
+                    treasury: -20, // Security budget increase
+                    personalWealth: 5 // Security services show "gratitude"
                 },
                 add: ["paranoia_increases"],
-                legacy: { icon: "👮", name: "The Strongman", weight: 5 }
+                legacy: { icon: "👮", name: "The Strongman", weight: 5, explanation: "You sided with the security services. Order through strength." }
             },
             {
                 text: "Back the Liberals",
@@ -257,7 +269,7 @@ export const SUCCESSION_EVENTS = [
                     anger: -2
                 },
                 add: ["generals_plotting_coup"],
-                legacy: { icon: "📈", name: "The Reformer", weight: 2 }
+                legacy: { icon: "📈", name: "The Reformer", weight: 2, explanation: "You backed the liberals. Perhaps there's hope for reform yet." }
             }
         ]
     }
