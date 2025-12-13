@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>Folio Edition Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #0f172a;
+            font-family: 'Inter', sans-serif;
+            touch-action: none;
+        }
+
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        #ui-layer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 40px;
+            z-index: 10;
+        }
+
+        .instruction {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            font-weight: 600;
+            text-shadow: 0 2px 8px rgba(15, 23, 42, 0.6);
+            transition: opacity 0.5s ease;
+        }
+
+        .btn-glass {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 14px 42px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: 0 8px 32px rgba(15, 23, 42, 0.3);
+        }
+
+        .btn-glass.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn-glass:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="canvas-container"></div>
+
+    <div id="ui-layer">
+        <div id="hint-text" class="instruction">Swipe Up to Draw</div>
+        <button id="discard-btn" class="btn-glass">DISCARD</button>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const CONFIG = {
+            cardWidth: 2.5,
+            cardHeight: 3.5,
+            cardThickness: 0.04,
+            deckHeight: 0.6,
+            deckY: -3.5,
+            drawnY: 0.0,
+            nudgeStrength: 0.3
+        };
+
+        const STATE = { IDLE: 'idle', DRAGGING: 'dragging', DRAWN: 'drawn', ANIMATING: 'animating' };
+        let currentState = STATE.IDLE;
+
+        let scene, camera, renderer, raycaster;
+        let staticDeckMesh;
+        let activeCard;
+        let cardCounter = 1;
+
+        const mouse = new THREE.Vector2();
+        let isDragging = false;
+        let dragStartY = 0;
+        let dragStartX = 0;
+        let dragStartPos = new THREE.Vector3();
+        let hasMovedSignificantly = false;
+
+        function init() {
+            const container = document.getElementById('canvas-container');
+
+            // 1. Scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0f172a);
+            scene.fog = new THREE.FogExp2(0x0f172a, 0.035);
+
+            // 2. Camera
+            camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 100);
+            updateCameraAndLayout();
+
+            // 3. Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.2; // Slightly reduced from 1.3 to tame highlights
+
+            container.appendChild(renderer.domElement);
+
+            // 4. Lights
+            setupLighting();
+
+            // 5. Environment
+            setupTable();
+
+            // 6. Objects
+            createStaticDeck();
+            spawnNewCard();
+
+            // 7. Inputs
+            raycaster = new THREE.Raycaster();
+            window.addEventListener('resize', onWindowResize);
+
+            container.addEventListener('touchstart', onTouchStart, { passive: false });
+            container.addEventListener('touchmove', onTouchMove, { passive: false });
+            container.addEventListener('touchend', onEnd);
+            container.addEventListener('mousedown', onMouseDown);
+            window.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('mouseup', onEnd);
+
+            document.getElementById('discard-btn').addEventListener('click', discardCard);
+
+            animate();
+        }
+
+        function updateCameraAndLayout() {
+            const aspect = window.innerWidth / window.innerHeight;
+            const isPortrait = aspect < 1;
+
+            let targetDistance, targetHeight;
+
+            if (isPortrait) {
+                targetDistance = 14.0;
+                targetHeight = 0.5;
+            } else {
+                targetDistance = 9.0;
+                targetHeight = 0.5;
+            }
+
+            camera.position.set(0, targetHeight, targetDistance);
+            camera.lookAt(0, 0, 0);
+        }
+
+        function setupLighting() {
+            // 1. Base Ambient - Lifted slightly to prevent black crush
+            const ambient = new THREE.AmbientLight(0x334155, 0.6);
+            scene.add(ambient);
+
+            // 2. Left Softbox
+            // Moved DOWN (Y=2) and BACK (Z=12) to hit the card face more evenly
+            const leftSpot = new THREE.SpotLight(0xfff7ed, 5.0);
+            leftSpot.position.set(-10, 2, 12);
+            leftSpot.angle = Math.PI / 4;
+            leftSpot.penumbra = 1;
+            leftSpot.castShadow = true;
+            leftSpot.shadow.mapSize.width = 2048;
+            leftSpot.shadow.mapSize.height = 2048;
+            leftSpot.lookAt(0, 0, 0);
+            scene.add(leftSpot);
+
+            // 3. Right Softbox (Cooler Fill)
+            // Also lowered and moved back to balance the lighting
+            const rightSpot = new THREE.SpotLight(0xdbeafe, 4.0);
+            rightSpot.position.set(10, 2, 12);
+            rightSpot.angle = Math.PI / 4;
+            rightSpot.penumbra = 1;
+            rightSpot.lookAt(0, 0, 0);
+            scene.add(rightSpot);
+
+            // 4. Rim Light
+            const rimLight = new THREE.SpotLight(0x22d3ee, 3.5);
+            rimLight.position.set(0, 5, -8);
+            rimLight.lookAt(0, 0, 0);
+            scene.add(rimLight);
+
+            // 5. Bottom Fill - New!
+            // A subtle light from below to lift the bottom edge darkness specifically
+            const bottomFill = new THREE.DirectionalLight(0x64748b, 0.8);
+            bottomFill.position.set(0, -5, 2);
+            bottomFill.lookAt(0, 0, 0);
+            scene.add(bottomFill);
+        }
+
+        function setupTable() {
+            const geo = new THREE.PlaneGeometry(100, 100);
+            const mat = new THREE.MeshStandardMaterial({
+                color: 0x0f172a,
+                roughness: 0.6,
+                metalness: 0.1
+            });
+            const plane = new THREE.Mesh(geo, mat);
+            plane.rotation.x = -Math.PI / 2;
+            plane.position.y = CONFIG.deckY - (CONFIG.deckHeight / 2);
+            plane.receiveShadow = true;
+            scene.add(plane);
+        }
+
+        const sharedTex = (function () {
+            const sC = document.createElement('canvas'); sC.width = 64; sC.height = 512;
+            const sCtx = sC.getContext('2d');
+            sCtx.fillStyle = '#ffffff'; sCtx.fillRect(0, 0, 64, 512);
+            sCtx.fillStyle = '#cbd5e1';
+            for (let i = 0; i < 512; i += 2) if (Math.random() > 0.6) sCtx.fillRect(0, i, 64, 1);
+
+            const bC = document.createElement('canvas'); bC.width = 512; bC.height = 716;
+            const bCtx = bC.getContext('2d');
+            bCtx.fillStyle = '#1e293b'; bCtx.fillRect(0, 0, 512, 716);
+            bCtx.strokeStyle = '#334155'; bCtx.lineWidth = 4;
+            bCtx.strokeRect(30, 30, 452, 656);
+            bCtx.save(); bCtx.translate(256, 358); bCtx.rotate(Math.PI / 4);
+            bCtx.fillStyle = '#6366f1'; bCtx.fillRect(-25, -25, 50, 50); bCtx.restore();
+
+            return {
+                side: new THREE.CanvasTexture(sC),
+                back: new THREE.CanvasTexture(bC)
+            };
+        })();
+
+        function createCardTexture(id) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512; canvas.height = 716;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, 512, 716);
+
+            const hue = (id * 137) % 360;
+
+            // GRADIENT TWEAK: Made the bottom lighter (50% -> 60% Lightness)
+            const grad = ctx.createLinearGradient(0, 0, 0, 600);
+            grad.addColorStop(0, `hsl(${hue}, 85%, 75%)`);
+            grad.addColorStop(1, `hsl(${hue}, 70%, 60%)`); // Brighter bottom
+            ctx.fillStyle = grad;
+            ctx.fillRect(25, 25, 462, 450);
+
+            ctx.fillStyle = 'rgba(255,255,255,0.3)';
+            ctx.beginPath(); ctx.arc(256, 250, 140, 0, Math.PI * 2); ctx.fill();
+
+            ctx.fillStyle = '#0f172a';
+            ctx.font = 'bold 52px Inter, sans-serif';
+            ctx.fillText(`MODEL ${id}`, 40, 530);
+
+            ctx.fillStyle = '#64748b';
+            ctx.font = '500 26px Inter, sans-serif';
+            ctx.fillText("First Edition", 40, 570);
+
+            const barY = 620;
+            ctx.fillStyle = '#e2e8f0'; ctx.fillRect(40, barY, 432, 8);
+            ctx.fillStyle = `hsl(${hue}, 70%, 60%)`; ctx.fillRect(40, barY, 432 * (0.3 + Math.random() * 0.6), 8);
+
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        function createStaticDeck() {
+            const geometry = new THREE.BoxGeometry(CONFIG.cardWidth, CONFIG.deckHeight, CONFIG.cardHeight);
+
+            const matSide = new THREE.MeshStandardMaterial({
+                map: sharedTex.side,
+                roughness: 0.8,
+                color: 0xffffff
+            });
+            const matTop = new THREE.MeshStandardMaterial({ map: sharedTex.back, roughness: 0.8 });
+            const matBot = new THREE.MeshStandardMaterial({ color: 0x0f172a });
+
+            staticDeckMesh = new THREE.Mesh(geometry, [matSide, matSide, matTop, matBot, matSide, matSide]);
+            staticDeckMesh.position.set(0, CONFIG.deckY, -1);
+            staticDeckMesh.rotation.y = Math.PI;
+
+            staticDeckMesh.castShadow = true;
+            staticDeckMesh.receiveShadow = true;
+            scene.add(staticDeckMesh);
+        }
+
+        function spawnNewCard() {
+            const geo = new THREE.BoxGeometry(CONFIG.cardWidth, CONFIG.cardThickness, CONFIG.cardHeight);
+            const frontTex = createCardTexture(cardCounter++);
+
+            const matEdge = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.6 });
+            const matBack = new THREE.MeshStandardMaterial({ map: sharedTex.back, roughness: 0.8 });
+
+            const matFront = new THREE.MeshPhysicalMaterial({
+                map: frontTex,
+                color: 0xffffff,
+                metalness: 0.0,
+                roughness: 0.7,
+                clearcoat: 1.0,
+                clearcoatRoughness: 0.15,
+                reflectivity: 0.5
+            });
+
+            const materials = [matEdge, matEdge, matBack, matFront, matEdge, matEdge];
+
+            activeCard = new THREE.Mesh(geo, materials);
+
+            const restingY = CONFIG.deckY + (CONFIG.deckHeight / 2) + (CONFIG.cardThickness / 2);
+            activeCard.position.set(0, restingY, -1);
+            activeCard.rotation.y = Math.PI;
+
+            activeCard.castShadow = true;
+            activeCard.receiveShadow = true;
+
+            activeCard.userData.isCard = true;
+            scene.add(activeCard);
+            currentState = STATE.IDLE;
+        }
+
+        // --- INPUT & ANIMATION ---
+        function onTouchStart(e) { e.preventDefault(); handleStart(e.touches[0].clientX, e.touches[0].clientY); }
+        function onMouseDown(e) { handleStart(e.clientX, e.clientY); }
+
+        function handleStart(x, y) {
+            if (currentState === STATE.ANIMATING || !activeCard) return;
+            mouse.x = (x / window.innerWidth) * 2 - 1;
+            mouse.y = -(y / window.innerHeight) * 2 + 1;
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObject(activeCard);
+            if (intersects.length > 0) {
+                isDragging = true;
+                dragStartY = y;
+                dragStartX = x;
+                dragStartPos.copy(activeCard.position);
+                hasMovedSignificantly = false;
+                if (activeCard.idleTween) activeCard.idleTween.pause();
+                if (activeCard.rotTween) activeCard.rotTween.pause();
+            }
+        }
+
+        function onTouchMove(e) { e.preventDefault(); handleMove(e.touches[0].clientX, e.touches[0].clientY); }
+        function onMouseMove(e) { handleMove(e.clientX, e.clientY); }
+
+        function handleMove(x, y) {
+            if (!isDragging || !activeCard) return;
+            const deltaY = dragStartY - y;
+            const deltaX = dragStartX - x;
+            if (Math.abs(deltaY) > 5 || Math.abs(deltaX) > 5) hasMovedSignificantly = true;
+            if (currentState === STATE.IDLE) {
+                const lift = Math.max(0, deltaY * 0.015);
+                activeCard.position.y = dragStartPos.y + lift;
+                activeCard.position.z = dragStartPos.z + (lift * 0.5);
+                activeCard.rotation.x = (lift * 0.2);
+            }
+        }
+
+        function onEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            if (currentState === STATE.IDLE) {
+                const liftedHeight = activeCard.position.y - dragStartPos.y;
+                if (liftedHeight > 1.2) {
+                    performDraw();
+                } else {
+                    gsap.to(activeCard.position, { x: 0, y: dragStartPos.y, z: dragStartPos.z, duration: 0.5, ease: "power2.out" });
+                    gsap.to(activeCard.rotation, { x: 0, duration: 0.5 });
+                }
+            } else if (currentState === STATE.DRAWN) {
+                if (!hasMovedSignificantly) {
+                    raycaster.setFromCamera(mouse, camera);
+                    const intersects = raycaster.intersectObject(activeCard);
+                    if (intersects.length > 0) nudgeCard(intersects[0].point);
+                }
+                if (activeCard.idleTween) activeCard.idleTween.resume();
+                if (activeCard.rotTween) activeCard.rotTween.resume();
+            }
+        }
+
+        function performDraw() {
+            currentState = STATE.ANIMATING;
+            document.getElementById('hint-text').style.opacity = 0;
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    currentState = STATE.DRAWN;
+                    document.getElementById('discard-btn').classList.add('visible');
+                    document.getElementById('hint-text').innerText = "TAP TO INSPECT";
+                    document.getElementById('hint-text').style.opacity = 1;
+                    startFloat(activeCard);
+                }
+            });
+            const targetZ = camera.position.z - 5.5;
+            tl.to(activeCard.position, { x: 0, y: CONFIG.drawnY, z: targetZ, duration: 1.0, ease: "power3.inOut" });
+            const targetRotX = Math.PI + 0.92;
+            tl.to(activeCard.rotation, { x: targetRotX, y: Math.PI * 2, z: 0, duration: 1.0, ease: "power2.inOut" }, "<");
+        }
+
+        function nudgeCard(point) {
+            const relX = point.x - activeCard.position.x;
+            const relY = point.y - activeCard.position.y;
+            const strength = CONFIG.nudgeStrength;
+            const baseX = Math.PI + 0.92;
+            const targetRotX = baseX - (relY * strength);
+            const targetRotY = (Math.PI * 2) + (relX * strength);
+            gsap.to(activeCard.rotation, {
+                x: targetRotX, y: targetRotY, duration: 0.3, ease: "power2.out", onComplete: () => {
+                    gsap.to(activeCard.rotation, { x: baseX, y: Math.PI * 2, duration: 1.5, ease: "elastic.out(1, 0.3)" });
+                }
+            });
+        }
+
+        function startFloat(card) {
+            card.idleTween = gsap.to(card.position, { y: CONFIG.drawnY + 0.15, duration: 3, yoyo: true, repeat: -1, ease: "sine.inOut" });
+            card.rotTween = gsap.to(card.rotation, { z: 0.02, y: Math.PI * 2 + 0.04, duration: 4, yoyo: true, repeat: -1, ease: "sine.inOut" });
+        }
+
+        function discardCard() {
+            if (currentState !== STATE.DRAWN) return;
+            currentState = STATE.ANIMATING;
+            gsap.to(activeCard.position, {
+                x: 8, y: CONFIG.drawnY + 2, z: -5, duration: 0.6, ease: "power2.in", onComplete: () => {
+                    scene.remove(activeCard);
+                    activeCard = null;
+                    document.getElementById('discard-btn').classList.remove('visible');
+                    document.getElementById('hint-text').innerText = "Swipe Up to Draw";
+                    spawnNewCard();
+                }
+            });
+            gsap.to(activeCard.rotation, { z: -0.5, duration: 0.5 });
+        }
+
+        function onWindowResize() {
+            updateCameraAndLayout();
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

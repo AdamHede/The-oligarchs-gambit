@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Oligarch's Gambit</title>
+    <link rel="stylesheet" href="styles.css?v=2.0.5">
+</head>
+
+<body>
+    <div id="game-container">
+        <!-- Title Screen -->
+        <div id="title-screen" class="screen active">
+            <h1 class="game-title">The Oligarch's Gambit</h1>
+            <p class="subtitle">A Satirical Tale of Power and Wealth</p>
+            <button id="start-game" class="btn-primary">Begin Your Ascent</button>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <!-- Header with Quarter/Year -->
+            <div class="header">
+                <h2 id="current-period">Quarter 1, Year 1</h2>
+            </div>
+
+            <!-- Metrics Display -->
+            <div class="metrics">
+                <div class="metric">
+                    <div class="metric-icon">💰</div>
+                    <div class="metric-info">
+                        <div class="metric-label">Your Wealth</div>
+                        <div class="metric-bar-container">
+                            <div class="metric-bar wealth-bar" id="personal-wealth-bar"></div>
+                        </div>
+                        <div class="metric-value" id="personal-wealth-value">50%</div>
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-icon">🏛️</div>
+                    <div class="metric-info">
+                        <div class="metric-label">State Treasury</div>
+                        <div class="metric-bar-container">
+                            <div class="metric-bar treasury-bar" id="treasury-bar"></div>
+                        </div>
+                        <div class="metric-value" id="treasury-value">50%</div>
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-icon">👔</div>
+                    <div class="metric-info">
+                        <div class="metric-label">Elite Approval</div>
+                        <div class="metric-bar-container">
+                            <div class="metric-bar elite-bar" id="elite-bar"></div>
+                        </div>
+                        <div class="metric-value" id="elite-value">50%</div>
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-icon">😤</div>
+                    <div class="metric-info">
+                        <div class="metric-label">Public Anger</div>
+                        <div class="metric-bar-container">
+                            <div class="metric-bar anger-bar" id="anger-bar"></div>
+                        </div>
+                        <div class="metric-value" id="anger-value">20%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legacy Achievements -->
+            <div id="legacy-container" class="legacy-container"></div>
+
+            <!-- Debug Section -->
+            <div class="debug-section">
+                <details class="debug-details">
+                    <summary class="debug-summary">🐛 Debug Information</summary>
+                    <div class="debug-content">
+                        <div class="debug-info">
+                            <div class="debug-row">
+                                <span class="debug-label">Version:</span>
+                                <span id="debug-version" class="debug-value">-</span>
+                            </div>
+                            <div class="debug-row">
+                                <span class="debug-label">Latest Changes:</span>
+                                <span id="debug-summary" class="debug-value">-</span>
+                            </div>
+                            <div class="debug-row">
+                                <span class="debug-label">Total Events:</span>
+                                <span id="debug-total-events" class="debug-value">-</span>
+                            </div>
+                            <div class="debug-row">
+                                <span class="debug-label">Active Events:</span>
+                                <span id="debug-active-events" class="debug-value">-</span>
+                            </div>
+                        </div>
+
+                        <details class="debug-events-details">
+                            <summary class="debug-events-summary">⚠️ Active Events List (Spoilers!)</summary>
+                            <div id="debug-events-list" class="debug-events-list">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </details>
+
+                        <details class="debug-events-details">
+                            <summary class="debug-events-summary">🌳 Event Tree Structure (Spoilers!)</summary>
+                            <div id="debug-event-tree" class="debug-event-tree">
+                                <div class="debug-tree-stats">
+                                    <p><strong>Loading event tree...</strong></p>
+                                    <p class="debug-tree-hint">Run <code>node analyze-events.js</code> to generate the
+                                        tree data.</p>
+                                </div>
+                            </div>
+                        </details>
+
+                        <details class="debug-events-details">
+                            <summary class="debug-events-summary">🌌 Universe Graph (Interactive)</summary>
+                            <div class="debug-graph-container">
+                                <p style="padding: 15px; text-align: center;">
+                                    <a href="event-lab.html" target="_blank"
+                                        style="color: #d4af37; text-decoration: none; font-weight: bold; font-size: 1.1em;">
+                                        🧪 Open Event Lab →
+                                    </a>
+                                </p>
+                                <p style="padding: 0 15px 15px; text-align: center; color: #b8b8b8; font-size: 0.9em;">
+                                    Full-page interactive event graph visualization
+                                </p>
+                            </div>
+                        </details>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Event Card -->
+            <div id="event-card" class="event-card">
+                <div class="foil-overlay"></div>
+                <div class="event-content">
+                    <div id="storyline-header" class="storyline-header" style="display: none;">
+                        <span id="storyline-icon" class="storyline-icon"></span>
+                        <span id="storyline-name" class="storyline-name"></span>
+                    </div>
+                    <h3 id="event-title" class="event-title"></h3>
+                    <p id="event-description" class="event-description"></p>
+                    <div id="choices-container" class="choices-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="gameover-screen" class="screen">
+            <h1 class="game-title">Game Over</h1>
+            <div id="gameover-reason" class="gameover-reason"></div>
+            <div id="final-stats" class="final-stats"></div>
+            <div id="final-legacy" class="final-legacy"></div>
+            <button id="restart-game" class="btn-primary">Play Again</button>
+        </div>
+    </div>
+
+
+
+    <!-- Legacy Details Modal -->
+    <div id="legacy-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="legacy-modal-close">&times;</button>
+            <div class="modal-icon" id="legacy-modal-icon"></div>
+            <h3 class="modal-title" id="legacy-modal-title"></h3>
+            <p class="modal-description" id="legacy-modal-description"></p>
+            <div class="modal-impact" id="legacy-modal-impact"></div>
+        </div>
+    </div>
+
+    <!-- Cytoscape.js for graph visualization -->
+    <script src="https://unpkg.com/cytoscape@3/dist/cytoscape.min.js"></script>
+
+    <!-- Main Game Script (ES Module) -->
+    <script type="module" src="game.js?v=2.0.5"></script>
+</body>
+
+</html>
