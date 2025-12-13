@@ -61,7 +61,8 @@ export const BASIC_RECURRING_EVENTS = [
                 effects: {
                     anger: 10, // Reduced from 15 - still harsh but survivable
                     elite: -5,
-                    treasury: 0
+                    treasury: 0,
+                    personalWealth: 3 // Brain drain = cheap labor remains, your companies benefit
                 }
                 // Removed self-add to break loop
             },
@@ -101,7 +102,8 @@ export const BASIC_RECURRING_EVENTS = [
                 text: "Expel the ringleaders",
                 effects: {
                     anger: 5,
-                    elite: 1 // "Strong hand"
+                    elite: 1, // "Strong hand"
+                    personalWealth: 2 // Their wealthy parents make "donations" to get them quietly reinstated
                 },
                 // Removed self-add loop: add: ["university_protests"]
             },
@@ -131,7 +133,7 @@ export const BASIC_RECURRING_EVENTS = [
                 text: "Authorize the sale",
                 effects: {
                     treasury: 20,
-                    personalWealth: 8, // Increased from 5 - greedy bait
+                    personalWealth: 12, // Diamonds and gold - very lucrative
                     elite: 5,
                     anger: 15 // High - greedy trap
                 }
@@ -165,9 +167,10 @@ export const BASIC_RECURRING_EVENTS = [
                 effects: {
                     treasury: -100, // Massive national project
                     elite: 10,
-                    anger: 5 // Reduced - public doesn't care as much about infrastructure graft
+                    anger: 5, // Reduced - public doesn't care as much about infrastructure graft
+                    personalWealth: 8 // Kickback from Rotenberg's $100B contract
                 },
-                // Removed self-add to break loop
+                legacy: { icon: "🛣️", name: "The Road Builder", weight: 5 }
             },
             {
                 text: "Delay for budget reasons",
@@ -200,7 +203,7 @@ export const BASIC_RECURRING_EVENTS = [
                     elite: 2,
                     anger: 5 // Anti-corruption investigation fodder
                 },
-                legacy: { icon: "🏒", name: "The Hockey Player", weight: 0 }
+                legacy: { icon: "🏒", name: "The Hockey Player", weight: 0, explanation: "Your hockey prowess is legendary. Your political skills, less so." }
             },
             {
                 text: "Modest repairs only",

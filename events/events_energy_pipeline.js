@@ -20,7 +20,7 @@ export const ENERGY_EVENTS = [
                     anger: 5 // Domestic prices rise too?
                 },
                 add: ["europe_freezes_propaganda", "budget_deficit_energy", "counter_sanctions_energy"],
-                legacy: { icon: "❄️", name: "The Coldmaker", weight: -5 }
+                legacy: { icon: "❄️", name: "The Coldmaker", weight: -5, explanation: "You cut off gas supplies to freeze Europe. They won't forget." }
             },
             {
                 text: "Sell at maximum price",
@@ -112,7 +112,8 @@ export const ENERGY_EVENTS = [
                 text: "Raise domestic prices",
                 effects: {
                     treasury: 20,
-                    anger: 10
+                    anger: 10,
+                    personalWealth: 3 // Price increase markup goes to your distributors
                 },
                 remove: ["budget_deficit_energy"]
             },
@@ -152,12 +153,13 @@ export const ENERGY_EVENTS = [
             {
                 text: "Keep more for yourself",
                 effects: {
-                    personalWealth: 15,
+                    personalWealth: 20, // Fatter cut
                     elite: -8, // Increased from -5
                     treasury: -10,
                     anger: 8 // Added - word gets out
                 },
-                remove: ["oligarch_bonus_payout"]
+                remove: ["oligarch_bonus_payout"],
+                legacy: { icon: "💰", name: "The Greedy", weight: -10 }
             }
         ]
     },

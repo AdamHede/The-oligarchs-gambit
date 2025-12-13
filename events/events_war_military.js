@@ -21,7 +21,7 @@ export const WAR_EVENTS = [
                     anger: 5
                 },
                 add: ["war_goes_badly", "sanctions_initial_wave", "rally_around_flag"],
-                legacy: { icon: "⚔️", name: "The Invader", weight: -10 }
+                legacy: { icon: "⚔️", name: "The Invader", weight: -10, explanation: "You launched a full-scale invasion of a sovereign nation. History will not be kind." }
             },
             {
                 text: "Reject the plan",
@@ -31,7 +31,7 @@ export const WAR_EVENTS = [
                     anger: -5
                 },
                 add: ["generals_plotting_coup"],
-                legacy: { icon: "🕊️", name: "The Peacemaker", weight: 5 }
+                legacy: { icon: "🕊️", name: "The Peacemaker", weight: 5, explanation: "You chose diplomacy over war. A rare moment of restraint." }
             }
         ]
     },
@@ -53,7 +53,8 @@ export const WAR_EVENTS = [
                 effects: {
                     treasury: -150,
                     anger: 15, // Reduced from 20 - still harsh
-                    elite: 5
+                    elite: 5,
+                    personalWealth: 5 // War contracts for your friends (who share...)
                 },
                 add: ["conscription_crisis", "equipment_shortages"],
                 remove: ["war_goes_badly"]
@@ -76,7 +77,7 @@ export const WAR_EVENTS = [
                 },
                 add: ["frozen_conflict"],
                 remove: ["war_goes_badly", "conscription_crisis", "equipment_shortages", "generals_plotting_coup", "rural_unrest", "border_exodus_brain_drain"],
-                legacy: { icon: "🐈", name: "The Paper Tiger", weight: -10 }
+                legacy: { icon: "🐈", name: "The Paper Tiger", weight: -10, explanation: "Your military threats proved hollow. The world saw through your bluff." }
             }
         ]
     },
@@ -98,17 +99,20 @@ export const WAR_EVENTS = [
                 effects: {
                     treasury: -20,
                     anger: 5, // Urban elite don't care
-                    elite: 0
+                    elite: 0,
+                    personalWealth: 5 // Urban conscription buyouts - the wealthy pay to keep their sons home
                 },
                 add: ["rural_unrest"],
-                remove: ["conscription_crisis"]
+                remove: ["conscription_crisis"],
+                legacy: { icon: "👑", name: "The Class Divider", weight: -5 }
             },
             {
                 text: "General mobilization",
                 effects: {
                     treasury: -80,
                     anger: 25, // Reduced from 30 - still extremely harsh
-                    elite: 5
+                    elite: 5,
+                    personalWealth: 3 // Defense industry "consulting fees"
                 },
                 add: ["border_exodus_brain_drain"],
                 remove: ["conscription_crisis"]
@@ -132,7 +136,8 @@ export const WAR_EVENTS = [
                 text: "Capitalize on the momentum",
                 effects: {
                     elite: 5,
-                    anger: -5
+                    anger: -5,
+                    personalWealth: 5 // Patriotic donations to "defense fund" (your pocket)
                 }
             }
         ]

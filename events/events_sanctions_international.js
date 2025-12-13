@@ -62,7 +62,7 @@ export const SANCTIONS_EVENTS = [
                     elite: -2, // You look silly
                     anger: 2
                 },
-                legacy: { icon: "🤡", name: "The Laughing Stock", weight: -5 }
+                legacy: { icon: "🤡", name: "The Laughing Stock", weight: -5, explanation: "Your pathetic retaliation made you a global joke." }
             }
         ]
     },
@@ -85,7 +85,7 @@ export const SANCTIONS_EVENTS = [
                     anger: 15,
                     elite: -10, // Draconian measures scare investors
                     treasury: -10, // Enforcement costs
-                    personalWealth: 5 // Seized assets from fleeing traitors
+                    personalWealth: 10 // Seized assets from fleeing "traitors"
                 },
                 add: ["underground_railroad"]
             },
@@ -266,6 +266,16 @@ export const SANCTIONS_EVENTS = [
                     treasury: 0
                 },
                 add: ["tech_sector_collapse"], // Risk of it happening again
+                remove: ["subsidy_dependency"]
+            },
+            {
+                text: "Restructure subsidies through your holding company",
+                effects: {
+                    treasury: -60,
+                    elite: 0,
+                    personalWealth: 12 // Subsidy laundering
+                },
+                legacy: { icon: "🏦", name: "The Subsidy King", weight: 5 },
                 remove: ["subsidy_dependency"]
             }
         ]

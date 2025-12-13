@@ -20,7 +20,7 @@ export const SHADOW_WAR_EVENTS = [
                     anger: 0
                 },
                 add: ["assassination_attempt_botched", "shadow_war_ultimatum"],
-                legacy: { icon: "☂️", name: "The Silencer", weight: 5 }
+                legacy: { icon: "☂️", name: "The Silencer", weight: 5, explanation: "The traitor was eliminated. A message sent to all who would betray the motherland." }
             },
             {
                 text: "Let him publish",
@@ -115,7 +115,7 @@ export const SHADOW_WAR_EVENTS = [
                 },
                 add: ["shadow_war_ultimatum"],
                 remove: ["assassination_attempt_botched"],
-                legacy: { icon: "🕵️‍♂️", name: "The Bumbling Assassin", weight: -5 }
+                legacy: { icon: "🕵️‍♂️", name: "The Bumbling Assassin", weight: -5, explanation: "Your assassination attempt failed spectacularly. An international embarrassment." }
             },
             {
                 text: "Make a joke of it",
@@ -178,7 +178,7 @@ export const SHADOW_WAR_EVENTS = [
                     anger: -5 // War avoided
                 },
                 remove: ["shadow_war_ultimatum", "assassination_attempt_botched", "cyber_attack_grid"],
-                legacy: { icon: "🐀", name: "The Betrayer", weight: -15 }
+                legacy: { icon: "🐀", name: "The Betrayer", weight: -15, explanation: "You surrendered a loyal agent to save yourself. Loyalty means nothing to you." }
             },
             {
                 text: "Escalate to open conflict",

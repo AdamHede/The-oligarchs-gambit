@@ -52,7 +52,7 @@ export const DOMESTIC_EVENTS = [
                     treasury: -30 // Reduced from -90 (emergency repair vs national project)
                 },
                 add: ["infrastructure_decay"],
-                legacy: { icon: "📢", name: "The Micro-Manager", weight: 2 }
+                legacy: { icon: "📢", name: "The Micro-Manager", weight: 2, explanation: "You personally managed the price of eggs. Such attention to detail!" }
             },
             {
                 text: "Ignore it",
@@ -89,7 +89,8 @@ export const DOMESTIC_EVENTS = [
                 text: "Turn a blind eye",
                 effects: {
                     anger: -3,
-                    treasury: -15 // Lost tax revenue
+                    treasury: -15, // Lost tax revenue
+                    personalWealth: 5 // Your people run the black market
                 },
                 remove: ["shortages_black_market"]
             }
@@ -117,17 +118,17 @@ export const DOMESTIC_EVENTS = [
                 },
                 // Removed explicit loop back to inflation_crisis to break the death spiral
                 // addToPool: ["inflation_crisis"] 
-                legacy: { icon: "💸", name: "The Money Printer", weight: 0 }
+                legacy: { icon: "💸", name: "The Money Printer", weight: 0, explanation: "You printed money to solve your problems. Hyperinflation will be your legacy." }
             },
             {
                 text: "Raise retirement age",
                 effects: {
                     anger: 10, // Reduced from 15
-                    treasury: 40, // Increased from 30
+                    treasury: 30, // Reduced from 40 to balance wealth gain
                     elite: 5,
-                    treasury: 40 // Increased from 30
+                    personalWealth: 8 // "Administrative savings" diverted
                 },
-                legacy: { icon: "📉", name: "The Iron Accountant", weight: 5 }
+                legacy: { icon: "📉", name: "The Iron Accountant", weight: 5, explanation: "You accepted the pain of austerity. The budget will thank you." }
             }
         ]
     },
@@ -152,13 +153,14 @@ export const DOMESTIC_EVENTS = [
                     anger: -5
                 },
                 remove: ["infrastructure_decay"],
-                legacy: { icon: "🏗️", name: "The Builder", weight: 10 }
+                legacy: { icon: "🏗️", name: "The Builder", weight: 10, explanation: "You invested in infrastructure for the people. A rare moment of generosity." }
             },
             {
                 text: "Patch it up cheaply",
                 effects: {
                     treasury: -20,
-                    anger: 5
+                    anger: 5,
+                    personalWealth: 5 // Pocket the difference
                 },
                 add: ["infrastructure_decay"]
             }

@@ -48,7 +48,7 @@ export const SOCIAL_EVENTS = [
                 effects: {
                     anger: 8, // Reduced from 12 - harsh but manageable
                     elite: -5,
-                    personalWealth: 5
+                    personalWealth: 8 // Seize protest leaders' assets
                 },
                 add: ["bloody_sunday_scenario"],
                 remove: ["mass_protests_blogger"]
@@ -113,7 +113,8 @@ export const SOCIAL_EVENTS = [
                 effects: {
                     elite: 5,
                     treasury: -10,
-                    anger: 8 // Economic pain felt by common people
+                    anger: 8, // Economic pain felt by common people
+                    personalWealth: 5 // Parallel import schemes you profit from
                 },
                 remove: ["sanctions_human_rights"]
             },
@@ -179,10 +180,12 @@ export const SOCIAL_EVENTS = [
                 effects: {
                     anger: -15, // Fear suppresses them
                     elite: -15, // Increased from -10 (depth 3 = 1.5x)
-                    treasury: -75 // Increased from -50
+                    treasury: -75, // Increased from -50
+                    personalWealth: 10 // "Anti-terrorism fund" raids on dissidents
                 },
                 add: ["sanctions_human_rights"],
-                remove: ["bloody_sunday_scenario"]
+                remove: ["bloody_sunday_scenario"],
+                legacy: { icon: "💀", name: "The Butcher", weight: 20 }
             },
             {
                 text: "Back down",
