@@ -595,7 +595,7 @@
             cardThickness: 0.04,
             deckHeight: 0.6,
             deckY: -3.5,
-            drawnY: 0.0,
+            drawnY: 0.4,
             nudgeStrength: 0.3
         };
 
@@ -701,15 +701,38 @@
                 }
             }
 
+            // Storyline border colors (distinct per storyline)
+            const storylineBorderColors = {
+                'war-invasion': '#dc2626',      // Red
+                'energy-politics': '#f59e0b',   // Amber
+                'oligarch-rivalry': '#7c3aed',  // Purple
+                'sanctions-spiral': '#2563eb',  // Blue
+                'succession-crisis': '#d97706', // Orange
+                'popular-uprising': '#ef4444',  // Red-orange
+                'domestic-crisis': '#64748b',   // Slate
+                'religious-revival': '#a855f7', // Violet
+                'shadow-war': '#374151'         // Dark gray
+            };
+
+            // Rarity colors
+            const rarityColors = {
+                'common': '#9ca3af',     // Gray
+                'rare': '#3b82f6',       // Blue
+                'epic': '#a855f7',       // Purple  
+                'legendary': '#f59e0b'   // Gold
+            };
 
             // Function to draw card content (background + text)
             function drawCardContent(imgInfo) {
+                const rarity = event.rarity || 'common';
+                const storylines = event.storylines || (event.storyline ? [event.storyline] : []);
+                const storyline = storylines[0] || '';
+
                 // Background - Dark Mode
                 ctx.fillStyle = '#1e293b';
                 ctx.fillRect(0, 0, 512, 716);
 
-                // Storyline color base
-                const storylines = event.storylines || (event.storyline ? [event.storyline] : []);
+                // Storyline color base (for gradients)
                 const storylineColors = {
                     'war-invasion': { h: 0, s: 70, l: 55 },
                     'energy-politics': { h: 45, s: 85, l: 55 },
@@ -717,45 +740,142 @@
                     'sanctions-spiral': { h: 210, s: 70, l: 50 },
                     'succession-crisis': { h: 35, s: 90, l: 50 },
                     'popular-uprising': { h: 15, s: 80, l: 55 },
-                    'domestic-crisis': { h: 200, s: 50, l: 45 }
+                    'domestic-crisis': { h: 200, s: 50, l: 45 },
+                    'religious-revival': { h: 270, s: 60, l: 55 },
+                    'shadow-war': { h: 220, s: 20, l: 30 }
                 };
 
-                const storyline = storylines[0] || '';
                 const color = storylineColors[storyline] || { h: (event.id.length * 37) % 360, s: 70, l: 60 };
 
-                // Draw Image or Gradient Placeholder
+                // ============================================
+                // STORYLINE FRAME BORDER (6px)
+                // ============================================
+                const borderColor = storylineBorderColors[storyline] || '#475569';
+                const borderWidth = 6;
+
+                // Draw outer frame
+                ctx.strokeStyle = borderColor;
+                ctx.lineWidth = borderWidth;
+                ctx.strokeRect(borderWidth / 2, borderWidth / 2, 512 - borderWidth, 716 - borderWidth);
+
+                // Add inner glow effect for the border
+                ctx.save();
+                ctx.strokeStyle = borderColor;
+                ctx.lineWidth = 2;
+                ctx.globalAlpha = 0.3;
+                ctx.strokeRect(borderWidth + 2, borderWidth + 2, 512 - borderWidth * 2 - 4, 716 - borderWidth * 2 - 4);
+                ctx.restore();
+
+                // ============================================
+                // RARITY CORNER DECORATIONS
+                // ============================================
+                const cornerSize = 40;
+                const rarityColor = rarityColors[rarity] || rarityColors['common'];
+
+                if (rarity !== 'common') {
+                    ctx.save();
+
+                    // Corner triangles with metallic gradient
+                    const drawCorner = (x, y, flipX, flipY) => {
+                        ctx.save();
+                        ctx.translate(x, y);
+                        ctx.scale(flipX, flipY);
+
+                        // Create gradient for metallic effect
+                        const grad = ctx.createLinearGradient(0, 0, cornerSize, cornerSize);
+                        if (rarity === 'legendary') {
+                            grad.addColorStop(0, '#fef3c7');
+                            grad.addColorStop(0.3, '#f59e0b');
+                            grad.addColorStop(0.6, '#fbbf24');
+                            grad.addColorStop(1, '#d97706');
+                        } else if (rarity === 'epic') {
+                            grad.addColorStop(0, '#e9d5ff');
+                            grad.addColorStop(0.5, '#a855f7');
+                            grad.addColorStop(1, '#7c3aed');
+                        } else { // rare
+                            grad.addColorStop(0, '#dbeafe');
+                            grad.addColorStop(0.5, '#3b82f6');
+                            grad.addColorStop(1, '#1d4ed8');
+                        }
+
+                        ctx.fillStyle = grad;
+                        ctx.beginPath();
+                        ctx.moveTo(0, 0);
+                        ctx.lineTo(cornerSize, 0);
+                        ctx.lineTo(0, cornerSize);
+                        ctx.closePath();
+                        ctx.fill();
+
+                        // Add shine line
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(cornerSize * 0.2, cornerSize * 0.1);
+                        ctx.lineTo(cornerSize * 0.1, cornerSize * 0.2);
+                        ctx.stroke();
+
+                        ctx.restore();
+                    };
+
+                    // Draw all four corners
+                    drawCorner(borderWidth, borderWidth, 1, 1);           // Top-left
+                    drawCorner(512 - borderWidth, borderWidth, -1, 1);     // Top-right
+                    drawCorner(borderWidth, 716 - borderWidth, 1, -1);     // Bottom-left
+                    drawCorner(512 - borderWidth, 716 - borderWidth, -1, -1); // Bottom-right
+
+                    ctx.restore();
+                }
+
+                // ============================================
+                // LEGENDARY OUTER GLOW
+                // ============================================
+                if (rarity === 'legendary') {
+                    ctx.save();
+                    ctx.shadowColor = '#f59e0b';
+                    ctx.shadowBlur = 15;
+                    ctx.strokeStyle = 'rgba(245, 158, 11, 0.5)';
+                    ctx.lineWidth = 3;
+                    ctx.strokeRect(1, 1, 510, 714);
+                    ctx.restore();
+                }
+
+                // Draw Image or Gradient Placeholder (inset by border)
                 const imgHeight = 350;
+                const imgInset = borderWidth + 4;
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.rect(imgInset, imgInset, 512 - imgInset * 2, imgHeight - imgInset);
+                ctx.clip();
+
                 if (imgInfo && imgInfo.loaded) {
                     try {
-                        // Draw image ensuring it covers the area
-                        // Calculate aspect ratio to 'cover'
                         const sWidth = imgInfo.img.width;
                         const sHeight = imgInfo.img.height;
-                        const dWidth = 512;
-                        const dHeight = imgHeight;
+                        const dWidth = 512 - imgInset * 2;
+                        const dHeight = imgHeight - imgInset;
 
                         const scale = Math.max(dWidth / sWidth, dHeight / sHeight);
-                        const x = (dWidth - sWidth * scale) / 2;
-                        const y = (dHeight - sHeight * scale) / 2;
+                        const x = imgInset + (dWidth - sWidth * scale) / 2;
+                        const y = imgInset + (dHeight - sHeight * scale) / 2;
 
                         ctx.drawImage(imgInfo.img, 0, 0, sWidth, sHeight, x, y, sWidth * scale, sHeight * scale);
 
-                        // Add a gradient overlay at the bottom of the image for text readability transition
-                        // Fades to Dark Background
+                        // Gradient overlay for text transition
                         const overlay = ctx.createLinearGradient(0, imgHeight - 100, 0, imgHeight);
-                        overlay.addColorStop(0, 'rgba(30, 41, 59, 0)'); // #1e293b transparent
+                        overlay.addColorStop(0, 'rgba(30, 41, 59, 0)');
                         overlay.addColorStop(1, '#1e293b');
                         ctx.fillStyle = overlay;
-                        ctx.fillRect(0, imgHeight - 100, 512, 100);
+                        ctx.fillRect(imgInset, imgHeight - 100, 512 - imgInset * 2, 100);
 
                     } catch (e) {
                         console.warn('Error drawing image', e);
-                        // Fallback to gradient if drawing fails
-                        drawGradient(ctx, color, imgHeight);
+                        drawGradient(ctx, color, imgHeight, imgInset);
                     }
                 } else {
-                    drawGradient(ctx, color, imgHeight);
+                    drawGradient(ctx, color, imgHeight, imgInset);
                 }
+                ctx.restore();
 
                 // Title - White
                 ctx.fillStyle = '#ffffff';
@@ -769,7 +889,7 @@
                 let currentLine = '';
                 titleWords.forEach(word => {
                     const testLine = currentLine ? currentLine + ' ' + word : word;
-                    if (ctx.measureText(testLine).width > 430) {
+                    if (ctx.measureText(testLine).width > 420) {
                         titleLines.push(currentLine);
                         currentLine = word;
                     } else {
@@ -784,8 +904,7 @@
                     titleY += 38;
                 });
 
-                // Storyline tag (Draw ON TOP of image if exists, or just below header)
-                // Let's put it top left with a background pill
+                // Storyline tag pill
                 if (storyline) {
                     const tagNames = {
                         'war-invasion': '⚔️ WAR',
@@ -794,24 +913,45 @@
                         'sanctions-spiral': '🚫 SANCTIONS',
                         'succession-crisis': '👑 SUCCESSION',
                         'popular-uprising': '🔥 UPRISING',
-                        'domestic-crisis': '🏛️ CRISIS'
+                        'domestic-crisis': '🏛️ CRISIS',
+                        'religious-revival': '✝️ FAITH',
+                        'shadow-war': '🕵️ SHADOW'
                     };
 
                     const tagText = tagNames[storyline] || storyline.toUpperCase();
                     ctx.font = 'bold 14px Inter, sans-serif';
                     const textWidth = ctx.measureText(tagText).width;
 
-                    // Pill background
+                    // Pill with storyline color
                     ctx.save();
-                    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                    ctx.fillStyle = borderColor;
+                    ctx.globalAlpha = 0.9;
                     ctx.beginPath();
-                    ctx.roundRect(30, 30, textWidth + 24, 30, 15);
+                    ctx.roundRect(20, 20, textWidth + 24, 30, 15);
                     ctx.fill();
+                    ctx.globalAlpha = 1.0;
 
-                    // Text
                     ctx.fillStyle = '#ffffff';
                     ctx.textAlign = 'center';
-                    ctx.fillText(tagText, 30 + (textWidth + 24) / 2, 50);
+                    ctx.fillText(tagText, 20 + (textWidth + 24) / 2, 40);
+                    ctx.restore();
+                }
+
+                // Rarity badge (top-right)
+                if (rarity !== 'common') {
+                    ctx.save();
+                    const badgeText = rarity.toUpperCase();
+                    ctx.font = 'bold 12px Inter, sans-serif';
+                    const badgeWidth = ctx.measureText(badgeText).width + 16;
+
+                    ctx.fillStyle = rarityColor;
+                    ctx.beginPath();
+                    ctx.roundRect(512 - badgeWidth - 20, 20, badgeWidth, 26, 13);
+                    ctx.fill();
+
+                    ctx.fillStyle = rarity === 'legendary' ? '#1e293b' : '#ffffff';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(badgeText, 512 - badgeWidth / 2 - 20, 38);
                     ctx.restore();
                 }
 
@@ -825,7 +965,7 @@
                 currentLine = '';
                 descWords.forEach(word => {
                     const testLine = currentLine ? currentLine + ' ' + word : word;
-                    if (ctx.measureText(testLine).width > 430) {
+                    if (ctx.measureText(testLine).width > 420) {
                         if (descLines.length < 5) {
                             descLines.push(currentLine);
                         }
@@ -845,22 +985,22 @@
                     descY += 26;
                 });
 
-                // Bottom accent bar
-                ctx.fillStyle = `hsl(${color.h}, ${color.s}%, ${color.l}%)`;
-                ctx.fillRect(40, 670, 432, 6);
+                // Bottom accent bar (storyline color)
+                ctx.fillStyle = borderColor;
+                ctx.fillRect(borderWidth + 10, 716 - borderWidth - 16, 512 - borderWidth * 2 - 20, 6);
 
-                // Border around image area to separate from content - Darker
-                ctx.strokeStyle = '#334155';
+                // Subtle inner border line
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
                 ctx.lineWidth = 1;
-                ctx.strokeRect(0, imgHeight, 512, 1);
+                ctx.strokeRect(borderWidth + 1, imgHeight, 512 - borderWidth * 2 - 2, 1);
             }
 
-            function drawGradient(ctx, color, height) {
+            function drawGradient(ctx, color, height, inset = 0) {
                 const grad = ctx.createLinearGradient(0, 0, 0, height);
-                grad.addColorStop(0, `hsl(${color.h}, ${color.s}%, ${color.l - 20}%)`); // Darker gradient
+                grad.addColorStop(0, `hsl(${color.h}, ${color.s}%, ${color.l - 20}%)`);
                 grad.addColorStop(1, `hsl(${color.h}, ${color.s - 10}%, ${color.l - 30}%)`);
                 ctx.fillStyle = grad;
-                ctx.fillRect(0, 0, 512, height);
+                ctx.fillRect(inset, inset, 512 - inset * 2, height - inset);
 
                 // Placeholder Icon
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
@@ -951,9 +1091,9 @@
             const isPortrait = aspect < 1;
 
             if (isPortrait) {
-                camera.position.set(0, 0.5, 14.0);
+                camera.position.set(0, 0.5, 16.0);
             } else {
-                camera.position.set(0, 0.5, 9.0);
+                camera.position.set(0, 0.5, 10.5);
             }
             camera.lookAt(0, 0, 0);
         }
@@ -1031,23 +1171,78 @@
         function spawnCardForEvent(event) {
             if (activeCard) {
                 scene.remove(activeCard);
+                // Clean up any particles
+                if (activeCard.userData.particles) {
+                    scene.remove(activeCard.userData.particles);
+                }
                 activeCard = null;
             }
 
+            const rarity = event.rarity || 'common';
             const geo = new THREE.BoxGeometry(CONFIG.cardWidth, CONFIG.cardThickness, CONFIG.cardHeight);
             const frontTex = createEventTexture(event);
 
-            const matEdge = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.6 });
+            // Rarity-based material properties
+            const rarityMaterials = {
+                common: {
+                    metalness: 0.0,
+                    roughness: 0.65,
+                    clearcoat: 0.8,
+                    clearcoatRoughness: 0.2,
+                    reflectivity: 0.4
+                },
+                rare: {
+                    metalness: 0.1,
+                    roughness: 0.5,
+                    clearcoat: 1.0,
+                    clearcoatRoughness: 0.1,
+                    reflectivity: 0.6,
+                    iridescence: 0.4,
+                    iridescenceIOR: 1.5
+                },
+                epic: {
+                    metalness: 0.15,
+                    roughness: 0.4,
+                    clearcoat: 1.0,
+                    clearcoatRoughness: 0.05,
+                    reflectivity: 0.7,
+                    iridescence: 0.7,
+                    iridescenceIOR: 1.8,
+                    sheen: 0.5,
+                    sheenRoughness: 0.3,
+                    sheenColor: new THREE.Color(0xa855f7)
+                },
+                legendary: {
+                    metalness: 0.2,
+                    roughness: 0.3,
+                    clearcoat: 1.0,
+                    clearcoatRoughness: 0.0,
+                    reflectivity: 0.8,
+                    iridescence: 1.0,
+                    iridescenceIOR: 2.0,
+                    sheen: 1.0,
+                    sheenRoughness: 0.2,
+                    sheenColor: new THREE.Color(0xf59e0b)
+                }
+            };
+
+            const matProps = rarityMaterials[rarity] || rarityMaterials.common;
+
+            // Edge material - shimmery for higher rarities
+            const edgeColor = rarity === 'legendary' ? 0xfaf5e0 :
+                rarity === 'epic' ? 0xf5f0fa :
+                    rarity === 'rare' ? 0xf0f5ff : 0xffffff;
+            const matEdge = new THREE.MeshStandardMaterial({
+                color: edgeColor,
+                roughness: rarity === 'legendary' ? 0.3 : 0.6,
+                metalness: rarity === 'legendary' ? 0.3 : 0.0
+            });
             const matBack = new THREE.MeshStandardMaterial({ map: sharedTex.back, roughness: 0.8 });
 
             const matFront = new THREE.MeshPhysicalMaterial({
                 map: frontTex,
                 color: 0xffffff,
-                metalness: 0.0,
-                roughness: 0.7,
-                clearcoat: 1.0,
-                clearcoatRoughness: 0.15,
-                reflectivity: 0.5
+                ...matProps
             });
 
             const materials = [matEdge, matEdge, matBack, matFront, matEdge, matEdge];
@@ -1060,16 +1255,110 @@
             activeCard.castShadow = true;
             activeCard.receiveShadow = true;
             activeCard.userData.isCard = true;
+            activeCard.userData.rarity = rarity;
 
             scene.add(activeCard);
+
+            // Create particle system for legendary cards
+            if (rarity === 'legendary') {
+                createLegendaryParticles(activeCard);
+            }
+
             drawState = DRAW_STATE.IDLE;
 
-            // Auto-draw immediately
+            // Auto-draw with rarity-based delay
+            const drawDelay = rarity === 'legendary' ? 800 :
+                rarity === 'epic' ? 700 : 600;
             setTimeout(() => {
                 if (activeCard && drawState === DRAW_STATE.IDLE) {
                     performDraw();
                 }
-            }, 600); // Short delay for "spawn" effect visibility
+            }, drawDelay);
+        }
+
+        // Particle system for legendary cards
+        function createLegendaryParticles(card) {
+            const particleCount = 20;
+            const positions = new Float32Array(particleCount * 3);
+            const velocities = [];
+
+            for (let i = 0; i < particleCount; i++) {
+                // Distribute around card edges
+                const edge = Math.floor(Math.random() * 4);
+                let x, y, z;
+
+                switch (edge) {
+                    case 0: // Top
+                        x = (Math.random() - 0.5) * CONFIG.cardWidth;
+                        z = -CONFIG.cardHeight / 2;
+                        break;
+                    case 1: // Bottom
+                        x = (Math.random() - 0.5) * CONFIG.cardWidth;
+                        z = CONFIG.cardHeight / 2;
+                        break;
+                    case 2: // Left
+                        x = -CONFIG.cardWidth / 2;
+                        z = (Math.random() - 0.5) * CONFIG.cardHeight;
+                        break;
+                    case 3: // Right
+                        x = CONFIG.cardWidth / 2;
+                        z = (Math.random() - 0.5) * CONFIG.cardHeight;
+                        break;
+                }
+                y = (Math.random() - 0.5) * 0.1;
+
+                positions[i * 3] = x;
+                positions[i * 3 + 1] = y;
+                positions[i * 3 + 2] = z;
+
+                velocities.push({
+                    x: (Math.random() - 0.5) * 0.002,
+                    y: Math.random() * 0.003 + 0.001,
+                    z: (Math.random() - 0.5) * 0.002
+                });
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: 0xf59e0b,
+                size: 0.03,
+                transparent: true,
+                opacity: 0.4,
+                blending: THREE.AdditiveBlending,
+                sizeAttenuation: true
+            });
+
+            const particles = new THREE.Points(geometry, material);
+            particles.userData.velocities = velocities;
+            particles.userData.positions = positions;
+
+            card.add(particles);
+            card.userData.particles = particles;
+        }
+
+        function updateParticles() {
+            if (!activeCard || !activeCard.userData.particles) return;
+
+            const particles = activeCard.userData.particles;
+            const positions = particles.geometry.attributes.position.array;
+            const velocities = particles.userData.velocities;
+
+            for (let i = 0; i < velocities.length; i++) {
+                positions[i * 3] += velocities[i].x;
+                positions[i * 3 + 1] += velocities[i].y;
+                positions[i * 3 + 2] += velocities[i].z;
+
+                // Reset particle when it drifts too far
+                if (positions[i * 3 + 1] > 0.5) {
+                    positions[i * 3 + 1] = -0.1;
+                    positions[i * 3] = (Math.random() - 0.5) * CONFIG.cardWidth;
+                    positions[i * 3 + 2] = (Math.random() - 0.5) * CONFIG.cardHeight;
+                }
+            }
+
+            particles.geometry.attributes.position.needsUpdate = true;
         }
 
         // ============================================================
@@ -1135,9 +1424,10 @@
             } else if (drawState === DRAW_STATE.DRAWN) {
                 // Elastic Drag Logic
                 // Convert screen delta to world movement roughly
-                const sensitivity = 0.01;
+                // Low sensitivity for a heavy, museum-like feel
+                const sensitivity = 0.003;
                 activeCard.position.x = dragStartPos.x - (deltaX * sensitivity);
-                activeCard.position.y = dragStartPos.y - (deltaY * sensitivity);
+                activeCard.position.y = dragStartPos.y + (deltaY * sensitivity);
 
                 // Add some tilt based on movement for feel
                 activeCard.rotation.z = -(deltaX * 0.002);
@@ -1193,6 +1483,18 @@
             drawState = DRAW_STATE.ANIMATING;
             document.getElementById('hint-text').style.opacity = 0;
 
+            const rarity = activeCard?.userData?.rarity || 'common';
+
+            // Rarity-based animation timings
+            const animConfig = {
+                common: { duration: 0.8, ease: "power3.inOut", rotDuration: 0.8 },
+                rare: { duration: 0.9, ease: "power3.inOut", rotDuration: 0.9 },
+                epic: { duration: 1.0, ease: "power2.inOut", rotDuration: 1.0 },
+                legendary: { duration: 1.2, ease: "back.out(1.2)", rotDuration: 1.2 }
+            };
+
+            const config = animConfig[rarity] || animConfig.common;
+
             const tl = gsap.timeline({
                 onComplete: () => {
                     drawState = DRAW_STATE.DRAWN;
@@ -1202,22 +1504,87 @@
             });
 
             const targetZ = camera.position.z - 5.5;
-            tl.to(activeCard.position, {
-                x: 0,
-                y: CONFIG.drawnY,
-                z: targetZ,
-                duration: 1.0,
-                ease: "power3.inOut"
-            });
 
-            const targetRotX = Math.PI + 0.92;
-            tl.to(activeCard.rotation, {
-                x: targetRotX,
-                y: Math.PI * 2,
-                z: 0,
-                duration: 1.0,
-                ease: "power2.inOut"
-            }, "<");
+            // Legendary: add dramatic pause and extra rotation
+            if (rarity === 'legendary') {
+                // Brief pause/anticipation
+                tl.to(activeCard.position, {
+                    y: activeCard.position.y + 0.3,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+
+                // Main draw with dramatic arc
+                tl.to(activeCard.position, {
+                    x: 0,
+                    y: CONFIG.drawnY,
+                    z: targetZ,
+                    duration: config.duration,
+                    ease: config.ease
+                });
+
+                // Extra rotation flourish
+                const targetRotX = Math.PI + 0.92;
+                tl.to(activeCard.rotation, {
+                    x: targetRotX,
+                    y: Math.PI * 2 + 0.2, // Slight extra spin
+                    z: 0.05, // Slight tilt
+                    duration: config.rotDuration,
+                    ease: "elastic.out(1, 0.5)"
+                }, "<0.1");
+
+                // Settle to final rotation
+                tl.to(activeCard.rotation, {
+                    y: Math.PI * 2,
+                    z: 0,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+
+            } else if (rarity === 'epic') {
+                // Epic: smooth with slight flourish
+                tl.to(activeCard.position, {
+                    x: 0,
+                    y: CONFIG.drawnY,
+                    z: targetZ,
+                    duration: config.duration,
+                    ease: config.ease
+                });
+
+                const targetRotX = Math.PI + 0.92;
+                tl.to(activeCard.rotation, {
+                    x: targetRotX,
+                    y: Math.PI * 2,
+                    z: 0.02,
+                    duration: config.rotDuration,
+                    ease: "power2.inOut"
+                }, "<");
+
+                tl.to(activeCard.rotation, {
+                    z: 0,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+
+            } else {
+                // Common/Rare: clean, quick entrance
+                tl.to(activeCard.position, {
+                    x: 0,
+                    y: CONFIG.drawnY,
+                    z: targetZ,
+                    duration: config.duration,
+                    ease: config.ease
+                });
+
+                const targetRotX = Math.PI + 0.92;
+                tl.to(activeCard.rotation, {
+                    x: targetRotX,
+                    y: Math.PI * 2,
+                    z: 0,
+                    duration: config.rotDuration,
+                    ease: "power2.inOut"
+                }, "<");
+            }
         }
 
         function nudgeCard(point) {
@@ -1621,6 +1988,7 @@
 
         function animate() {
             requestAnimationFrame(animate);
+            updateParticles();
             renderer.render(scene, camera);
         }
 
