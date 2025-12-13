@@ -18,8 +18,8 @@ const VERSION = '1.0.0';
 const INITIAL_STATS = {
     personalWealth: 10,
     treasury: 1000,
-    elite: 90,
-    anger: 10
+    elite: 50,  // Reduced from 90 - start closer to danger
+    anger: 30   // Raised from 10 - start closer to danger
 };
 
 const STAT_BOUNDS = {

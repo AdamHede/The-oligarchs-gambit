@@ -3,7 +3,7 @@ export const BASIC_RECURRING_EVENTS = [
         id: "tax_haven_crackdown",
         title: "Offshore Crackdown",
         description: "European regulators are tightening control on offshore accounts. Your assets in Cyprus are under scrutiny.",
-        weight: 3, // Reduced from 10
+        weight: 3,
         storyline: null,
         rarity: "common",
         meta: {
@@ -15,20 +15,19 @@ export const BASIC_RECURRING_EVENTS = [
             {
                 text: "Move funds to Dubai",
                 effects: {
-                    personalWealth: -5, // Transaction costs
+                    personalWealth: -5,
                     treasury: 0,
                     elite: 0,
                     anger: 0
                 }
-                // Removed self-add to break loop
             },
             {
                 text: "Repatriate funds (Tax Amnesty)",
                 effects: {
-                    personalWealth: -10, // Taxes
+                    personalWealth: -10,
                     treasury: 5,
-                    elite: -2, // "Going legitimate?"
-                    anger: -2 // "Patriotic act"
+                    elite: -4,  // 2x from -2
+                    anger: -4   // 2x from -2
                 },
                 remove: ["tax_haven_crackdown"]
             }
@@ -38,7 +37,7 @@ export const BASIC_RECURRING_EVENTS = [
         id: "brain_drain",
         title: "The Exodus",
         description: "Young IT specialists and engineers are leaving the country in droves, citing lack of improving prospects.",
-        weight: 2, // Reduced from 3 to prevent repetition
+        weight: 2,
         storyline: null,
         rarity: "common",
         meta: {
@@ -48,33 +47,31 @@ export const BASIC_RECURRING_EVENTS = [
         },
         choices: [
             {
-                text: "Increase IT sector subsidies",
+                text: "Increase IT subsidies—your IT holding company gets the contracts",
                 effects: {
-                    treasury: -25, // Increased from -15
-                    anger: -2,
-                    elite: 2 // Tech oligarchs happy
+                    treasury: -25,
+                    anger: -4,   // 2x from -2
+                    elite: 4,    // 2x from 2
+                    personalWealth: 3  // Added wealth gain
                 }
-                // Removed self-add to break loop
             },
             {
                 text: "Close the borders for 'specialists'",
                 effects: {
-                    anger: 10, // Reduced from 15 - still harsh but survivable
-                    elite: -5,
+                    anger: 20,   // 2x from 10
+                    elite: -10,  // 2x from -5
                     treasury: 0,
-                    personalWealth: 3 // Brain drain = cheap labor remains, your companies benefit
+                    personalWealth: 5  // Increased from 3
                 }
-                // Removed self-add to break loop
             },
             {
                 text: "Institute strict 'Exit Visa' requirements",
                 effects: {
-                    treasury: -5, // Bureaucracy costs
-                    elite: -10, // They hate being trapped
-                    anger: 15, // People are furious
+                    treasury: -5,
+                    elite: -20,  // 2x from -10
+                    anger: 30,   // 2x from 15
                     personalWealth: 0
                 }
-                // Effectively solves the brain drain by force
             }
         ]
     },
@@ -82,7 +79,7 @@ export const BASIC_RECURRING_EVENTS = [
         id: "university_protests",
         title: "Student Unrest",
         description: "Students at the capital's top university are protesting against curriculum changes and lack of freedom.",
-        weight: 3, // Reduced from 8
+        weight: 3,
         storyline: null,
         rarity: "common",
         meta: {
@@ -94,24 +91,23 @@ export const BASIC_RECURRING_EVENTS = [
             {
                 text: "Ignore them",
                 effects: {
-                    anger: 2,
+                    anger: 4,    // 2x from 2
                     elite: 0
                 }
             },
             {
-                text: "Expel the ringleaders",
+                text: "Expel the ringleaders—their parents pay 'administrative fees' to avoid prison",
                 effects: {
-                    anger: 5,
-                    elite: 1, // "Strong hand"
-                    personalWealth: 2 // Their wealthy parents make "donations" to get them quietly reinstated
-                },
-                // Removed self-add loop: add: ["university_protests"]
+                    anger: 10,   // 2x from 5
+                    elite: 2,    // 2x from 1
+                    personalWealth: 4  // 2x from 2
+                }
             },
             {
                 text: "Meet with student leaders",
                 effects: {
-                    anger: -2,
-                    elite: -2 // "Weakness"
+                    anger: -4,   // 2x from -2
+                    elite: -4    // 2x from -2
                 }
             }
         ]
@@ -120,7 +116,7 @@ export const BASIC_RECURRING_EVENTS = [
         id: "arms_deal_opportunity",
         title: "The African Market",
         description: "A regime in Central Africa wants to buy our older military hardware. They pay in gold and diamonds.",
-        weight: 3, // Reduced from 6
+        weight: 3,
         storyline: null,
         rarity: "common",
         meta: {
@@ -133,17 +129,16 @@ export const BASIC_RECURRING_EVENTS = [
                 text: "Authorize the sale",
                 effects: {
                     treasury: 20,
-                    personalWealth: 12, // Diamonds and gold - very lucrative
-                    elite: 5,
-                    anger: 15 // High - greedy trap
+                    personalWealth: 15,  // Increased from 12
+                    elite: 10,   // 2x from 5
+                    anger: 30    // 2x from 15
                 }
-                // Removed self-add to break loop
             },
             {
                 text: "Decline (International image)",
                 effects: {
                     treasury: 0,
-                    elite: -5,
+                    elite: -10,  // 2x from -5
                     anger: 0
                 }
             }
@@ -153,7 +148,7 @@ export const BASIC_RECURRING_EVENTS = [
         id: "infrastructure_project",
         title: "The New Highway",
         description: "The Ministry of Transport proposes a new highway connecting the capital to the Urals. A massive project.",
-        weight: 3, // Reduced from 8
+        weight: 3,
         storyline: null,
         rarity: "common",
         meta: {
@@ -163,12 +158,12 @@ export const BASIC_RECURRING_EVENTS = [
         },
         choices: [
             {
-                text: "Approve (Rotenberg gets the contract)",
+                text: "Approve it—Rotenberg kicks back 10% to 'the foundation'",
                 effects: {
-                    treasury: -100, // Massive national project
-                    elite: 10,
-                    anger: 5, // Reduced - public doesn't care as much about infrastructure graft
-                    personalWealth: 8 // Kickback from Rotenberg's $100B contract
+                    treasury: -100,
+                    elite: 20,   // 2x from 10
+                    anger: 10,   // 2x from 5
+                    personalWealth: 12  // Increased from 8
                 },
                 legacy: { icon: "🛣️", name: "The Road Builder", weight: 5 }
             },
@@ -176,8 +171,8 @@ export const BASIC_RECURRING_EVENTS = [
                 text: "Delay for budget reasons",
                 effects: {
                     treasury: 0,
-                    elite: -5,
-                    anger: 2
+                    elite: -10,  // 2x from -5
+                    anger: 4     // 2x from 2
                 }
             }
         ]
@@ -196,12 +191,12 @@ export const BASIC_RECURRING_EVENTS = [
         },
         choices: [
             {
-                text: "Spare no expense",
+                text: "Spare no expense—your Swiss contractor is very loyal",
                 effects: {
-                    treasury: -35, // Increased from -10 (Luxury scale correction)
-                    personalWealth: 0,
-                    elite: 2,
-                    anger: 5 // Anti-corruption investigation fodder
+                    treasury: -35,
+                    personalWealth: 5,  // Added wealth gain
+                    elite: 4,    // 2x from 2
+                    anger: 10    // 2x from 5
                 },
                 legacy: { icon: "🏒", name: "The Hockey Player", weight: 0, explanation: "Your hockey prowess is legendary. Your political skills, less so." }
             },
@@ -209,8 +204,8 @@ export const BASIC_RECURRING_EVENTS = [
                 text: "Modest repairs only",
                 effects: {
                     treasury: -2,
-                    elite: -2, // "Are you poor?"
-                    anger: -1
+                    elite: -4,   // 2x from -2
+                    anger: -2    // 2x from -1
                 }
             }
         ]

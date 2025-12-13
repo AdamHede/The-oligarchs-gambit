@@ -2,7 +2,7 @@ export const ENERGY_EVENTS = [
     {
         id: "energy_price_spike",
         title: "Winter is Coming",
-        description: "Global energy prices have spiked. Europe is desperate for gas. You have your hand on the valve.",
+        description: "Global energy prices have spiked. Europe is desperate for gas. You have your hand on the valve. Gazprom's 'special trading subsidiary'—your offshore shell company—takes a 2% cut on every transaction.",
         weight: 8,
         storyline: "energy-politics",
         rarity: "rare",
@@ -15,9 +15,9 @@ export const ENERGY_EVENTS = [
             {
                 text: "Cut off the gas to Europe",
                 effects: {
-                    treasury: -50, // Lost revenue
-                    elite: 10, // Geopolitical power move (reduced from 15)
-                    anger: 5 // Domestic prices rise too?
+                    treasury: -50,
+                    elite: 20,   // 2x from 10
+                    anger: 10    // 2x from 5
                 },
                 add: ["europe_freezes_propaganda", "budget_deficit_energy", "counter_sanctions_energy"],
                 legacy: { icon: "❄️", name: "The Coldmaker", weight: -5, explanation: "You cut off gas supplies to freeze Europe. They won't forget." }
@@ -25,19 +25,19 @@ export const ENERGY_EVENTS = [
             {
                 text: "Sell at maximum price",
                 effects: {
-                    treasury: 100, // Massive profit
-                    personalWealth: 10, // Skim off top
-                    elite: 3,
-                    anger: 15 // Increased from 8 - people pay more too, prices spike
+                    treasury: 100,
+                    personalWealth: 15,  // Increased from 10
+                    elite: 6,    // 2x from 3
+                    anger: 30    // 2x from 15
                 },
-                add: ["oligarch_bonus_payout", "inflation_crisis"] // Money supply expands
+                add: ["oligarch_bonus_payout", "inflation_crisis"]
             }
         ]
     },
     {
         id: "pipeline_sabotage",
         title: "Pipeline Mystery",
-        description: "One of your major undersea pipelines has exploded. No one knows who did it, but everyone is pointing fingers.",
+        description: "One of your major undersea pipelines has exploded. No one knows who did it, but everyone is pointing fingers. The insurance payout is generous—routed through your personal reinsurance scheme.",
         weight: 4,
         storyline: "energy-politics",
         rarity: "epic",
@@ -50,8 +50,9 @@ export const ENERGY_EVENTS = [
             {
                 text: "Blame Western spies",
                 effects: {
-                    anger: -5, // Rally effect
-                    elite: 2
+                    anger: -10,  // 2x from -5
+                    elite: 4,    // 2x from 2
+                    personalWealth: 5  // Added - insurance fraud
                 },
                 add: ["shadow_war_escalation"]
             },
@@ -59,7 +60,7 @@ export const ENERGY_EVENTS = [
                 text: "Quietly repair it",
                 effects: {
                     treasury: -40,
-                    personalWealth: -2
+                    personalWealth: -4  // 2x from -2
                 }
             }
         ]
@@ -67,7 +68,7 @@ export const ENERGY_EVENTS = [
     {
         id: "europe_freezes_propaganda",
         title: "Winter of Discontent",
-        description: "Europe is freezing without your gas. State media is broadcasting images of cold Europeans while your people stay warm. The propaganda value is immense.",
+        description: "Europe is freezing without your gas. State media is broadcasting images of cold Europeans while your people stay warm. Your daughter's production company handles the 'documentary' contracts.",
         weight: 0,
         storyline: "energy-politics",
         rarity: "common",
@@ -80,16 +81,17 @@ export const ENERGY_EVENTS = [
             {
                 text: "Amplify the propaganda",
                 effects: {
-                    elite: 3, // Reduced from 5
-                    anger: -3
+                    elite: 6,    // 2x from 3
+                    anger: -6,   // 2x from -3
+                    personalWealth: 3  // Added - media budget skimming
                 },
-                add: ["counter_sanctions_energy"], // Risk
+                add: ["counter_sanctions_energy"],
                 remove: ["europe_freezes_propaganda"]
             },
             {
                 text: "Focus on domestic issues",
                 effects: {
-                    anger: -2
+                    anger: -4    // 2x from -2
                 },
                 remove: ["europe_freezes_propaganda"]
             }
@@ -109,11 +111,11 @@ export const ENERGY_EVENTS = [
         },
         choices: [
             {
-                text: "Raise domestic prices",
+                text: "Raise domestic prices—your trading desk profits from the volatility",
                 effects: {
                     treasury: 20,
-                    anger: 10,
-                    personalWealth: 3 // Price increase markup goes to your distributors
+                    anger: 20,   // 2x from 10
+                    personalWealth: 6  // 2x from 3
                 },
                 remove: ["budget_deficit_energy"]
             },
@@ -121,7 +123,7 @@ export const ENERGY_EVENTS = [
                 text: "Cut other spending",
                 effects: {
                     treasury: 10,
-                    elite: -5
+                    elite: -10   // 2x from -5
                 },
                 remove: ["budget_deficit_energy"]
             }
@@ -143,20 +145,20 @@ export const ENERGY_EVENTS = [
             {
                 text: "Pay them handsomely",
                 effects: {
-                    elite: 10,
-                    treasury: -70, // Increased from -50
+                    elite: 20,   // 2x from 10
+                    treasury: -70,
                     personalWealth: -5,
-                    anger: 5 // Added - public sees favoritism
+                    anger: 10    // 2x from 5
                 },
                 remove: ["oligarch_bonus_payout"]
             },
             {
                 text: "Keep more for yourself",
                 effects: {
-                    personalWealth: 20, // Fatter cut
-                    elite: -8, // Increased from -5
+                    personalWealth: 30,  // Increased from 20
+                    elite: -16,  // 2x from -8
                     treasury: -10,
-                    anger: 8 // Added - word gets out
+                    anger: 16    // 2x from 8
                 },
                 remove: ["oligarch_bonus_payout"],
                 legacy: { icon: "💰", name: "The Greedy", weight: -10 }
@@ -179,9 +181,9 @@ export const ENERGY_EVENTS = [
             {
                 text: "Stop selling to them",
                 effects: {
-                    treasury: -30, // Revenue loss
-                    elite: 2,
-                    anger: 5
+                    treasury: -30,
+                    elite: 4,    // 2x from 2
+                    anger: 10    // 2x from 5
                 },
                 add: ["budget_deficit_energy"],
                 remove: ["counter_sanctions_energy"]
@@ -189,8 +191,9 @@ export const ENERGY_EVENTS = [
             {
                 text: "Sell through intermediaries",
                 effects: {
-                    treasury: -10, // Middlemen take a cut
-                    elite: -2 // Look weak
+                    treasury: -10,
+                    elite: -4,   // 2x from -2
+                    personalWealth: 5  // Added - middleman fees
                 },
                 remove: ["counter_sanctions_energy"]
             }
@@ -212,16 +215,16 @@ export const ENERGY_EVENTS = [
             {
                 text: "Escalate the shadow war",
                 effects: {
-                    elite: 5,
+                    elite: 10,   // 2x from 5
                     treasury: -20,
-                    anger: 5
+                    anger: 10    // 2x from 5
                 },
                 remove: ["shadow_war_escalation"]
             },
             {
                 text: "De-escalate",
                 effects: {
-                    elite: -3,
+                    elite: -6,   // 2x from -3
                     treasury: -10
                 },
                 remove: ["shadow_war_escalation"]

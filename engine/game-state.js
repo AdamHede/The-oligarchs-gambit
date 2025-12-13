@@ -15,8 +15,8 @@ function createInitialState(initialStats = {}, initialDeck = []) {
         stats: {
             personalWealth: initialStats.personalWealth || 10,
             treasury: initialStats.treasury || 1000,
-            elite: initialStats.elite || 90,
-            anger: initialStats.anger || 10,
+            elite: initialStats.elite || 50,  // Reduced from 90 - start closer to danger
+            anger: initialStats.anger || 30,  // Raised from 10 - start closer to danger
             ...initialStats
         },
         counters: {},

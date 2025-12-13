@@ -15,16 +15,17 @@ export const SOCIAL_EVENTS = [
             {
                 text: "Claim it belongs to your friend",
                 effects: {
-                    elite: 5, // Friend takes the fall (and a favor)
-                    anger: 5 // Nobody believes you
+                    elite: 10,   // 2x from 5
+                    anger: 10    // 2x from 5
                 },
                 add: ["palace_denial_memes"]
             },
             {
-                text: "Arrest the blogger",
+                text: "Arrest the blogger—seize his 'Anti-Corruption Foundation' funds",
                 effects: {
-                    anger: 15, // Martyrdom
-                    elite: 5 // Strength
+                    anger: 30,   // 2x from 15
+                    elite: 10,   // 2x from 5
+                    personalWealth: 10  // Added - seize blogger's assets
                 },
                 add: ["mass_protests_blogger", "sanctions_human_rights"]
             }
@@ -34,7 +35,7 @@ export const SOCIAL_EVENTS = [
         id: "mass_protests_blogger",
         title: "Snow Revolution",
         description: "Thousands are in the streets demanding your resignation. They are throwing snowballs at the riot police.",
-        weight: 0, // Triggered
+        weight: 0,
         storyline: "popular-uprising",
         rarity: "epic",
         meta: {
@@ -44,11 +45,11 @@ export const SOCIAL_EVENTS = [
         },
         choices: [
             {
-                text: "Crack down hard",
+                text: "Crack down hard—arrested protesters pay hefty fines",
                 effects: {
-                    anger: 8, // Reduced from 12 - harsh but manageable
-                    elite: -5,
-                    personalWealth: 8 // Seize protest leaders' assets
+                    anger: 16,   // 2x from 8
+                    elite: -10,  // 2x from -5
+                    personalWealth: 12  // Increased from 8
                 },
                 add: ["bloody_sunday_scenario"],
                 remove: ["mass_protests_blogger"]
@@ -56,8 +57,8 @@ export const SOCIAL_EVENTS = [
             {
                 text: "Wait it out",
                 effects: {
-                    elite: -10, // Looking weak
-                    anger: -5 // Lose momentum
+                    elite: -20,  // 2x from -10
+                    anger: -10   // 2x from -5
                 },
                 add: ["emboldened_opposition"],
                 remove: ["mass_protests_blogger"]
@@ -80,16 +81,16 @@ export const SOCIAL_EVENTS = [
             {
                 text: "Ignore the memes",
                 effects: {
-                    anger: 5,
-                    elite: -2
+                    anger: 10,   // 2x from 5
+                    elite: -4    // 2x from -2
                 },
                 remove: ["palace_denial_memes"]
             },
             {
                 text: "Try to suppress them",
                 effects: {
-                    anger: 10,
-                    elite: -5
+                    anger: 20,   // 2x from 10
+                    elite: -10   // 2x from -5
                 },
                 remove: ["palace_denial_memes"]
             }
@@ -109,21 +110,21 @@ export const SOCIAL_EVENTS = [
         },
         choices: [
             {
-                text: "Defy the sanctions",
+                text: "Defy the sanctions—'repatriate' frozen assets through friendly intermediaries",
                 effects: {
-                    elite: 5,
+                    elite: 10,   // 2x from 5
                     treasury: -10,
-                    anger: 8, // Economic pain felt by common people
-                    personalWealth: 5 // Parallel import schemes you profit from
+                    anger: 16,   // 2x from 8
+                    personalWealth: 10  // Increased from 5
                 },
                 remove: ["sanctions_human_rights"]
             },
             {
                 text: "Try to negotiate",
                 effects: {
-                    elite: -5,
+                    elite: -10,  // 2x from -5
                     personalWealth: -5,
-                    treasury: 20 // Unlocked funds
+                    treasury: 20
                 },
                 remove: ["sanctions_human_rights"]
             }
@@ -146,18 +147,18 @@ export const SOCIAL_EVENTS = [
                 text: "Bribe their leaders",
                 effects: {
                     treasury: -20,
-                    elite: -2,
-                    anger: -2
+                    elite: -4,   // 2x from -2
+                    anger: -4    // 2x from -2
                 },
                 remove: ["emboldened_opposition"]
             },
             {
                 text: "Let them march",
                 effects: {
-                    anger: 10,
-                    elite: -5
+                    anger: 20,   // 2x from 10
+                    elite: -10   // 2x from -5
                 },
-                add: ["mass_protests_blogger"], // Cycles back
+                add: ["mass_protests_blogger"],
                 remove: ["emboldened_opposition"]
             }
         ]
@@ -176,12 +177,12 @@ export const SOCIAL_EVENTS = [
         },
         choices: [
             {
-                text: "Double down and crush them",
+                text: "Double down—the martial law emergency fund is loosely audited",
                 effects: {
-                    anger: -15, // Fear suppresses them
-                    elite: -15, // Increased from -10 (depth 3 = 1.5x)
-                    treasury: -75, // Increased from -50
-                    personalWealth: 10 // "Anti-terrorism fund" raids on dissidents
+                    anger: -30,  // 2x from -15
+                    elite: -30,  // 2x from -15
+                    treasury: -75,
+                    personalWealth: 15  // Increased from 10
                 },
                 add: ["sanctions_human_rights"],
                 remove: ["bloody_sunday_scenario"],
@@ -190,8 +191,8 @@ export const SOCIAL_EVENTS = [
             {
                 text: "Back down",
                 effects: {
-                    elite: -20, // Weakness (increased from -15)
-                    anger: -5 // Appeased
+                    elite: -40,  // 2x from -20
+                    anger: -10   // 2x from -5
                 },
                 remove: ["bloody_sunday_scenario"]
             }

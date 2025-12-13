@@ -15,19 +15,19 @@ export const SUCCESSION_EVENTS = [
             {
                 text: "Compensate him fully",
                 effects: {
-                    treasury: -25, // Adjusted from -70 based on coherence application
-                    elite: 10,
-                    anger: 3 // Reduced from 8 - this is the balanced choice
+                    treasury: -25,
+                    elite: 20,   // 2x from 10
+                    anger: 6     // 2x from 3
                 },
                 add: ["oligarch_greed_spiral"]
             },
             {
-                text: "Tell him to be a patriot",
+                text: "Tell him to be a patriot—you'll 'safeguard' his domestic assets",
                 effects: {
-                    elite: -15,
+                    elite: -30,  // 2x from -15
                     treasury: 0,
-                    personalWealth: 10, // Greedy bait
-                    anger: 8 // High - greedy penalty
+                    personalWealth: 15,  // Increased from 10
+                    anger: 16    // 2x from 8
                 },
                 add: ["oligarch_plotting"]
             }
@@ -36,7 +36,7 @@ export const SUCCESSION_EVENTS = [
     {
         id: "health_scare_rumors",
         title: "Trembling Hands",
-        description: "A video of you gripping a table during a meeting has gone viral. Rumors of your ill health are spreading among the elite. The sharks are circling.",
+        description: "A video of you gripping a table during a meeting has gone viral. Rumors of your ill health are spreading among the elite. The sharks are circling. Their sudden 'retirements' could come with asset seizures for 'tax irregularities'...",
         weight: 6,
         storyline: "succession-crisis",
         rarity: "epic",
@@ -49,16 +49,16 @@ export const SUCCESSION_EVENTS = [
             {
                 text: "Stage a judo match",
                 effects: {
-                    elite: 5, // Show strength
-                    anger: -2
+                    elite: 10,   // 2x from 5
+                    anger: -4    // 2x from -2
                 },
                 add: ["body_double_auditions"]
             },
             {
                 text: "Purge the 'disloyal' gossipers",
                 effects: {
-                    elite: -10, // Fear
-                    personalWealth: 5 // Seize their assets
+                    elite: -20,  // 2x from -10
+                    personalWealth: 10  // Increased from 5
                 },
                 add: ["paranoia_increases"]
             }
@@ -80,27 +80,27 @@ export const SUCCESSION_EVENTS = [
             {
                 text: "Pay them all",
                 effects: {
-                    treasury: -150, // Increased from -100 (depth 2 = 1.5x)
-                    elite: 10,
-                    anger: 15 // Increased from 10
+                    treasury: -150,
+                    elite: 20,   // 2x from 10
+                    anger: 30    // 2x from 15
                 },
                 remove: ["oligarch_greed_spiral"]
             },
             {
                 text: "Refuse",
                 effects: {
-                    elite: -5,
+                    elite: -10,  // 2x from -5
                     anger: 0
                 },
                 remove: ["oligarch_greed_spiral"]
             },
             {
-                text: "Pay them... from their own frozen assets abroad",
+                text: "Pay them... through your offshore trust (pocket the 'admin fee')",
                 effects: {
                     treasury: -50,
-                    elite: 5,
-                    personalWealth: 15, // You keep the difference
-                    anger: 5
+                    elite: 10,   // 2x from 5
+                    personalWealth: 20,  // Increased from 15
+                    anger: 10    // 2x from 5
                 },
                 legacy: { icon: "🎩", name: "The Middleman", weight: 10 },
                 remove: ["oligarch_greed_spiral"]
@@ -110,7 +110,7 @@ export const SUCCESSION_EVENTS = [
     {
         id: "oligarch_plotting",
         title: "The Plot Thickens",
-        description: "The Aluminum King's anger has spread. Other oligarchs are quietly discussing your removal. The sharks are circling.",
+        description: "The Aluminum King's anger has spread. Other oligarchs are quietly discussing your removal. The plotters' combined assets exceed $40 billion. After show trials, it could all be yours.",
         weight: 0,
         storyline: "oligarch-rivalry",
         rarity: "epic",
@@ -123,10 +123,10 @@ export const SUCCESSION_EVENTS = [
             {
                 text: "Preemptively purge",
                 effects: {
-                    elite: -20, // Increased from -15
-                    personalWealth: 20,
+                    elite: -40,  // 2x from -20
+                    personalWealth: 30,  // Increased from 20
                     treasury: 10,
-                    anger: 10 // Added - purges create fear and resentment
+                    anger: 20    // 2x from 10
                 },
                 remove: ["oligarch_plotting"],
                 legacy: { icon: "🔪", name: "The Survivor", weight: 10, explanation: "You struck first against the plotters. Ruthless, but effective." }
@@ -134,8 +134,8 @@ export const SUCCESSION_EVENTS = [
             {
                 text: "Try to buy loyalty",
                 effects: {
-                    treasury: -70, // Increased from -50 (depth 2 = 1.4x)
-                    elite: 5
+                    treasury: -70,
+                    elite: 10    // 2x from 5
                 },
                 remove: ["oligarch_plotting"]
             }
@@ -157,16 +157,17 @@ export const SUCCESSION_EVENTS = [
             {
                 text: "Use them frequently",
                 effects: {
-                    elite: -5,
-                    anger: 5
+                    elite: -10,  // 2x from -5
+                    anger: 10    // 2x from 5
                 },
                 remove: ["body_double_auditions"]
             },
             {
                 text: "Use them sparingly",
                 effects: {
-                    elite: 2,
-                    treasury: -10
+                    elite: 4,    // 2x from 2
+                    treasury: -10,
+                    personalWealth: 3  // Added - save on security costs
                 },
                 remove: ["body_double_auditions"]
             }
@@ -175,7 +176,7 @@ export const SUCCESSION_EVENTS = [
     {
         id: "paranoia_increases",
         title: "The Purge Begins",
-        description: "Your paranoia has reached new heights. You're purging anyone who might have gossiped about your health. Fear spreads through the elite.",
+        description: "Your paranoia has reached new heights. You're purging anyone who might have gossiped about your health. Each purged oligarch's fortune flows directly into your Swiss accounts.",
         weight: 0,
         storyline: "succession-crisis",
         rarity: "epic",
@@ -188,9 +189,9 @@ export const SUCCESSION_EVENTS = [
             {
                 text: "Continue the purge",
                 effects: {
-                    elite: -15, // Increased from -10
-                    personalWealth: 20, // Seized assets
-                    anger: 12 // Increased from 5 - fear and resentment spread
+                    elite: -30,  // 2x from -15
+                    personalWealth: 30,  // Increased from 20
+                    anger: 24    // 2x from 12
                 },
                 remove: ["paranoia_increases"],
                 legacy: { icon: "👑", name: "The Mad King", weight: 15, explanation: "Your paranoia consumed all reason. The purges will be remembered." }
@@ -198,10 +199,10 @@ export const SUCCESSION_EVENTS = [
             {
                 text: "Stop the purge",
                 effects: {
-                    elite: 5,
-                    anger: -5
+                    elite: 10,   // 2x from 5
+                    anger: -10   // 2x from -5
                 },
-                add: ["oligarch_plotting"], // Mercy is weakness
+                add: ["oligarch_plotting"],
                 remove: ["paranoia_increases"]
             }
         ]
@@ -209,7 +210,7 @@ export const SUCCESSION_EVENTS = [
     {
         id: "oligarch_defection",
         title: "The Banker Flees",
-        description: "Your former personal banker has fled to London. He is threatening to release documents about your offshore accounts unless you guarantee his safety.",
+        description: "Your former personal banker has fled to London. He's threatening to release documents about your offshore accounts unless you guarantee his safety. His local properties and Swiss account passwords are still accessible...",
         weight: 6,
         storyline: "oligarch-rivalry",
         rarity: "rare",
@@ -222,17 +223,18 @@ export const SUCCESSION_EVENTS = [
             {
                 text: "Send the agents",
                 effects: {
-                    elite: -10, // Everyone is scared
-                    anger: -2, // Traitors punished
-                    treasury: -10
+                    elite: -20,  // 2x from -10
+                    anger: -4,   // 2x from -2
+                    treasury: -10,
+                    personalWealth: 5  // Added - he knew where the bodies are buried
                 },
-                add: ["sanctions_human_rights"] // Getting caught
+                add: ["sanctions_human_rights"]
             },
             {
                 text: "Let him go",
                 effects: {
-                    elite: -5, // Weakness
-                    anger: 5 // Corruption exposed
+                    elite: -10,  // 2x from -5
+                    anger: 10    // 2x from 5
                 }
             }
         ]
@@ -251,12 +253,12 @@ export const SUCCESSION_EVENTS = [
         },
         choices: [
             {
-                text: "Back the Siloviki",
+                text: "Back the Siloviki—they'll expedite your 'private contracts' abroad",
                 effects: {
-                    elite: -5, // Liberals unhappy
-                    anger: 5, // More repression
-                    treasury: -20, // Security budget increase
-                    personalWealth: 5 // Security services show "gratitude"
+                    elite: -10,  // 2x from -5
+                    anger: 10,   // 2x from 5
+                    treasury: -20,
+                    personalWealth: 10  // 2x from 5
                 },
                 add: ["paranoia_increases"],
                 legacy: { icon: "👮", name: "The Strongman", weight: 5, explanation: "You sided with the security services. Order through strength." }
@@ -264,9 +266,9 @@ export const SUCCESSION_EVENTS = [
             {
                 text: "Back the Liberals",
                 effects: {
-                    elite: -5, // Siloviki unhappy
-                    treasury: 10, // Better economic management
-                    anger: -2
+                    elite: -10,  // 2x from -5
+                    treasury: 10,
+                    anger: -4    // 2x from -2
                 },
                 add: ["generals_plotting_coup"],
                 legacy: { icon: "📈", name: "The Reformer", weight: 2, explanation: "You backed the liberals. Perhaps there's hope for reform yet." }
