@@ -3,180 +3,1525 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <title>The Oligarch's Gambit</title>
-    <link rel="stylesheet" href="styles.css?v=2.0.5">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #0f172a;
+            font-family: 'Inter', sans-serif;
+            touch-action: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* UI Layer - overlays the 3D scene */
+        #ui-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Title Screen */
+        #title-screen {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+            pointer-events: auto;
+            z-index: 100;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        #title-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .game-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.8rem, 6vw, 3rem);
+            color: #d4af37;
+            text-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+            margin-bottom: 12px;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .subtitle {
+            font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            pointer-events: auto;
+            background: linear-gradient(135deg, #d4af37 0%, #aa8c2c 100%);
+            color: #1a1a2e;
+            padding: 16px 48px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.96);
+        }
+
+        /* HUD - Top bar with metrics */
+        #hud {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        #hud.visible {
+            opacity: 1;
+        }
+
+        .hud-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .hud-right {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: flex-end;
+        }
+
+        .metric-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .metric-bar-track {
+            width: 60px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .metric-bar-fill {
+            height: 100%;
+            background: white;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .metric-pill .icon {
+            font-size: 0.9rem;
+        }
+
+        .metric-pill .value {
+            font-weight: 600;
+            min-width: 36px;
+        }
+
+        .wealth-pill .value {
+            color: #f4d03f;
+        }
+
+        .treasury-pill .value {
+            color: #5dade2;
+        }
+
+        .elite-pill .value {
+            color: #bb8fce;
+        }
+
+        .anger-pill .value {
+            color: #ec7063;
+        }
+
+        .period-display {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Bottom UI */
+        #bottom-ui {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 20px 40px;
+            pointer-events: none;
+        }
+
+        .instruction {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            font-weight: 600;
+            text-shadow: 0 2px 8px rgba(15, 23, 42, 0.6);
+            transition: opacity 0.5s ease;
+            text-align: center;
+        }
+
+        /* Choices Container */
+        #choices-container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            pointer-events: none;
+        }
+
+        #choices-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .choice-btn {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .choice-btn:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .choice-text {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .choice-effects {
+            display: flex;
+            gap: 12px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            flex-wrap: wrap;
+        }
+
+        /* Legacy Display */
+        #legacy-container {
+            position: absolute;
+            top: 70px;
+            left: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            max-width: 50%;
+            pointer-events: none;
+        }
+
+        .legacy-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            color: #d4af37;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            animation: legacy-pop 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: transform 0.2s;
+            pointer-events: auto;
+        }
+
+        .legacy-badge:hover {
+            transform: scale(1.05);
+            background: rgba(212, 175, 55, 0.2);
+            color: #fff;
+        }
+
+        .legacy-badge.negative {
+            background: rgba(231, 76, 60, 0.2);
+            border-color: rgba(231, 76, 60, 0.5);
+        }
+
+        @keyframes legacy-pop {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Game Over Screen */
+        #gameover-screen {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            pointer-events: auto;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        #gameover-screen.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .gameover-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            color: #e74c3c;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .gameover-reason {
+            max-width: 400px;
+            text-align: center;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            border-radius: 12px;
+        }
+
+        .final-stats {
+            max-width: 300px;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .final-legacy {
+            max-width: 400px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .final-legacy h4 {
+            color: #d4af37;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .final-legacy-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .score-display {
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            padding: 20px 40px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .score-display h3 {
+            color: #d4af37;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .score-display p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+        }
+
+        .score-display p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+        }
+
+        /* Legacy Modal */
+        #legacy-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        #legacy-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: #1e293b;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .modal-title {
+            color: #d4af37;
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .modal-desc {
+            color: #ccc;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .modal-impact {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="game-container">
+
+    <div id="canvas-container"></div>
+
+    <div id="ui-layer">
         <!-- Title Screen -->
-        <div id="title-screen" class="screen active">
+        <div id="title-screen">
             <h1 class="game-title">The Oligarch's Gambit</h1>
             <p class="subtitle">A Satirical Tale of Power and Wealth</p>
-            <button id="start-game" class="btn-primary">Begin Your Ascent</button>
+            <button id="start-btn" class="btn-primary">Begin Your Ascent</button>
         </div>
 
-        <!-- Game Screen -->
-        <div id="game-screen" class="screen">
-            <!-- Header with Quarter/Year -->
-            <div class="header">
-                <h2 id="current-period">Quarter 1, Year 1</h2>
-            </div>
-
-            <!-- Metrics Display -->
-            <div class="metrics">
-                <div class="metric">
-                    <div class="metric-icon">💰</div>
-                    <div class="metric-info">
-                        <div class="metric-label">Your Wealth</div>
-                        <div class="metric-bar-container">
-                            <div class="metric-bar wealth-bar" id="personal-wealth-bar"></div>
+        <!-- HUD -->
+        <div id="hud">
+            <div class="hud-left">
+                <div class="metric-pill wealth-pill">
+                    <span class="icon">💰</span>
+                    <div class="metric-bar-track">
+                        <div class="metric-bar-fill" id="wealth-bar" style="background-color: #f4d03f; width: 25%">
                         </div>
-                        <div class="metric-value" id="personal-wealth-value">50%</div>
                     </div>
+                    <span class="value" id="wealth-value">$50B</span>
                 </div>
-
-                <div class="metric">
-                    <div class="metric-icon">🏛️</div>
-                    <div class="metric-info">
-                        <div class="metric-label">State Treasury</div>
-                        <div class="metric-bar-container">
-                            <div class="metric-bar treasury-bar" id="treasury-bar"></div>
+                <div class="metric-pill treasury-pill">
+                    <span class="icon">🏛️</span>
+                    <div class="metric-bar-track">
+                        <div class="metric-bar-fill" id="treasury-bar" style="background-color: #5dade2; width: 25%">
                         </div>
-                        <div class="metric-value" id="treasury-value">50%</div>
                     </div>
-                </div>
-
-                <div class="metric">
-                    <div class="metric-icon">👔</div>
-                    <div class="metric-info">
-                        <div class="metric-label">Elite Approval</div>
-                        <div class="metric-bar-container">
-                            <div class="metric-bar elite-bar" id="elite-bar"></div>
-                        </div>
-                        <div class="metric-value" id="elite-value">50%</div>
-                    </div>
-                </div>
-
-                <div class="metric">
-                    <div class="metric-icon">😤</div>
-                    <div class="metric-info">
-                        <div class="metric-label">Public Anger</div>
-                        <div class="metric-bar-container">
-                            <div class="metric-bar anger-bar" id="anger-bar"></div>
-                        </div>
-                        <div class="metric-value" id="anger-value">20%</div>
-                    </div>
+                    <span class="value" id="treasury-value">$500B</span>
                 </div>
             </div>
-
-            <!-- Legacy Achievements -->
-            <div id="legacy-container" class="legacy-container"></div>
-
-            <!-- Debug Section -->
-            <div class="debug-section">
-                <details class="debug-details">
-                    <summary class="debug-summary">🐛 Debug Information</summary>
-                    <div class="debug-content">
-                        <div class="debug-info">
-                            <div class="debug-row">
-                                <span class="debug-label">Version:</span>
-                                <span id="debug-version" class="debug-value">-</span>
-                            </div>
-                            <div class="debug-row">
-                                <span class="debug-label">Latest Changes:</span>
-                                <span id="debug-summary" class="debug-value">-</span>
-                            </div>
-                            <div class="debug-row">
-                                <span class="debug-label">Total Events:</span>
-                                <span id="debug-total-events" class="debug-value">-</span>
-                            </div>
-                            <div class="debug-row">
-                                <span class="debug-label">Active Events:</span>
-                                <span id="debug-active-events" class="debug-value">-</span>
-                            </div>
-                        </div>
-
-                        <details class="debug-events-details">
-                            <summary class="debug-events-summary">⚠️ Active Events List (Spoilers!)</summary>
-                            <div id="debug-events-list" class="debug-events-list">
-                                <!-- Will be populated by JavaScript -->
-                            </div>
-                        </details>
-
-                        <details class="debug-events-details">
-                            <summary class="debug-events-summary">🌳 Event Tree Structure (Spoilers!)</summary>
-                            <div id="debug-event-tree" class="debug-event-tree">
-                                <div class="debug-tree-stats">
-                                    <p><strong>Loading event tree...</strong></p>
-                                    <p class="debug-tree-hint">Run <code>node analyze-events.js</code> to generate the
-                                        tree data.</p>
-                                </div>
-                            </div>
-                        </details>
-
-                        <details class="debug-events-details">
-                            <summary class="debug-events-summary">🌌 Universe Graph (Interactive)</summary>
-                            <div class="debug-graph-container">
-                                <p style="padding: 15px; text-align: center;">
-                                    <a href="event-lab.html" target="_blank"
-                                        style="color: #d4af37; text-decoration: none; font-weight: bold; font-size: 1.1em;">
-                                        🧪 Open Event Lab →
-                                    </a>
-                                </p>
-                                <p style="padding: 0 15px 15px; text-align: center; color: #b8b8b8; font-size: 0.9em;">
-                                    Full-page interactive event graph visualization
-                                </p>
-                            </div>
-                        </details>
+            <div class="hud-right">
+                <div class="metric-pill elite-pill">
+                    <span class="value" id="elite-value">50%</span>
+                    <div class="metric-bar-track">
+                        <div class="metric-bar-fill" id="elite-bar" style="background-color: #bb8fce; width: 50%"></div>
                     </div>
-                </details>
-            </div>
-
-            <!-- Event Card -->
-            <div id="event-card" class="event-card">
-                <div class="foil-overlay"></div>
-                <div class="event-content">
-                    <div id="storyline-header" class="storyline-header" style="display: none;">
-                        <span id="storyline-icon" class="storyline-icon"></span>
-                        <span id="storyline-name" class="storyline-name"></span>
-                    </div>
-                    <h3 id="event-title" class="event-title"></h3>
-                    <p id="event-description" class="event-description"></p>
-                    <div id="choices-container" class="choices-container"></div>
+                    <span class="icon">👔</span>
                 </div>
+                <div class="metric-pill anger-pill">
+                    <span class="value" id="anger-value">20%</span>
+                    <div class="metric-bar-track">
+                        <div class="metric-bar-fill" id="anger-bar" style="background-color: #ec7063; width: 20%"></div>
+                    </div>
+                    <span class="icon">😤</span>
+                </div>
+                <div class="period-display" id="period-display">Q1 Year 1</div>
+            </div>
+        </div>
+
+        <!-- Legacy Container -->
+        <div id="legacy-container"></div>
+
+        <!-- Bottom UI -->
+        <div id="bottom-ui">
+            <!-- Hint removed as per auto-draw request -->
+            <div id="hint-text" class="instruction" style="display: none;"></div>
+            <div id="choices-container"></div>
+        </div>
+
+        <!-- Legacy Modal -->
+        <div id="legacy-modal">
+            <div class="modal-content">
+                <span class="modal-close" id="legacy-modal-close">&times;</span>
+                <span class="modal-icon" id="legacy-modal-icon">👑</span>
+                <h3 class="modal-title" id="legacy-modal-title">Legacy Name</h3>
+                <p class="modal-desc" id="legacy-modal-description">Description of this legacy.</p>
+                <div class="modal-impact" id="legacy-modal-impact">+5% Score</div>
             </div>
         </div>
 
         <!-- Game Over Screen -->
-        <div id="gameover-screen" class="screen">
-            <h1 class="game-title">Game Over</h1>
+        <div id="gameover-screen">
+            <h2 class="gameover-title">Game Over</h2>
             <div id="gameover-reason" class="gameover-reason"></div>
             <div id="final-stats" class="final-stats"></div>
             <div id="final-legacy" class="final-legacy"></div>
-            <button id="restart-game" class="btn-primary">Play Again</button>
+            <div id="score-display" class="score-display"></div>
+            <button id="restart-btn" class="btn-primary">Play Again</button>
         </div>
     </div>
 
+    <script type="module">
+        import { GameEngineV2 } from './engine/game-engine.js';
+        import ALL_EVENTS from './events/index.js';
 
+        // ============================================================
+        // CONFIGURATION
+        // ============================================================
+        const CONFIG = {
+            cardWidth: 2.5,
+            cardHeight: 3.5,
+            cardThickness: 0.04,
+            deckHeight: 0.6,
+            deckY: -3.5,
+            drawnY: 0.0,
+            nudgeStrength: 0.3
+        };
 
-    <!-- Legacy Details Modal -->
-    <div id="legacy-modal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" id="legacy-modal-close">&times;</button>
-            <div class="modal-icon" id="legacy-modal-icon"></div>
-            <h3 class="modal-title" id="legacy-modal-title"></h3>
-            <p class="modal-description" id="legacy-modal-description"></p>
-            <div class="modal-impact" id="legacy-modal-impact"></div>
-        </div>
-    </div>
+        const DRAW_STATE = { IDLE: 'idle', DRAGGING: 'dragging', DRAWN: 'drawn', ANIMATING: 'animating' };
 
-    <!-- Cytoscape.js for graph visualization -->
-    <script src="https://unpkg.com/cytoscape@3/dist/cytoscape.min.js"></script>
+        // ============================================================
+        // GAME STATE
+        // ============================================================
+        let engine;
+        let drawState = DRAW_STATE.IDLE;
+        let currentEvent = null;
 
-    <!-- Main Game Script (ES Module) -->
-    <script type="module" src="game.js?v=2.0.5"></script>
+        // ============================================================
+        // THREE.JS SETUP
+        // ============================================================
+        let scene, camera, renderer, raycaster;
+        let staticDeckMesh;
+        let activeCard;
+        const mouse = new THREE.Vector2();
+        let isDragging = false;
+        let dragStartY = 0;
+        let dragStartX = 0;
+        let dragStartPos = new THREE.Vector3();
+        let hasMovedSignificantly = false;
+
+        // Shared textures
+        const sharedTex = createSharedTextures();
+
+        function createSharedTextures() {
+            // Side texture (deck edge)
+            const sideCanvas = document.createElement('canvas');
+            sideCanvas.width = 64;
+            sideCanvas.height = 512;
+            const sCtx = sideCanvas.getContext('2d');
+            sCtx.fillStyle = '#ffffff';
+            sCtx.fillRect(0, 0, 64, 512);
+            sCtx.fillStyle = '#cbd5e1';
+            for (let i = 0; i < 512; i += 2) {
+                if (Math.random() > 0.6) sCtx.fillRect(0, i, 64, 1);
+            }
+
+            // Back texture (card back / deck top)
+            const backCanvas = document.createElement('canvas');
+            backCanvas.width = 512;
+            backCanvas.height = 716;
+            const bCtx = backCanvas.getContext('2d');
+            // Dark background
+            bCtx.fillStyle = '#1e293b';
+            bCtx.fillRect(0, 0, 512, 716);
+            // Border
+            bCtx.strokeStyle = '#334155';
+            bCtx.lineWidth = 4;
+            bCtx.strokeRect(30, 30, 452, 656);
+            // Center diamond
+            bCtx.save();
+            bCtx.translate(256, 358);
+            bCtx.rotate(Math.PI / 4);
+            bCtx.fillStyle = '#d4af37';
+            bCtx.fillRect(-25, -25, 50, 50);
+            bCtx.restore();
+            // Title text
+            bCtx.fillStyle = '#d4af37';
+            bCtx.font = 'bold 24px Cinzel, serif';
+            bCtx.textAlign = 'center';
+            bCtx.fillText("THE OLIGARCH'S", 256, 180);
+            bCtx.fillText("GAMBIT", 256, 210);
+
+            return {
+                side: new THREE.CanvasTexture(sideCanvas),
+                back: new THREE.CanvasTexture(backCanvas)
+            };
+        }
+
+        function createEventTexture(event) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 716;
+            const ctx = canvas.getContext('2d');
+
+            // Background
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, 512, 716);
+
+            // Storyline color
+            const storylines = event.storylines || (event.storyline ? [event.storyline] : []);
+            const storylineColors = {
+                'war-invasion': { h: 0, s: 70, l: 55 },
+                'energy-politics': { h: 45, s: 85, l: 55 },
+                'oligarch-rivalry': { h: 280, s: 60, l: 50 },
+                'sanctions-spiral': { h: 210, s: 70, l: 50 },
+                'succession-crisis': { h: 35, s: 90, l: 50 },
+                'popular-uprising': { h: 15, s: 80, l: 55 },
+                'domestic-crisis': { h: 200, s: 50, l: 45 }
+            };
+
+            const storyline = storylines[0] || '';
+            const color = storylineColors[storyline] || { h: (event.id.length * 37) % 360, s: 70, l: 60 };
+
+            // Image placeholder area (gradient)
+            const imgHeight = 350;
+            const grad = ctx.createLinearGradient(0, 0, 0, imgHeight);
+            grad.addColorStop(0, `hsl(${color.h}, ${color.s}%, ${color.l + 15}%)`);
+            grad.addColorStop(1, `hsl(${color.h}, ${color.s - 10}%, ${color.l}%)`);
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 512, imgHeight);
+
+            // Descriptive circle (placeholder for future image)
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+            ctx.beginPath();
+            ctx.arc(256, 175, 100, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Storyline tag
+            if (storyline) {
+                const tagNames = {
+                    'war-invasion': '⚔️ WAR',
+                    'energy-politics': '⚡ ENERGY',
+                    'oligarch-rivalry': '👑 INTRIGUE',
+                    'sanctions-spiral': '🚫 SANCTIONS',
+                    'succession-crisis': '👑 SUCCESSION',
+                    'popular-uprising': '🔥 UPRISING',
+                    'domestic-crisis': '🏛️ CRISIS'
+                };
+
+                // Add a subtle shadow for readability over image
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                ctx.shadowBlur = 4;
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                ctx.font = 'bold 16px Inter, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText(tagNames[storyline] || storyline.toUpperCase(), 30, 40);
+                ctx.shadowBlur = 0;
+            }
+
+            // Title
+            ctx.fillStyle = '#000000';
+            ctx.font = 'bold 32px Inter, sans-serif';
+            ctx.textAlign = 'left';
+
+            // Word wrap title
+            const title = event.title || 'Unknown Event';
+            const titleWords = title.split(' ');
+            let titleLines = [];
+            let currentLine = '';
+            titleWords.forEach(word => {
+                const testLine = currentLine ? currentLine + ' ' + word : word;
+                if (ctx.measureText(testLine).width > 430) {
+                    titleLines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = testLine;
+                }
+            });
+            titleLines.push(currentLine);
+
+            let titleY = 390;
+            titleLines.forEach(line => {
+                ctx.fillText(line, 40, titleY);
+                titleY += 38;
+            });
+
+            // Description (truncated)
+            ctx.fillStyle = '#000000';
+            ctx.font = '400 20px Inter, sans-serif';
+            const desc = event.description || '';
+            const descWords = desc.split(' ');
+            let descLines = [];
+            currentLine = '';
+            descWords.forEach(word => {
+                const testLine = currentLine ? currentLine + ' ' + word : word;
+                if (ctx.measureText(testLine).width > 430) {
+                    if (descLines.length < 5) {
+                        descLines.push(currentLine);
+                    }
+                    currentLine = word;
+                } else {
+                    currentLine = testLine;
+                }
+            });
+            if (descLines.length < 5) descLines.push(currentLine);
+            if (descLines.length === 5 && currentLine !== descLines[4]) {
+                descLines[4] = descLines[4].slice(0, -3) + '...';
+            }
+
+            let descY = titleY + 20;
+            descLines.forEach(line => {
+                ctx.fillText(line, 40, descY);
+                descY += 26;
+            });
+
+            // Bottom accent bar
+            ctx.fillStyle = `hsl(${color.h}, ${color.s}%, ${color.l}%)`;
+            ctx.fillRect(40, 670, 432, 6);
+
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        function init() {
+            const container = document.getElementById('canvas-container');
+
+            // Scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0f172a);
+            scene.fog = new THREE.FogExp2(0x0f172a, 0.035);
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 100);
+            updateCameraAndLayout();
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.2;
+            container.appendChild(renderer.domElement);
+
+            // Lighting
+            setupLighting();
+
+            // Environment
+            setupTable();
+
+            // Create deck
+            createStaticDeck();
+
+            // Inputs
+            raycaster = new THREE.Raycaster();
+            window.addEventListener('resize', onWindowResize);
+            container.addEventListener('touchstart', onTouchStart, { passive: false });
+            container.addEventListener('touchmove', onTouchMove, { passive: false });
+            container.addEventListener('touchend', onEnd);
+            container.addEventListener('mousedown', onMouseDown);
+            window.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('mouseup', onEnd);
+
+            // UI Event Listeners
+            document.getElementById('start-btn').addEventListener('click', startGame);
+            document.getElementById('restart-btn').addEventListener('click', restartGame);
+
+            // Start render loop
+            animate();
+        }
+
+        function updateCameraAndLayout() {
+            const aspect = window.innerWidth / window.innerHeight;
+            const isPortrait = aspect < 1;
+
+            if (isPortrait) {
+                camera.position.set(0, 0.5, 14.0);
+            } else {
+                camera.position.set(0, 0.5, 9.0);
+            }
+            camera.lookAt(0, 0, 0);
+        }
+
+        function setupLighting() {
+            // Ambient
+            const ambient = new THREE.AmbientLight(0x334155, 0.6);
+            scene.add(ambient);
+
+            // Left softbox
+            const leftSpot = new THREE.SpotLight(0xfff7ed, 5.0);
+            leftSpot.position.set(-10, 2, 12);
+            leftSpot.angle = Math.PI / 4;
+            leftSpot.penumbra = 1;
+            leftSpot.castShadow = true;
+            leftSpot.shadow.mapSize.width = 2048;
+            leftSpot.shadow.mapSize.height = 2048;
+            leftSpot.lookAt(0, 0, 0);
+            scene.add(leftSpot);
+
+            // Right softbox
+            const rightSpot = new THREE.SpotLight(0xdbeafe, 4.0);
+            rightSpot.position.set(10, 2, 12);
+            rightSpot.angle = Math.PI / 4;
+            rightSpot.penumbra = 1;
+            rightSpot.lookAt(0, 0, 0);
+            scene.add(rightSpot);
+
+            // Rim light
+            const rimLight = new THREE.SpotLight(0x22d3ee, 3.5);
+            rimLight.position.set(0, 5, -8);
+            rimLight.lookAt(0, 0, 0);
+            scene.add(rimLight);
+
+            // Bottom fill
+            const bottomFill = new THREE.DirectionalLight(0x64748b, 0.8);
+            bottomFill.position.set(0, -5, 2);
+            bottomFill.lookAt(0, 0, 0);
+            scene.add(bottomFill);
+        }
+
+        function setupTable() {
+            const geo = new THREE.PlaneGeometry(100, 100);
+            const mat = new THREE.MeshStandardMaterial({
+                color: 0x0f172a,
+                roughness: 0.6,
+                metalness: 0.1
+            });
+            const plane = new THREE.Mesh(geo, mat);
+            plane.rotation.x = -Math.PI / 2;
+            plane.position.y = CONFIG.deckY - (CONFIG.deckHeight / 2);
+            plane.receiveShadow = true;
+            scene.add(plane);
+        }
+
+        function createStaticDeck() {
+            const geometry = new THREE.BoxGeometry(CONFIG.cardWidth, CONFIG.deckHeight, CONFIG.cardHeight);
+
+            const matSide = new THREE.MeshStandardMaterial({
+                map: sharedTex.side,
+                roughness: 0.8,
+                color: 0xffffff
+            });
+            const matTop = new THREE.MeshStandardMaterial({ map: sharedTex.back, roughness: 0.8 });
+            const matBot = new THREE.MeshStandardMaterial({ color: 0x0f172a });
+
+            staticDeckMesh = new THREE.Mesh(geometry, [matSide, matSide, matTop, matBot, matSide, matSide]);
+            staticDeckMesh.position.set(0, CONFIG.deckY, -1);
+            staticDeckMesh.rotation.y = Math.PI;
+            staticDeckMesh.castShadow = true;
+            staticDeckMesh.receiveShadow = true;
+            scene.add(staticDeckMesh);
+        }
+
+        function spawnCardForEvent(event) {
+            if (activeCard) {
+                scene.remove(activeCard);
+                activeCard = null;
+            }
+
+            const geo = new THREE.BoxGeometry(CONFIG.cardWidth, CONFIG.cardThickness, CONFIG.cardHeight);
+            const frontTex = createEventTexture(event);
+
+            const matEdge = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.6 });
+            const matBack = new THREE.MeshStandardMaterial({ map: sharedTex.back, roughness: 0.8 });
+
+            const matFront = new THREE.MeshPhysicalMaterial({
+                map: frontTex,
+                color: 0xffffff,
+                metalness: 0.0,
+                roughness: 0.7,
+                clearcoat: 1.0,
+                clearcoatRoughness: 0.15,
+                reflectivity: 0.5
+            });
+
+            const materials = [matEdge, matEdge, matBack, matFront, matEdge, matEdge];
+            activeCard = new THREE.Mesh(geo, materials);
+
+            const restingY = CONFIG.deckY + (CONFIG.deckHeight / 2) + (CONFIG.cardThickness / 2);
+            activeCard.position.set(0, restingY, -1);
+            activeCard.rotation.y = Math.PI;
+
+            activeCard.castShadow = true;
+            activeCard.receiveShadow = true;
+            activeCard.userData.isCard = true;
+
+            scene.add(activeCard);
+            drawState = DRAW_STATE.IDLE;
+
+            // Auto-draw immediately
+            setTimeout(() => {
+                if (activeCard && drawState === DRAW_STATE.IDLE) {
+                    performDraw();
+                }
+            }, 600); // Short delay for "spawn" effect visibility
+        }
+
+        // ============================================================
+        // INPUT HANDLING
+        // ============================================================
+        function onTouchStart(e) {
+            e.preventDefault();
+            handleStart(e.touches[0].clientX, e.touches[0].clientY);
+        }
+
+        function onMouseDown(e) {
+            handleStart(e.clientX, e.clientY);
+        }
+
+        function handleStart(x, y) {
+            if (drawState === DRAW_STATE.ANIMATING || !activeCard) return;
+
+            mouse.x = (x / window.innerWidth) * 2 - 1;
+            mouse.y = -(y / window.innerHeight) * 2 + 1;
+            raycaster.setFromCamera(mouse, camera);
+
+            const intersects = raycaster.intersectObject(activeCard);
+            if (intersects.length > 0) {
+                isDragging = true;
+                dragStartY = y;
+                dragStartX = x;
+                dragStartPos.copy(activeCard.position);
+                hasMovedSignificantly = false;
+
+                if (activeCard.idleTween) activeCard.idleTween.pause();
+                if (activeCard.rotTween) activeCard.rotTween.pause();
+
+                // Kill any existing sprang tweens if we grab it again
+                gsap.killTweensOf(activeCard.position);
+                gsap.killTweensOf(activeCard.rotation);
+            }
+        }
+
+        function onTouchMove(e) {
+            e.preventDefault();
+            handleMove(e.touches[0].clientX, e.touches[0].clientY);
+        }
+
+        function onMouseMove(e) {
+            handleMove(e.clientX, e.clientY);
+        }
+
+        function handleMove(x, y) {
+            if (!isDragging || !activeCard) return;
+
+            const deltaY = dragStartY - y;
+            const deltaX = dragStartX - x;
+
+            if (Math.abs(deltaY) > 5 || Math.abs(deltaX) > 5) {
+                hasMovedSignificantly = true;
+            }
+
+            if (drawState === DRAW_STATE.IDLE) {
+                const lift = Math.max(0, deltaY * 0.015);
+                activeCard.position.y = dragStartPos.y + lift;
+                activeCard.position.z = dragStartPos.z + (lift * 0.5);
+                activeCard.rotation.x = (lift * 0.2);
+            } else if (drawState === DRAW_STATE.DRAWN) {
+                // Elastic Drag Logic
+                // Convert screen delta to world movement roughly
+                const sensitivity = 0.01;
+                activeCard.position.x = dragStartPos.x - (deltaX * sensitivity);
+                activeCard.position.y = dragStartPos.y - (deltaY * sensitivity);
+
+                // Add some tilt based on movement for feel
+                activeCard.rotation.z = -(deltaX * 0.002);
+                activeCard.rotation.x = (Math.PI + 0.92) - (deltaY * 0.002);
+            }
+        }
+
+        function onEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+
+            if (drawState === DRAW_STATE.IDLE) {
+                const liftedHeight = activeCard.position.y - dragStartPos.y;
+                if (liftedHeight > 1.2) {
+                    performDraw();
+                } else {
+                    gsap.to(activeCard.position, {
+                        x: 0,
+                        y: dragStartPos.y,
+                        z: dragStartPos.z,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                    gsap.to(activeCard.rotation, { x: 0, duration: 0.5 });
+                }
+            } else if (drawState === DRAW_STATE.DRAWN) {
+                // Spring back to center
+                gsap.to(activeCard.position, {
+                    x: 0,
+                    y: CONFIG.drawnY,
+                    z: camera.position.z - 5.5,
+                    duration: 0.8,
+                    ease: "elastic.out(1, 0.5)"
+                });
+
+                gsap.to(activeCard.rotation, {
+                    x: Math.PI + 0.92,
+                    y: Math.PI * 2,
+                    z: 0,
+                    duration: 0.8,
+                    ease: "elastic.out(1, 0.5)",
+                    onComplete: () => {
+                        if (activeCard) {
+                            if (activeCard.idleTween) activeCard.idleTween.resume();
+                            if (activeCard.rotTween) activeCard.rotTween.resume();
+                        }
+                    }
+                });
+            }
+        }
+
+        function performDraw() {
+            drawState = DRAW_STATE.ANIMATING;
+            document.getElementById('hint-text').style.opacity = 0;
+
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    drawState = DRAW_STATE.DRAWN;
+                    showChoices(currentEvent);
+                    startFloat(activeCard);
+                }
+            });
+
+            const targetZ = camera.position.z - 5.5;
+            tl.to(activeCard.position, {
+                x: 0,
+                y: CONFIG.drawnY,
+                z: targetZ,
+                duration: 1.0,
+                ease: "power3.inOut"
+            });
+
+            const targetRotX = Math.PI + 0.92;
+            tl.to(activeCard.rotation, {
+                x: targetRotX,
+                y: Math.PI * 2,
+                z: 0,
+                duration: 1.0,
+                ease: "power2.inOut"
+            }, "<");
+        }
+
+        function nudgeCard(point) {
+            const relX = point.x - activeCard.position.x;
+            const relY = point.y - activeCard.position.y;
+            const strength = CONFIG.nudgeStrength;
+            const baseX = Math.PI + 0.92;
+            const targetRotX = baseX - (relY * strength);
+            const targetRotY = (Math.PI * 2) + (relX * strength);
+
+            gsap.to(activeCard.rotation, {
+                x: targetRotX,
+                y: targetRotY,
+                duration: 0.3,
+                ease: "power2.out",
+                onComplete: () => {
+                    gsap.to(activeCard.rotation, {
+                        x: baseX,
+                        y: Math.PI * 2,
+                        duration: 1.5,
+                        ease: "elastic.out(1, 0.3)"
+                    });
+                }
+            });
+        }
+
+        function startFloat(card) {
+            card.idleTween = gsap.to(card.position, {
+                y: CONFIG.drawnY + 0.15,
+                duration: 3,
+                yoyo: true,
+                repeat: -1,
+                ease: "sine.inOut"
+            });
+            card.rotTween = gsap.to(card.rotation, {
+                z: 0.02,
+                y: Math.PI * 2 + 0.04,
+                duration: 4,
+                yoyo: true,
+                repeat: -1,
+                ease: "sine.inOut"
+            });
+        }
+
+        // ============================================================
+        // UI FUNCTIONS
+        // ============================================================
+        function showChoices(event) {
+            const container = document.getElementById('choices-container');
+            container.innerHTML = '';
+
+            event.choices.forEach((choice, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+
+                const effectsHTML = formatEffects(choice.effects);
+                btn.innerHTML = `
+                    <div class="choice-text">${choice.text}</div>
+                    ${effectsHTML}
+                `;
+
+                btn.addEventListener('click', () => handleChoice(index));
+                container.appendChild(btn);
+            });
+
+            container.classList.add('visible');
+        }
+
+        function formatEffects(effects) {
+            if (!effects) return '';
+
+            const effectIcons = {
+                personalWealth: '💰',
+                treasury: '🏛️',
+                elite: '👔',
+                anger: '😤'
+            };
+
+            const stats = effects.stats || effects;
+            const effectStrings = [];
+
+            for (const [key, value] of Object.entries(stats)) {
+                if (value !== 0 && effectIcons[key]) {
+                    const absValue = Math.abs(value);
+                    const direction = value > 0 ? '↑' : '↓';
+                    let indicator = direction;
+                    if (absValue > 10) indicator = direction + direction;
+                    if (absValue > 20) indicator = direction + direction + direction;
+
+                    const color = value > 0 ? '#2ecc71' : '#e74c3c';
+                    effectStrings.push(`<span style="color: ${color};">${effectIcons[key]} ${indicator}</span>`);
+                }
+            }
+
+            return effectStrings.length > 0 ? `<div class="choice-effects">${effectStrings.join(' ')}</div>` : '';
+        }
+
+        function handleChoice(choiceIndex) {
+            // Hide choices
+            document.getElementById('choices-container').classList.remove('visible');
+
+            // Make choice in engine
+            const result = engine.makeChoice(choiceIndex);
+
+            // Update HUD
+            updateHUD();
+            updateLegacy();
+
+            // Check game over
+            const gameOver = engine.checkGameOver();
+            if (gameOver) {
+                setTimeout(() => showGameOver(gameOver), 600);
+                return;
+            }
+
+            // Discard and draw next
+            discardAndDrawNext();
+        }
+
+        function discardAndDrawNext() {
+            drawState = DRAW_STATE.ANIMATING;
+
+            gsap.to(activeCard.position, {
+                x: 8,
+                y: CONFIG.drawnY + 2,
+                z: -5,
+                duration: 0.6,
+                ease: "power2.in",
+                onComplete: () => {
+                    scene.remove(activeCard);
+                    activeCard = null;
+
+                    // Draw next event
+                    currentEvent = engine.drawNextEvent();
+                    if (currentEvent) {
+                        spawnCardForEvent(currentEvent);
+                    } else {
+                        // Fallback quiet quarter
+                        currentEvent = {
+                            id: 'quiet_quarter_fallback',
+                            title: 'A Quiet Quarter',
+                            description: 'Nothing particularly dramatic happens this quarter. Your administration continues its usual... operations.',
+                            choices: [{ text: 'Continue business as usual', effects: {} }]
+                        };
+                        spawnCardForEvent(currentEvent);
+                    }
+                }
+            });
+
+            gsap.to(activeCard.rotation, { z: -0.5, duration: 0.5 });
+        }
+
+        function updateHUD() {
+            const state = engine.getState();
+            const { stats } = state;
+
+            // Update text values
+            document.getElementById('wealth-value').textContent = `$${Math.round(stats.personalWealth)}B`;
+            document.getElementById('treasury-value').textContent = `$${Math.round(stats.treasury)}B`;
+            document.getElementById('elite-value').textContent = `${Math.round(stats.elite)}%`;
+            document.getElementById('anger-value').textContent = `${Math.round(stats.anger)}%`;
+
+            // Update bars
+            // Wealth (Arbitrary max 200 for now)
+            const wealthPct = Math.min(100, (stats.personalWealth / 200) * 100);
+            document.getElementById('wealth-bar').style.width = `${wealthPct}%`;
+
+            // Treasury (Arbitrary max 2000 for now)
+            const treasuryPct = Math.min(100, (stats.treasury / 2000) * 100);
+            document.getElementById('treasury-bar').style.width = `${treasuryPct}%`;
+
+            // Elite (0-100)
+            const elitePct = Math.min(100, Math.max(0, stats.elite));
+            document.getElementById('elite-bar').style.width = `${elitePct}%`;
+
+            // Anger (0-100)
+            const angerPct = Math.min(100, Math.max(0, stats.anger));
+            document.getElementById('anger-bar').style.width = `${angerPct}%`;
+
+            document.getElementById('period-display').textContent = `Q${state.quarter} Year ${state.year}`;
+        }
+
+        function updateLegacy() {
+            const state = engine.getState();
+            const container = document.getElementById('legacy-container');
+            container.innerHTML = '';
+
+            const legacyItems = state.history
+                .filter(entry => entry.legacy)
+                .map(entry => entry.legacy);
+
+            // Dedupe
+            const seen = new Set();
+            legacyItems.forEach(legacy => {
+                if (legacy && !seen.has(legacy.name)) {
+                    seen.add(legacy.name);
+
+                    const badge = document.createElement('div');
+                    badge.className = 'legacy-badge' + (legacy.weight < 0 ? ' negative' : '');
+                    badge.innerHTML = `<span>${legacy.icon}</span><span>${legacy.name}</span>`;
+
+                    // Add click handler for modal
+                    badge.style.cursor = 'pointer';
+                    badge.addEventListener('click', (e) => {
+                        e.stopPropagation(); // prevent interfering with other clicks
+                        showLegacyModal(legacy);
+                    });
+
+                    container.appendChild(badge);
+                }
+            });
+        }
+
+        function showLegacyModal(legacy) {
+            const modal = document.getElementById('legacy-modal');
+            document.getElementById('legacy-modal-icon').textContent = legacy.icon;
+            document.getElementById('legacy-modal-title').textContent = legacy.name;
+            document.getElementById('legacy-modal-description').textContent = legacy.explanation || "No description available.";
+
+            const weight = legacy.weight || 0;
+            const impactEl = document.getElementById('legacy-modal-impact');
+            const impactText = weight > 0 ? `+${weight}% Oligarch Score` : `${weight}% Oligarch Score`;
+            impactEl.textContent = impactText;
+            impactEl.style.color = weight > 0 ? '#2ecc71' : '#e74c3c';
+            impactEl.style.background = weight > 0 ? 'rgba(46, 204, 113, 0.1)' : 'rgba(231, 76, 60, 0.1)';
+
+            modal.classList.add('active');
+        }
+
+        // Modal Close Logic
+        document.getElementById('legacy-modal-close').addEventListener('click', () => {
+            document.getElementById('legacy-modal').classList.remove('active');
+        });
+        document.getElementById('legacy-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'legacy-modal') {
+                e.target.classList.remove('active');
+            }
+        });
+
+        function showGameOver(result) {
+            const screen = document.getElementById('gameover-screen');
+            const state = engine.getState();
+
+            // Reason
+            document.getElementById('gameover-reason').innerHTML = `
+                <strong>${result.reason}</strong><br><br>
+                ${result.description}
+            `;
+
+            // Stats
+            document.getElementById('final-stats').innerHTML = `
+                <div class="stat-row"><span>💰 Personal Wealth</span><span style="color:#f4d03f;">$${Math.round(state.stats.personalWealth)}B</span></div>
+                <div class="stat-row"><span>🏛️ State Treasury</span><span style="color:#5dade2;">$${Math.round(state.stats.treasury)}B</span></div>
+                <div class="stat-row"><span>👔 Elite Approval</span><span style="color:#bb8fce;">${Math.round(state.stats.elite)}%</span></div>
+                <div class="stat-row"><span>😤 Public Anger</span><span style="color:#ec7063;">${Math.round(state.stats.anger)}%</span></div>
+                <div class="stat-row"><span>📅 Time in Power</span><span>${state.year} years, ${state.quarter - 1} quarters</span></div>
+            `;
+
+            // Legacy
+            const legacyItems = state.history.filter(e => e.legacy).map(e => e.legacy);
+            const legacyHTML = [...new Map(legacyItems.map(l => [l?.name, l])).values()]
+                .filter(Boolean)
+                .map(l => `<div class="legacy-badge" style="margin:4px;">${l.icon} ${l.name}</div>`)
+                .join('');
+
+            document.getElementById('final-legacy').innerHTML = legacyItems.length > 0
+                ? `<h4>Your Legacy</h4><div class="final-legacy-badges">${legacyHTML}</div>`
+                : `<h4>Your Legacy</h4><p style="color:#888;font-style:italic;">You left no mark on history...</p>`;
+
+            // Score
+            const legacyMultiplier = legacyItems.reduce((sum, l) => sum + (l?.weight || 5), 0);
+            const score = Math.round(state.stats.personalWealth * (state.year + state.quarter / 4) * (1 + legacyMultiplier / 100));
+
+            document.getElementById('score-display').innerHTML = `
+                <h3>Oligarch Score: ${score}</h3>
+                <p>Wealth × Time × Legacy (${legacyMultiplier > 0 ? '+' : ''}${legacyMultiplier}%)</p>
+            `;
+
+            screen.classList.add('visible');
+        }
+
+        // ============================================================
+        // GAME FLOW
+        // ============================================================
+        function startGame() {
+            // Convert events (same logic as game.js)
+            const allEvents = convertEvents(ALL_EVENTS);
+
+            // Create engine
+            engine = new GameEngineV2(allEvents);
+
+            // Hide title screen
+            document.getElementById('title-screen').classList.add('hidden');
+
+            // Show HUD
+            document.getElementById('hud').classList.add('visible');
+
+            // Draw first event
+            currentEvent = engine.drawNextEvent();
+            if (currentEvent) {
+                spawnCardForEvent(currentEvent);
+            }
+
+            updateHUD();
+        }
+
+        function restartGame() {
+            // Hide game over
+            document.getElementById('gameover-screen').classList.remove('visible');
+
+            // Clear legacy
+            document.getElementById('legacy-container').innerHTML = '';
+
+            // Remove active card
+            if (activeCard) {
+                scene.remove(activeCard);
+                activeCard = null;
+            }
+
+            // Restart
+            startGame();
+        }
+
+        function convertEvents(events) {
+            return events.map(event => {
+                const converted = { ...event };
+
+                if (converted.choices) {
+                    converted.choices = converted.choices.map(choice => {
+                        const newChoice = { ...choice };
+
+                        if (newChoice.effects) {
+                            if (newChoice.effects.stats || newChoice.effects.counters || newChoice.effects.flags) {
+                                return newChoice;
+                            }
+
+                            const stats = {};
+                            const counters = {};
+                            const flags = {};
+                            let legacy = null;
+
+                            for (const [key, value] of Object.entries(newChoice.effects)) {
+                                if (key === 'legacy') {
+                                    legacy = value;
+                                } else if (typeof value === 'boolean') {
+                                    flags[key] = value;
+                                } else if (typeof value === 'number') {
+                                    if (['personalWealth', 'treasury', 'elite', 'anger'].includes(key)) {
+                                        stats[key] = value;
+                                    } else {
+                                        counters[key] = value;
+                                    }
+                                }
+                            }
+
+                            newChoice.effects = {};
+                            if (Object.keys(stats).length > 0) newChoice.effects.stats = stats;
+                            if (Object.keys(counters).length > 0) newChoice.effects.counters = counters;
+                            if (Object.keys(flags).length > 0) newChoice.effects.flags = flags;
+                            if (legacy) newChoice.effects.legacy = legacy;
+                        }
+
+                        if (newChoice.legacy) {
+                            if (!newChoice.effects) newChoice.effects = {};
+                            newChoice.effects.legacy = newChoice.legacy;
+                            delete newChoice.legacy;
+                        }
+
+                        if (newChoice.addToPool) {
+                            newChoice.add = newChoice.addToPool;
+                            delete newChoice.addToPool;
+                        }
+                        if (newChoice.removeFromPool) {
+                            newChoice.remove = newChoice.removeFromPool;
+                            delete newChoice.removeFromPool;
+                        }
+
+                        return newChoice;
+                    });
+                }
+
+                if (converted.storyline && !converted.storylines) {
+                    converted.storylines = [converted.storyline];
+                    delete converted.storyline;
+                }
+
+                return converted;
+            });
+        }
+
+        // ============================================================
+        // RENDER LOOP
+        // ============================================================
+        function onWindowResize() {
+            updateCameraAndLayout();
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+
+        // Initialize
+        init();
+    </script>
 </body>
 
 </html>
