@@ -13,11 +13,12 @@ export const RELIGIOUS_EVENTS = [
         },
         choices: [
             {
-                text: "Accept the blessing with pomp",
+                text: "Accept the blessing with pomp—and construction oversight fees",
                 effects: {
-                    anger: -5,
-                    elite: 5,
-                    treasury: -5 // Donation to church
+                    anger: -10,  // 2x from -5
+                    elite: 10,   // 2x from 5
+                    treasury: -5,
+                    personalWealth: 5  // Added - church donations funneled
                 },
                 add: ["cathedral_construction", "anti_lgbt_law_church_demand"],
                 legacy: { icon: "🙏", name: "The Pious", weight: 5, explanation: "You publicly embraced the faith. God and the Patriarch are on your side." }
@@ -25,17 +26,16 @@ export const RELIGIOUS_EVENTS = [
             {
                 text: "Decline, keep state secular",
                 effects: {
-                    anger: 5, // Rural anger
-                    elite: -5 // Patriarch annoyed
-                },
-                // No follow-up chain started
+                    anger: 10,   // 2x from 5
+                    elite: -10   // 2x from -5
+                }
             }
         ]
     },
     {
         id: "cathedral_construction",
         title: "The Cathedral of War",
-        description: "The Defense Minister wants to build a massive cathedral dedicated to the armed forces. It will feature mosaics of angels with kalashnikovs and stairs made from melted down German tanks.",
+        description: "The Defense Minister wants to build a massive cathedral dedicated to the armed forces. It will feature mosaics of angels with Kalashnikovs and stairs made from melted German tanks. Your construction company will win the contract at triple the estimated cost.",
         weight: 0,
         storyline: "religious-revival",
         rarity: "rare",
@@ -48,10 +48,10 @@ export const RELIGIOUS_EVENTS = [
             {
                 text: "Build it. Make it grand.",
                 effects: {
-                    treasury: -75, // Increased from -50 (depth 2 = 1.5x)
-                    elite: 10, // Generals + Priests happy
-                    anger: 8, // Increased from 5 - waste of money
-                    personalWealth: 10 // Construction kickbacks - holy graft
+                    treasury: -75,
+                    elite: 20,   // 2x from 10
+                    anger: 16,   // 2x from 8
+                    personalWealth: 15  // Increased from 10
                 },
                 add: ["patriarch_blessing_nukes"],
                 remove: ["cathedral_construction"],
@@ -61,8 +61,8 @@ export const RELIGIOUS_EVENTS = [
                 text: "Build a hospital instead",
                 effects: {
                     treasury: -30,
-                    anger: -10,
-                    elite: -10 // Church unhappy
+                    anger: -20,  // 2x from -10
+                    elite: -20   // 2x from -10
                 },
                 remove: ["cathedral_construction"]
             }
@@ -84,8 +84,8 @@ export const RELIGIOUS_EVENTS = [
             {
                 text: "Pass the law",
                 effects: {
-                    anger: -5, // Conservative base happy
-                    elite: 5
+                    anger: -10,  // 2x from -5
+                    elite: 10    // 2x from 5
                 },
                 add: ["church_western_backlash", "patriarch_scandal"],
                 remove: ["anti_lgbt_law_church_demand"]
@@ -93,7 +93,7 @@ export const RELIGIOUS_EVENTS = [
             {
                 text: "Shelve the proposal",
                 effects: {
-                    elite: -5,
+                    elite: -10,  // 2x from -5
                     anger: 0
                 },
                 remove: ["anti_lgbt_law_church_demand"]
@@ -114,10 +114,11 @@ export const RELIGIOUS_EVENTS = [
         },
         choices: [
             {
-                text: "Proceed with the ceremony",
+                text: "Proceed—the televised ceremony requires expensive 'event management contracts'",
                 effects: {
-                    anger: 5, // World thinks you are crazy
-                    elite: 5
+                    anger: 10,   // 2x from 5
+                    elite: 10,   // 2x from 5
+                    personalWealth: 5  // Added - ceremony sponsorships
                 },
                 add: ["holy_war_declaration"],
                 remove: ["patriarch_blessing_nukes"]
@@ -125,7 +126,7 @@ export const RELIGIOUS_EVENTS = [
             {
                 text: "Too crazy, even for us",
                 effects: {
-                    elite: -5
+                    elite: -10   // 2x from -5
                 },
                 remove: ["patriarch_blessing_nukes"]
             }
@@ -148,14 +149,14 @@ export const RELIGIOUS_EVENTS = [
                 text: "Censor the internet",
                 effects: {
                     treasury: -10,
-                    anger: 10
+                    anger: 20    // 2x from 10
                 },
                 remove: ["patriarch_scandal"]
             },
             {
                 text: "Ignore it",
                 effects: {
-                    elite: -5 // Church looks weak
+                    elite: -10   // 2x from -5
                 },
                 remove: ["patriarch_scandal"]
             }
@@ -177,8 +178,8 @@ export const RELIGIOUS_EVENTS = [
             {
                 text: "Condemn them as heretics",
                 effects: {
-                    anger: 5,
-                    elite: 5
+                    anger: 10,   // 2x from 5
+                    elite: 10    // 2x from 5
                 },
                 add: ["inquisition_cultural_purge"],
                 remove: ["church_western_backlash"]
@@ -186,7 +187,7 @@ export const RELIGIOUS_EVENTS = [
             {
                 text: "Try to reconcile",
                 effects: {
-                    elite: -10 // Patriarch furious at weakness
+                    elite: -20   // 2x from -10
                 },
                 remove: ["church_western_backlash"]
             }
@@ -195,7 +196,7 @@ export const RELIGIOUS_EVENTS = [
     {
         id: "holy_war_declaration",
         title: "Deus Vult",
-        description: "The Church is now fully integrated into the war effort, declaring the conflict a 'Holy War' against Satanists in the West. It boosts recruitment but terrifies the educated class.",
+        description: "The Church is now fully integrated into the war effort, declaring the conflict a 'Holy War' against Satanists in the West. Donations pour in—the Church's 30% tithe goes to your 'charitable foundation'.",
         weight: 0,
         storyline: "religious-revival",
         rarity: "rare",
@@ -208,9 +209,9 @@ export const RELIGIOUS_EVENTS = [
             {
                 text: "Embrace the Holy War",
                 effects: {
-                    anger: 15, // Educated people flee
-                    elite: 10,
-                    personalWealth: 8 // "Holy war bonds" - zealous donations funneled your way
+                    anger: 30,   // 2x from 15
+                    elite: 20,   // 2x from 10
+                    personalWealth: 12  // Increased from 8
                 },
                 legacy: { icon: "✝️", name: "The Crusader", weight: 10, explanation: "You weaponized religion for the state. The Patriarch approves." },
                 remove: ["holy_war_declaration"]
@@ -218,7 +219,7 @@ export const RELIGIOUS_EVENTS = [
             {
                 text: "Tone it down",
                 effects: {
-                    elite: -10
+                    elite: -20   // 2x from -10
                 },
                 remove: ["holy_war_declaration"]
             }
@@ -227,7 +228,7 @@ export const RELIGIOUS_EVENTS = [
     {
         id: "inquisition_cultural_purge",
         title: "The Cultural Inquisition",
-        description: " zealots are now demanding a purge of all 'foreign agents' from theaters, universities, and galleries. They want to burn books.",
+        description: "Zealots are demanding a purge of all 'foreign agents' from theaters, universities, and galleries. The confiscated 'degenerate art' collection is worth billions—it vanishes into private storage.",
         weight: 0,
         storyline: "religious-revival",
         rarity: "rare",
@@ -240,9 +241,9 @@ export const RELIGIOUS_EVENTS = [
             {
                 text: "Let them purge",
                 effects: {
-                    anger: 20, // Brain drain max
-                    elite: 5,
-                    personalWealth: 15 // Seized "decadent" art and property
+                    anger: 40,   // 2x from 20
+                    elite: 10,   // 2x from 5
+                    personalWealth: 25  // Increased from 15
                 },
                 legacy: { icon: "🔥", name: "The Inquisitor", weight: 15, explanation: "You burned the heretics. Medieval, but effective." },
                 remove: ["inquisition_cultural_purge"]
@@ -250,7 +251,7 @@ export const RELIGIOUS_EVENTS = [
             {
                 text: "Protect the culture",
                 effects: {
-                    elite: -15 // Zealots turn on you
+                    elite: -30   // 2x from -15
                 },
                 remove: ["inquisition_cultural_purge"]
             }

@@ -2,8 +2,8 @@ export const SANCTIONS_EVENTS = [
     {
         id: "sanctions_initial_wave",
         title: "The Economic Iron Curtain",
-        description: "In response to your recent actions, Western nations have imposed sweeping sanctions. Luxury brands are leaving, and the stock market is in freefall.",
-        weight: 0, // Triggered
+        description: "In response to your recent actions, Western nations have imposed sweeping sanctions. Luxury brands are leaving, and the stock market is in freefall. Western companies are abandoning factories and warehouses—the fire sale begins.",
+        weight: 0,
         storyline: "sanctions-spiral",
         rarity: "common",
         meta: {
@@ -13,12 +13,12 @@ export const SANCTIONS_EVENTS = [
         },
         choices: [
             {
-                text: "Seize foreign assets",
+                text: "Seize foreign assets in the fire sale",
                 effects: {
-                    personalWealth: 20, // Steal the factories
+                    personalWealth: 30,  // Increased from 20
                     treasury: 10,
-                    elite: -5, // International isolation hurts them
-                    anger: 5
+                    elite: -10,  // 2x from -5
+                    anger: 10    // 2x from 5
                 },
                 add: ["import_substitution_failure", "tech_sector_collapse", "sanctions_human_rights"],
                 remove: ["sanctions_initial_wave"]
@@ -27,8 +27,8 @@ export const SANCTIONS_EVENTS = [
                 text: "Try to negotiate secretly",
                 effects: {
                     personalWealth: -5,
-                    elite: 2, // Business community relieved
-                    treasury: -20 // Cost of lobbyists/bribes
+                    elite: 4,    // 2x from 2
+                    treasury: -20
                 },
                 add: ["sanctions_loophole_found"],
                 remove: ["sanctions_initial_wave"]
@@ -51,7 +51,7 @@ export const SANCTIONS_EVENTS = [
             {
                 text: "Ban the criticism",
                 effects: {
-                    anger: 5,
+                    anger: 10,   // 2x from 5
                     elite: 0
                 },
                 add: ["internet_censorship_tightens"]
@@ -59,8 +59,8 @@ export const SANCTIONS_EVENTS = [
             {
                 text: "Ignore it",
                 effects: {
-                    elite: -2, // You look silly
-                    anger: 2
+                    elite: -4,   // 2x from -2
+                    anger: 4     // 2x from 2
                 },
                 legacy: { icon: "🤡", name: "The Laughing Stock", weight: -5, explanation: "Your pathetic retaliation made you a global joke." }
             }
@@ -80,21 +80,21 @@ export const SANCTIONS_EVENTS = [
         },
         choices: [
             {
-                text: "Close the borders for IT workers",
+                text: "Close the borders for IT workers—exit visas require a 'processing fee'",
                 effects: {
-                    anger: 15,
-                    elite: -10, // Draconian measures scare investors
-                    treasury: -10, // Enforcement costs
-                    personalWealth: 10 // Seized assets from fleeing "traitors"
+                    anger: 30,   // 2x from 15
+                    elite: -20,  // 2x from -10
+                    treasury: -10,
+                    personalWealth: 15  // Increased from 10
                 },
                 add: ["underground_railroad"]
             },
             {
                 text: "Offer massive tax breaks to stay",
                 effects: {
-                    treasury: -150, // Increased from -100 (depth 5 = 1.5x)
-                    elite: 5,
-                    anger: -5
+                    treasury: -150,
+                    elite: 10,   // 2x from 5
+                    anger: -10   // 2x from -5
                 },
                 add: ["loyal_tech_giant", "subsidy_dependency"]
             }
@@ -117,8 +117,8 @@ export const SANCTIONS_EVENTS = [
                 text: "Exploit the loopholes",
                 effects: {
                     treasury: 30,
-                    personalWealth: 5,
-                    elite: 3
+                    personalWealth: 10,  // Increased from 5
+                    elite: 6     // 2x from 3
                 },
                 remove: ["sanctions_loophole_found"]
             },
@@ -147,17 +147,17 @@ export const SANCTIONS_EVENTS = [
             {
                 text: "Tighten control further",
                 effects: {
-                    anger: 10,
-                    elite: -3
+                    anger: 20,   // 2x from 10
+                    elite: -6    // 2x from -3
                 },
                 remove: ["internet_censorship_tightens"]
             },
             {
                 text: "Ease restrictions slightly",
                 effects: {
-                    anger: -5,
-                    elite: 2,
-                    treasury: -30 // Cost of monitoring instead of blocking
+                    anger: -10,  // 2x from -5
+                    elite: 4,    // 2x from 2
+                    treasury: -30
                 },
                 add: ["foreign_influence_creeping"],
                 remove: ["internet_censorship_tightens"]
@@ -178,17 +178,18 @@ export const SANCTIONS_EVENTS = [
         },
         choices: [
             {
-                text: "Crack down hard",
+                text: "Crack down hard—those caught fleeing forfeit all assets",
                 effects: {
-                    anger: 15,
-                    elite: -5
+                    anger: 30,   // 2x from 15
+                    elite: -10,  // 2x from -5
+                    personalWealth: 5  // Added - seized escapee assets
                 },
                 remove: ["underground_railroad"]
             },
             {
                 text: "Turn a blind eye",
                 effects: {
-                    elite: -3,
+                    elite: -6,   // 2x from -3
                     treasury: -10
                 },
                 remove: ["underground_railroad"]
@@ -212,23 +213,24 @@ export const SANCTIONS_EVENTS = [
                 text: "Invest heavily",
                 effects: {
                     treasury: -40,
-                    elite: 5,
-                    anger: -3
+                    elite: 10,   // 2x from 5
+                    anger: -6    // 2x from -3
                 },
                 remove: ["loyal_tech_giant"]
             },
             {
-                text: "Offer modest support",
+                text: "Offer modest support—for a quiet equity stake in your wife's name",
                 effects: {
                     treasury: -15,
-                    elite: 2
+                    elite: 4,    // 2x from 2
+                    personalWealth: 5  // Added - equity stake
                 },
                 remove: ["loyal_tech_giant"]
             },
             {
                 text: "Reject the request",
                 effects: {
-                    elite: -2, // Disappointed
+                    elite: -4,   // 2x from -2
                     treasury: 0
                 },
                 remove: ["loyal_tech_giant"]
@@ -251,29 +253,27 @@ export const SANCTIONS_EVENTS = [
             {
                 text: "Keep paying",
                 effects: {
-                    treasury: -80, // Increased from -50 (depth 6 = 1.6x)
-                    elite: 2
+                    treasury: -80,
+                    elite: 4     // 2x from 2
                 },
-                // Keeps the event in the pool? Or maybe it's a one-off that might recur if we add it back? 
-                // For now, let's make it one-off but painful.
                 remove: ["subsidy_dependency"]
             },
             {
                 text: "Cut them off",
                 effects: {
-                    elite: -5,
-                    anger: 5, // Jobs lost
+                    elite: -10,  // 2x from -5
+                    anger: 10,   // 2x from 5
                     treasury: 0
                 },
-                add: ["tech_sector_collapse"], // Risk of it happening again
+                add: ["tech_sector_collapse"],
                 remove: ["subsidy_dependency"]
             },
             {
-                text: "Restructure subsidies through your holding company",
+                text: "Restructure subsidies through your holding company (30% commission)",
                 effects: {
                     treasury: -60,
                     elite: 0,
-                    personalWealth: 12 // Subsidy laundering
+                    personalWealth: 18  // Increased from 12
                 },
                 legacy: { icon: "🏦", name: "The Subsidy King", weight: 5 },
                 remove: ["subsidy_dependency"]
@@ -296,17 +296,17 @@ export const SANCTIONS_EVENTS = [
             {
                 text: "Let them talk",
                 effects: {
-                    anger: -2,
-                    elite: -5 // Weakness
+                    anger: -4,   // 2x from -2
+                    elite: -10   // 2x from -5
                 },
-                add: ["mass_protests_blogger"], // Lead to protests
+                add: ["mass_protests_blogger"],
                 remove: ["foreign_influence_creeping"]
             },
             {
                 text: "Clamp down again",
                 effects: {
-                    anger: 10,
-                    elite: 2
+                    anger: 20,   // 2x from 10
+                    elite: 4     // 2x from 2
                 },
                 remove: ["foreign_influence_creeping"]
             }

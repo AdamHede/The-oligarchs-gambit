@@ -15,17 +15,18 @@ export const DOMESTIC_EVENTS = [
             {
                 text: "Price controls",
                 effects: {
-                    treasury: -35, // Increased from -20 (depth 2 = 1.3x)
-                    anger: -5,
-                    elite: -3 // Increased from -2
+                    treasury: -35,
+                    anger: -10,  // 2x from -5
+                    elite: -6    // 2x from -3
                 },
                 add: ["shortages_black_market", "pension_crisis"]
             },
             {
-                text: "Blame foreign saboteurs",
+                text: "Blame foreign saboteurs—the distraction lets you skim the emergency fund",
                 effects: {
-                    anger: 5,
-                    elite: 0
+                    anger: 10,   // 2x from 5
+                    elite: 0,
+                    personalWealth: 3  // Added - distraction lets you skim
                 },
                 add: ["tv_propaganda_blame"]
             }
@@ -47,9 +48,9 @@ export const DOMESTIC_EVENTS = [
             {
                 text: "Fly there and yell at the Governor",
                 effects: {
-                    anger: -5, // "The Tsar is good"
-                    elite: -5, // "The Boyars are bad"
-                    treasury: -30 // Reduced from -90 (emergency repair vs national project)
+                    anger: -10,  // 2x from -5
+                    elite: -10,  // 2x from -5
+                    treasury: -30
                 },
                 add: ["infrastructure_decay"],
                 legacy: { icon: "📢", name: "The Micro-Manager", weight: 2, explanation: "You personally managed the price of eggs. Such attention to detail!" }
@@ -57,7 +58,7 @@ export const DOMESTIC_EVENTS = [
             {
                 text: "Ignore it",
                 effects: {
-                    anger: 15,
+                    anger: 30,   // 2x from 15
                     elite: 0
                 }
             }
@@ -66,7 +67,7 @@ export const DOMESTIC_EVENTS = [
     {
         id: "shortages_black_market",
         title: "The Black Market Boom",
-        description: "Price controls have created shortages. A thriving black market has emerged, selling everything at triple the official price.",
+        description: "Price controls have created shortages. A thriving black market has emerged, selling everything at triple the official price. Your cousin runs the largest network. He pays tribute.",
         weight: 0,
         storyline: "domestic-crisis",
         rarity: "common",
@@ -79,18 +80,18 @@ export const DOMESTIC_EVENTS = [
             {
                 text: "Crack down on the black market",
                 effects: {
-                    anger: 10,
-                    elite: -3,
-                    treasury: -10 // Policing costs
+                    anger: 20,   // 2x from 10
+                    elite: -6,   // 2x from -3
+                    treasury: -10
                 },
                 remove: ["shortages_black_market"]
             },
             {
                 text: "Turn a blind eye",
                 effects: {
-                    anger: -3,
-                    treasury: -15, // Lost tax revenue
-                    personalWealth: 5 // Your people run the black market
+                    anger: -6,   // 2x from -3
+                    treasury: -15,
+                    personalWealth: 8  // Increased from 5
                 },
                 remove: ["shortages_black_market"]
             }
@@ -112,21 +113,19 @@ export const DOMESTIC_EVENTS = [
             {
                 text: "Print money to pay them",
                 effects: {
-                    treasury: -50, // Increased from -30 (Systemic failure is expensive)
-                    anger: -5,
-                    elite: -3 // Increased from -2
+                    treasury: -50,
+                    anger: -10,  // 2x from -5
+                    elite: -6    // 2x from -3
                 },
-                // Removed explicit loop back to inflation_crisis to break the death spiral
-                // addToPool: ["inflation_crisis"] 
                 legacy: { icon: "💸", name: "The Money Printer", weight: 0, explanation: "You printed money to solve your problems. Hyperinflation will be your legacy." }
             },
             {
-                text: "Raise retirement age",
+                text: "Raise retirement age—your daughter's firm handles the 'restructuring consultancy'",
                 effects: {
-                    anger: 10, // Reduced from 15
-                    treasury: 30, // Reduced from 40 to balance wealth gain
-                    elite: 5,
-                    personalWealth: 8 // "Administrative savings" diverted
+                    anger: 20,   // 2x from 10
+                    treasury: 30,
+                    elite: 10,   // 2x from 5
+                    personalWealth: 12  // Increased from 8
                 },
                 legacy: { icon: "📉", name: "The Iron Accountant", weight: 5, explanation: "You accepted the pain of austerity. The budget will thank you." }
             }
@@ -148,19 +147,19 @@ export const DOMESTIC_EVENTS = [
             {
                 text: "Massive modernization program",
                 effects: {
-                    treasury: -150, // Increased from -100 (depth 2 = 1.5x)
-                    elite: 10, // Contracts for friends
-                    anger: -5
+                    treasury: -150,
+                    elite: 20,   // 2x from 10
+                    anger: -10   // 2x from -5
                 },
                 remove: ["infrastructure_decay"],
                 legacy: { icon: "🏗️", name: "The Builder", weight: 10, explanation: "You invested in infrastructure for the people. A rare moment of generosity." }
             },
             {
-                text: "Patch it up cheaply",
+                text: "Patch it up cheaply—your friends win contracts at 5x actual cost",
                 effects: {
                     treasury: -20,
-                    anger: 5,
-                    personalWealth: 5 // Pocket the difference
+                    anger: 10,   // 2x from 5
+                    personalWealth: 8  // Increased from 5
                 },
                 add: ["infrastructure_decay"]
             }
@@ -180,17 +179,18 @@ export const DOMESTIC_EVENTS = [
         },
         choices: [
             {
-                text: "Amplify the blame",
+                text: "Amplify the blame—your family's ad agency handles the media buys",
                 effects: {
-                    anger: -5,
-                    elite: 2
+                    anger: -10,  // 2x from -5
+                    elite: 4,    // 2x from 2
+                    personalWealth: 3  // Added - propaganda budget skimming
                 },
                 remove: ["tv_propaganda_blame"]
             },
             {
                 text: "Focus on solutions",
                 effects: {
-                    anger: -3,
+                    anger: -6,   // 2x from -3
                     treasury: -15
                 },
                 remove: ["tv_propaganda_blame"]

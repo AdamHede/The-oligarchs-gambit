@@ -2,8 +2,8 @@ export const WAR_EVENTS = [
     {
         id: "war_special_operation_proposal",
         title: "Special Military Operation",
-        description: "Your Generals present a plan for a 'quick' 72-hour intervention in a neighboring region. They promise it will boost your approval ratings and secure vital resources. Intelligence suggests the West is too weak to react.",
-        weight: 10, // High priority to start
+        description: "Your Generals present a plan for a 'quick' 72-hour intervention in a neighboring region. They promise it will boost your approval ratings and secure vital resources. The Defense Minister hints that certain 'logistics contracts' could be routed through your Cyprus holding company.",
+        weight: 10,
         storyline: "war-invasion",
         rarity: "rare",
         meta: {
@@ -16,10 +16,10 @@ export const WAR_EVENTS = [
             {
                 text: "Authorize the operation",
                 effects: {
-                    personalWealth: 5, // War chest skimming
+                    personalWealth: 10,  // Increased from 5
                     treasury: -50,
-                    elite: 10, // Generals are happy
-                    anger: 5
+                    elite: 20,   // 2x from 10
+                    anger: 10    // 2x from 5
                 },
                 add: ["war_goes_badly", "sanctions_initial_wave", "rally_around_flag"],
                 legacy: { icon: "⚔️", name: "The Invader", weight: -10, explanation: "You launched a full-scale invasion of a sovereign nation. History will not be kind." }
@@ -27,9 +27,9 @@ export const WAR_EVENTS = [
             {
                 text: "Reject the plan",
                 effects: {
-                    elite: -10, // Generals are furious
-                    treasury: 5, // Saved money
-                    anger: -5
+                    elite: -20,  // 2x from -10
+                    treasury: 5,
+                    anger: -10   // 2x from -5
                 },
                 add: ["generals_plotting_coup"],
                 legacy: { icon: "🕊️", name: "The Peacemaker", weight: 5, explanation: "You chose diplomacy over war. A rare moment of restraint." }
@@ -39,8 +39,8 @@ export const WAR_EVENTS = [
     {
         id: "war_goes_badly",
         title: "The 72-Hour Quagmire",
-        description: "It has been three weeks. The '72-hour' operation has stalled. Logistics are a nightmare, and your tanks are running out of fuel. The Generals are blaming each other.",
-        weight: 0, // Triggered only
+        description: "It has been three weeks. The '72-hour' operation has stalled. Logistics are a nightmare, and your tanks are running out of fuel. Your brother-in-law's ammunition factory is working triple shifts at premium rates. The Generals are blaming each other.",
+        weight: 0,
         storyline: "war-invasion",
         rarity: "common",
         meta: {
@@ -54,9 +54,9 @@ export const WAR_EVENTS = [
                 text: "Double down: Mobilize more troops",
                 effects: {
                     treasury: -150,
-                    anger: 15, // Reduced from 20 - still harsh
-                    elite: 5,
-                    personalWealth: 5 // War contracts for your friends (who share...)
+                    anger: 30,   // 2x from 15
+                    elite: 10,   // 2x from 5
+                    personalWealth: 10  // Increased from 5
                 },
                 add: ["conscription_crisis", "equipment_shortages"],
                 remove: ["war_goes_badly"]
@@ -64,8 +64,8 @@ export const WAR_EVENTS = [
             {
                 text: "Pull back and regroup",
                 effects: {
-                    elite: -15, // Perceived weakness
-                    anger: -5
+                    elite: -30,  // 2x from -15
+                    anger: -10   // 2x from -5
                 },
                 add: ["general_fired_scapegoat"],
                 remove: ["war_goes_badly"]
@@ -73,9 +73,9 @@ export const WAR_EVENTS = [
             {
                 text: "Declare victory and withdraw",
                 effects: {
-                    elite: -20, // Humiliating defeat
-                    anger: -10, // Relief
-                    treasury: 30 // Saved war costs
+                    elite: -40,  // 2x from -20
+                    anger: -20,  // 2x from -10
+                    treasury: 30
                 },
                 add: ["frozen_conflict"],
                 remove: ["war_goes_badly", "conscription_crisis", "equipment_shortages", "generals_plotting_coup", "rural_unrest", "border_exodus_brain_drain"],
@@ -98,12 +98,12 @@ export const WAR_EVENTS = [
         image: "assets/images/events/conscription_crisis.png",
         choices: [
             {
-                text: "Mobilize the rural poor only",
+                text: "Mobilize the rural poor only—your nephews are exempt",
                 effects: {
                     treasury: -20,
-                    anger: 5, // Urban elite don't care
+                    anger: 10,   // 2x from 5
                     elite: 0,
-                    personalWealth: 5 // Urban conscription buyouts - the wealthy pay to keep their sons home
+                    personalWealth: 10  // Increased from 5
                 },
                 add: ["rural_unrest"],
                 remove: ["conscription_crisis"],
@@ -113,9 +113,9 @@ export const WAR_EVENTS = [
                 text: "General mobilization",
                 effects: {
                     treasury: -80,
-                    anger: 25, // Reduced from 30 - still extremely harsh
-                    elite: 5,
-                    personalWealth: 3 // Defense industry "consulting fees"
+                    anger: 50,   // 2x from 25
+                    elite: 10,   // 2x from 5
+                    personalWealth: 6  // 2x from 3
                 },
                 add: ["border_exodus_brain_drain"],
                 remove: ["conscription_crisis"]
@@ -125,7 +125,7 @@ export const WAR_EVENTS = [
     {
         id: "rally_around_flag",
         title: "Patriotic Surge",
-        description: "The initial operation has sparked a wave of nationalist sentiment. State media is flooded with patriotic programming.",
+        description: "The initial operation has sparked a wave of nationalist sentiment. Patriotic merchandise sales are soaring—your daughter's company has the exclusive license. State media is flooded with 'Z' imagery.",
         weight: 3,
         storyline: "war-invasion",
         rarity: "common",
@@ -138,9 +138,9 @@ export const WAR_EVENTS = [
             {
                 text: "Capitalize on the momentum",
                 effects: {
-                    elite: 5,
-                    anger: -5,
-                    personalWealth: 5 // Patriotic donations to "defense fund" (your pocket)
+                    elite: 10,   // 2x from 5
+                    anger: -10,  // 2x from -5
+                    personalWealth: 10  // Increased from 5
                 }
             }
         ]
@@ -148,7 +148,7 @@ export const WAR_EVENTS = [
     {
         id: "generals_plotting_coup",
         title: "The Generals Are Restless",
-        description: "Your rejection of the military operation has angered the top brass. Whispers of discontent are spreading through the officer corps.",
+        description: "Your rejection of the military operation has angered the top brass. Whispers of discontent are spreading through the officer corps. Their mansions and yachts could be seized under the anti-corruption statute...",
         weight: 5,
         storyline: "war-invasion",
         rarity: "rare",
@@ -161,15 +161,16 @@ export const WAR_EVENTS = [
             {
                 text: "Purge the disloyal",
                 effects: {
-                    elite: -10,
-                    treasury: -20
+                    elite: -20,  // 2x from -10
+                    treasury: -20,
+                    personalWealth: 10  // Added - seized assets
                 }
             },
             {
                 text: "Offer them concessions",
                 effects: {
                     treasury: -30,
-                    elite: 5
+                    elite: 10    // 2x from 5
                 }
             }
         ]
@@ -188,18 +189,19 @@ export const WAR_EVENTS = [
         },
         choices: [
             {
-                text: "Scramble to find supplies",
+                text: "Scramble to find supplies—award contracts to loyal friends",
                 effects: {
-                    treasury: -80, // Increased from -50 (depth 5 = 1.6x)
-                    anger: 8 // Increased from 5
+                    treasury: -80,
+                    anger: 16,   // 2x from 8
+                    personalWealth: 5  // Added - supply contract kickbacks
                 },
                 remove: ["equipment_shortages"]
             },
             {
                 text: "Accept the shortages",
                 effects: {
-                    elite: -10,
-                    anger: 10
+                    elite: -20,  // 2x from -10
+                    anger: 20    // 2x from 10
                 },
                 remove: ["equipment_shortages"]
             }
@@ -219,18 +221,19 @@ export const WAR_EVENTS = [
         },
         choices: [
             {
-                text: "Continue the operation",
+                text: "Continue the operation—his vacation villa now funds the war",
                 effects: {
-                    elite: -5,
-                    treasury: -30
+                    elite: -10,  // 2x from -5
+                    treasury: -30,
+                    personalWealth: 5  // Added - general's seized villa
                 },
                 remove: ["general_fired_scapegoat"]
             },
             {
                 text: "Reassess strategy",
                 effects: {
-                    elite: 5,
-                    anger: -5
+                    elite: 10,   // 2x from 5
+                    anger: -10   // 2x from -5
                 },
                 remove: ["general_fired_scapegoat"]
             }
@@ -252,15 +255,15 @@ export const WAR_EVENTS = [
             {
                 text: "Suppress the protests",
                 effects: {
-                    anger: 10,
-                    elite: 2
+                    anger: 20,   // 2x from 10
+                    elite: 4     // 2x from 2
                 },
                 remove: ["rural_unrest"]
             },
             {
                 text: "Promise fair treatment",
                 effects: {
-                    anger: -5,
+                    anger: -10,  // 2x from -5
                     treasury: -10
                 },
                 remove: ["rural_unrest"]
@@ -270,7 +273,7 @@ export const WAR_EVENTS = [
     {
         id: "border_exodus_brain_drain",
         title: "The Great Exodus",
-        description: "Massive numbers of educated professionals are fleeing across the borders. Universities and tech companies are emptying out.",
+        description: "Massive numbers of educated professionals are fleeing across the borders. Universities and tech companies are emptying out. Exit permits now cost $50,000 each—your customs chief shares the proceeds.",
         weight: 0,
         storyline: "war-invasion",
         rarity: "rare",
@@ -283,8 +286,9 @@ export const WAR_EVENTS = [
             {
                 text: "Close the borders",
                 effects: {
-                    anger: 15,
-                    elite: -5
+                    anger: 30,   // 2x from 15
+                    elite: -10,  // 2x from -5
+                    personalWealth: 10  // Added - exit fees
                 },
                 remove: ["border_exodus_brain_drain"]
             },
@@ -292,7 +296,7 @@ export const WAR_EVENTS = [
                 text: "Let them go",
                 effects: {
                     treasury: -20,
-                    elite: -10
+                    elite: -20   // 2x from -10
                 },
                 remove: ["border_exodus_brain_drain"]
             }
@@ -315,14 +319,23 @@ export const WAR_EVENTS = [
             {
                 text: "Maintain status quo",
                 effects: {
-                    treasury: -8, // Increased from -2 - ongoing conflict is expensive
-                    elite: -1, // Added - war fatigue
-                    anger: 2 // Added - war drags on
+                    treasury: -8,
+                    elite: -2,   // 2x from -1
+                    anger: 4     // 2x from 2
                 },
-                // Recur
                 add: ["frozen_conflict"]
+            },
+            {
+                text: "Sign unpopular peace treaty",
+                effects: {
+                    treasury: 10,
+                    elite: -20,  // 2x from -10
+                    anger: -20,  // 2x from -10
+                    personalWealth: 0
+                },
+                remove: ["frozen_conflict", "sanctions_initial_wave"],
+                legacy: { icon: "🏳️", name: "The Peacemaker", weight: -5 }
             }
         ]
     }
 ];
-
