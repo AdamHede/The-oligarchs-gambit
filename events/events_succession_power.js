@@ -11,6 +11,7 @@ export const SUCCESSION_EVENTS = [
             impact: 3,
             sentiment: "negative"
         },
+        image: "assets/images/events/oligarch_yacht_seized.png",
         choices: [
             {
                 text: "Compensate him fully",
@@ -45,6 +46,7 @@ export const SUCCESSION_EVENTS = [
             impact: 4,
             sentiment: "negative"
         },
+        image: "assets/images/events/health_scare_rumors.png",
         choices: [
             {
                 text: "Stage a judo match",
@@ -76,6 +78,7 @@ export const SUCCESSION_EVENTS = [
             impact: 5,
             sentiment: "negative"
         },
+        image: "assets/images/events/oligarch_greed_spiral.png",
         choices: [
             {
                 text: "Pay them all",
@@ -153,6 +156,7 @@ export const SUCCESSION_EVENTS = [
             impact: 2,
             sentiment: "negative"
         },
+        image: "assets/images/events/body_double_auditions.png",
         choices: [
             {
                 text: "Use them frequently",
@@ -184,6 +188,7 @@ export const SUCCESSION_EVENTS = [
             impact: 4,
             sentiment: "negative"
         },
+        image: "assets/images/events/paranoia_increases.png",
         choices: [
             {
                 text: "Continue the purge",
@@ -249,6 +254,7 @@ export const SUCCESSION_EVENTS = [
             impact: 3,
             sentiment: "neutral"
         },
+        image: "assets/images/events/palace_intrigue.png",
         choices: [
             {
                 text: "Back the Siloviki",

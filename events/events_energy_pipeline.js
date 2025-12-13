@@ -139,6 +139,7 @@ export const ENERGY_EVENTS = [
             impact: 3,
             sentiment: "positive"
         },
+        image: "assets/images/events/oligarch_bonus_payout.png",
         choices: [
             {
                 text: "Pay them handsomely",

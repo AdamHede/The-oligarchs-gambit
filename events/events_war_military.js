@@ -11,6 +11,7 @@ export const WAR_EVENTS = [
             impact: 5,
             sentiment: "neutral"
         },
+        image: "assets/images/events/war_special_operation_proposal.png",
         choices: [
             {
                 text: "Authorize the operation",
@@ -47,6 +48,7 @@ export const WAR_EVENTS = [
             impact: 5,
             sentiment: "negative"
         },
+        image: "assets/images/events/war_goes_badly.png",
         choices: [
             {
                 text: "Double down: Mobilize more troops",
@@ -93,6 +95,7 @@ export const WAR_EVENTS = [
             impact: 5,
             sentiment: "negative"
         },
+        image: "assets/images/events/conscription_crisis.png",
         choices: [
             {
                 text: "Mobilize the rural poor only",
@@ -307,6 +310,7 @@ export const WAR_EVENTS = [
             impact: 3,
             sentiment: "negative"
         },
+        image: "assets/images/events/frozen_conflict.png",
         choices: [
             {
                 text: "Maintain status quo",
