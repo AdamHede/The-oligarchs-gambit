@@ -674,123 +674,227 @@
             canvas.width = 512;
             canvas.height = 716;
             const ctx = canvas.getContext('2d');
+            const texture = new THREE.CanvasTexture(canvas);
 
-            // Background
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, 512, 716);
+            // Determine image path
+            let imagePath = 'assets/images/palace.png'; // Default
+            if (event.image) {
+                imagePath = event.image;
+            } else {
+                // Determine storyline safely
+                const storyline = (event.storylines && event.storylines[0]) || event.storyline;
 
-            // Storyline color
-            const storylines = event.storylines || (event.storyline ? [event.storyline] : []);
-            const storylineColors = {
-                'war-invasion': { h: 0, s: 70, l: 55 },
-                'energy-politics': { h: 45, s: 85, l: 55 },
-                'oligarch-rivalry': { h: 280, s: 60, l: 50 },
-                'sanctions-spiral': { h: 210, s: 70, l: 50 },
-                'succession-crisis': { h: 35, s: 90, l: 50 },
-                'popular-uprising': { h: 15, s: 80, l: 55 },
-                'domestic-crisis': { h: 200, s: 50, l: 45 }
-            };
+                if (storyline) {
+                    const storylineImages = {
+                        'war-invasion': 'assets/images/war-invasion.png',
+                        'oligarch-rivalry': 'assets/images/oligarch-rivalry.png',
+                        'sanctions-spiral': 'assets/images/sanctions-spiral.png',
+                        'succession-crisis': 'assets/images/succession-crisis.png',
+                        'popular-uprising': 'assets/images/popular-uprising.png',
+                        'religious-revival': 'assets/images/religious-revival.png',
+                        'shadow-war': 'assets/images/shadow-war.png',
+                        'domestic-crisis': 'assets/images/cultural-purge.png' // Best fit from available
+                    };
+                    if (storylineImages[storyline]) {
+                        imagePath = storylineImages[storyline];
+                    }
+                }
+            }
 
-            const storyline = storylines[0] || '';
-            const color = storylineColors[storyline] || { h: (event.id.length * 37) % 360, s: 70, l: 60 };
 
-            // Image placeholder area (gradient)
-            const imgHeight = 350;
-            const grad = ctx.createLinearGradient(0, 0, 0, imgHeight);
-            grad.addColorStop(0, `hsl(${color.h}, ${color.s}%, ${color.l + 15}%)`);
-            grad.addColorStop(1, `hsl(${color.h}, ${color.s - 10}%, ${color.l}%)`);
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, 512, imgHeight);
+            // Function to draw card content (background + text)
+            function drawCardContent(imgInfo) {
+                // Background - Dark Mode
+                ctx.fillStyle = '#1e293b';
+                ctx.fillRect(0, 0, 512, 716);
 
-            // Descriptive circle (placeholder for future image)
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
-            ctx.beginPath();
-            ctx.arc(256, 175, 100, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Storyline tag
-            if (storyline) {
-                const tagNames = {
-                    'war-invasion': '⚔️ WAR',
-                    'energy-politics': '⚡ ENERGY',
-                    'oligarch-rivalry': '👑 INTRIGUE',
-                    'sanctions-spiral': '🚫 SANCTIONS',
-                    'succession-crisis': '👑 SUCCESSION',
-                    'popular-uprising': '🔥 UPRISING',
-                    'domestic-crisis': '🏛️ CRISIS'
+                // Storyline color base
+                const storylines = event.storylines || (event.storyline ? [event.storyline] : []);
+                const storylineColors = {
+                    'war-invasion': { h: 0, s: 70, l: 55 },
+                    'energy-politics': { h: 45, s: 85, l: 55 },
+                    'oligarch-rivalry': { h: 280, s: 60, l: 50 },
+                    'sanctions-spiral': { h: 210, s: 70, l: 50 },
+                    'succession-crisis': { h: 35, s: 90, l: 50 },
+                    'popular-uprising': { h: 15, s: 80, l: 55 },
+                    'domestic-crisis': { h: 200, s: 50, l: 45 }
                 };
 
-                // Add a subtle shadow for readability over image
-                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-                ctx.shadowBlur = 4;
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-                ctx.font = 'bold 16px Inter, sans-serif';
-                ctx.textAlign = 'left';
-                ctx.fillText(tagNames[storyline] || storyline.toUpperCase(), 30, 40);
-                ctx.shadowBlur = 0;
-            }
+                const storyline = storylines[0] || '';
+                const color = storylineColors[storyline] || { h: (event.id.length * 37) % 360, s: 70, l: 60 };
 
-            // Title
-            ctx.fillStyle = '#000000';
-            ctx.font = 'bold 32px Inter, sans-serif';
-            ctx.textAlign = 'left';
+                // Draw Image or Gradient Placeholder
+                const imgHeight = 350;
+                if (imgInfo && imgInfo.loaded) {
+                    try {
+                        // Draw image ensuring it covers the area
+                        // Calculate aspect ratio to 'cover'
+                        const sWidth = imgInfo.img.width;
+                        const sHeight = imgInfo.img.height;
+                        const dWidth = 512;
+                        const dHeight = imgHeight;
 
-            // Word wrap title
-            const title = event.title || 'Unknown Event';
-            const titleWords = title.split(' ');
-            let titleLines = [];
-            let currentLine = '';
-            titleWords.forEach(word => {
-                const testLine = currentLine ? currentLine + ' ' + word : word;
-                if (ctx.measureText(testLine).width > 430) {
-                    titleLines.push(currentLine);
-                    currentLine = word;
-                } else {
-                    currentLine = testLine;
-                }
-            });
-            titleLines.push(currentLine);
+                        const scale = Math.max(dWidth / sWidth, dHeight / sHeight);
+                        const x = (dWidth - sWidth * scale) / 2;
+                        const y = (dHeight - sHeight * scale) / 2;
 
-            let titleY = 390;
-            titleLines.forEach(line => {
-                ctx.fillText(line, 40, titleY);
-                titleY += 38;
-            });
+                        ctx.drawImage(imgInfo.img, 0, 0, sWidth, sHeight, x, y, sWidth * scale, sHeight * scale);
 
-            // Description (truncated)
-            ctx.fillStyle = '#000000';
-            ctx.font = '400 20px Inter, sans-serif';
-            const desc = event.description || '';
-            const descWords = desc.split(' ');
-            let descLines = [];
-            currentLine = '';
-            descWords.forEach(word => {
-                const testLine = currentLine ? currentLine + ' ' + word : word;
-                if (ctx.measureText(testLine).width > 430) {
-                    if (descLines.length < 5) {
-                        descLines.push(currentLine);
+                        // Add a gradient overlay at the bottom of the image for text readability transition
+                        // Fades to Dark Background
+                        const overlay = ctx.createLinearGradient(0, imgHeight - 100, 0, imgHeight);
+                        overlay.addColorStop(0, 'rgba(30, 41, 59, 0)'); // #1e293b transparent
+                        overlay.addColorStop(1, '#1e293b');
+                        ctx.fillStyle = overlay;
+                        ctx.fillRect(0, imgHeight - 100, 512, 100);
+
+                    } catch (e) {
+                        console.warn('Error drawing image', e);
+                        // Fallback to gradient if drawing fails
+                        drawGradient(ctx, color, imgHeight);
                     }
-                    currentLine = word;
                 } else {
-                    currentLine = testLine;
+                    drawGradient(ctx, color, imgHeight);
                 }
-            });
-            if (descLines.length < 5) descLines.push(currentLine);
-            if (descLines.length === 5 && currentLine !== descLines[4]) {
-                descLines[4] = descLines[4].slice(0, -3) + '...';
+
+                // Title - White
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 32px Inter, sans-serif';
+                ctx.textAlign = 'left';
+
+                // Word wrap title
+                const title = event.title || 'Unknown Event';
+                const titleWords = title.split(' ');
+                let titleLines = [];
+                let currentLine = '';
+                titleWords.forEach(word => {
+                    const testLine = currentLine ? currentLine + ' ' + word : word;
+                    if (ctx.measureText(testLine).width > 430) {
+                        titleLines.push(currentLine);
+                        currentLine = word;
+                    } else {
+                        currentLine = testLine;
+                    }
+                });
+                titleLines.push(currentLine);
+
+                let titleY = 390;
+                titleLines.forEach(line => {
+                    ctx.fillText(line, 40, titleY);
+                    titleY += 38;
+                });
+
+                // Storyline tag (Draw ON TOP of image if exists, or just below header)
+                // Let's put it top left with a background pill
+                if (storyline) {
+                    const tagNames = {
+                        'war-invasion': '⚔️ WAR',
+                        'energy-politics': '⚡ ENERGY',
+                        'oligarch-rivalry': '👑 INTRIGUE',
+                        'sanctions-spiral': '🚫 SANCTIONS',
+                        'succession-crisis': '👑 SUCCESSION',
+                        'popular-uprising': '🔥 UPRISING',
+                        'domestic-crisis': '🏛️ CRISIS'
+                    };
+
+                    const tagText = tagNames[storyline] || storyline.toUpperCase();
+                    ctx.font = 'bold 14px Inter, sans-serif';
+                    const textWidth = ctx.measureText(tagText).width;
+
+                    // Pill background
+                    ctx.save();
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                    ctx.beginPath();
+                    ctx.roundRect(30, 30, textWidth + 24, 30, 15);
+                    ctx.fill();
+
+                    // Text
+                    ctx.fillStyle = '#ffffff';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(tagText, 30 + (textWidth + 24) / 2, 50);
+                    ctx.restore();
+                }
+
+                // Description (truncated) - Light Gray
+                ctx.fillStyle = '#e2e8f0';
+                ctx.font = '400 20px Inter, sans-serif';
+                ctx.textAlign = 'left';
+                const desc = event.description || '';
+                const descWords = desc.split(' ');
+                let descLines = [];
+                currentLine = '';
+                descWords.forEach(word => {
+                    const testLine = currentLine ? currentLine + ' ' + word : word;
+                    if (ctx.measureText(testLine).width > 430) {
+                        if (descLines.length < 5) {
+                            descLines.push(currentLine);
+                        }
+                        currentLine = word;
+                    } else {
+                        currentLine = testLine;
+                    }
+                });
+                if (descLines.length < 5) descLines.push(currentLine);
+                if (descLines.length === 5 && currentLine !== descLines[4]) {
+                    descLines[4] = descLines[4].slice(0, -3) + '...';
+                }
+
+                let descY = titleY + 20;
+                descLines.forEach(line => {
+                    ctx.fillText(line, 40, descY);
+                    descY += 26;
+                });
+
+                // Bottom accent bar
+                ctx.fillStyle = `hsl(${color.h}, ${color.s}%, ${color.l}%)`;
+                ctx.fillRect(40, 670, 432, 6);
+
+                // Border around image area to separate from content - Darker
+                ctx.strokeStyle = '#334155';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(0, imgHeight, 512, 1);
             }
 
-            let descY = titleY + 20;
-            descLines.forEach(line => {
-                ctx.fillText(line, 40, descY);
-                descY += 26;
-            });
+            function drawGradient(ctx, color, height) {
+                const grad = ctx.createLinearGradient(0, 0, 0, height);
+                grad.addColorStop(0, `hsl(${color.h}, ${color.s}%, ${color.l - 20}%)`); // Darker gradient
+                grad.addColorStop(1, `hsl(${color.h}, ${color.s - 10}%, ${color.l - 30}%)`);
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, 512, height);
 
-            // Bottom accent bar
-            ctx.fillStyle = `hsl(${color.h}, ${color.s}%, ${color.l}%)`;
-            ctx.fillRect(40, 670, 432, 6);
+                // Placeholder Icon
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.beginPath();
+                ctx.arc(256, 175, 100, 0, Math.PI * 2);
+                ctx.fill();
+            }
 
-            return new THREE.CanvasTexture(canvas);
+            // Initial draw (placeholder)
+            drawCardContent({ loaded: false });
+
+            // Load Image
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = () => {
+                drawCardContent({ loaded: true, img: img });
+                texture.needsUpdate = true;
+            };
+            img.onerror = () => {
+                // Try fallback logic if specific image fails
+                if (imagePath !== 'assets/images/palace.png') {
+                    const fallbackImg = new Image();
+                    fallbackImg.crossOrigin = "Anonymous";
+                    fallbackImg.onload = () => {
+                        drawCardContent({ loaded: true, img: fallbackImg });
+                        texture.needsUpdate = true;
+                    };
+                    fallbackImg.src = 'assets/images/palace.png';
+                }
+            };
+
+            img.src = imagePath;
+
+            return texture;
         }
 
         function init() {
@@ -1411,6 +1515,7 @@
             // Show HUD
             document.getElementById('hud').classList.add('visible');
 
+            // Draw first event
             // Draw first event
             currentEvent = engine.drawNextEvent();
             if (currentEvent) {
