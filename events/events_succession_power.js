@@ -2,7 +2,7 @@ export const SUCCESSION_EVENTS = [
     {
         id: "oligarch_yacht_seized",
         title: "The Yacht Incident",
-        description: "Your close ally, the Aluminum King, has had his $600M superyacht seized in Italy. He is demanding you compensate him from the state budget.",
+        description: "Aluminum magnate Oleg Deripaska bursts into your office, red-faced with fury. Italian police have seized his 'Lady Anastasia'—$600 million of floating palace, now impounded in Sardinia. 'I built that empire for YOU,' he shouts. 'I moved aluminum for you, laundered for you, bribed for you. Now they take my yacht and you say nothing?' He demands compensation from state funds. Behind him, other oligarchs watch to see how you handle disloyalty... and loyalty.",
         weight: 8,
         storyline: "oligarch-rivalry",
         rarity: "rare",
@@ -14,30 +14,32 @@ export const SUCCESSION_EVENTS = [
         image: "assets/images/events/oligarch_yacht_seized.png",
         choices: [
             {
-                text: "Compensate him fully",
+                text: "Compensate him from the treasury",
                 effects: {
-                    treasury: -25, // Adjusted from -70 based on coherence application
+                    treasury: -25,
                     elite: 10,
-                    anger: 3 // Reduced from 8 - this is the balanced choice
+                    anger: 3
                 },
-                add: ["oligarch_greed_spiral"]
+                add: ["oligarch_greed_spiral"],
+                legacy: { icon: "🛥️", name: "The Yacht Buyer", weight: -5, explanation: "You paid for a billionaire's toy with state money. The people noticed." }
             },
             {
-                text: "Tell him to be a patriot",
+                text: "Tell him to be a patriot and sacrifice",
                 effects: {
                     elite: -15,
                     treasury: 0,
-                    personalWealth: 10, // Greedy bait
-                    anger: 8 // High - greedy penalty
+                    personalWealth: 10,
+                    anger: 8
                 },
-                add: ["oligarch_plotting"]
+                add: ["oligarch_plotting"],
+                legacy: { icon: "🦅", name: "The Unmoved", weight: 10, explanation: "You refused to bail out the oligarchs. They learned who is master here." }
             }
         ]
     },
     {
         id: "health_scare_rumors",
         title: "Trembling Hands",
-        description: "A video of you gripping a table during a meeting has gone viral. Rumors of your ill health are spreading among the elite. The sharks are circling.",
+        description: "The video spreads through Telegram in hours: you, gripping a table edge during a meeting with Shoigu, your hand visibly trembling. Amateur analysts zoom in, slow it down, overlay medical diagrams. Western intelligence agencies leak 'assessments' of your health. FSB chief Bortnikov reports that General Surovikin was heard asking, 'How long does he have?' The sharks sense blood in the water. They're positioning themselves for what comes after.",
         weight: 6,
         storyline: "succession-crisis",
         rarity: "epic",
@@ -49,27 +51,29 @@ export const SUCCESSION_EVENTS = [
         image: "assets/images/events/health_scare_rumors.png",
         choices: [
             {
-                text: "Stage a judo match",
+                text: "Stage a televised judo demonstration",
                 effects: {
-                    elite: 5, // Show strength
+                    elite: 5,
                     anger: -2
                 },
-                add: ["body_double_auditions"]
+                add: ["body_double_auditions"],
+                legacy: { icon: "🥋", name: "The Athlete", weight: 5, explanation: "You threw opponents on camera to prove your vigor. The performance convinced some." }
             },
             {
-                text: "Purge the 'disloyal' gossipers",
+                text: "Purge the gossipers—make examples",
                 effects: {
-                    elite: -10, // Fear
-                    personalWealth: 5 // Seize their assets
+                    elite: -10,
+                    personalWealth: 5
                 },
-                add: ["paranoia_increases"]
+                add: ["paranoia_increases"],
+                legacy: { icon: "👁️", name: "The Paranoid", weight: 10, explanation: "You purged those who whispered about weakness. Now they only whisper when alone." }
             }
         ]
     },
     {
         id: "oligarch_greed_spiral",
         title: "The Compensation Spiral",
-        description: "Word has spread that you compensated the Aluminum King. Now every oligarch with seized assets is demanding the same treatment.",
+        description: "They come in waves: Potanin, Usmanov, Fridman, Aven. Each with a lawyer, each with a list of frozen assets, each demanding what Deripaska received. 'If he gets compensation, so do we,' declares nickel baron Vladimir Potanin. 'The West froze $400 billion of our money. Are you the protector of Russian capital or not?' The line outside your office stretches down the hallway. If you pay them all, the treasury collapses. If you refuse, they plot.",
         weight: 0,
         storyline: "oligarch-rivalry",
         rarity: "common",
@@ -81,31 +85,33 @@ export const SUCCESSION_EVENTS = [
         image: "assets/images/events/oligarch_greed_spiral.png",
         choices: [
             {
-                text: "Pay them all",
+                text: "Pay them all—buy their loyalty",
                 effects: {
-                    treasury: -150, // Increased from -100 (depth 2 = 1.5x)
+                    treasury: -150,
                     elite: 10,
-                    anger: 15 // Increased from 10
+                    anger: 15
                 },
-                remove: ["oligarch_greed_spiral"]
+                remove: ["oligarch_greed_spiral"],
+                legacy: { icon: "💸", name: "The Spendthrift", weight: -10, explanation: "You emptied the treasury to satisfy billionaires. The people starve while yachts sail." }
             },
             {
-                text: "Refuse",
+                text: "Refuse all further claims",
                 effects: {
                     elite: -5,
                     anger: 0
                 },
-                remove: ["oligarch_greed_spiral"]
+                remove: ["oligarch_greed_spiral"],
+                legacy: { icon: "🛑", name: "The Refuser", weight: 5, explanation: "You drew a line. The oligarchs learned there are limits." }
             },
             {
-                text: "Pay them... from their own frozen assets abroad",
+                text: "Compensate them... from their own frozen assets",
                 effects: {
                     treasury: -50,
                     elite: 5,
-                    personalWealth: 15, // You keep the difference
+                    personalWealth: 15,
                     anger: 5
                 },
-                legacy: { icon: "🎩", name: "The Middleman", weight: 10 },
+                legacy: { icon: "🎩", name: "The Middleman", weight: 15, explanation: "You laundered their own money through the treasury and kept the difference. Brilliant." },
                 remove: ["oligarch_greed_spiral"]
             }
         ]
@@ -113,7 +119,7 @@ export const SUCCESSION_EVENTS = [
     {
         id: "oligarch_plotting",
         title: "The Plot Thickens",
-        description: "The Aluminum King's anger has spread. Other oligarchs are quietly discussing your removal. The sharks are circling.",
+        description: "FSB surveillance intercepts encrypted messages between Deripaska and former finance minister Alexei Kudrin. They're discussing 'transition scenarios.' Security cameras catch Potanin meeting with a retired general in a private dining room. Telegram channels whisper about 'palace intrigue.' Your personal chef starts his car remotely now—just in case. The oligarchs you built are wondering if they could do better with someone else.",
         weight: 0,
         storyline: "oligarch-rivalry",
         rarity: "epic",
@@ -124,30 +130,31 @@ export const SUCCESSION_EVENTS = [
         },
         choices: [
             {
-                text: "Preemptively purge",
+                text: "Strike first—preemptive purge",
                 effects: {
-                    elite: -20, // Increased from -15
+                    elite: -20,
                     personalWealth: 20,
                     treasury: 10,
-                    anger: 10 // Added - purges create fear and resentment
+                    anger: 10
                 },
                 remove: ["oligarch_plotting"],
-                legacy: { icon: "🔪", name: "The Survivor", weight: 10, explanation: "You struck first against the plotters. Ruthless, but effective." }
+                legacy: { icon: "🔪", name: "The Survivor", weight: 15, explanation: "You struck before they could. Stalin would approve." }
             },
             {
-                text: "Try to buy loyalty",
+                text: "Buy their loyalty with treasure",
                 effects: {
-                    treasury: -70, // Increased from -50 (depth 2 = 1.4x)
+                    treasury: -70,
                     elite: 5
                 },
-                remove: ["oligarch_plotting"]
+                remove: ["oligarch_plotting"],
+                legacy: { icon: "🪙", name: "The Buyer", weight: -5, explanation: "You paid off conspirators instead of eliminating them. They'll try again." }
             }
         ]
     },
     {
         id: "body_double_auditions",
         title: "The Lookalike Search",
-        description: "You've ordered your security services to find body doubles who can stand in for you at public events. The auditions are... interesting.",
+        description: "FSO chief Dmitry Kochnev presents the candidates: twelve men who bear varying degrees of resemblance to you. One is a former actor from Novosibirsk, another a mathematics teacher from Kazan. They've been surgically enhanced, trained in your mannerisms, fed the same diet. 'We can deploy them at regional events,' Kochnev explains. 'The distance will hide any imperfections.' The question is how often to use them—and what happens if someone notices.",
         weight: 0,
         storyline: "succession-crisis",
         rarity: "rare",
@@ -159,15 +166,16 @@ export const SUCCESSION_EVENTS = [
         image: "assets/images/events/body_double_auditions.png",
         choices: [
             {
-                text: "Use them frequently",
+                text: "Use doubles frequently—preserve yourself",
                 effects: {
                     elite: -5,
                     anger: 5
                 },
-                remove: ["body_double_auditions"]
+                remove: ["body_double_auditions"],
+                legacy: { icon: "🎭", name: "The Phantom", weight: 5, explanation: "You multiplied yourself. Which one is real? Only you know." }
             },
             {
-                text: "Use them sparingly",
+                text: "Use them sparingly—maintain authenticity",
                 effects: {
                     elite: 2,
                     treasury: -10
@@ -179,7 +187,7 @@ export const SUCCESSION_EVENTS = [
     {
         id: "paranoia_increases",
         title: "The Purge Begins",
-        description: "Your paranoia has reached new heights. You're purging anyone who might have gossiped about your health. Fear spreads through the elite.",
+        description: "The lists grow longer each night. Deputy Chief of Staff Sergei Kiriyenko hands you another folder: names of officials who attended the wrong dinner parties, who made the wrong jokes at the wrong time. 'This one asked his driver about your health,' Kiriyenko notes. 'This one has a daughter in London.' The elite watch each other now, reporting preemptively before they are reported. Trust has become a luxury you cannot afford.",
         weight: 0,
         storyline: "succession-crisis",
         rarity: "epic",
@@ -191,30 +199,31 @@ export const SUCCESSION_EVENTS = [
         image: "assets/images/events/paranoia_increases.png",
         choices: [
             {
-                text: "Continue the purge",
+                text: "Deepen the purge—trust no one",
                 effects: {
-                    elite: -15, // Increased from -10
-                    personalWealth: 20, // Seized assets
-                    anger: 12 // Increased from 5 - fear and resentment spread
+                    elite: -15,
+                    personalWealth: 20,
+                    anger: 12
                 },
                 remove: ["paranoia_increases"],
-                legacy: { icon: "👑", name: "The Mad King", weight: 15, explanation: "Your paranoia consumed all reason. The purges will be remembered." }
+                legacy: { icon: "👑", name: "The Mad King", weight: 15, explanation: "Like Stalin before you, you purged until only the terrified remained. Effective." }
             },
             {
-                text: "Stop the purge",
+                text: "Stop the purge—restore some trust",
                 effects: {
                     elite: 5,
                     anger: -5
                 },
-                add: ["oligarch_plotting"], // Mercy is weakness
-                remove: ["paranoia_increases"]
+                add: ["oligarch_plotting"],
+                remove: ["paranoia_increases"],
+                legacy: { icon: "🕊️", name: "The Merciful", weight: -10, explanation: "You showed mercy. They will interpret it as weakness." }
             }
         ]
     },
     {
         id: "oligarch_defection",
         title: "The Banker Flees",
-        description: "Your former personal banker has fled to London. He is threatening to release documents about your offshore accounts unless you guarantee his safety.",
+        description: "Sergei Pugachev, the banker who knew everything—every offshore account, every shell company, every payoff—has surfaced in London. He's given interviews to the BBC, leaked documents to investigative journalists, and is writing a tell-all memoir. 'I know where $200 billion went,' he tells the cameras. 'I moved it personally.' The GRU proposes a solution involving umbrellas and nerve agents. The question is whether the cure would be worse than the disease.",
         weight: 6,
         storyline: "oligarch-rivalry",
         rarity: "rare",
@@ -225,27 +234,29 @@ export const SUCCESSION_EVENTS = [
         },
         choices: [
             {
-                text: "Send the agents",
+                text: "Send the specialists—silence him permanently",
                 effects: {
-                    elite: -10, // Everyone is scared
-                    anger: -2, // Traitors punished
+                    elite: -10,
+                    anger: -2,
                     treasury: -10
                 },
-                add: ["sanctions_human_rights"] // Getting caught
+                add: ["sanctions_human_rights"],
+                legacy: { icon: "☠️", name: "The Eliminator", weight: 15, explanation: "You silenced the traitor permanently. A message sent across continents." }
             },
             {
-                text: "Let him go",
+                text: "Let him talk—deny everything",
                 effects: {
-                    elite: -5, // Weakness
-                    anger: 5 // Corruption exposed
-                }
+                    elite: -5,
+                    anger: 5
+                },
+                legacy: { icon: "🤷", name: "The Denier", weight: -10, explanation: "You let a traitor expose your secrets while the world watched." }
             }
         ]
     },
     {
         id: "palace_intrigue",
         title: "War of the Towers",
-        description: "The 'Siloviki' (security services) and the 'Liberals' (economic bloc) are openly fighting for control over the budget. You must choose a side.",
+        description: "The eternal Kremlin conflict erupts anew. Security Council Secretary Nikolai Patrushev and his Siloviki faction demand more budget for 'defense of the motherland.' Central Bank chief Elvira Nabiullina and her technocrats insist on fiscal restraint. They argue in your presence now, no longer pretending to agree. 'The security services have become a state within a state,' Nabiullina says coldly. Patrushev's smile doesn't reach his eyes: 'And who keeps the state secure?'",
         weight: 6,
         storyline: "succession-crisis",
         rarity: "common",
@@ -257,25 +268,25 @@ export const SUCCESSION_EVENTS = [
         image: "assets/images/events/palace_intrigue.png",
         choices: [
             {
-                text: "Back the Siloviki",
+                text: "Back the Siloviki—strength above economy",
                 effects: {
-                    elite: -5, // Liberals unhappy
-                    anger: 5, // More repression
-                    treasury: -20, // Security budget increase
-                    personalWealth: 5 // Security services show "gratitude"
+                    elite: -5,
+                    anger: 5,
+                    treasury: -20,
+                    personalWealth: 5
                 },
                 add: ["paranoia_increases"],
-                legacy: { icon: "👮", name: "The Strongman", weight: 5, explanation: "You sided with the security services. Order through strength." }
+                legacy: { icon: "👮", name: "The Strongman", weight: 10, explanation: "You chose the security services. The economy suffers, but the regime endures." }
             },
             {
-                text: "Back the Liberals",
+                text: "Back the Liberals—economy above security",
                 effects: {
-                    elite: -5, // Siloviki unhappy
-                    treasury: 10, // Better economic management
+                    elite: -5,
+                    treasury: 10,
                     anger: -2
                 },
                 add: ["generals_plotting_coup"],
-                legacy: { icon: "📈", name: "The Reformer", weight: 2, explanation: "You backed the liberals. Perhaps there's hope for reform yet." }
+                legacy: { icon: "📈", name: "The Reformer", weight: -5, explanation: "You chose the economists over the enforcers. The generals noticed." }
             }
         ]
     }
