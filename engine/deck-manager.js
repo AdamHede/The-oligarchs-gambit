@@ -1,8 +1,15 @@
 /**
  * Event System 2.0 - Deck Manager
- * 
+ *
  * Manages the active event deck: adding, removing, and drawing events
+ *
+ * v2.1 additions:
+ * - Dynamic weight calculation based on storyline weights and event-specific modifiers
+ * - onceOnly event handling
  */
+
+import { getEffectiveStorylineWeight } from './game-state.js';
+import { evaluateCondition } from './condition-eval.js';
 
 /**
  * Adds events to the deck
@@ -39,11 +46,57 @@ function removeFromDeck(eventIds, currentDeck) {
     return currentDeck.filter(id => !eventIds.includes(id));
 }
 
+// =============================================================================
+// v2.1 Dynamic Weight Calculation
+// =============================================================================
+
+/**
+ * Calculates effective weight for an event based on state
+ * @param {Object} event - Event object
+ * @param {Object} state - Game state
+ * @returns {number} - Effective weight
+ */
+function calculateEffectiveWeight(event, state) {
+    let baseWeight = event.weight || 1;
+
+    // v2.1: Apply storyline weight modifiers
+    if (event.storylines && event.storylines.length > 0) {
+        // Use highest storyline weight if event belongs to multiple
+        const storylineMultipliers = event.storylines.map(storyline => {
+            const effectiveWeight = getEffectiveStorylineWeight(state, storyline, baseWeight);
+            return effectiveWeight / baseWeight;
+        });
+        const maxMultiplier = Math.max(...storylineMultipliers, 1.0);
+        baseWeight *= maxMultiplier;
+    }
+
+    // v2.1: Apply event-specific weight modifiers
+    if (event.weightModifiers && Array.isArray(event.weightModifiers)) {
+        event.weightModifiers.forEach(modifier => {
+            // Check if modifier conditions are met
+            const conditionsMet = modifier.conditions
+                ? evaluateCondition(modifier.conditions, state)
+                : true;
+
+            if (conditionsMet) {
+                if (modifier.multiplier !== undefined) {
+                    baseWeight *= modifier.multiplier;
+                }
+                if (modifier.bonus !== undefined) {
+                    baseWeight += modifier.bonus;
+                }
+            }
+        });
+    }
+
+    return Math.max(0, baseWeight); // Ensure non-negative
+}
+
 /**
  * Draws a random event from the deck based on weights
  * @param {Object[]} allEvents - All available events (indexed by ID)
  * @param {string[]} deck - Current deck state
- * @param {Function} isEligibleFn - Function to check if event is eligible (state) => boolean
+ * @param {Function} isEligibleFn - Function to check if event is eligible (event, state, allEvents) => boolean
  * @param {Object} state - Game state for eligibility checking
  * @returns {Object|null} - Selected event or null if none available
  */
@@ -63,19 +116,19 @@ function drawEvent(allEvents, deck, isEligibleFn, state) {
         return null;
     }
 
-    // Filter by eligibility
+    // Filter by eligibility (v2.1: pass allEvents for storylineActive checks)
     const eligibleEvents = deckEvents.filter(event => {
         if (!event) return false;
-        return isEligibleFn(event, state);
+        return isEligibleFn(event, state, allEvents);
     });
 
     if (eligibleEvents.length === 0) {
         return null;
     }
 
-    // Calculate weights
+    // v2.1: Calculate dynamic weights
     const weightedEvents = eligibleEvents.map(event => {
-        const weight = event.weight || 1;
+        const weight = calculateEffectiveWeight(event, state);
         return { event, weight };
     });
 
@@ -105,11 +158,11 @@ function drawEvent(allEvents, deck, isEligibleFn, state) {
  * Processes deck operations from a choice
  * @param {Object} choice - Choice object with add/remove/removeSelf/addSelf
  * @param {string} eventId - ID of the event this choice belongs to
- * @param {boolean} isRecurring - Whether the event is recurring
+ * @param {Object|boolean} eventOrIsRecurring - v2.1: Full event object, or boolean for backward compat
  * @param {string[]} currentDeck - Current deck state
  * @returns {string[]} - New deck state
  */
-function processChoiceDeckOperations(choice, eventId, isRecurring, currentDeck) {
+function processChoiceDeckOperations(choice, eventId, eventOrIsRecurring, currentDeck) {
     let newDeck = [...currentDeck];
 
     // Add events
@@ -120,6 +173,16 @@ function processChoiceDeckOperations(choice, eventId, isRecurring, currentDeck) 
     // Remove events
     if (choice.remove) {
         newDeck = removeFromDeck(choice.remove, newDeck);
+    }
+
+    // v2.1: Handle both old boolean and new object signatures
+    const event = typeof eventOrIsRecurring === 'object' ? eventOrIsRecurring : null;
+    const isRecurring = event ? (event.recurring || false) : eventOrIsRecurring;
+
+    // v2.1: Handle onceOnly events (higher priority than recurring)
+    if (event && event.onceOnly === true) {
+        newDeck = removeFromDeck([eventId], newDeck);
+        return newDeck; // Skip other self-management logic
     }
 
     // Handle self-removal/add
@@ -142,6 +205,7 @@ export {
     addToDeck,
     removeFromDeck,
     drawEvent,
-    processChoiceDeckOperations
+    processChoiceDeckOperations,
+    calculateEffectiveWeight  // v2.1 export
 };
 

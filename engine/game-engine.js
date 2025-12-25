@@ -1,11 +1,17 @@
 /**
  * Event System 2.0 - Main Game Engine
- * 
+ *
  * Wires together all components: state, deck, conditions, effects
+ *
+ * v2.1 additions:
+ * - Time-gate filtering in initial deck
+ * - Narrative variations based on state
+ * - onceOnly event handling on draw
+ * - Pass full event object to deck operations
  */
 
 import { createInitialState, addHistoryEntry, advanceTime, getDefaultStatBounds } from './game-state.js';
-import { isEventEligible } from './condition-eval.js';
+import { isEventEligible, evaluateCondition } from './condition-eval.js';
 import { drawEvent, processChoiceDeckOperations } from './deck-manager.js';
 import { applyEffects, applyAutoCounters } from './effect-applier.js';
 
@@ -39,11 +45,25 @@ class GameEngineV2 {
             // Exclude triggered-only events (weight <= 0)
             if (event.weight !== undefined && event.weight <= 0) return false;
 
+            // v2.1: Exclude events outside initial time gate (Year 1, Q1)
+            if (event.timeGate) {
+                const { minYear, maxYear, minQuarter, maxQuarter, minTurn, maxTurn } = event.timeGate;
+                // Check if Year 1, Q1 is within the time gate
+                if (minYear !== undefined && 1 < minYear) return false;
+                if (maxYear !== undefined && 1 > maxYear) return false;
+                if (minQuarter !== undefined && minYear === 1 && 1 < minQuarter) return false;
+                if (maxQuarter !== undefined && maxYear === 1 && 1 > maxQuarter) return false;
+                if (minTurn !== undefined && 0 < minTurn) return false;
+                if (maxTurn !== undefined && 0 > maxTurn) return false;
+            }
+
             // Include events with no conditions or only basic stat conditions
             if (!event.conditions) return true;
             const cond = event.conditions;
-            // Exclude events that require flags, counters, or hasTriggered
-            return !cond.flags && !cond.counters && !cond.all && !cond.any && !cond.not;
+            // Exclude events that require flags, counters, complex logic, or v2.1 features
+            return !cond.flags && !cond.counters && !cond.all && !cond.any && !cond.not
+                && !cond.year && !cond.quarter && !cond.turn && !cond.relationships
+                && !cond.relationship && !cond.characterState && !cond.storylineActive;
         });
 
         const deck = [];
@@ -103,7 +123,47 @@ class GameEngineV2 {
         );
 
         this.currentEvent = event;
+
+        // v2.1: Handle onceOnly events - remove from deck immediately on draw
+        if (event && event.onceOnly === true) {
+            this.state.deck = this.state.deck.filter(id => id !== event.id);
+        }
+
         return event;
+    }
+
+    /**
+     * v2.1: Gets the appropriate narrative for an event based on narrative variations
+     * @param {Object} event - Event object
+     * @returns {Object} - {title, description}
+     */
+    getNarrativeForEvent(event) {
+        if (!event) {
+            return { title: '', description: '' };
+        }
+
+        if (!event.narrativeVariations || event.narrativeVariations.length === 0) {
+            return {
+                title: event.title,
+                description: event.description
+            };
+        }
+
+        // Find first matching variation
+        for (const variation of event.narrativeVariations) {
+            if (evaluateCondition(variation.conditions, this.state)) {
+                return {
+                    title: variation.title || event.title,
+                    description: variation.description || event.description
+                };
+            }
+        }
+
+        // No variation matched, return default
+        return {
+            title: event.title,
+            description: event.description
+        };
     }
 
     /**
@@ -129,11 +189,11 @@ class GameEngineV2 {
         // Apply auto-counters
         applyAutoCounters(this.state, event.id, choiceIndex);
 
-        // Process deck operations
+        // Process deck operations (v2.1: pass full event object for onceOnly check)
         this.state.deck = processChoiceDeckOperations(
             choice,
             event.id,
-            event.recurring || false,
+            event,  // v2.1: Pass full event instead of just recurring boolean
             this.state.deck
         );
 
@@ -202,7 +262,13 @@ class GameEngineV2 {
             deck: [...this.state.deck],
             year: this.state.year,
             quarter: this.state.quarter,
-            history: [...this.state.history]
+            turn: this.state.turn,  // v2.1
+            history: [...this.state.history],
+            // v2.1 additions
+            relationships: { ...this.state.relationships },
+            characterStates: { ...this.state.characterStates },
+            storylineWeights: { ...this.state.storylineWeights },
+            terminatedEvents: new Set(this.state.terminatedEvents)
         };
     }
 
@@ -213,7 +279,7 @@ class GameEngineV2 {
     getEligibleEvents() {
         return this.state.deck
             .map(id => this.eventMap.get(id))
-            .filter(event => event && isEventEligible(event, this.state));
+            .filter(event => event && isEventEligible(event, this.state, this.allEvents));
     }
 }
 

@@ -1,7 +1,14 @@
 /**
  * Event System 2.0 - Schema Definitions and Validation
- * 
+ *
  * Provides JSDoc types and runtime validation for events
+ *
+ * v2.1 additions:
+ * - TimeGate for temporal restrictions
+ * - WeightModifier for dynamic weight adjustments
+ * - NarrativeVariation for conditional text
+ * - Extended ChoiceEffects with relationships, characterStates, modifyStorylineWeights, terminates
+ * - Extended Conditions with year, quarter, turn, relationship, characterState, storylineActive
  */
 
 /**
@@ -81,6 +88,76 @@
  * @property {Array<Object>} history - Game history for debugging/analytics
  */
 
+// =============================================================================
+// v2.1 Type Definitions
+// =============================================================================
+
+/**
+ * @typedef {Object} TimeGate
+ * @property {number} [minYear] - Only appears >= this year
+ * @property {number} [maxYear] - Only appears <= this year
+ * @property {number} [minQuarter] - Only appears >= this quarter (1-4)
+ * @property {number} [maxQuarter] - Only appears <= this quarter (1-4)
+ * @property {number} [minTurn] - Only appears >= this turn number
+ * @property {number} [maxTurn] - Only appears <= this turn number
+ */
+
+/**
+ * @typedef {Object} WeightModifier
+ * @property {ConditionExpression} conditions - Conditions for this modifier to apply
+ * @property {number} [multiplier] - Weight multiplier (e.g., 1.5 = +50%, 0.5 = -50%)
+ * @property {number} [bonus] - Flat bonus to weight (applied after multiplier)
+ */
+
+/**
+ * @typedef {Object} NarrativeVariation
+ * @property {ConditionExpression} conditions - When this variation applies
+ * @property {string} [title] - Alternative title text
+ * @property {string} [description] - Alternative description text
+ */
+
+/**
+ * @typedef {Object} ChoiceEffectsV21
+ * @extends ChoiceEffects
+ * @property {Object<string, number>} [relationships] - Relationship changes (character_id: delta)
+ * @property {Object<string, string>} [characterStates] - Character state changes (character_id: state)
+ * @property {Object<string, {multiplier?: number, bonus?: number}>} [modifyStorylineWeights] - Dynamic storyline weight changes
+ * @property {string[]} [terminates] - Event IDs to permanently block
+ */
+
+/**
+ * @typedef {Object} ConditionsV21
+ * @extends Conditions
+ * @property {number|StatComparison} [year] - Year comparison
+ * @property {number|StatComparison} [quarter] - Quarter comparison (1-4)
+ * @property {number|StatComparison} [turn] - Absolute turn number comparison
+ * @property {string} [relationship] - Character ID for relationship check (use with gte/lte/etc)
+ * @property {Object<string, StatComparison>} [relationships] - Character relationship checks
+ * @property {{character: string, state: string}} [characterState] - Check character state
+ * @property {string} [storylineActive] - Check if storyline has events in deck
+ */
+
+/**
+ * @typedef {Object} EventV21
+ * @extends Event
+ * @property {TimeGate} [timeGate] - Temporal restrictions on event appearance
+ * @property {boolean} [onceOnly] - If true, removes self from deck after first draw
+ * @property {WeightModifier[]} [weightModifiers] - Dynamic weight adjustments
+ * @property {NarrativeVariation[]} [narrativeVariations] - Conditional text variations
+ * @property {string} [characterId] - ID of recurring character this event features
+ * @property {string} [rarity] - Rarity tier: common, rare, epic, legendary
+ */
+
+/**
+ * @typedef {Object} GameStateV21
+ * @extends GameState
+ * @property {Object<string, number>} relationships - Character relationships (0-100)
+ * @property {Object<string, string>} characterStates - Character states (alive, arrested, exiled, dead)
+ * @property {Object<string, {multiplier: number, bonus: number}>} storylineWeights - Dynamic weight modifiers
+ * @property {Set<string>} terminatedEvents - Permanently blocked event IDs
+ * @property {number} turn - Absolute turn counter
+ */
+
 /**
  * Validates an event object against the schema
  * @param {Event} event - Event to validate
@@ -158,9 +235,131 @@ function validateEvent(event, allEventIds = new Set()) {
         errors.push(`Event "${event.id || 'unknown'}" tags must be an array`);
     }
 
+    // v2.1: Validate timeGate
+    if (event.timeGate) {
+        const tg = event.timeGate;
+        if (tg.minYear !== undefined && typeof tg.minYear !== 'number') {
+            errors.push(`Event "${event.id}" timeGate.minYear must be a number`);
+        }
+        if (tg.maxYear !== undefined && typeof tg.maxYear !== 'number') {
+            errors.push(`Event "${event.id}" timeGate.maxYear must be a number`);
+        }
+        if (tg.minQuarter !== undefined && (typeof tg.minQuarter !== 'number' || tg.minQuarter < 1 || tg.minQuarter > 4)) {
+            errors.push(`Event "${event.id}" timeGate.minQuarter must be 1-4`);
+        }
+        if (tg.maxQuarter !== undefined && (typeof tg.maxQuarter !== 'number' || tg.maxQuarter < 1 || tg.maxQuarter > 4)) {
+            errors.push(`Event "${event.id}" timeGate.maxQuarter must be 1-4`);
+        }
+        if (tg.minTurn !== undefined && typeof tg.minTurn !== 'number') {
+            errors.push(`Event "${event.id}" timeGate.minTurn must be a number`);
+        }
+        if (tg.maxTurn !== undefined && typeof tg.maxTurn !== 'number') {
+            errors.push(`Event "${event.id}" timeGate.maxTurn must be a number`);
+        }
+        // Logical validation
+        if (tg.minYear && tg.maxYear && tg.minYear > tg.maxYear) {
+            errors.push(`Event "${event.id}" timeGate.minYear > maxYear (impossible condition)`);
+        }
+        if (tg.minTurn && tg.maxTurn && tg.minTurn > tg.maxTurn) {
+            errors.push(`Event "${event.id}" timeGate.minTurn > maxTurn (impossible condition)`);
+        }
+    }
+
+    // v2.1: Validate onceOnly
+    if (event.onceOnly !== undefined && typeof event.onceOnly !== 'boolean') {
+        errors.push(`Event "${event.id}" onceOnly must be a boolean`);
+    }
+
+    // v2.1: Validate weightModifiers
+    if (event.weightModifiers) {
+        if (!Array.isArray(event.weightModifiers)) {
+            errors.push(`Event "${event.id}" weightModifiers must be an array`);
+        } else {
+            event.weightModifiers.forEach((mod, idx) => {
+                if (mod.multiplier !== undefined && typeof mod.multiplier !== 'number') {
+                    errors.push(`Event "${event.id}" weightModifier ${idx} multiplier must be a number`);
+                }
+                if (mod.bonus !== undefined && typeof mod.bonus !== 'number') {
+                    errors.push(`Event "${event.id}" weightModifier ${idx} bonus must be a number`);
+                }
+            });
+        }
+    }
+
+    // v2.1: Validate narrativeVariations
+    const warnings = [];
+    if (event.narrativeVariations) {
+        if (!Array.isArray(event.narrativeVariations)) {
+            errors.push(`Event "${event.id}" narrativeVariations must be an array`);
+        } else {
+            event.narrativeVariations.forEach((variation, idx) => {
+                if (!variation.conditions) {
+                    warnings.push(`Event "${event.id}" narrativeVariation ${idx} has no conditions (will never match)`);
+                }
+                if (!variation.title && !variation.description) {
+                    warnings.push(`Event "${event.id}" narrativeVariation ${idx} has no title or description (useless variation)`);
+                }
+            });
+        }
+    }
+
+    // v2.1: Validate characterId
+    if (event.characterId !== undefined && typeof event.characterId !== 'string') {
+        errors.push(`Event "${event.id}" characterId must be a string`);
+    }
+
+    // v2.1: Validate choice effects
+    if (event.choices) {
+        event.choices.forEach((choice, idx) => {
+            if (choice.effects) {
+                // Validate relationships
+                if (choice.effects.relationships) {
+                    if (typeof choice.effects.relationships !== 'object') {
+                        errors.push(`Event "${event.id}" choice ${idx} effects.relationships must be an object`);
+                    } else {
+                        Object.entries(choice.effects.relationships).forEach(([charId, value]) => {
+                            if (typeof value !== 'number') {
+                                errors.push(`Event "${event.id}" choice ${idx} effects.relationships.${charId} must be a number`);
+                            }
+                        });
+                    }
+                }
+
+                // Validate characterStates
+                if (choice.effects.characterStates) {
+                    if (typeof choice.effects.characterStates !== 'object') {
+                        errors.push(`Event "${event.id}" choice ${idx} effects.characterStates must be an object`);
+                    } else {
+                        const validStates = ['alive', 'arrested', 'exiled', 'dead'];
+                        Object.entries(choice.effects.characterStates).forEach(([char, state]) => {
+                            if (!validStates.includes(state)) {
+                                warnings.push(`Event "${event.id}" choice ${idx} sets unusual character state "${state}" for ${char}`);
+                            }
+                        });
+                    }
+                }
+
+                // Validate modifyStorylineWeights
+                if (choice.effects.modifyStorylineWeights) {
+                    if (typeof choice.effects.modifyStorylineWeights !== 'object') {
+                        errors.push(`Event "${event.id}" choice ${idx} effects.modifyStorylineWeights must be an object`);
+                    }
+                }
+
+                // Validate terminates
+                if (choice.effects.terminates) {
+                    if (!Array.isArray(choice.effects.terminates)) {
+                        errors.push(`Event "${event.id}" choice ${idx} effects.terminates must be an array`);
+                    }
+                }
+            }
+        });
+    }
+
     return {
         valid: errors.length === 0,
-        errors
+        errors,
+        warnings  // v2.1: Include warnings in return
     };
 }
 

@@ -15,6 +15,8 @@ import energyPipeline from './energy-pipeline.storyline.js';
 import popularUprising from './popular-uprising.storyline.js';
 import domesticCrisis from './domestic-crisis.storyline.js';
 import common from './common.storyline.js';
+// v2.1: Early game agency storyline
+import earlyGameAgenda from './early-game-agenda.storyline.js';
 
 // Export individual storylines for selective use
 export {
@@ -26,11 +28,13 @@ export {
     energyPipeline,
     popularUprising,
     domesticCrisis,
-    common
+    common,
+    earlyGameAgenda  // v2.1
 };
 
 // Export all storylines as array for easy initialization
 export const allStorylines = [
+    earlyGameAgenda,  // v2.1: First to ensure high-weight early events are available
     warInvasion,
     sanctionsSpiral,
     shadowWar,
@@ -97,6 +101,13 @@ export const storylineMetadata = {
         description: 'Background events and pacing',
         entryWeight: 5,
         theme: { borderColor: '#555', accentColor: '#888' }
+    },
+    // v2.1: Early game agenda storyline
+    'early-game-agenda': {
+        name: 'Early Game Agenda',
+        description: 'Agenda-setting events that shape your rule from the start',
+        entryWeight: 25, // Very high to ensure early appearance
+        theme: { borderColor: '#d4af37', accentColor: '#ffd700' }
     }
 };
 
