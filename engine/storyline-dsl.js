@@ -30,6 +30,10 @@ export function event(id, config) {
         narrativeVariations: config.narrativeVariations,
         characterId: config.characterId,
         weightModifiers: config.weightModifiers,
+        // v2.2: Entity dependencies - event is auto-removed if any required entity dies/exits
+        requires: config.requires ?? [],
+        // v2.2: Force add to initial deck
+        forceAddAtStart: config.forceAddAtStart ?? false,
         // For referencing shared events
         _isReference: false
     };
@@ -60,8 +64,10 @@ export function choice(text, config = {}) {
         text,
         effects: config.effects ?? {},
         legacy: config.legacy,
-        // Nested events that become available when this choice is made
+        // Nested events that become available when this choice is made (parallel - all will occur)
         unlocks: config.unlocks ?? [],
+        // v2.2: Exclusive outcomes - only ONE will occur, drawing one removes siblings
+        unlocksExclusive: config.unlocksExclusive ?? [],
         // Events that become permanently blocked when this choice is made
         terminates: config.terminates ?? [],
         // Whether to keep this event in deck (for recurring events)
@@ -148,7 +154,10 @@ function processEventNode(node, parentChoiceInfo, storyline) {
         onceOnly: node.onceOnly,
         narrativeVariations: node.narrativeVariations,
         characterId: node.characterId,
-        weightModifiers: node.weightModifiers
+        weightModifiers: node.weightModifiers,
+        // v2.2 properties
+        requires: node.requires ?? [],
+        forceAddAtStart: node.forceAddAtStart ?? false
     };
 
     // Track tree relationships
@@ -165,14 +174,16 @@ function processEventNode(node, parentChoiceInfo, storyline) {
                 legacy: choiceNode.legacy,
                 // We'll compute add/remove from unlocks/terminates
                 add: [],
-                remove: []
+                remove: [],
+                // v2.2: Track exclusive groups for this choice
+                exclusiveGroups: []
             };
 
             // Track unlocks in tree structure
             storyline.tree[eventId].children[choiceIndex] = [];
             storyline.tree[eventId].terminates[choiceIndex] = choiceNode.terminates ?? [];
 
-            // Process nested unlocks
+            // Process nested unlocks (parallel - all will eventually occur)
             if (choiceNode.unlocks) {
                 choiceNode.unlocks.forEach(childNode => {
                     if (childNode._isReference) {
@@ -187,6 +198,30 @@ function processEventNode(node, parentChoiceInfo, storyline) {
                         processEventNode(childNode, { parentEventId: eventId, choiceIndex }, storyline);
                     }
                 });
+            }
+
+            // v2.2: Process exclusive unlocks (mutually exclusive - only one will occur)
+            if (choiceNode.unlocksExclusive && choiceNode.unlocksExclusive.length > 0) {
+                const exclusiveGroupIds = [];
+                
+                choiceNode.unlocksExclusive.forEach(childNode => {
+                    if (childNode._isReference) {
+                        flatChoice.add.push(childNode.id);
+                        storyline.tree[eventId].children[choiceIndex].push(childNode.id);
+                        exclusiveGroupIds.push(childNode.id);
+                    } else if (childNode.id) {
+                        flatChoice.add.push(childNode.id);
+                        storyline.tree[eventId].children[choiceIndex].push(childNode.id);
+                        exclusiveGroupIds.push(childNode.id);
+                        // Recursively process child
+                        processEventNode(childNode, { parentEventId: eventId, choiceIndex }, storyline);
+                    }
+                });
+                
+                // Store the exclusive group for engine registration
+                if (exclusiveGroupIds.length > 1) {
+                    flatChoice.exclusiveGroups.push(exclusiveGroupIds);
+                }
             }
 
             // Process terminates
@@ -237,7 +272,11 @@ export function compileStorylines(storylines) {
         storylines: {},
         events: {},
         globalTree: {},
-        entryPoints: []
+        entryPoints: [],
+        // v2.2: Map of eventId -> array of sibling event IDs in same exclusive group
+        exclusiveGroups: {},
+        // v2.2: Map of entityId -> array of event IDs that require this entity
+        entityDependencies: {}
     };
 
     storylines.forEach(storyline => {
@@ -252,6 +291,43 @@ export function compileStorylines(storylines) {
         // Collect entry points
         registry.entryPoints.push(...storyline.entryPoints);
     });
+
+    // v2.2: Build exclusive groups from choice data
+    for (const event of Object.values(registry.events)) {
+        if (event.choices) {
+            event.choices.forEach(choice => {
+                if (choice.exclusiveGroups) {
+                    choice.exclusiveGroups.forEach(group => {
+                        // For each event in the group, map it to its siblings
+                        group.forEach(eventId => {
+                            const siblings = group.filter(id => id !== eventId);
+                            if (!registry.exclusiveGroups[eventId]) {
+                                registry.exclusiveGroups[eventId] = [];
+                            }
+                            // Add siblings (avoiding duplicates)
+                            siblings.forEach(siblingId => {
+                                if (!registry.exclusiveGroups[eventId].includes(siblingId)) {
+                                    registry.exclusiveGroups[eventId].push(siblingId);
+                                }
+                            });
+                        });
+                    });
+                }
+            });
+        }
+        
+        // v2.2: Build entity dependencies
+        if (event.requires && event.requires.length > 0) {
+            event.requires.forEach(entityId => {
+                if (!registry.entityDependencies[entityId]) {
+                    registry.entityDependencies[entityId] = [];
+                }
+                if (!registry.entityDependencies[entityId].includes(event.id)) {
+                    registry.entityDependencies[entityId].push(event.id);
+                }
+            });
+        }
+    }
 
     return registry;
 }

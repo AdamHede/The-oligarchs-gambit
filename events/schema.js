@@ -149,6 +149,19 @@
  */
 
 /**
+ * @typedef {Object} EventV22
+ * @extends EventV21
+ * @property {string[]} [requires] - Entity IDs this event depends on (auto-removed if entity dies/exits)
+ * @property {boolean} [forceAddAtStart] - If true, always added to initial deck
+ */
+
+/**
+ * @typedef {Object} ChoiceV22
+ * @extends Choice
+ * @property {Object[]} [unlocksExclusive] - Mutually exclusive outcomes (only one will occur)
+ */
+
+/**
  * @typedef {Object} GameStateV21
  * @extends GameState
  * @property {Object<string, number>} relationships - Character relationships (0-100)
@@ -306,6 +319,24 @@ function validateEvent(event, allEventIds = new Set()) {
     // v2.1: Validate characterId
     if (event.characterId !== undefined && typeof event.characterId !== 'string') {
         errors.push(`Event "${event.id}" characterId must be a string`);
+    }
+
+    // v2.2: Validate requires (entity dependencies)
+    if (event.requires !== undefined) {
+        if (!Array.isArray(event.requires)) {
+            errors.push(`Event "${event.id}" requires must be an array of entity IDs`);
+        } else {
+            event.requires.forEach((entityId, idx) => {
+                if (typeof entityId !== 'string') {
+                    errors.push(`Event "${event.id}" requires[${idx}] must be a string`);
+                }
+            });
+        }
+    }
+
+    // v2.2: Validate forceAddAtStart
+    if (event.forceAddAtStart !== undefined && typeof event.forceAddAtStart !== 'boolean') {
+        errors.push(`Event "${event.id}" forceAddAtStart must be a boolean`);
     }
 
     // v2.1: Validate choice effects

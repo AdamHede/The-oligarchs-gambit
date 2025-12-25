@@ -37,6 +37,8 @@ function createInitialState(initialStats = {}, initialDeck = []) {
         year: 1,
         quarter: 1,
         turn: 0                   // v2.1: Absolute turn counter
+        // Note: exclusiveGroups and entityDependencies are stored in the registry,
+        // not in game state, as they're static data compiled from storylines
     };
 }
 

@@ -98,9 +98,10 @@ function calculateEffectiveWeight(event, state) {
  * @param {string[]} deck - Current deck state
  * @param {Function} isEligibleFn - Function to check if event is eligible (event, state, allEvents) => boolean
  * @param {Object} state - Game state for eligibility checking
+ * @param {Object} [registry] - v2.2: Optional compiled registry with exclusiveGroups
  * @returns {Object|null} - Selected event or null if none available
  */
-function drawEvent(allEvents, deck, isEligibleFn, state) {
+function drawEvent(allEvents, deck, isEligibleFn, state, registry = null) {
     // Filter to events in deck
     const deckEvents = deck
         .map(id => allEvents.find(e => e.id === id))
@@ -111,7 +112,7 @@ function drawEvent(allEvents, deck, isEligibleFn, state) {
         if (state.deck.length === 0) {
             state.deck.push('quiet_quarter');
             // Recursive call to draw the newly added event
-            return drawEvent(allEvents, state.deck, isEligibleFn, state);
+            return drawEvent(allEvents, state.deck, isEligibleFn, state, registry);
         }
         return null;
     }
@@ -135,23 +136,42 @@ function drawEvent(allEvents, deck, isEligibleFn, state) {
     // Calculate total weight
     const totalWeight = weightedEvents.reduce((sum, item) => sum + item.weight, 0);
 
+    let selectedEvent;
     if (totalWeight === 0) {
         // Fallback: equal probability
         const randomIndex = Math.floor(Math.random() * weightedEvents.length);
-        return weightedEvents[randomIndex].event;
-    }
-
-    // Weighted random selection
-    let random = Math.random() * totalWeight;
-    for (const item of weightedEvents) {
-        random -= item.weight;
-        if (random <= 0) {
-            return item.event;
+        selectedEvent = weightedEvents[randomIndex].event;
+    } else {
+        // Weighted random selection
+        let random = Math.random() * totalWeight;
+        for (const item of weightedEvents) {
+            random -= item.weight;
+            if (random <= 0) {
+                selectedEvent = item.event;
+                break;
+            }
+        }
+        // Fallback (shouldn't reach here)
+        if (!selectedEvent) {
+            selectedEvent = weightedEvents[0].event;
         }
     }
 
-    // Fallback (shouldn't reach here)
-    return weightedEvents[0].event;
+    // v2.2: Remove exclusive siblings from deck at DRAW time
+    if (selectedEvent && registry?.exclusiveGroups) {
+        const siblings = registry.exclusiveGroups[selectedEvent.id];
+        if (siblings && siblings.length > 0) {
+            state.deck = removeFromDeck(siblings, state.deck);
+            // Also mark them as terminated so they can't be re-added
+            siblings.forEach(siblingId => {
+                if (state.terminatedEvents) {
+                    state.terminatedEvents.add(siblingId);
+                }
+            });
+        }
+    }
+
+    return selectedEvent;
 }
 
 /**

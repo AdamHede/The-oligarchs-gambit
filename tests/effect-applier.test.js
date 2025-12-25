@@ -293,7 +293,9 @@ test('Empty effects', () => {
     };
 
     const result = applyEffects(state, {}, statBounds);
-    assert.strictEqual(result, null);
+    // v2.2: applyEffects now returns { legacy, unavailableEntities }
+    assert.strictEqual(result.legacy, null);
+    assert.deepStrictEqual(result.unavailableEntities, []);
     assert.strictEqual(state.stats.treasury, 500);
 });
 
@@ -307,8 +309,15 @@ test('Null/undefined effects', () => {
         treasury: { min: 0, max: 2000 }
     };
 
-    assert.strictEqual(applyEffects(state, null, statBounds), null);
-    assert.strictEqual(applyEffects(state, undefined, statBounds), null);
+    // v2.2: applyEffects now returns { legacy, unavailableEntities }
+    const result1 = applyEffects(state, null, statBounds);
+    assert.strictEqual(result1.legacy, null);
+    assert.deepStrictEqual(result1.unavailableEntities, []);
+    
+    const result2 = applyEffects(state, undefined, statBounds);
+    assert.strictEqual(result2.legacy, null);
+    assert.deepStrictEqual(result2.unavailableEntities, []);
+    
     assert.strictEqual(state.stats.treasury, 500);
 });
 
@@ -329,7 +338,8 @@ test('Legacy achievement returned', () => {
         legacy
     });
 
-    assert.deepStrictEqual(result, legacy);
+    // v2.2: applyEffects now returns { legacy, unavailableEntities }
+    assert.deepStrictEqual(result.legacy, legacy);
 });
 
 test('Extreme values - large positive', () => {

@@ -117,19 +117,39 @@ function applyRelationshipChanges(state, relationshipChanges) {
 }
 
 /**
- * Applies character state changes
+ * States that make a character "unavailable" for events requiring them
+ */
+const UNAVAILABLE_STATES = new Set(['dead', 'exiled', 'imprisoned', 'fled']);
+
+/**
+ * Applies character state changes and returns list of newly unavailable characters
  * @param {Object} state - Game state
  * @param {Object<string, string>} characterStateChanges - Character state changes
+ * @returns {string[]} - Array of characterIds that became unavailable
  */
 function applyCharacterStateChanges(state, characterStateChanges) {
     if (!characterStateChanges || typeof characterStateChanges !== 'object') {
-        return;
+        return [];
     }
+
+    const newlyUnavailable = [];
 
     Object.entries(characterStateChanges).forEach(([characterId, newState]) => {
         if (typeof newState !== 'string') return;
+        
+        const oldState = state.characterStates?.[characterId] || 'alive';
+        const wasAvailable = !UNAVAILABLE_STATES.has(oldState);
+        const isNowUnavailable = UNAVAILABLE_STATES.has(newState);
+        
         setCharacterState(state, characterId, newState);
+        
+        // Track characters that just became unavailable (for cascade invalidation)
+        if (wasAvailable && isNowUnavailable) {
+            newlyUnavailable.push(characterId);
+        }
     });
+
+    return newlyUnavailable;
 }
 
 /**
@@ -175,11 +195,17 @@ const STAT_KEYS = new Set(['personalWealth', 'treasury', 'elite', 'anger']);
  * @param {Object} state - Game state
  * @param {Object} effects - Effects object from choice
  * @param {Object} statBounds - Optional bounds for stats
- * @returns {Object} - Legacy object if present, null otherwise
+ * @returns {Object} - Result object with legacy and cascade info
  */
 function applyEffects(state, effects, statBounds = {}) {
+    const result = {
+        legacy: null,
+        // v2.2: Characters that became unavailable (for cascade invalidation)
+        unavailableEntities: []
+    };
+
     if (!effects || typeof effects !== 'object') {
-        return null;
+        return result;
     }
 
     // Backward compatibility: Handle both flat and nested stat formats
@@ -217,9 +243,10 @@ function applyEffects(state, effects, statBounds = {}) {
         applyRelationshipChanges(state, effects.relationships);
     }
 
-    // v2.1: Apply character state changes
+    // v2.1: Apply character state changes (v2.2: returns newly unavailable entities)
     if (effects.characterStates) {
-        applyCharacterStateChanges(state, effects.characterStates);
+        const unavailable = applyCharacterStateChanges(state, effects.characterStates);
+        result.unavailableEntities.push(...unavailable);
     }
 
     // v2.1: Apply storyline weight modifications
@@ -232,8 +259,10 @@ function applyEffects(state, effects, statBounds = {}) {
         applyTerminations(state, effects.terminates);
     }
 
-    // Return legacy object if present
-    return effects.legacy || null;
+    // Legacy object if present
+    result.legacy = effects.legacy || null;
+    
+    return result;
 }
 
 /**

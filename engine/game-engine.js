@@ -8,21 +8,29 @@
  * - Narrative variations based on state
  * - onceOnly event handling on draw
  * - Pass full event object to deck operations
+ *
+ * v2.2 additions:
+ * - Exclusive groups: drawing one event removes mutually exclusive siblings
+ * - Entity dependencies: events requiring an entity are auto-removed when entity dies/exits
+ * - forceAddAtStart: events can declare they must be in initial deck
  */
 
 import { createInitialState, addHistoryEntry, advanceTime, getDefaultStatBounds } from './game-state.js';
 import { isEventEligible, evaluateCondition } from './condition-eval.js';
-import { drawEvent, processChoiceDeckOperations } from './deck-manager.js';
+import { drawEvent, processChoiceDeckOperations, removeFromDeck } from './deck-manager.js';
 import { applyEffects, applyAutoCounters } from './effect-applier.js';
 
 class GameEngineV2 {
     /**
      * @param {Object[]} allEvents - All available events
      * @param {Object} [initialState] - Initial state overrides
+     * @param {Object} [registry] - v2.2: Compiled storyline registry (for exclusive groups, entity deps)
      */
-    constructor(allEvents, initialState = {}) {
+    constructor(allEvents, initialState = {}, registry = null) {
         this.allEvents = allEvents;
         this.eventMap = new Map(allEvents.map(e => [e.id, e]));
+        // v2.2: Store registry for exclusive groups and entity dependencies
+        this.registry = registry;
 
         // Create initial state
         const initialDeck = initialState.deck || this.getInitialDeck();
@@ -74,7 +82,15 @@ class GameEngineV2 {
             deck.push(quiet.id);
         }
 
-        // Force-include early-game agenda events (these set up major storylines)
+        // v2.2: Force-include events with forceAddAtStart property
+        this.allEvents.forEach(event => {
+            if (event.forceAddAtStart && !deck.includes(event.id)) {
+                deck.push(event.id);
+            }
+        });
+
+        // Legacy: Force-include early-game agenda events (these set up major storylines)
+        // TODO: Migrate these to use forceAddAtStart property instead
         const earlyGameEvents = [
             'dacha_summit',
             'first_big_move', 
@@ -129,11 +145,13 @@ class GameEngineV2 {
      * @returns {Object|null} - Event or null if none available
      */
     drawNextEvent() {
+        // v2.2: Pass registry for exclusive group handling
         const event = drawEvent(
             this.allEvents,
             this.state.deck,
             isEventEligible,
-            this.state
+            this.state,
+            this.registry
         );
 
         this.currentEvent = event;
@@ -197,8 +215,26 @@ class GameEngineV2 {
             throw new Error(`Invalid choice index: ${choiceIndex}`);
         }
 
-        // Apply effects
-        const legacy = applyEffects(this.state, choice.effects, this.statBounds);
+        // Apply effects (v2.2: returns object with legacy and unavailableEntities)
+        const effectResult = applyEffects(this.state, choice.effects, this.statBounds);
+        const legacy = effectResult?.legacy || effectResult; // Handle both old and new return format
+
+        // v2.2: Cascade invalidation for unavailable entities
+        if (effectResult?.unavailableEntities && this.registry?.entityDependencies) {
+            effectResult.unavailableEntities.forEach(entityId => {
+                const dependentEvents = this.registry.entityDependencies[entityId];
+                if (dependentEvents && dependentEvents.length > 0) {
+                    // Remove dependent events from deck
+                    this.state.deck = removeFromDeck(dependentEvents, this.state.deck);
+                    // Mark them as terminated
+                    dependentEvents.forEach(eventId => {
+                        if (this.state.terminatedEvents) {
+                            this.state.terminatedEvents.add(eventId);
+                        }
+                    });
+                }
+            });
+        }
 
         // Apply auto-counters
         applyAutoCounters(this.state, event.id, choiceIndex);
