@@ -1,99 +1,101 @@
 /**
- * Storylines Index - Schema & Template
- *
- * This file shows the structure for registering storylines.
- * When creating new storylines, follow this pattern.
+ * Storylines Index - Import and Export All Storylines
+ * 
+ * This file imports all storyline definitions and exports them for use by the game engine.
  */
 
-// ==============================================================================
-// STEP 1: Import your storyline files
-// ==============================================================================
-// import myStoryline from './my-storyline.storyline.js';
-// import anotherStoryline from './another-storyline.storyline.js';
+// ================================================================
+// Import Storylines
+// ================================================================
 
-// ==============================================================================
-// STEP 2: Export individual storylines (optional, for selective imports)
-// ==============================================================================
-// export {
-//     myStoryline,
-//     anotherStoryline
-// };
+import commonEventsStoryline from './common-events.storyline.js';
+import earlyEventsStoryline from './early-events.storyline.js';
+import specialOperationStoryline from './special-operation.storyline.js';
+import dissidentStoryline from './dissident.storyline.js';
+import holyAllianceStoryline from './holy-alliance.storyline.js';
 
-// ==============================================================================
-// STEP 3: Export array of all storylines (required for game initialization)
-// ==============================================================================
-// export const allStorylines = [
-//     myStoryline,
-//     anotherStoryline
-// ];
+// ================================================================
+// Export Individual Storylines (for selective imports)
+// ================================================================
 
-// ==============================================================================
-// STEP 4: Define metadata for UI theming and behavior
-// ==============================================================================
-// export const storylineMetadata = {
-//     'my-storyline': {
-//         name: 'Display Name',
-//         description: 'Short tagline for this storyline',
-//         entryWeight: 10,  // Higher = more likely to appear early (0 = triggered only)
-//         theme: {
-//             borderColor: '#RRGGBB',  // Card border color
-//             accentColor: '#RRGGBB'   // Card accent/highlight color
-//         }
-//     }
-// };
+export {
+    commonEventsStoryline,
+    earlyEventsStoryline,
+    specialOperationStoryline,
+    dissidentStoryline,
+    holyAllianceStoryline
+};
 
-// ==============================================================================
-// STORYLINE FILE STRUCTURE (.storyline.js)
-// ==============================================================================
-// Each storyline file should export an array of events like this:
-//
-// export default [
-//     {
-//         id: "unique_event_id",
-//         title: "Event Title (2-6 words, punchy)",
-//         description: "2-4 sentences. Setup, complication, stakes, vivid detail.",
-//         storylines: ["my-storyline"],
-//         weight: 5,           // Draw probability (higher = more common)
-//         recurring: false,    // true = stays in deck after drawn
-//         tags: ["political", "crisis"],
-//         
-//         // Optional: Advanced features (see TECHNICAL_IMPLEMENTATION_V2.1.md)
-//         // timeGate: { minYear: 1, maxYear: 3 },
-//         // onceOnly: true,
-//         // weightModifiers: [{ conditions: {...}, multiplier: 1.5 }],
-//         
-//         conditions: {
-//             // When can this event appear?
-//             stats: { treasury: { gte: 200 }, anger: { lt: 50 } },
-//             flags: { "war_started": true },
-//             counters: { "choice:punish": { gte: 2 } }
-//         },
-//         
-//         choices: [
-//             {
-//                 text: "Active voice choice text (6-15 words)",
-//                 effects: {
-//                     stats: { personalWealth: 10, treasury: -50, elite: 5, anger: -10 },
-//                     flags: { "flag_name": true },
-//                     counters: { "custom:something": 1 },
-//                     // relationships: { "character_id": 10 },  // v2.1
-//                     legacy: {
-//                         icon: "⚔️",
-//                         name: "Warmonger",
-//                         weight: -10  // Positive = good, Negative = bad
-//                     }
-//                 },
-//                 add: ["event_id_to_add"],        // Events to add to deck
-//                 remove: ["event_id_to_remove"],  // Events to remove from deck
-//                 removeSelf: true                 // Remove this event from deck
-//             }
-//         ]
-//     }
-// ];
+// ================================================================
+// Export Array of All Storylines (for game initialization)
+// ================================================================
 
-// ==============================================================================
-// TEMPORARY: Empty exports while rebuilding
-// ==============================================================================
-export const allStorylines = [];
-export const storylineMetadata = {};
+export const allStorylines = [
+    commonEventsStoryline,
+    earlyEventsStoryline,
+    specialOperationStoryline,
+    dissidentStoryline,
+    holyAllianceStoryline
+];
+
+// ================================================================
+// Export Storyline Metadata (for UI theming and behavior)
+// ================================================================
+
+export const storylineMetadata = {
+    'common-events': {
+        name: 'Common Events',
+        description: 'Balance and pacing events that rotate through the deck',
+        entryWeight: 10,  // Always present in some form
+        theme: {
+            borderColor: '#696969',  // Dim gray
+            accentColor: '#A9A9A9'   // Dark gray
+        }
+    },
+    
+    'early-events': {
+        name: 'Early Events',
+        description: 'Year 1 agenda-setting moments',
+        entryWeight: 0,  // Forced, not random
+        theme: {
+            borderColor: '#FFD700',  // Gold
+            accentColor: '#FFA500'   // Orange
+        }
+    },
+    
+    'special-operation': {
+        name: 'The Special Operation',
+        description: 'War, hubris, and impossible choices',
+        entryWeight: 0,  // Triggered by inaugural address
+        theme: {
+            borderColor: '#8B0000',  // Dark red
+            accentColor: '#FF4444'   // Bright red
+        }
+    },
+    
+    'dissident': {
+        name: 'The Dissident',
+        description: 'One man vs the state - repression and its costs',
+        entryWeight: 0,  // Triggered by inaugural address
+        theme: {
+            borderColor: '#2F4F4F',  // Dark slate gray
+            accentColor: '#778899'   // Light slate gray
+        }
+    },
+    
+    'holy-alliance': {
+        name: 'The Holy Alliance',
+        description: 'Church-state bargain, moral crusade, cynical power',
+        entryWeight: 0,  // Triggered by inaugural address
+        theme: {
+            borderColor: '#8B4513',  // Saddle brown
+            accentColor: '#DAA520'   // Goldenrod
+        }
+    }
+};
+
+// ================================================================
+// Default Export
+// ================================================================
+
 export default allStorylines;
