@@ -1,5 +1,21 @@
 # World Bible: The Oligarchy
 
+## Player Role & Game Philosophy
+
+**You are the Oligarch.** Not just any oligarch—you're the one who clawed your way to the very top. Through cunning, ruthlessness, and probably a few convenient "accidents," you now sit at the apex of power in The Motherland.
+
+**Your Goals:**
+- **Get Rich**: Accumulate obscene personal wealth. Billions aren't enough—you want your name on Forbes lists and palaces that make Versailles look quaint.
+- **Stay in Power**: The throne is slippery. Keep the elites loyal, the public compliant, and your enemies six feet under (or in Siberia).
+- **Write History**: Shape your legacy. Liberator? Modernizer? Strongman? The narrative is yours to craft.
+- **Don't Lose Face**: Respect and fear are everything. Humiliation is worse than bankruptcy.
+
+**The Tone**: This is dark comedy satire—cynical, absurd, and unapologetically corrupt. Think *Dr. Strangelove* meets *The Death of Stalin*. You're not here to be liked, make friends, or save the world. You're here to extract wealth, consolidate power, and occasionally make spectacularly terrible decisions that somehow work out (or don't).
+
+**Gameplay Philosophy**: The game rewards bold, decisive action—usually of the questionable variety. Seize that yacht. Rig that election. Polonium that blogger. The "safe" choice often leads to slow decline, while the audacious choice opens new (terrifying) opportunities. This is an evil dictator simulator. Lean into it.
+
+---
+
 ## The Setting: The Motherland (Rossiya-adjacent)
 
 The game takes place in a vast, resource-rich, transcontinental nation simply called **"The Motherland"** (or sometimes just "The Federation"). It is a place of stark contrasts: frozen tundras sitting atop trillions in gas reserves, crumbling Soviet-era brutalist apartment blocks overshadowed by glittering neo-futurist skyscrapers, and babushkas selling pickles outside luxury boutiques that sell $5,000 handbags.
@@ -49,24 +65,4 @@ The overwhelming feeling is **Cynicism**.
 -   Corruption is not a bug; it's the operating system.
 -   Truth is not objective; it's whatever the TV says today.
 -   Safety is an illusion; you can be a billionaire today and in a penal colony tomorrow.
-
-## New Storyline Ideas
-
-### 9. The Cultural Purge ("The War on Woke")
-**Theme:** The regime turns on its own artists and intellectuals to distract from failures.
-**The Plot:** The "Patriots" demand a cleansing of culture. Theaters, rappers, and filmmakers are targeted. You must decide whether to let the mob destroy your cultural soft power or protect the "degenerate" artists who are secretly your friends.
-**Key Events:**
--   The "Naked Party" Scandal (Celebs caught partying during war).
--   Banning "Foreign Agent" books.
--   Rappers forced to apologize on camera in turtlenecks.
-
-### 10. The AI Dictator ("Cyber-Gulag")
-**Theme:** Using modern technology to enforce old-school tyranny.
-**The Plot:** The Tech Magnates propose a new "Social Rating System" driven by AI. It promises total control without the need for messy police violence. But the AI starts making "optimizations" that you didn't authorize.
-**Key Events:**
--   Face Pay implementation (and tracking).
--   The "Predictive Arrest" algorithm.
--   The Internet Sovereignty firewall test.
--   Deepfakes of *you* appearing when you are sick.
-
 

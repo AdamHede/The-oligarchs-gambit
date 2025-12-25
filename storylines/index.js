@@ -1,114 +1,99 @@
 /**
- * Storylines Index
+ * Storylines Index - Schema & Template
  *
- * Central registry of all storyline definitions.
- * Import this to get all storylines for the game.
+ * This file shows the structure for registering storylines.
+ * When creating new storylines, follow this pattern.
  */
 
-// Tree-based storylines
-import warInvasion from './war-invasion.storyline.js';
-import sanctionsSpiral from './sanctions-spiral.storyline.js';
-import shadowWar from './shadow-war.storyline.js';
-import successionCrisis from './succession-crisis.storyline.js';
-import religiousRevival from './religious-revival.storyline.js';
-import energyPipeline from './energy-pipeline.storyline.js';
-import popularUprising from './popular-uprising.storyline.js';
-import domesticCrisis from './domestic-crisis.storyline.js';
-import common from './common.storyline.js';
-// v2.1: Early game agency storyline
-import earlyGameAgenda from './early-game-agenda.storyline.js';
+// ==============================================================================
+// STEP 1: Import your storyline files
+// ==============================================================================
+// import myStoryline from './my-storyline.storyline.js';
+// import anotherStoryline from './another-storyline.storyline.js';
 
-// Export individual storylines for selective use
-export {
-    warInvasion,
-    sanctionsSpiral,
-    shadowWar,
-    successionCrisis,
-    religiousRevival,
-    energyPipeline,
-    popularUprising,
-    domesticCrisis,
-    common,
-    earlyGameAgenda  // v2.1
-};
+// ==============================================================================
+// STEP 2: Export individual storylines (optional, for selective imports)
+// ==============================================================================
+// export {
+//     myStoryline,
+//     anotherStoryline
+// };
 
-// Export all storylines as array for easy initialization
-export const allStorylines = [
-    earlyGameAgenda,  // v2.1: First to ensure high-weight early events are available
-    warInvasion,
-    sanctionsSpiral,
-    shadowWar,
-    successionCrisis,
-    religiousRevival,
-    energyPipeline,
-    popularUprising,
-    domesticCrisis,
-    common
-];
+// ==============================================================================
+// STEP 3: Export array of all storylines (required for game initialization)
+// ==============================================================================
+// export const allStorylines = [
+//     myStoryline,
+//     anotherStoryline
+// ];
 
-// Export storyline metadata for UI theming
-export const storylineMetadata = {
-    'war-invasion': {
-        name: 'War of Expansion',
-        description: 'A 72-hour operation that goes horribly wrong',
-        entryWeight: 10,
-        theme: { borderColor: '#8B0000', accentColor: '#DC143C' }
-    },
-    'sanctions-spiral': {
-        name: 'Sanctions Spiral',
-        description: 'Western sanctions tighten the noose on your economy',
-        entryWeight: 0, // Triggered
-        theme: { borderColor: '#1a472a', accentColor: '#2d5a3d' }
-    },
-    'shadow-war': {
-        name: 'Shadow War',
-        description: 'Covert operations and espionage that can spiral out of control',
-        entryWeight: 10,
-        theme: { borderColor: '#1a1a2e', accentColor: '#16213e' }
-    },
-    'succession-crisis': {
-        name: 'Succession Crisis',
-        description: 'Power struggles and questions about your grip on power',
-        entryWeight: 8,
-        theme: { borderColor: '#4a0e0e', accentColor: '#722f2f' }
-    },
-    'religious-revival': {
-        name: 'Religious Revival',
-        description: 'The Church becomes a tool of state power',
-        entryWeight: 10,
-        theme: { borderColor: '#614126', accentColor: '#8B6914' }
-    },
-    'energy-pipeline': {
-        name: 'Energy Politics',
-        description: 'Weaponizing energy resources for geopolitical gain',
-        entryWeight: 8,
-        theme: { borderColor: '#2d4a2d', accentColor: '#4a7c4a' }
-    },
-    'popular-uprising': {
-        name: 'Popular Uprising',
-        description: 'Mass movements threaten your grip on power',
-        entryWeight: 8,
-        theme: { borderColor: '#8B0000', accentColor: '#FF4500' }
-    },
-    'domestic-crisis': {
-        name: 'Domestic Crisis',
-        description: 'Economic collapse and infrastructure decay threaten stability',
-        entryWeight: 8,
-        theme: { borderColor: '#4a3728', accentColor: '#6b4423' }
-    },
-    'common': {
-        name: 'Common Events',
-        description: 'Background events and pacing',
-        entryWeight: 5,
-        theme: { borderColor: '#555', accentColor: '#888' }
-    },
-    // v2.1: Early game agenda storyline
-    'early-game-agenda': {
-        name: 'Early Game Agenda',
-        description: 'Agenda-setting events that shape your rule from the start',
-        entryWeight: 25, // Very high to ensure early appearance
-        theme: { borderColor: '#d4af37', accentColor: '#ffd700' }
-    }
-};
+// ==============================================================================
+// STEP 4: Define metadata for UI theming and behavior
+// ==============================================================================
+// export const storylineMetadata = {
+//     'my-storyline': {
+//         name: 'Display Name',
+//         description: 'Short tagline for this storyline',
+//         entryWeight: 10,  // Higher = more likely to appear early (0 = triggered only)
+//         theme: {
+//             borderColor: '#RRGGBB',  // Card border color
+//             accentColor: '#RRGGBB'   // Card accent/highlight color
+//         }
+//     }
+// };
 
+// ==============================================================================
+// STORYLINE FILE STRUCTURE (.storyline.js)
+// ==============================================================================
+// Each storyline file should export an array of events like this:
+//
+// export default [
+//     {
+//         id: "unique_event_id",
+//         title: "Event Title (2-6 words, punchy)",
+//         description: "2-4 sentences. Setup, complication, stakes, vivid detail.",
+//         storylines: ["my-storyline"],
+//         weight: 5,           // Draw probability (higher = more common)
+//         recurring: false,    // true = stays in deck after drawn
+//         tags: ["political", "crisis"],
+//         
+//         // Optional: Advanced features (see TECHNICAL_IMPLEMENTATION_V2.1.md)
+//         // timeGate: { minYear: 1, maxYear: 3 },
+//         // onceOnly: true,
+//         // weightModifiers: [{ conditions: {...}, multiplier: 1.5 }],
+//         
+//         conditions: {
+//             // When can this event appear?
+//             stats: { treasury: { gte: 200 }, anger: { lt: 50 } },
+//             flags: { "war_started": true },
+//             counters: { "choice:punish": { gte: 2 } }
+//         },
+//         
+//         choices: [
+//             {
+//                 text: "Active voice choice text (6-15 words)",
+//                 effects: {
+//                     stats: { personalWealth: 10, treasury: -50, elite: 5, anger: -10 },
+//                     flags: { "flag_name": true },
+//                     counters: { "custom:something": 1 },
+//                     // relationships: { "character_id": 10 },  // v2.1
+//                     legacy: {
+//                         icon: "⚔️",
+//                         name: "Warmonger",
+//                         weight: -10  // Positive = good, Negative = bad
+//                     }
+//                 },
+//                 add: ["event_id_to_add"],        // Events to add to deck
+//                 remove: ["event_id_to_remove"],  // Events to remove from deck
+//                 removeSelf: true                 // Remove this event from deck
+//             }
+//         ]
+//     }
+// ];
+
+// ==============================================================================
+// TEMPORARY: Empty exports while rebuilding
+// ==============================================================================
+export const allStorylines = [];
+export const storylineMetadata = {};
 export default allStorylines;
