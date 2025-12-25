@@ -12,7 +12,7 @@ export { addToDeck, removeFromDeck, drawEvent, processChoiceDeckOperations } fro
 export { applyEffects, applyAutoCounters, applyStatChanges, applyCounterChanges, applyFlagChanges } from './effect-applier.js';
 
 // New storyline system
-export { defineStoryline, event, choice, eventRef, compileStorylines, getEventsArray, visualizeTree } from './storyline-dsl.js';
+export { defineStoryline, event, choice, eventRef, compileStorylines, getEventsArray } from './storyline-dsl.js';
 export { EventTracker, EventStatus, createEventTracker, getEventStatusHelper } from './event-tracker.js';
 export { StorylineEngine, createStorylineEngine } from './storyline-engine.js';
 

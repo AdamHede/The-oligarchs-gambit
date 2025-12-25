@@ -17,11 +17,9 @@ import { SHADOW_WAR_EVENTS } from './events_shadow_war.js';
 import { MISC_EVENTS } from './events_misc.js';
 import { BASIC_RECURRING_EVENTS } from './events_basic_recurring.js';
 
-// Example events (for reference and testing)
-import { EXAMPLE_EVENTS } from './example.js';
-
 /**
  * All events in the game
+ * Note: This file is kept for tools and tests. The main game now uses storylines.
  */
 const ALL_EVENTS = [
     ...WAR_EVENTS,
@@ -34,7 +32,6 @@ const ALL_EVENTS = [
     ...SHADOW_WAR_EVENTS,
     ...MISC_EVENTS,
     ...BASIC_RECURRING_EVENTS,
-    // ...EXAMPLE_EVENTS // Optional: exclude examples in production
 ];
 
 export default ALL_EVENTS;
