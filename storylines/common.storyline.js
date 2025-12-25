@@ -151,18 +151,18 @@ export default defineStoryline({
             title: "A Quiet Quarter",
             description: "For once, nothing seems to be on fire. Your ministers are nervous—surely this calm cannot last.",
             weight: 1,
-            recurring: true,
+            recurring: false, // Non-recurring by default - choices can addSelf if needed
             rarity: "common",
             meta: { depth: 1, impact: 1, sentiment: "neutral" },
 
             choices: [
                 choice("Enjoy the peace while it lasts", {
                     effects: { anger: -2, elite: 1 },
-                    keepInDeck: true
+                    addSelf: true // Occasionally reappear
                 }),
                 choice("Something must be wrong. Investigate.", {
                     effects: { elite: -1, anger: 1 },
-                    keepInDeck: true
+                    addSelf: true // Occasionally reappear
                 })
             ]
         }),

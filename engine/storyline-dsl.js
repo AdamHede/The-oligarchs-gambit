@@ -65,7 +65,9 @@ export function choice(text, config = {}) {
         // Events that become permanently blocked when this choice is made
         terminates: config.terminates ?? [],
         // Whether to keep this event in deck (for recurring events)
-        keepInDeck: config.keepInDeck ?? false
+        keepInDeck: config.keepInDeck ?? false,
+        // Whether to add this event back to deck (for non-recurring events)
+        addSelf: config.addSelf ?? false
     };
 }
 
@@ -192,9 +194,14 @@ function processEventNode(node, parentChoiceInfo, storyline) {
                 flatChoice.remove = [...choiceNode.terminates];
             }
 
-            // Handle recurring events
+            // Handle recurring events and addSelf
             if (!node.recurring && !choiceNode.keepInDeck) {
                 flatChoice.removeSelf = true;
+            }
+            
+            // v2.1: Support addSelf for non-recurring events that should occasionally reappear
+            if (choiceNode.addSelf !== undefined) {
+                flatChoice.addSelf = choiceNode.addSelf;
             }
 
             flatEvent.choices.push(flatChoice);
