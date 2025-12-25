@@ -333,11 +333,13 @@ class SimulatedGame {
         });
 
         // Record history
+        const deckSizeAfter = this.deck.length;
         this.history.push({
             turn: this.turn,
             eventId: event.id,
             choiceIndex,
-            statsAfter: { ...this.stats }
+            statsAfter: { ...this.stats },
+            deckSizeAfter
         });
 
         this.turn++;
@@ -519,7 +521,12 @@ function runMonteCarloSimulation(events, numGames = 1000, strategyName = 'random
         eventFrequency: {},
         eventPresence: {}, // NEW: How many games an event appeared in
         eventDeathProximity: {}, // How often an event appears in last 3 turns before death
-        scores: []
+        scores: [],
+        // Per-turn deck size aggregation (end-of-turn, after choice deck ops)
+        deckSizeByTurn: {
+            sums: [],
+            counts: []
+        }
     };
 
     for (let i = 0; i < numGames; i++) {
@@ -543,6 +550,16 @@ function runMonteCarloSimulation(events, numGames = 1000, strategyName = 'random
         // Track event frequency
         result.history.forEach(h => {
             results.eventFrequency[h.eventId] = (results.eventFrequency[h.eventId] || 0) + 1;
+        });
+
+        // Track average deck size per turn (0-based turn index in this simulator)
+        result.history.forEach(h => {
+            const t = h.turn;
+            if (t === undefined || t === null) return;
+            const deckSize = h.deckSizeAfter;
+            if (typeof deckSize !== 'number') return;
+            results.deckSizeByTurn.sums[t] = (results.deckSizeByTurn.sums[t] || 0) + deckSize;
+            results.deckSizeByTurn.counts[t] = (results.deckSizeByTurn.counts[t] || 0) + 1;
         });
 
         // Track event presence (unique per game)
@@ -575,6 +592,26 @@ function runMonteCarloSimulation(events, numGames = 1000, strategyName = 'random
             p10: sortedTurns[Math.floor(sortedTurns.length * 0.1)],
             p90: sortedTurns[Math.floor(sortedTurns.length * 0.9)]
         },
+        deckSize: (() => {
+            const sums = results.deckSizeByTurn.sums;
+            const counts = results.deckSizeByTurn.counts;
+            const perTurn = sums.map((sum, idx) => {
+                const c = counts[idx] || 0;
+                return c ? (sum / c) : null;
+            });
+            const samples = sums.reduce((acc, sum, idx) => {
+                const c = counts[idx] || 0;
+                return acc + (c ? c : 0);
+            }, 0);
+            const totalDeckSize = sums.reduce((a, b) => a + (b || 0), 0);
+            const overallMean = samples ? (totalDeckSize / samples) : 0;
+            return {
+                // End-of-turn deck size, after applying the chosen option's add/remove ops
+                // Turn numbers in output are 1-based (Turn 1 corresponds to internal index 0)
+                overallMean,
+                perTurn
+            };
+        })(),
         wealth: {
             min: Math.min(...wealth),
             max: Math.max(...wealth),
@@ -653,11 +690,24 @@ function main() {
         console.log(`      Avg turns: ${stats.turns.mean.toFixed(1)} (${stats.turns.min}-${stats.turns.max})`);
         console.log(`      Avg wealth: ${stats.wealth.mean.toFixed(1)}`);
         console.log(`      Avg Score: ${stats.score.mean.toFixed(0)}`);
+        console.log(`      Avg deck size (end-of-turn): ${stats.deckSize.overallMean.toFixed(2)}`);
         console.log(`      Deaths: Elite ${stats.deathCausePercentages.elite_revolt}, ` +
             `Revolution ${stats.deathCausePercentages.revolution}, ` +
             `Bankrupt ${stats.deathCausePercentages.bankruptcy}`);
         console.log('\n      Game Length Distribution (Turns):');
         console.log(drawAsciiHistogram(stats.histogram, numGames));
+        console.log('\n      Avg Deck Size by Turn (end-of-turn, Turn 1..):');
+        const perTurn = stats.deckSize.perTurn;
+        const maxToPrint = 40;
+        const printed = Math.min(perTurn.length, maxToPrint);
+        for (let i = 0; i < printed; i++) {
+            const v = perTurn[i];
+            if (v === null || v === undefined) continue;
+            console.log(`         Turn ${String(i + 1).padStart(3)}: ${v.toFixed(2)}`);
+        }
+        if (perTurn.length > maxToPrint) {
+            console.log(`         ... (see report JSON for full series up to Turn ${perTurn.length})`);
+        }
         console.log('');
     }
 
