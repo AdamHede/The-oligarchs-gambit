@@ -677,7 +677,14 @@
             const texture = new THREE.CanvasTexture(canvas);
 
             // Determine image path
-            let imagePath = 'assets/images/palace.png'; // Default
+            // Priority:
+            // 1. event.image (explicit override)
+            // 2. assets/images/events/{event.id}.png (implicit convention)
+            // 3. Storyline theme image
+            // 4. Default palace.png
+
+            let imagePath = `assets/images/events/${event.id}.png`; // Try event-specific first by default convention
+            
             if (event.image) {
                 imagePath = event.image;
             } else {
@@ -686,6 +693,16 @@
 
                 if (storyline) {
                     const storylineImages = {
+                        // Current Storylines
+                        'special-operation': 'assets/images/war-invasion.png',
+                        'golden-circle': 'assets/images/oligarch-rivalry.png',
+                        'dissident': 'assets/images/popular-uprising.png',
+                        'holy-alliance': 'assets/images/religious-revival.png',
+                        'succession': 'assets/images/succession-crisis.png',
+                        'loyalty-apparatus': 'assets/images/shadow-war.png',
+                        'economic-vision': 'assets/images/sanctions-spiral.png',
+                        
+                        // Legacy/Fallbacks
                         'war-invasion': 'assets/images/war-invasion.png',
                         'oligarch-rivalry': 'assets/images/oligarch-rivalry.png',
                         'sanctions-spiral': 'assets/images/sanctions-spiral.png',
@@ -693,25 +710,40 @@
                         'popular-uprising': 'assets/images/popular-uprising.png',
                         'religious-revival': 'assets/images/religious-revival.png',
                         'shadow-war': 'assets/images/shadow-war.png',
-                        'domestic-crisis': 'assets/images/cultural-purge.png' // Best fit from available
+                        'domestic-crisis': 'assets/images/cultural-purge.png'
                     };
+                    
+                    // If we don't have a specific event image (we'll check via onerror later), 
+                    // this storyline image will be the fallback before palace.png
                     if (storylineImages[storyline]) {
-                        imagePath = storylineImages[storyline];
+                        // We store this as a fallback property to use in onerror
+                        texture.fallbackImage = storylineImages[storyline];
                     }
                 }
             }
 
             // Storyline border colors (distinct per storyline)
             const storylineBorderColors = {
-                'war-invasion': '#dc2626',      // Red
-                'energy-politics': '#f59e0b',   // Amber
-                'oligarch-rivalry': '#7c3aed',  // Purple
-                'sanctions-spiral': '#2563eb',  // Blue
-                'succession-crisis': '#d97706', // Orange
-                'popular-uprising': '#ef4444',  // Red-orange
-                'domestic-crisis': '#64748b',   // Slate
-                'religious-revival': '#a855f7', // Violet
-                'shadow-war': '#374151'         // Dark gray
+                'special-operation': '#dc2626', // Red
+                'golden-circle': '#f59e0b',     // Gold/Amber
+                'dissident': '#ef4444',         // Red-orange
+                'holy-alliance': '#a855f7',     // Violet
+                'succession': '#d97706',        // Orange
+                'loyalty-apparatus': '#374151', // Dark gray
+                'economic-vision': '#2563eb',   // Blue
+                'early-game-agenda': '#10b981', // Emerald/Green (New beginning)
+                'common': '#64748b',            // Slate
+                
+                // Legacy
+                'war-invasion': '#dc2626',
+                'energy-politics': '#f59e0b',
+                'oligarch-rivalry': '#7c3aed',
+                'sanctions-spiral': '#2563eb',
+                'succession-crisis': '#d97706',
+                'popular-uprising': '#ef4444',
+                'domestic-crisis': '#64748b',
+                'religious-revival': '#a855f7',
+                'shadow-war': '#374151'
             };
 
             // Rarity colors
@@ -734,6 +766,17 @@
 
                 // Storyline color base (for gradients)
                 const storylineColors = {
+                    'special-operation': { h: 0, s: 70, l: 55 },
+                    'golden-circle': { h: 45, s: 85, l: 55 },
+                    'dissident': { h: 15, s: 80, l: 55 },
+                    'holy-alliance': { h: 270, s: 60, l: 55 },
+                    'succession': { h: 35, s: 90, l: 50 },
+                    'loyalty-apparatus': { h: 220, s: 20, l: 30 },
+                    'economic-vision': { h: 210, s: 70, l: 50 },
+                    'early-game-agenda': { h: 150, s: 60, l: 45 },
+                    'common': { h: 200, s: 10, l: 50 },
+
+                    // Legacy
                     'war-invasion': { h: 0, s: 70, l: 55 },
                     'energy-politics': { h: 45, s: 85, l: 55 },
                     'oligarch-rivalry': { h: 280, s: 60, l: 50 },

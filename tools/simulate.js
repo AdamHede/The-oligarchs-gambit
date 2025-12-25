@@ -189,7 +189,8 @@ class SimulatedGame {
             'aluminum_king_introduction'
         ];
         for (const eventId of earlyGameEvents) {
-            const earlyEvent = eligible.find(e => e.id === eventId);
+            // v2.2: Look in allEvents, not eligible (to allow weight: 0 events to be force-included)
+            const earlyEvent = this.allEvents.find(e => e.id === eventId);
             if (earlyEvent && !deck.includes(eventId)) {
                 deck.push(eventId);
             }
@@ -418,8 +419,9 @@ function strategyConservative(event, stats) {
         if (stats.anger > 70) score -= (effects.anger || 0) * 3;
         else score -= (effects.anger || 0);
 
-        if (stats.treasury < 200) score += (effects.treasury || 0) / 10;
-        else score += (effects.treasury || 0) / 50;
+        // v2.2: Treasury is critical for survival (bankruptcy is #1 killer)
+        if (stats.treasury < 200) score += (effects.treasury || 0) * 2; // Increased weight significantly
+        else score += (effects.treasury || 0) / 10;
 
         if (score > bestScore) {
             bestScore = score;

@@ -8,22 +8,38 @@
 // Import Storylines
 // ================================================================
 
-import commonEventsStoryline from './common-events.storyline.js';
-import earlyEventsStoryline from './early-events.storyline.js';
+import commonStoryline from './common.storyline.js';
+import earlyGameAgendaStoryline from './early-game-agenda.storyline.js';
 import specialOperationStoryline from './special-operation.storyline.js';
 import dissidentStoryline from './dissident.storyline.js';
 import holyAllianceStoryline from './holy-alliance.storyline.js';
+import stubsStoryline from './stubs.storyline.js';
+
+// Dacha Summit Storylines (interconnected)
+import goldenCircleStoryline from './golden-circle.storyline.js';
+import successionStoryline from './succession.storyline.js';
+import loyaltyApparatusStoryline from './loyalty-apparatus.storyline.js';
+
+// Economic Vision Storylines (nested/convergent)
+import economicVisionStoryline from './economic-vision.storyline.js';
 
 // ================================================================
 // Export Individual Storylines (for selective imports)
 // ================================================================
 
 export {
-    commonEventsStoryline,
-    earlyEventsStoryline,
+    commonStoryline,
+    earlyGameAgendaStoryline,
     specialOperationStoryline,
     dissidentStoryline,
-    holyAllianceStoryline
+    holyAllianceStoryline,
+    stubsStoryline,
+    // Dacha Summit Storylines
+    goldenCircleStoryline,
+    successionStoryline,
+    loyaltyApparatusStoryline,
+    // Economic Vision Storylines
+    economicVisionStoryline
 };
 
 // ================================================================
@@ -31,11 +47,18 @@ export {
 // ================================================================
 
 export const allStorylines = [
-    commonEventsStoryline,
-    earlyEventsStoryline,
+    commonStoryline,
+    earlyGameAgendaStoryline,
     specialOperationStoryline,
     dissidentStoryline,
-    holyAllianceStoryline
+    holyAllianceStoryline,
+    stubsStoryline,
+    // Dacha Summit Storylines
+    goldenCircleStoryline,
+    successionStoryline,
+    loyaltyApparatusStoryline,
+    // Economic Vision Storylines
+    economicVisionStoryline
 ];
 
 // ================================================================
@@ -43,7 +66,7 @@ export const allStorylines = [
 // ================================================================
 
 export const storylineMetadata = {
-    'common-events': {
+    'common': {
         name: 'Common Events',
         description: 'Balance and pacing events that rotate through the deck',
         entryWeight: 10,  // Always present in some form
@@ -53,8 +76,8 @@ export const storylineMetadata = {
         }
     },
     
-    'early-events': {
-        name: 'Early Events',
+    'early-game-agenda': {
+        name: 'Early Game Agenda',
         description: 'Year 1 agenda-setting moments',
         entryWeight: 0,  // Forced, not random
         theme: {
@@ -90,6 +113,54 @@ export const storylineMetadata = {
         theme: {
             borderColor: '#8B4513',  // Saddle brown
             accentColor: '#DAA520'   // Goldenrod
+        }
+    },
+    
+    // ================================================================
+    // Dacha Summit Storylines (interconnected)
+    // ================================================================
+    
+    'golden-circle': {
+        name: 'The Golden Circle',
+        description: 'Oligarch wealth, excess, and the price of greed',
+        entryWeight: 0,  // Triggered by dacha summit
+        theme: {
+            borderColor: '#FFD700',  // Gold
+            accentColor: '#DAA520'   // Goldenrod
+        }
+    },
+    
+    'succession': {
+        name: 'The Succession Question',
+        description: 'Dynasty, heirs, and the impossible question of who comes after',
+        entryWeight: 0,  // Triggered by dacha summit
+        theme: {
+            borderColor: '#4B0082',  // Indigo
+            accentColor: '#9932CC'   // Dark Orchid
+        }
+    },
+    
+    'loyalty-apparatus': {
+        name: 'The Loyalty Apparatus',
+        description: 'Paranoia, surveillance, and the price of trust',
+        entryWeight: 0,  // Triggered by dacha summit
+        theme: {
+            borderColor: '#2F4F4F',  // Dark Slate Gray
+            accentColor: '#778899'   // Light Slate Gray
+        }
+    },
+    
+    // ================================================================
+    // Economic Vision Storylines (nested/convergent)
+    // ================================================================
+    
+    'economic-vision': {
+        name: 'The Economic Vision',
+        description: 'Three paths to economic power, all leading to a reckoning',
+        entryWeight: 0,  // Triggered by Five-Year Plan
+        theme: {
+            borderColor: '#4682B4',  // Steel Blue
+            accentColor: '#B8860B'   // Dark Goldenrod
         }
     }
 };

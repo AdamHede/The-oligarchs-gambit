@@ -1,14 +1,15 @@
 /**
- * Early Game Agenda Storyline - v2.1
+ * Early Game Agenda Storyline - v2.2
  *
  * These events give the player early agency to set the direction of their rule.
  * All events appear in Year 1 and are designed to shape the mid-game experience.
  *
  * Core Events:
- * 1. The Dacha Summit - Choose strategic faction alignment
+ * 1. The Dacha Summit - Choose strategic faction alignment (interconnected storylines)
  * 2. The First Big Move - Launch a major initiative
- * 3. The Inaugural Address - Set ideological framing
- * 4. The Aluminum King - Introduce recurring character Dmitri
+ * 3. The Inaugural Address - Set ideological framing (separate storylines)
+ * 4. The Five-Year Plan - Choose economic direction (nested/convergent storylines)
+ * 5. The Aluminum King - Introduce recurring character Dmitri
  */
 
 import { defineStoryline, event, choice, eventRef } from '../engine/storyline-dsl.js';
@@ -20,105 +21,111 @@ export default defineStoryline({
 
     tree: [
         // ═══════════════════════════════════════════════════════════════
-        // THE DACHA SUMMIT - Choose Your Faction Alignment
+        // THE DACHA SUMMIT - Three Branching Storylines
+        // ═══════════════════════════════════════════════════════════════
+        //
+        // The meeting with the elite who helped you seize power.
+        // Each choice opens a distinct storyline that can interconnect:
+        // 1. Golden Circle - Oligarch wealth management
+        // 2. Succession - Planning for the dynasty
+        // 3. Loyalty Apparatus - Paranoia and purges
         // ═══════════════════════════════════════════════════════════════
 
         event("dacha_summit", {
             title: "The Dacha Summit",
-            description: "Your inner circle gathers at the presidential dacha. The fireplace crackles. Vodka flows. Each faction leader makes their pitch for your priorities. The Generals want military expansion. The Oligarchs want stability and contracts. The Patriots want spectacle and blood. The Technocrats... well, they're just trying to keep the lights on.",
-            weight: 25, // Extremely high to ensure early appearance
+            description: "Your inner circle gathers at the presidential dacha. The fireplace crackles. Vodka flows. These are the men who made you—the oligarchs, the generals, the fixers. They helped you seize power. Now they want to know: what's in it for them? The conversation tonight will set the tone for your entire reign.",
+            
+            forceAddAtStart: true,      // Always in starting deck
+            timeGate: { maxYear: 1 },   // Disappears after Year 1
+            weight: 100,                // High weight to ensure it triggers in Year 1
             rarity: "legendary",
-
-            // v2.1: Only appears in Year 1, Q1-Q3
-            timeGate: {
-                minYear: 1,
-                maxYear: 1,
-                minQuarter: 1,
-                maxQuarter: 3
-            },
-
-            // v2.1: Remove after first appearance
             onceOnly: true,
-
-            // v2.1: Increase weight if Elite is high (more urgency when stable)
-            weightModifiers: [
-                {
-                    conditions: { stat: "elite", gte: 80 },
-                    multiplier: 1.5
-                }
-            ],
+            storylines: ['early-game-agenda'],
 
             meta: { depth: 1, impact: 5, sentiment: "neutral" },
 
             choices: [
-                choice("\"The future belongs to the Siloviki\"", {
+                // ============================================================
+                // CHOICE 1: THE GOLDEN CIRCLE
+                // Opens: Oligarch wealth management storyline
+                // ============================================================
+                choice("'Gentlemen, let's make ourselves obscenely rich.'", {
                     effects: {
-                        elite: 10,
-                        treasury: -50,
-                        personalWealth: 5,
-                        flags: { aligned_military: true },
-                        // v2.1: Increase war storyline weights
-                        modifyStorylineWeights: {
-                            "war-invasion": { multiplier: 1.5, bonus: 0 },
-                            "shadow-war": { multiplier: 1.5, bonus: 0 }
-                        }
-                    },
-                    legacy: {
-                        icon: "🎖️",
-                        name: "The Militarist",
-                        weight: 0,
-                        explanation: "You cast your lot with the security services. Steel and discipline will define your rule."
-                    }
-                }),
-                choice("\"We serve the Oligarchs' interests\"", {
-                    effects: {
-                        elite: 15,
-                        treasury: 50,
-                        personalWealth: 10,
-                        flags: { aligned_business: true },
-                        // v2.1: Increase economic storylines, decrease war
-                        modifyStorylineWeights: {
-                            "energy-pipeline": { multiplier: 1.5, bonus: 0 },
-                            "war-invasion": { multiplier: 0.7, bonus: 0 }
-                        }
-                    },
-                    legacy: {
-                        icon: "💼",
-                        name: "The Oligarch's Friend",
-                        weight: 0,
-                        explanation: "You aligned with money and power. Wealth flows, but so do expectations."
-                    }
-                }),
-                choice("\"We give the Patriots their glory\"", {
-                    effects: {
-                        anger: -10,
-                        elite: 5,
+                        elite: 12,
+                        personalWealth: 8,
                         treasury: -30,
-                        flags: { aligned_patriots: true },
-                        // v2.1: Increase religious/nationalist storylines
+                        flags: {
+                            "dacha_chose_wealth": true,
+                            "golden_circle_active": true
+                        },
                         modifyStorylineWeights: {
-                            "religious-revival": { multiplier: 1.5, bonus: 0 },
-                            "popular-uprising": { multiplier: 0.7, bonus: 0 }
+                            "golden-circle": { multiplier: 2.0, bonus: 10 }
                         }
                     },
                     legacy: {
-                        icon: "🦅",
-                        name: "The Patriot",
-                        weight: 0,
-                        explanation: "You chose the path of nationalism and tradition. The masses cheer."
-                    }
+                        icon: "💰",
+                        name: "The Profiteer",
+                        weight: -3,
+                        explanation: "You promised your friends riches beyond imagination. Now you must deliver."
+                    },
+                    unlocks: [
+                        eventRef("golden_circle_first_deal")
+                    ]
                 }),
-                choice("\"Play them against each other - I bow to no one\"", {
+                
+                // ============================================================
+                // CHOICE 2: THE SUCCESSION QUESTION
+                // Opens: Dynasty and heir storyline
+                // ============================================================
+                choice("'We must think of legacy. Who continues our work?'", {
                     effects: {
-                        flags: { balanced_approach: true }
-                        // No storyline modifications - keeps default balance
+                        elite: 5,
+                        anger: -5,
+                        flags: {
+                            "dacha_chose_succession": true,
+                            "succession_active": true
+                        },
+                        modifyStorylineWeights: {
+                            "succession": { multiplier: 2.0, bonus: 10 }
+                        }
                     },
                     legacy: {
-                        icon: "♟️",
-                        name: "The Balancer",
+                        icon: "👑",
+                        name: "The Dynast",
                         weight: 0,
-                        explanation: "You refused to choose. All factions compete for your favor."
-                    }
+                        explanation: "You spoke of legacy and succession. The question of 'who comes after' will haunt your reign."
+                    },
+                    unlocks: [
+                        eventRef("succession_the_candidates")
+                    ]
+                }),
+                
+                // ============================================================
+                // CHOICE 3: THE LOYALTY APPARATUS
+                // Opens: Paranoia and purge storyline
+                // ============================================================
+                choice("'Before we divide the spoils—who here can I truly trust?'", {
+                    effects: {
+                        elite: -8,
+                        anger: -3,
+                        treasury: -20,
+                        flags: {
+                            "dacha_chose_loyalty": true,
+                            "loyalty_apparatus_active": true
+                        },
+                        modifyStorylineWeights: {
+                            "loyalty-apparatus": { multiplier: 2.0, bonus: 10 }
+                        }
+                    },
+                    legacy: {
+                        icon: "🔍",
+                        name: "The Paranoid",
+                        weight: -5,
+                        explanation: "You began your reign with suspicion. Trust is a commodity you cannot afford."
+                    },
+                    unlocks: [
+                        eventRef("loyalty_the_dossiers")
+                    ]
                 })
             ]
         }),
@@ -160,7 +167,7 @@ export default defineStoryline({
                         explanation: "You chose war when peace was possible. History will judge harshly."
                     },
                     unlocks: [
-                        eventRef("war_special_operation_proposal")
+                        eventRef("war_proposal")
                     ]
                 }),
                 choice("\"Nationalize key industries - take back what's ours\"", {
@@ -254,6 +261,14 @@ export default defineStoryline({
                                         anger: 3,
                                         elite: -5
                                     }
+                                }),
+                                choice("Pause construction indefinitely", {
+                                    effects: {
+                                        treasury: 0,
+                                        anger: 10,
+                                        elite: -8
+                                    },
+                                    keepInDeck: true
                                 })
                             ]
                         })
@@ -340,7 +355,10 @@ export default defineStoryline({
                         name: "The Moralist",
                         weight: 0,
                         explanation: "You positioned yourself as defender of faith and tradition."
-                    }
+                    },
+                    unlocks: [
+                        eventRef("patriarch_audience")
+                    ]
                 }),
                 choice("\"Economic Sovereignty and Self-Sufficiency\"", {
                     effects: {
@@ -374,7 +392,10 @@ export default defineStoryline({
                         name: "The Stabilizer",
                         weight: 5,
                         explanation: "You promised peace and order. Breaking that promise will cost dearly."
-                    }
+                    },
+                    unlocks: [
+                        eventRef("dissident_returns")
+                    ]
                 })
             ]
         }),
@@ -614,6 +635,139 @@ export default defineStoryline({
                             ]
                         })
                     ]
+                })
+            ]
+        }),
+
+        // ═══════════════════════════════════════════════════════════════
+        // THE FIVE-YEAR PLAN - Economic Direction (Nested/Convergent)
+        // ═══════════════════════════════════════════════════════════════
+        //
+        // Choose the Federation's economic future. Unlike other early events:
+        // - Dacha: Three storylines that INTERCONNECT (crossover events)
+        // - Inaugural: Three storylines that are SEPARATE (no crossover)
+        // - THIS: Three branches that CONVERGE to shared resolution
+        //
+        // Three paths:
+        // 1. Silicon Steppe - Digital modernization
+        // 2. Pipeline State - Energy dominance
+        // 3. Fortress Economy - Autarky/self-sufficiency
+        // ═══════════════════════════════════════════════════════════════
+
+        event("five_year_plan", {
+            title: "The Five-Year Plan",
+            description: "Your economic advisors gather in the Kremlin's walnut-paneled conference room. Oil prices are volatile. The ruble is weak. The technocrats argue over PowerPoint slides while the oligarchs check their Swiss watches. The Central Banker looks like she hasn't slept in three days. Three competing visions emerge for the Federation's economic future.",
+            
+            forceAddAtStart: true,      // Always in starting deck
+            timeGate: { maxYear: 1 },   // Disappears after Year 1
+            weight: 100,                // High weight to ensure it triggers in Year 1
+            rarity: "legendary",
+            onceOnly: true,
+            storylines: ['early-game-agenda', 'economic-vision'],
+
+            meta: { depth: 1, impact: 5, sentiment: "neutral" },
+
+            choices: [
+                // ============================================================
+                // CHOICE 1: THE SILICON STEPPE
+                // Opens: Digital modernization storyline
+                // ============================================================
+                choice("'The future is digital. We will become the world's tech hub.'", {
+                    effects: {
+                        treasury: -50,
+                        elite: 8,
+                        flags: {
+                            "economic_path": "silicon",
+                            "silicon_steppe_active": true
+                        },
+                        modifyStorylineWeights: {
+                            "economic-vision": { multiplier: 2.0, bonus: 10 }
+                        }
+                    },
+                    legacy: {
+                        icon: "💻",
+                        name: "The Modernizer",
+                        weight: 0,
+                        explanation: "You bet the Federation's future on technology. Innovation or illusion?"
+                    },
+                    unlocks: [
+                        eventRef("silicon_tech_hub")
+                    ]
+                }),
+                
+                // ============================================================
+                // CHOICE 2: THE PIPELINE STATE
+                // Opens: Energy dominance storyline
+                // ============================================================
+                choice("'Our strength lies beneath our feet. Gas and oil will fuel our empire.'", {
+                    effects: {
+                        treasury: 30,
+                        elite: 12,
+                        flags: {
+                            "economic_path": "pipeline",
+                            "pipeline_state_active": true
+                        },
+                        modifyStorylineWeights: {
+                            "economic-vision": { multiplier: 2.0, bonus: 10 }
+                        }
+                    },
+                    legacy: {
+                        icon: "🛢️",
+                        name: "The Petro-Tsar",
+                        weight: -3,
+                        explanation: "You doubled down on hydrocarbons. The world either needs your gas or it doesn't."
+                    },
+                    unlocks: [
+                        eventRef("pipeline_new_route")
+                    ]
+                }),
+                
+                // ============================================================
+                // CHOICE 3: THE FORTRESS ECONOMY
+                // Opens: Autarky/self-sufficiency storyline
+                // ============================================================
+                choice("'We need no one. Import substitution - build it ourselves.'", {
+                    effects: {
+                        treasury: -20,
+                        elite: -5,
+                        anger: -8,
+                        flags: {
+                            "economic_path": "fortress",
+                            "fortress_economy_active": true
+                        },
+                        modifyStorylineWeights: {
+                            "economic-vision": { multiplier: 2.0, bonus: 10 }
+                        }
+                    },
+                    legacy: {
+                        icon: "🏰",
+                        name: "The Isolationist",
+                        weight: -5,
+                        explanation: "You chose self-sufficiency over integration. The shelves will tell the story."
+                    },
+                    unlocks: [
+                        eventRef("fortress_import_ban")
+                    ]
+                }),
+                
+                // ============================================================
+                // CHOICE 4: LAISSEZ-FAIRE (Non-commitment)
+                // Reduces control, leads to drift
+                // ============================================================
+                choice("'This is above my pay grade. Let the market decide.'", {
+                    effects: {
+                        treasury: 20,
+                        elite: -10,
+                        flags: {
+                            "economic_path": "laissez_faire"
+                        }
+                    },
+                    legacy: {
+                        icon: "🎲",
+                        name: "The Delegator",
+                        weight: 0,
+                        explanation: "You left the economy to others. Control slipped away with it."
+                    }
                 })
             ]
         })
