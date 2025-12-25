@@ -24,6 +24,12 @@ export function event(id, config) {
         conditions: config.conditions,
         meta: config.meta ?? {},
         choices: config.choices ?? [],
+        // v2.1 properties
+        timeGate: config.timeGate,
+        onceOnly: config.onceOnly,
+        narrativeVariations: config.narrativeVariations,
+        characterId: config.characterId,
+        weightModifiers: config.weightModifiers,
         // For referencing shared events
         _isReference: false
     };
@@ -134,7 +140,13 @@ function processEventNode(node, parentChoiceInfo, storyline) {
         image: node.image,
         conditions: node.conditions,
         meta: node.meta ?? {},
-        choices: []
+        choices: [],
+        // v2.1 properties
+        timeGate: node.timeGate,
+        onceOnly: node.onceOnly,
+        narrativeVariations: node.narrativeVariations,
+        characterId: node.characterId,
+        weightModifiers: node.weightModifiers
     };
 
     // Track tree relationships

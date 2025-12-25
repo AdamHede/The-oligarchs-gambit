@@ -185,30 +185,6 @@ export default defineStoryline({
         }),
 
         // ═══════════════════════════════════════════════════════════════
-        // HEALTH & PERSONAL EVENTS
-        // ═══════════════════════════════════════════════════════════════
-
-        event("health_scare_rumors", {
-            title: "Health Rumors",
-            description: "Whispers in the Kremlin corridors: is the President ill? Doctors are being flown in from abroad.",
-            weight: 2,
-            rarity: "rare",
-            meta: { depth: 1, impact: 3, sentiment: "negative" },
-
-            choices: [
-                choice("Make a public appearance looking vigorous", {
-                    effects: { elite: 5, anger: -2 }
-                }),
-                choice("Ignore the rumors", {
-                    effects: { elite: -5, anger: 2 }
-                }),
-                choice("Crack down on rumor-mongers", {
-                    effects: { elite: 2, anger: 8 }
-                })
-            ]
-        }),
-
-        // ═══════════════════════════════════════════════════════════════
         // CORRUPTION & SCANDAL
         // ═══════════════════════════════════════════════════════════════
 

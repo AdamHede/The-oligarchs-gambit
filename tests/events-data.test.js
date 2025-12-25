@@ -7,7 +7,11 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
 import { validateEvent, validateAllEvents } from '../events/schema.js';
-import ALL_EVENTS from '../events/index.js';
+import { allStorylines } from '../storylines/index.js';
+import { compileStorylines, getEventsArray } from '../engine/storyline-dsl.js';
+
+const registry = compileStorylines(allStorylines);
+const ALL_EVENTS = getEventsArray(registry);
 
 test('All events pass schema validation', () => {
     const result = validateAllEvents(ALL_EVENTS);

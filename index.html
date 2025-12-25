@@ -583,8 +583,8 @@
     </div>
 
     <script type="module">
-        import { GameEngineV2 } from './engine/game-engine.js';
-        import ALL_EVENTS from './events/index.js';
+        import { StorylineEngine } from './engine/storyline-engine.js';
+        import { allStorylines } from './storylines/index.js';
 
         // ============================================================
         // CONFIGURATION
@@ -1870,11 +1870,8 @@
         // GAME FLOW
         // ============================================================
         function startGame() {
-            // Convert events (same logic as game.js)
-            const allEvents = convertEvents(ALL_EVENTS);
-
-            // Create engine
-            engine = new GameEngineV2(allEvents);
+            // Create engine with storylines
+            engine = new StorylineEngine(allStorylines);
 
             // Hide title screen
             document.getElementById('title-screen').classList.add('hidden');
@@ -1907,73 +1904,6 @@
 
             // Restart
             startGame();
-        }
-
-        function convertEvents(events) {
-            return events.map(event => {
-                const converted = { ...event };
-
-                if (converted.choices) {
-                    converted.choices = converted.choices.map(choice => {
-                        const newChoice = { ...choice };
-
-                        if (newChoice.effects) {
-                            if (newChoice.effects.stats || newChoice.effects.counters || newChoice.effects.flags) {
-                                return newChoice;
-                            }
-
-                            const stats = {};
-                            const counters = {};
-                            const flags = {};
-                            let legacy = null;
-
-                            for (const [key, value] of Object.entries(newChoice.effects)) {
-                                if (key === 'legacy') {
-                                    legacy = value;
-                                } else if (typeof value === 'boolean') {
-                                    flags[key] = value;
-                                } else if (typeof value === 'number') {
-                                    if (['personalWealth', 'treasury', 'elite', 'anger'].includes(key)) {
-                                        stats[key] = value;
-                                    } else {
-                                        counters[key] = value;
-                                    }
-                                }
-                            }
-
-                            newChoice.effects = {};
-                            if (Object.keys(stats).length > 0) newChoice.effects.stats = stats;
-                            if (Object.keys(counters).length > 0) newChoice.effects.counters = counters;
-                            if (Object.keys(flags).length > 0) newChoice.effects.flags = flags;
-                            if (legacy) newChoice.effects.legacy = legacy;
-                        }
-
-                        if (newChoice.legacy) {
-                            if (!newChoice.effects) newChoice.effects = {};
-                            newChoice.effects.legacy = newChoice.legacy;
-                            delete newChoice.legacy;
-                        }
-
-                        if (newChoice.addToPool) {
-                            newChoice.add = newChoice.addToPool;
-                            delete newChoice.addToPool;
-                        }
-                        if (newChoice.removeFromPool) {
-                            newChoice.remove = newChoice.removeFromPool;
-                            delete newChoice.removeFromPool;
-                        }
-
-                        return newChoice;
-                    });
-                }
-
-                if (converted.storyline && !converted.storylines) {
-                    converted.storylines = [converted.storyline];
-                    delete converted.storyline;
-                }
-
-                return converted;
-            });
         }
 
         // ============================================================
