@@ -251,6 +251,27 @@ export default defineStoryline({
                     effects: { elite: -2, anger: 1 }
                 })
             ]
+        }),
+
+        // ═══════════════════════════════════════════════════════════════
+        // CELEBRATIONS & PERSONAL
+        // ═══════════════════════════════════════════════════════════════
+
+        event("birthday_celebration", {
+            title: "Your Birthday",
+            description: "It is your 70th birthday. The elite are gathering to pay homage and offer gifts.",
+            weight: 3,
+            rarity: "rare",
+            meta: { depth: 1, impact: 2, sentiment: "positive" },
+
+            choices: [
+                choice("Accept the lavish gifts", {
+                    effects: { personalWealth: 5, elite: 5, anger: 2 }
+                }),
+                choice("Ask for donations to the army", {
+                    effects: { treasury: 5, anger: -2, elite: -2 }
+                })
+            ]
         })
     ]
 });
