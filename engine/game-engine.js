@@ -74,6 +74,20 @@ class GameEngineV2 {
             deck.push(quiet.id);
         }
 
+        // Force-include early-game agenda events (these set up major storylines)
+        const earlyGameEvents = [
+            'dacha_summit',
+            'first_big_move', 
+            'inaugural_address',
+            'aluminum_king_introduction'
+        ];
+        for (const eventId of earlyGameEvents) {
+            const earlyEvent = eligible.find(e => e.id === eventId);
+            if (earlyEvent && !deck.includes(eventId)) {
+                deck.push(eventId);
+            }
+        }
+
         // Pool for remaining selection (exclude already added)
         let pool = eligible.filter(e => !deck.includes(e.id));
         const targetSize = 7; // Reduced from 12 to ensure Rarity works (pool is small)

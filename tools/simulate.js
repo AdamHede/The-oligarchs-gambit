@@ -139,26 +139,63 @@ class SimulatedGame {
         this.stats = { ...INITIAL_STATS };
         this.deck = this.getInitialDeck();
         this.turn = 0;
+        this.year = 1;
+        this.quarter = 1;
         this.history = [];
         this.isGameOver = false;
         this.gameOverReason = null;
+        this.terminatedEvents = new Set(); // v2.1: Track onceOnly events that have been drawn
     }
 
     getInitialDeck() {
-        const eligible = this.allEvents.filter(e => {
-            if (e.weight !== undefined && e.weight <= 0) return false;
-            return (e.weight === undefined || e.weight > 0);
+        const eligible = this.allEvents.filter(event => {
+            // Exclude triggered-only events (weight <= 0)
+            if (event.weight !== undefined && event.weight <= 0) return false;
+
+            // v2.1: Exclude events outside initial time gate (Year 1, Q1)
+            if (event.timeGate) {
+                const { minYear, maxYear, minQuarter, maxQuarter, minTurn, maxTurn } = event.timeGate;
+                // Check if Year 1, Q1 is within the time gate
+                if (minYear !== undefined && 1 < minYear) return false;
+                if (maxYear !== undefined && 1 > maxYear) return false;
+                if (minQuarter !== undefined && minYear === 1 && 1 < minQuarter) return false;
+                if (maxQuarter !== undefined && maxYear === 1 && 1 > maxQuarter) return false;
+                if (minTurn !== undefined && 0 < minTurn) return false;
+                if (maxTurn !== undefined && 0 > maxTurn) return false;
+            }
+
+            // Include events with no conditions or only basic stat conditions
+            if (!event.conditions) return true;
+            const cond = event.conditions;
+            // Exclude events that require flags, counters, complex logic, or v2.1 features
+            return !cond.flags && !cond.counters && !cond.all && !cond.any && !cond.not
+                && !cond.year && !cond.quarter && !cond.turn && !cond.relationships
+                && !cond.relationship && !cond.characterState && !cond.storylineActive;
         });
 
         const deck = [];
 
-        // Always include quiet_quarter if available
+        // Always include quiet_quarter if available (pacing event)
         const quiet = eligible.find(e => e.id === 'quiet_quarter');
         if (quiet) {
             deck.push(quiet.id);
         }
 
-        // Pool for remaining selection
+        // Force-include early-game agenda events (these set up major storylines)
+        const earlyGameEvents = [
+            'dacha_summit',
+            'first_big_move',
+            'inaugural_address',
+            'aluminum_king_introduction'
+        ];
+        for (const eventId of earlyGameEvents) {
+            const earlyEvent = eligible.find(e => e.id === eventId);
+            if (earlyEvent && !deck.includes(eventId)) {
+                deck.push(eventId);
+            }
+        }
+
+        // Pool for remaining selection (exclude already added)
         let pool = eligible.filter(e => !deck.includes(e.id));
         const targetSize = 7;
 
@@ -192,13 +229,52 @@ class SimulatedGame {
         return deck;
     }
 
+    /**
+     * v2.1: Check if event is within its time gate
+     */
+    isWithinTimeGate(event) {
+        const timeGate = event.timeGate;
+        if (!timeGate) return true;
+
+        const year = this.year;
+        const quarter = this.quarter;
+
+        // Check year bounds
+        if (timeGate.minYear !== undefined && year < timeGate.minYear) return false;
+        if (timeGate.maxYear !== undefined && year > timeGate.maxYear) return false;
+
+        // Check quarter bounds (within valid year range)
+        if (timeGate.minQuarter !== undefined) {
+            if (timeGate.minYear !== undefined && year === timeGate.minYear) {
+                if (quarter < timeGate.minQuarter) return false;
+            }
+        }
+        if (timeGate.maxQuarter !== undefined) {
+            if (timeGate.maxYear !== undefined && year === timeGate.maxYear) {
+                if (quarter > timeGate.maxQuarter) return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * v2.1: Check if event is eligible (time gate + not terminated)
+     */
+    isEventEligible(event) {
+        if (!event) return false;
+        if (this.terminatedEvents.has(event.id)) return false;
+        if (!this.isWithinTimeGate(event)) return false;
+        return true;
+    }
+
     drawEvent() {
         if (this.deck.length === 0) return null;
 
-        // Weight-based selection
+        // Weight-based selection with v2.1 eligibility filtering
         const eligibleEvents = this.deck
             .map(id => this.eventMap.get(id))
-            .filter(e => e);
+            .filter(e => this.isEventEligible(e));
 
         if (eligibleEvents.length === 0) return null;
 
@@ -207,10 +283,23 @@ class SimulatedGame {
 
         for (const event of eligibleEvents) {
             random -= (event.weight || 1);
-            if (random <= 0) return event;
+            if (random <= 0) {
+                // v2.1: Handle onceOnly events - mark as terminated
+                if (event.onceOnly === true) {
+                    this.terminatedEvents.add(event.id);
+                    this.deck = this.deck.filter(id => id !== event.id);
+                }
+                return event;
+            }
         }
 
-        return eligibleEvents[0];
+        const selectedEvent = eligibleEvents[0];
+        // v2.1: Handle onceOnly for fallback selection
+        if (selectedEvent && selectedEvent.onceOnly === true) {
+            this.terminatedEvents.add(selectedEvent.id);
+            this.deck = this.deck.filter(id => id !== selectedEvent.id);
+        }
+        return selectedEvent;
     }
 
     applyChoice(event, choiceIndex) {
@@ -252,6 +341,13 @@ class SimulatedGame {
         });
 
         this.turn++;
+        
+        // v2.1: Advance time (each turn = 1 quarter)
+        this.quarter++;
+        if (this.quarter > 4) {
+            this.quarter = 1;
+            this.year++;
+        }
     }
 
     checkGameOver() {

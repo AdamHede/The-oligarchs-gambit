@@ -133,11 +133,11 @@ export default defineStoryline({
             weight: 20,
             rarity: "epic",
 
-            // v2.1: Appears Year 1, Q2-Q4
+            // v2.1: Appears Year 1, Q1-Q4 (available from start, narrative says "six months")
             timeGate: {
                 minYear: 1,
                 maxYear: 1,
-                minQuarter: 2,
+                minQuarter: 1,
                 maxQuarter: 4
             },
 
@@ -392,10 +392,11 @@ export default defineStoryline({
             // v2.1: Character ID for relationship tracking
             characterId: "dmitri",
 
+            // v2.1: Appears Year 1, Q1-Q4 (available from start)
             timeGate: {
                 minYear: 1,
                 maxYear: 1,
-                minQuarter: 2,
+                minQuarter: 1,
                 maxQuarter: 4
             },
 
