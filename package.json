@@ -1,6 +1,6 @@
 {
   "name": "the-oligarchs-gambit",
-  "version": "2.0.1",
+  "version": "2.0.0",
   "description": "A story-driven game with Event System 2.0",
   "type": "module",
   "scripts": {

@@ -4,6 +4,12 @@ A satirical single-player strategy game where you play as an oligarch in a count
 
 **Play the game:** [https://the-oligarchs-gambit.pages.dev](https://the-oligarchs-gambit.pages.dev)
 
+## Release 2.0.0: The "Anger" Update
+The game has been significantly overhauled with a deep simulation engine. 
+- **New Event Engine**: Events now support complex chaining, multi-turn storylines, and delayed consequences.
+- **Deep Simulation**: Player survival is now consistently threatened by popular revolution (~97% of "deaths" in simulations).
+- **Expanded Content**: Over 60+ unique events including multi-stage narratives like "The Frozen Conflict" and "The African Market".
+
 ## Game Concept
 
 You are an oligarch in power, making quarterly decisions that affect four key metrics:
