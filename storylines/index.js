@@ -23,6 +23,9 @@ import loyaltyApparatusStoryline from './loyalty-apparatus.storyline.js';
 // Economic Vision Storylines (nested/convergent)
 import economicVisionStoryline from './economic-vision.storyline.js';
 
+// Global Stage Storylines (reactive/adversarial)
+import globalStageStoryline from './global-stage.storyline.js';
+
 // ================================================================
 // Export Individual Storylines (for selective imports)
 // ================================================================
@@ -39,7 +42,9 @@ export {
     successionStoryline,
     loyaltyApparatusStoryline,
     // Economic Vision Storylines
-    economicVisionStoryline
+    economicVisionStoryline,
+    // Global Stage Storylines
+    globalStageStoryline
 };
 
 // ================================================================
@@ -58,7 +63,9 @@ export const allStorylines = [
     successionStoryline,
     loyaltyApparatusStoryline,
     // Economic Vision Storylines
-    economicVisionStoryline
+    economicVisionStoryline,
+    // Global Stage Storylines
+    globalStageStoryline
 ];
 
 // ================================================================
@@ -161,6 +168,20 @@ export const storylineMetadata = {
         theme: {
             borderColor: '#4682B4',  // Steel Blue
             accentColor: '#B8860B'   // Dark Goldenrod
+        }
+    },
+    
+    // ================================================================
+    // Global Stage Storylines (reactive/adversarial)
+    // ================================================================
+    
+    'global-stage': {
+        name: 'The Global Stage',
+        description: 'Three geopolitical paths - your choice determines who becomes ally, adversary, or opportunist',
+        entryWeight: 0,  // Triggered by Global Stage summit
+        theme: {
+            borderColor: '#1E3A5F',  // Deep Navy Blue
+            accentColor: '#C9B037'   // Gold/Brass
         }
     }
 };

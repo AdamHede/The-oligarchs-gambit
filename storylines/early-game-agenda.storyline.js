@@ -770,6 +770,157 @@ export default defineStoryline({
                     }
                 })
             ]
+        }),
+
+        // ═══════════════════════════════════════════════════════════════
+        // THE GLOBAL STAGE - International Relations (Reactive/Adversarial)
+        // ═══════════════════════════════════════════════════════════════
+        //
+        // Your first major international appearance. Choose your
+        // geopolitical alignment - but each choice creates both allies
+        // AND adversaries. All three paths remain active in different roles:
+        // 1. Western Gambit - Euro-Atlantic integration
+        // 2. Eastern Embrace - Chinese partnership
+        // 3. Third Way - Non-aligned coalition
+        // ═══════════════════════════════════════════════════════════════
+
+        event("global_stage_summit", {
+            title: "The Global Stage",
+            description: "The World Economic Forum in Davos. Your first invitation since taking power. You fly in on the presidential jet—Western media notes it cost $80 million. The American Ambassador requests 'frank discussions.' The Chinese delegation is warmly friendly. Representatives from India, Turkey, and the Gulf circle like sharks. Back home, the ruble fell 4% today. Everyone has an offer. Everyone wants something.",
+            
+            forceAddAtStart: true,      // Always in starting deck
+            timeGate: { maxYear: 1 },   // Disappears after Year 1
+            weight: 100,                // High weight to ensure it triggers in Year 1
+            rarity: "legendary",
+            onceOnly: true,
+            storylines: ['early-game-agenda', 'global-stage'],
+
+            meta: { depth: 1, impact: 5, sentiment: "neutral" },
+
+            choices: [
+                // ============================================================
+                // CHOICE 1: THE WESTERN GAMBIT
+                // Opens: Euro-Atlantic integration path
+                // West = ALLY, East = ADVERSARY, Third Way = OPPORTUNIST
+                // ============================================================
+                choice("'We seek partnership with the civilized world.'", {
+                    effects: {
+                        treasury: 50,
+                        elite: -10,
+                        flags: {
+                            "global_alignment": "western",
+                            "western_accord_ally": true,
+                            "eastern_embrace_adversary": true,
+                            "third_way_opportunist": true,
+                            "global_stage_active": true
+                        },
+                        modifyStorylineWeights: {
+                            "global-stage": { multiplier: 2.0, bonus: 10 }
+                        }
+                    },
+                    legacy: {
+                        icon: "🇪🇺",
+                        name: "The Westernizer",
+                        weight: 0,
+                        explanation: "You reached toward Europe. They reached back with conditions."
+                    },
+                    unlocks: [
+                        eventRef("western_accord_first_offer")
+                    ]
+                }),
+                
+                // ============================================================
+                // CHOICE 2: THE EASTERN EMBRACE
+                // Opens: Chinese partnership path
+                // East = ALLY, West = ADVERSARY, Third Way = OPPORTUNIST
+                // ============================================================
+                choice("'Our future lies with our Eastern friends.'", {
+                    effects: {
+                        treasury: 30,
+                        elite: 5,
+                        flags: {
+                            "global_alignment": "eastern",
+                            "eastern_embrace_ally": true,
+                            "western_accord_adversary": true,
+                            "third_way_opportunist": true,
+                            "global_stage_active": true
+                        },
+                        modifyStorylineWeights: {
+                            "global-stage": { multiplier: 2.0, bonus: 10 }
+                        }
+                    },
+                    legacy: {
+                        icon: "🐉",
+                        name: "The Eastern Pivot",
+                        weight: -3,
+                        explanation: "You turned away from Europe toward a rising power."
+                    },
+                    unlocks: [
+                        eventRef("eastern_embrace_first_offer")
+                    ]
+                }),
+                
+                // ============================================================
+                // CHOICE 3: THE THIRD WAY
+                // Opens: Non-aligned coalition path
+                // Third Way = ALLY, West = OPPORTUNIST, East = OPPORTUNIST
+                // ============================================================
+                choice("'We will build a new order with new partners.'", {
+                    effects: {
+                        treasury: 20,
+                        elite: 8,
+                        anger: -5,
+                        flags: {
+                            "global_alignment": "third_way",
+                            "third_way_ally": true,
+                            "western_accord_opportunist": true,
+                            "eastern_embrace_opportunist": true,
+                            "global_stage_active": true
+                        },
+                        modifyStorylineWeights: {
+                            "global-stage": { multiplier: 2.0, bonus: 10 }
+                        }
+                    },
+                    legacy: {
+                        icon: "🌍",
+                        name: "The Non-Aligned",
+                        weight: 0,
+                        explanation: "You rejected both superpowers. Now prove you don't need them."
+                    },
+                    unlocks: [
+                        eventRef("third_way_first_offer")
+                    ]
+                }),
+                
+                // ============================================================
+                // CHOICE 4: MULTI-VECTOR DIPLOMACY
+                // All three paths = OPPORTUNIST (chaotic)
+                // ============================================================
+                choice("'Let them all court us. We answer to no one.'", {
+                    effects: {
+                        elite: 3,
+                        flags: {
+                            "global_alignment": "multi_vector",
+                            "western_accord_opportunist": true,
+                            "eastern_embrace_opportunist": true,
+                            "third_way_opportunist": true,
+                            "global_stage_active": true
+                        },
+                        modifyStorylineWeights: {
+                            "global-stage": { multiplier: 1.5, bonus: 5 }
+                        }
+                    },
+                    legacy: {
+                        icon: "🎭",
+                        name: "The Multi-Vector",
+                        weight: -5,
+                        explanation: "You played all sides. They noticed."
+                    },
+                    unlocks: [
+                        eventRef("multi_vector_chaos")
+                    ]
+                })
+            ]
         })
     ]
 });

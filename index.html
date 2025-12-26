@@ -680,8 +680,9 @@
             // Priority:
             // 1. event.image (explicit override)
             // 2. assets/images/events/{event.id}.png (implicit convention)
-            // 3. Storyline theme image
-            // 4. Default palace.png
+            // 3. assets/images/storylines/{storyline}.png (implicit convention)
+            // 4. Storyline theme image (legacy map)
+            // 5. Default palace.png
 
             let imagePath = `assets/images/events/${event.id}.png`; // Try event-specific first by default convention
             
@@ -692,6 +693,13 @@
                 const storyline = (event.storylines && event.storylines[0]) || event.storyline;
 
                 if (storyline) {
+                    // Try the standardized storyline path first
+                    // Note: We can't easily check file existence in client-side JS without a 404,
+                    // so we'll rely on the onerror chain.
+                    // But we can set the fallback for the event image failure to be the storyline image.
+                    
+                    const storylinePath = `assets/images/storylines/${storyline}.png`;
+                    
                     const storylineImages = {
                         // Current Storylines
                         'special-operation': 'assets/images/war-invasion.png',
@@ -716,8 +724,10 @@
                     // If we don't have a specific event image (we'll check via onerror later), 
                     // this storyline image will be the fallback before palace.png
                     if (storylineImages[storyline]) {
-                        // We store this as a fallback property to use in onerror
                         texture.fallbackImage = storylineImages[storyline];
+                        texture.storylinePath = storylinePath; // Try this before the hardcoded map
+                    } else {
+                        texture.storylinePath = storylinePath;
                     }
                 }
             }
@@ -1063,17 +1073,62 @@
                 texture.needsUpdate = true;
             };
             img.onerror = () => {
-                // Try fallback logic if specific image fails
-                if (imagePath !== 'assets/images/palace.png') {
-                    const fallbackImg = new Image();
-                    fallbackImg.crossOrigin = "Anonymous";
-                    fallbackImg.onload = () => {
-                        drawCardContent({ loaded: true, img: fallbackImg });
+                // 1. Try Storyline Path (standardized)
+                if (texture.storylinePath) {
+                    const slImg = new Image();
+                    slImg.crossOrigin = "Anonymous";
+                    slImg.onload = () => {
+                        drawCardContent({ loaded: true, img: slImg });
                         texture.needsUpdate = true;
                     };
-                    fallbackImg.src = 'assets/images/palace.png';
+                    slImg.onerror = () => {
+                        // 2. Try Fallback Map Image
+                        if (texture.fallbackImage) {
+                            const fbImg = new Image();
+                            fbImg.crossOrigin = "Anonymous";
+                            fbImg.onload = () => {
+                                drawCardContent({ loaded: true, img: fbImg });
+                                texture.needsUpdate = true;
+                            };
+                            fbImg.onerror = () => {
+                                // 3. Try Default Palace
+                                loadPalaceFallback();
+                            };
+                            fbImg.src = texture.fallbackImage;
+                        } else {
+                            // 3. Try Default Palace
+                            loadPalaceFallback();
+                        }
+                    };
+                    slImg.src = texture.storylinePath;
+                } else if (texture.fallbackImage) {
+                     // 2. Try Fallback Map Image (Directly if no standardized path)
+                    const fbImg = new Image();
+                    fbImg.crossOrigin = "Anonymous";
+                    fbImg.onload = () => {
+                        drawCardContent({ loaded: true, img: fbImg });
+                        texture.needsUpdate = true;
+                    };
+                    fbImg.onerror = () => {
+                        loadPalaceFallback();
+                    };
+                    fbImg.src = texture.fallbackImage;
+                } else {
+                    loadPalaceFallback();
                 }
             };
+            
+            function loadPalaceFallback() {
+                if (imagePath !== 'assets/images/palace.png') {
+                    const finalImg = new Image();
+                    finalImg.crossOrigin = "Anonymous";
+                    finalImg.onload = () => {
+                        drawCardContent({ loaded: true, img: finalImg });
+                        texture.needsUpdate = true;
+                    };
+                    finalImg.src = 'assets/images/palace.png';
+                }
+            }
 
             img.src = imagePath;
 
