@@ -74,19 +74,20 @@ function calculateEffectiveWeight(event, state) {
                 const currentTurn = state.turn || 0;
                 const delta = currentTurn - lastSeen;
                 
-                // Aggressive recency curve:
-                // 1 turn ago: 0.1x (Very unlikely)
-                // 2 turns ago: 0.3x
-                // 3 turns ago: 0.6x
-                // 4 turns ago: 0.8x
-                // 5 turns ago: 1.0x (Neutral)
-                // >5 turns: +0.2x per turn (Catch up)
-                if (delta <= 1) recencyMult = 0.1;
-                else if (delta === 2) recencyMult = 0.3;
-                else if (delta === 3) recencyMult = 0.6;
-                else if (delta === 4) recencyMult = 0.8;
-                else if (delta === 5) recencyMult = 1.0;
-                else recencyMult = 1.0 + (delta - 5) * 0.2;
+                // Storyline interweaving curve:
+                // Allows back-to-back events (~35% chance) but prevents long runs
+                // 1 turn ago: 0.15x (possible but reduced)
+                // 2 turns ago: 0.2x (still suppressed)
+                // 3 turns ago: 0.35x (starting to recover)
+                // 4 turns ago: 0.55x (moderate recovery)
+                // 5 turns ago: 0.8x (nearly neutral)
+                // 6+ turns: 1.0x + catch-up bonus
+                if (delta <= 1) recencyMult = 0.15;
+                else if (delta === 2) recencyMult = 0.2;
+                else if (delta === 3) recencyMult = 0.35;
+                else if (delta === 4) recencyMult = 0.55;
+                else if (delta === 5) recencyMult = 0.8;
+                else recencyMult = 1.0 + (delta - 6) * 0.2;
             }
 
             return (effectiveWeight * recencyMult) / baseWeight;
