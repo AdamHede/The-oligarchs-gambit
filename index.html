@@ -674,6 +674,11 @@
             canvas.width = 512;
             canvas.height = 716;
             const ctx = canvas.getContext('2d');
+            
+            // Immediately fill with opaque background to ensure texture is never transparent
+            ctx.fillStyle = '#1e293b';
+            ctx.fillRect(0, 0, 512, 716);
+            
             const texture = new THREE.CanvasTexture(canvas);
 
             // Determine image path
@@ -798,7 +803,7 @@
                     'shadow-war': { h: 220, s: 20, l: 30 }
                 };
 
-                const color = storylineColors[storyline] || { h: (event.id.length * 37) % 360, s: 70, l: 60 };
+                const color = storylineColors[storyline] || { h: ((event.id || 'default').length * 37) % 360, s: 70, l: 60 };
 
                 // ============================================
                 // STORYLINE FRAME BORDER (6px)
@@ -1069,6 +1074,7 @@
 
             // Initial draw (placeholder)
             drawCardContent({ loaded: false });
+            texture.needsUpdate = true; // Ensure Three.js picks up initial canvas content
 
             // Load Image
             const img = new Image();
@@ -1346,9 +1352,11 @@
                 map: frontTex,
                 color: 0xffffff,
                 ...matProps,
-                side: THREE.DoubleSide, // Fix: Ensure visibility from both sides
-                transparent: false,     // Fix: Force opaque rendering
-                alphaTest: 0.5          // Fix: Handle alpha in texture cleanly
+                side: THREE.DoubleSide,  // Fix: Ensure visibility from both sides
+                transparent: false,      // Fix: Force opaque rendering
+                opacity: 1.0,            // Fix: Ensure full opacity
+                depthWrite: true,        // Fix: Ensure proper depth buffer participation
+                depthTest: true
             });
 
             const materials = [matEdge, matEdge, matBack, matFront, matEdge, matEdge];
