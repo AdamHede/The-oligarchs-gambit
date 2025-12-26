@@ -30,10 +30,10 @@ export class StorylineEngine extends GameEngineV2 {
         // Merge with any legacy events
         const allEvents = [...storylineEvents, ...legacyEvents];
 
-        // Initialize base engine
-        super(allEvents, initialState);
+        // Initialize base engine (v2.2: pass registry for exclusive groups & entity deps)
+        super(allEvents, initialState, registry);
 
-        // Store registry for tracking
+        // Store registry for tracking (also stored in base class now)
         this.registry = registry;
         this.storylines = storylines;
 

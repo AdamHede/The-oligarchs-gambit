@@ -151,18 +151,18 @@ export default defineStoryline({
             title: "A Quiet Quarter",
             description: "For once, nothing seems to be on fire. Your ministers are nervous—surely this calm cannot last.",
             weight: 1,
-            recurring: true,
+            recurring: false, // Non-recurring by default - choices can addSelf if needed
             rarity: "common",
             meta: { depth: 1, impact: 1, sentiment: "neutral" },
 
             choices: [
-                choice("Enjoy the peace while it lasts", {
-                    effects: { anger: -2, elite: 1 },
-                    keepInDeck: true
+                choice("Take a short vacation. You've earned it.", {
+                    effects: { anger: 3 },
+                    addSelf: true // Occasionally reappear
                 }),
-                choice("Something must be wrong. Investigate.", {
-                    effects: { elite: -1, anger: 1 },
-                    keepInDeck: true
+                choice("Stage a minor media distraction.", {
+                    effects: { elite: -3 },
+                    addSelf: true // Occasionally reappear
                 })
             ]
         }),
@@ -180,30 +180,6 @@ export default defineStoryline({
                 }),
                 choice("Too busy with affairs of state", {
                     effects: { elite: -1 }
-                })
-            ]
-        }),
-
-        // ═══════════════════════════════════════════════════════════════
-        // HEALTH & PERSONAL EVENTS
-        // ═══════════════════════════════════════════════════════════════
-
-        event("health_scare_rumors", {
-            title: "Health Rumors",
-            description: "Whispers in the Kremlin corridors: is the President ill? Doctors are being flown in from abroad.",
-            weight: 2,
-            rarity: "rare",
-            meta: { depth: 1, impact: 3, sentiment: "negative" },
-
-            choices: [
-                choice("Make a public appearance looking vigorous", {
-                    effects: { elite: 5, anger: -2 }
-                }),
-                choice("Ignore the rumors", {
-                    effects: { elite: -5, anger: 2 }
-                }),
-                choice("Crack down on rumor-mongers", {
-                    effects: { elite: 2, anger: 8 }
                 })
             ]
         }),

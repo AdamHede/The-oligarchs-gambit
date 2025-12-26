@@ -1,8 +1,9 @@
-
-import ALL_EVENTS from '../events/index.js';
+import { allStorylines } from '../storylines/index.js';
+import { compileStorylines, getEventsArray } from '../engine/storyline-dsl.js';
 
 function checkMetadata() {
-    const events = ALL_EVENTS;
+    const registry = compileStorylines(allStorylines);
+    const events = getEventsArray(registry);
     let missing = 0;
 
     console.log("Checking metadata for " + events.length + " events...");

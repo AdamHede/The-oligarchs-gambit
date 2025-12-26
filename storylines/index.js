@@ -1,103 +1,193 @@
 /**
- * Storylines Index
- *
- * Central registry of all storyline definitions.
- * Import this to get all storylines for the game.
+ * Storylines Index - Import and Export All Storylines
+ * 
+ * This file imports all storyline definitions and exports them for use by the game engine.
  */
 
-// Tree-based storylines
-import warInvasion from './war-invasion.storyline.js';
-import sanctionsSpiral from './sanctions-spiral.storyline.js';
-import shadowWar from './shadow-war.storyline.js';
-import successionCrisis from './succession-crisis.storyline.js';
-import religiousRevival from './religious-revival.storyline.js';
-import energyPipeline from './energy-pipeline.storyline.js';
-import popularUprising from './popular-uprising.storyline.js';
-import domesticCrisis from './domestic-crisis.storyline.js';
-import common from './common.storyline.js';
+// ================================================================
+// Import Storylines
+// ================================================================
 
-// Export individual storylines for selective use
+import commonStoryline from './common.storyline.js';
+import earlyGameAgendaStoryline from './early-game-agenda.storyline.js';
+import specialOperationStoryline from './special-operation.storyline.js';
+import dissidentStoryline from './dissident.storyline.js';
+import holyAllianceStoryline from './holy-alliance.storyline.js';
+import stubsStoryline from './stubs.storyline.js';
+
+// Dacha Summit Storylines (interconnected)
+import goldenCircleStoryline from './golden-circle.storyline.js';
+import successionStoryline from './succession.storyline.js';
+import loyaltyApparatusStoryline from './loyalty-apparatus.storyline.js';
+
+// Economic Vision Storylines (nested/convergent)
+import economicVisionStoryline from './economic-vision.storyline.js';
+
+// Global Stage Storylines (reactive/adversarial)
+import globalStageStoryline from './global-stage.storyline.js';
+
+// ================================================================
+// Export Individual Storylines (for selective imports)
+// ================================================================
+
 export {
-    warInvasion,
-    sanctionsSpiral,
-    shadowWar,
-    successionCrisis,
-    religiousRevival,
-    energyPipeline,
-    popularUprising,
-    domesticCrisis,
-    common
+    commonStoryline,
+    earlyGameAgendaStoryline,
+    specialOperationStoryline,
+    dissidentStoryline,
+    holyAllianceStoryline,
+    stubsStoryline,
+    // Dacha Summit Storylines
+    goldenCircleStoryline,
+    successionStoryline,
+    loyaltyApparatusStoryline,
+    // Economic Vision Storylines
+    economicVisionStoryline,
+    // Global Stage Storylines
+    globalStageStoryline
 };
 
-// Export all storylines as array for easy initialization
+// ================================================================
+// Export Array of All Storylines (for game initialization)
+// ================================================================
+
 export const allStorylines = [
-    warInvasion,
-    sanctionsSpiral,
-    shadowWar,
-    successionCrisis,
-    religiousRevival,
-    energyPipeline,
-    popularUprising,
-    domesticCrisis,
-    common
+    commonStoryline,
+    earlyGameAgendaStoryline,
+    specialOperationStoryline,
+    dissidentStoryline,
+    holyAllianceStoryline,
+    stubsStoryline,
+    // Dacha Summit Storylines
+    goldenCircleStoryline,
+    successionStoryline,
+    loyaltyApparatusStoryline,
+    // Economic Vision Storylines
+    economicVisionStoryline,
+    // Global Stage Storylines
+    globalStageStoryline
 ];
 
-// Export storyline metadata for UI theming
+// ================================================================
+// Export Storyline Metadata (for UI theming and behavior)
+// ================================================================
+
 export const storylineMetadata = {
-    'war-invasion': {
-        name: 'War of Expansion',
-        description: 'A 72-hour operation that goes horribly wrong',
-        entryWeight: 10,
-        theme: { borderColor: '#8B0000', accentColor: '#DC143C' }
-    },
-    'sanctions-spiral': {
-        name: 'Sanctions Spiral',
-        description: 'Western sanctions tighten the noose on your economy',
-        entryWeight: 0, // Triggered
-        theme: { borderColor: '#1a472a', accentColor: '#2d5a3d' }
-    },
-    'shadow-war': {
-        name: 'Shadow War',
-        description: 'Covert operations and espionage that can spiral out of control',
-        entryWeight: 10,
-        theme: { borderColor: '#1a1a2e', accentColor: '#16213e' }
-    },
-    'succession-crisis': {
-        name: 'Succession Crisis',
-        description: 'Power struggles and questions about your grip on power',
-        entryWeight: 8,
-        theme: { borderColor: '#4a0e0e', accentColor: '#722f2f' }
-    },
-    'religious-revival': {
-        name: 'Religious Revival',
-        description: 'The Church becomes a tool of state power',
-        entryWeight: 10,
-        theme: { borderColor: '#614126', accentColor: '#8B6914' }
-    },
-    'energy-pipeline': {
-        name: 'Energy Politics',
-        description: 'Weaponizing energy resources for geopolitical gain',
-        entryWeight: 8,
-        theme: { borderColor: '#2d4a2d', accentColor: '#4a7c4a' }
-    },
-    'popular-uprising': {
-        name: 'Popular Uprising',
-        description: 'Mass movements threaten your grip on power',
-        entryWeight: 8,
-        theme: { borderColor: '#8B0000', accentColor: '#FF4500' }
-    },
-    'domestic-crisis': {
-        name: 'Domestic Crisis',
-        description: 'Economic collapse and infrastructure decay threaten stability',
-        entryWeight: 8,
-        theme: { borderColor: '#4a3728', accentColor: '#6b4423' }
-    },
     'common': {
         name: 'Common Events',
-        description: 'Background events and pacing',
-        entryWeight: 5,
-        theme: { borderColor: '#555', accentColor: '#888' }
+        description: 'Balance and pacing events that rotate through the deck',
+        entryWeight: 10,  // Always present in some form
+        theme: {
+            borderColor: '#696969',  // Dim gray
+            accentColor: '#A9A9A9'   // Dark gray
+        }
+    },
+    
+    'early-game-agenda': {
+        name: 'Early Game Agenda',
+        description: 'Year 1 agenda-setting moments',
+        entryWeight: 0,  // Forced, not random
+        theme: {
+            borderColor: '#FFD700',  // Gold
+            accentColor: '#FFA500'   // Orange
+        }
+    },
+    
+    'special-operation': {
+        name: 'The Special Operation',
+        description: 'War, hubris, and impossible choices',
+        entryWeight: 0,  // Triggered by inaugural address
+        theme: {
+            borderColor: '#8B0000',  // Dark red
+            accentColor: '#FF4444'   // Bright red
+        }
+    },
+    
+    'dissident': {
+        name: 'The Dissident',
+        description: 'One man vs the state - repression and its costs',
+        entryWeight: 0,  // Triggered by inaugural address
+        theme: {
+            borderColor: '#2F4F4F',  // Dark slate gray
+            accentColor: '#778899'   // Light slate gray
+        }
+    },
+    
+    'holy-alliance': {
+        name: 'The Holy Alliance',
+        description: 'Church-state bargain, moral crusade, cynical power',
+        entryWeight: 0,  // Triggered by inaugural address
+        theme: {
+            borderColor: '#8B4513',  // Saddle brown
+            accentColor: '#DAA520'   // Goldenrod
+        }
+    },
+    
+    // ================================================================
+    // Dacha Summit Storylines (interconnected)
+    // ================================================================
+    
+    'golden-circle': {
+        name: 'The Golden Circle',
+        description: 'Oligarch wealth, excess, and the price of greed',
+        entryWeight: 0,  // Triggered by dacha summit
+        theme: {
+            borderColor: '#FFD700',  // Gold
+            accentColor: '#DAA520'   // Goldenrod
+        }
+    },
+    
+    'succession': {
+        name: 'The Succession Question',
+        description: 'Dynasty, heirs, and the impossible question of who comes after',
+        entryWeight: 0,  // Triggered by dacha summit
+        theme: {
+            borderColor: '#4B0082',  // Indigo
+            accentColor: '#9932CC'   // Dark Orchid
+        }
+    },
+    
+    'loyalty-apparatus': {
+        name: 'The Loyalty Apparatus',
+        description: 'Paranoia, surveillance, and the price of trust',
+        entryWeight: 0,  // Triggered by dacha summit
+        theme: {
+            borderColor: '#2F4F4F',  // Dark Slate Gray
+            accentColor: '#778899'   // Light Slate Gray
+        }
+    },
+    
+    // ================================================================
+    // Economic Vision Storylines (nested/convergent)
+    // ================================================================
+    
+    'economic-vision': {
+        name: 'The Economic Vision',
+        description: 'Three paths to economic power, all leading to a reckoning',
+        entryWeight: 0,  // Triggered by Five-Year Plan
+        theme: {
+            borderColor: '#4682B4',  // Steel Blue
+            accentColor: '#B8860B'   // Dark Goldenrod
+        }
+    },
+    
+    // ================================================================
+    // Global Stage Storylines (reactive/adversarial)
+    // ================================================================
+    
+    'global-stage': {
+        name: 'The Global Stage',
+        description: 'Three geopolitical paths - your choice determines who becomes ally, adversary, or opportunist',
+        entryWeight: 0,  // Triggered by Global Stage summit
+        theme: {
+            borderColor: '#1E3A5F',  // Deep Navy Blue
+            accentColor: '#C9B037'   // Gold/Brass
+        }
     }
 };
+
+// ================================================================
+// Default Export
+// ================================================================
 
 export default allStorylines;

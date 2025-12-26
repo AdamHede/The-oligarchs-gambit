@@ -202,106 +202,15 @@
     
     <!-- Main Lab Script -->
     <script type="module">
-        import { GameEngineV2 } from './engine/game-engine.js';
+        import { StorylineEngine } from './engine/storyline-engine.js';
+        import { allStorylines } from './storylines/index.js';
         import { DebugGraph } from './debug-graph.js';
-        import ALL_EVENTS from './events/index.js';
-
-        // Convert events format if needed (same as game.js)
-        function convertEvents(events) {
-            return events.map(event => {
-                const converted = { ...event };
-                
-                if (converted.choices) {
-                    converted.choices = converted.choices.map(choice => {
-                        const newChoice = { ...choice };
-                        
-                        if (newChoice.effects) {
-                            if (newChoice.effects.stats || newChoice.effects.counters || newChoice.effects.flags) {
-                                return newChoice;
-                            }
-                            
-                            const stats = {};
-                            const counters = {};
-                            const flags = {};
-                            let legacy = null;
-                            
-                            for (const [key, value] of Object.entries(newChoice.effects)) {
-                                if (key === 'legacy') {
-                                    legacy = value;
-                                } else if (typeof value === 'boolean') {
-                                    flags[key] = value;
-                                } else if (typeof value === 'number') {
-                                    if (['personalWealth', 'treasury', 'elite', 'anger'].includes(key)) {
-                                        stats[key] = value;
-                                    } else {
-                                        counters[key] = value;
-                                    }
-                                }
-                            }
-                            
-                            newChoice.effects = {};
-                            if (Object.keys(stats).length > 0) newChoice.effects.stats = stats;
-                            if (Object.keys(counters).length > 0) newChoice.effects.counters = counters;
-                            if (Object.keys(flags).length > 0) newChoice.effects.flags = flags;
-                            if (legacy) newChoice.effects.legacy = legacy;
-                        }
-                        
-                        if (newChoice.addToPool) {
-                            newChoice.add = newChoice.addToPool;
-                            delete newChoice.addToPool;
-                        }
-                        if (newChoice.removeFromPool) {
-                            newChoice.remove = newChoice.removeFromPool;
-                            delete newChoice.removeFromPool;
-                        }
-                        
-                        return newChoice;
-                    });
-                }
-                
-                if (converted.storyline && !converted.storylines) {
-                    converted.storylines = [converted.storyline];
-                    delete converted.storyline;
-                }
-                
-                if (converted.conditions) {
-                    const newConditions = {};
-                    
-                    if (converted.conditions.personalWealth !== undefined ||
-                        converted.conditions.treasury !== undefined ||
-                        converted.conditions.elite !== undefined ||
-                        converted.conditions.anger !== undefined) {
-                        newConditions.stats = {};
-                        if (converted.conditions.personalWealth !== undefined) {
-                            newConditions.stats.personalWealth = { gte: converted.conditions.personalWealth };
-                        }
-                        if (converted.conditions.treasury !== undefined) {
-                            newConditions.stats.treasury = { gte: converted.conditions.treasury };
-                        }
-                        if (converted.conditions.elite !== undefined) {
-                            newConditions.stats.elite = { gte: converted.conditions.elite };
-                        }
-                        if (converted.conditions.anger !== undefined) {
-                            newConditions.stats.anger = { gte: converted.conditions.anger };
-                        }
-                    }
-                    
-                    if (Object.keys(newConditions).length > 0) {
-                        converted.conditions = newConditions;
-                    } else if (Object.keys(converted.conditions).length === 0) {
-                        delete converted.conditions;
-                    }
-                }
-                
-                return converted;
-            });
-        }
 
         // Initialize when DOM is ready
         document.addEventListener('DOMContentLoaded', () => {
             try {
-                const allEvents = convertEvents(ALL_EVENTS);
-                const engine = new GameEngineV2(allEvents);
+                const engine = new StorylineEngine(allStorylines);
+                const allEvents = engine.allEvents;
                 const debugGraph = new DebugGraph('event-graph', engine, allEvents);
                 
                 // Attach graph control buttons

@@ -237,16 +237,19 @@ export class GameUI {
 
         if (!this.eventTitle || !this.eventDescription || !this.choicesContainer) return;
 
+        // v2.1: Get narrative (with possible variations based on state)
+        const narrative = this.engine.getNarrativeForEvent(event);
+
         // Add storyline tag if present
         const storylines = event.storylines || (event.storyline ? [event.storyline] : []);
         if (storylines.length > 0) {
             const storylineTag = this.formatStorylineTag(storylines[0]);
-            this.eventTitle.innerHTML = `${storylineTag} ${event.title}`;
+            this.eventTitle.innerHTML = `${storylineTag} ${narrative.title}`;
         } else {
-            this.eventTitle.textContent = event.title;
+            this.eventTitle.textContent = narrative.title;
         }
 
-        this.eventDescription.textContent = event.description;
+        this.eventDescription.textContent = narrative.description;
 
         // Clear and populate choices
         this.choicesContainer.innerHTML = '';

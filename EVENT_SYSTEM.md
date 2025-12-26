@@ -1,5 +1,36 @@
 # Event System Documentation
 
+> **Version 2.2** - Adds exclusive groups, entity dependencies, and force-add events
+
+## Quick Reference: DSL Syntax
+
+```javascript
+import { defineStoryline, event, choice, eventRef } from './engine/storyline-dsl.js';
+
+// Define an event
+event("event_id", {
+    title: "Event Title",
+    description: "Event description...",
+    weight: 5,                    // Draw probability
+    requires: ["entity_id"],      // v2.2: Auto-removed if entity dies
+    forceAddAtStart: true,        // v2.2: Always in initial deck
+    timeGate: { maxYear: 1 },     // Disappears after Year 1
+    
+    choices: [
+        choice("Choice text", {
+            effects: {
+                stats: { treasury: -50 },
+                flags: { war_started: true },
+                characterStates: { general_X: "dead" }  // Triggers cascade
+            },
+            unlocks: [...],           // Parallel outcomes (all occur)
+            unlocksExclusive: [...],  // v2.2: Exclusive outcomes (one occurs)
+            terminates: ["event_id"]  // Explicit blocking
+        })
+    ]
+})
+```
+
 ## Overview
 
 The event system is a **card-based narrative engine** where events ("cards") are drawn randomly from a shared pool. This creates a unique gameplay feel:
@@ -224,23 +255,19 @@ choices: [{
 
 When a single choice adds multiple events to the pool, there are two distinct patterns. **Understanding these is critical for good game design.**
 
-### Pattern 1: Parallel Consequences
+### Pattern 1: Parallel Consequences (unlocks)
 
 A single action triggers **multiple independent consequences** that all unfold over time.
 
 **Example: Killing a hostage**
 ```javascript
-{
-    id: "hostage_situation",
-    choices: [{
-        text: "Execute the hostage to send a message",
-        add: [
-            "international_outrage",      // Foreign leaders condemn you
-            "hostage_family_revenge",     // The family seeks vengeance
-            "domestic_fear_spreads"       // Your own people grow afraid
-        ]
-    }]
-}
+choice("Execute the hostage to send a message", {
+    unlocks: [
+        event("international_outrage", {...}),    // Foreign leaders condemn you
+        event("hostage_family_revenge", {...}),   // The family seeks vengeance
+        event("domestic_fear_spreads", {...})     // Your own people grow afraid
+    ]
+})
 ```
 
 All three events will eventually be drawn. The player doesn't know the order—maybe they deal with international sanctions first, then the family's revenge plot shows up weeks later. This creates **layered storytelling** where consequences unfold unpredictably.
@@ -250,47 +277,33 @@ All three events will eventually be drawn. The player doesn't know the order—m
 - You want the player to experience all consequences, just not all at once
 - Different factions react to the same event
 
-### Pattern 2: Competing Outcomes (Random Fork)
+### Pattern 2: Mutually Exclusive Outcomes (unlocksExclusive) ⭐ NEW v2.2
 
-A single action has **multiple possible outcomes**, but only one will occur. This adds uncertainty to player decisions.
+A single action has **multiple possible outcomes**, but only one will occur. The engine automatically removes siblings when one is drawn.
 
 **Example: Send idiot nephew to summit**
 ```javascript
-{
-    id: "climate_summit_invitation",
-    choices: [{
-        text: "Send your incompetent nephew as delegation head",
-        add: [
-            "nephew_surprising_success",  // He actually does well
-            "nephew_embarrasses_regime"   // He's a disaster
-        ]
-    }]
-}
-
-// In nephew_surprising_success:
-{
-    id: "nephew_surprising_success",
-    title: "The Idiot Savant",
-    description: "Against all odds, your nephew charmed the EU delegates...",
-    choices: [{
-        text: "Promote him",
-        remove: ["nephew_embarrasses_regime"]  // Cancel the bad outcome
-    }]
-}
-
-// In nephew_embarrasses_regime:
-{
-    id: "nephew_embarrasses_regime", 
-    title: "The Diplomatic Disaster",
-    description: "Your nephew got drunk and insulted the German chancellor...",
-    choices: [{
-        text: "Recall him immediately",
-        remove: ["nephew_surprising_success"]  // Cancel the good outcome
-    }]
-}
+choice("Send your incompetent nephew as delegation head", {
+    unlocksExclusive: [
+        event("nephew_surprising_success", {
+            title: "The Idiot Savant",
+            description: "Against all odds, your nephew charmed the EU delegates...",
+            choices: [
+                choice("Promote him", { effects: { stats: { elite: 5 } } })
+            ]
+        }),
+        event("nephew_embarrasses_regime", {
+            title: "The Diplomatic Disaster", 
+            description: "Your nephew got drunk and insulted the German chancellor...",
+            choices: [
+                choice("Recall him immediately", { effects: { stats: { elite: -5 } } })
+            ]
+        })
+    ]
+})
 ```
 
-**Key mechanic:** Whichever event is drawn first removes the other from the pool. The player made one decision but experiences one of two random outcomes.
+**Key mechanic:** When ANY event from an exclusive group is **drawn**, all siblings are automatically removed from the deck. No manual `remove: []` needed!
 
 **When to use:**
 - Actions with uncertain outcomes (gambling, diplomacy, military operations)
@@ -302,24 +315,175 @@ A single action has **multiple possible outcomes**, but only one will occur. Thi
 A single choice can use both patterns:
 
 ```javascript
-{
-    id: "start_war",
-    choices: [{
-        text: "Launch the special military operation",
-        add: [
-            // Parallel consequences (all will happen):
-            "sanctions_incoming",
-            "war_casualties_mount",
-            
-            // Competing outcomes (only one will happen):
-            "quick_victory",        // 72-hour special operation
-            "war_becomes_quagmire"  // Years of conflict
-        ]
-    }]
-}
+choice("Launch the special military operation", {
+    // Parallel consequences (all will happen):
+    unlocks: [
+        event("sanctions_incoming", {...}),
+        event("war_casualties_mount", {...})
+    ],
+    // Exclusive outcomes (only one will happen):
+    unlocksExclusive: [
+        event("quick_victory", {...}),        // 72-hour special operation
+        event("war_becomes_quagmire", {...})  // Years of conflict
+    ]
+})
 ```
 
 The sanctions and casualties are guaranteed. But the war's outcome is uncertain until one of those cards is drawn.
+
+## Entity Dependencies (requires) ⭐ NEW v2.2
+
+Events can declare dependencies on characters or entities. When an entity becomes unavailable (dead, exiled, fled), all events requiring that entity are **automatically removed** from the deck.
+
+### Declaring Dependencies
+
+```javascript
+event("prisoner_hunger_strike", {
+    title: "Hunger Strike",
+    description: "Your famous prisoner has begun refusing food...",
+    requires: ["prisoner_navalny"],  // This event requires the prisoner to exist
+    choices: [
+        choice("Force-feed him", {...}),
+        choice("Let him starve", {...})
+    ]
+})
+```
+
+### Triggering Cascade Removal
+
+When a choice changes a character's state to an "unavailable" state, all dependent events are removed:
+
+```javascript
+choice("Execute the prisoner", {
+    effects: {
+        characterStates: { "prisoner_navalny": "dead" }  // Triggers cascade!
+    }
+})
+```
+
+**Unavailable states:** `dead`, `exiled`, `imprisoned`, `fled`
+
+**What happens:**
+1. Character state is set to "dead"
+2. Engine finds all events with `requires: ["prisoner_navalny"]`
+3. Those events are removed from deck and marked as terminated
+4. They cannot be re-added later
+
+### When to Use
+
+- **Recurring characters**: Opposition leader, specific oligarch, family member
+- **Narrative coherence**: Can't have "prisoner escapes" event if prisoner is dead
+- **Scale management**: One character death can cleanly remove 10+ related events
+
+## Early Game Events (forceAddAtStart) ⭐ NEW v2.2
+
+Events that set up major storylines can be force-added to the initial deck:
+
+```javascript
+event("inaugural_address", {
+    title: "Your Inaugural Address",
+    description: "The cameras are rolling. What message defines your regime?",
+    forceAddAtStart: true,              // Always in initial deck
+    timeGate: { maxYear: 1 },           // Disappears after Year 1
+    choices: [
+        choice("Promise military glory", {
+            unlocksExclusive: [
+                event("war_planning", {...}),
+                event("general_enthusiasm", {...})
+            ]
+        }),
+        choice("Promise economic reform", {
+            unlocks: [
+                event("privatization_wave", {...})
+            ]
+        })
+    ]
+})
+```
+
+**Pattern for "Early Events":**
+- `forceAddAtStart: true` - Guaranteed to be in starting deck
+- `timeGate: { maxYear: 1 }` - Disappears after Year 1 (turn 4)
+- Up to 4 choices that each spawn different storylines
+
+## Event Lifecycle & Trigger Matrix ⭐ NEW v2.2
+
+Understanding when events can be added or removed is crucial for designing responsive storylines.
+
+### The Two Trigger Points
+
+| Trigger | Can ADD events | Can REMOVE events |
+|---------|----------------|-------------------|
+| **Event is DRAWN** | ❌ No | ✅ Yes (exclusive siblings) |
+| **Choice is MADE** | ✅ Yes | ✅ Yes |
+
+**Drawing is passive** (fate determines outcome), **choosing is active** (player shapes consequences).
+
+### Complete Deck Modification Matrix
+
+| What happens | When | Where declared | Example |
+|--------------|------|----------------|---------|
+| Add events to deck | Choice made | `unlocks: []` or `unlocksExclusive: []` | Spawn consequences |
+| Remove specific events | Choice made | `terminates: []` | Block alternative paths |
+| Remove exclusive siblings | Event drawn | `unlocksExclusive: []` on parent | Only one outcome occurs |
+| Remove entity-dependent events | Character state changes | `requires: []` + `characterStates` | Character dies, related events gone |
+| Prevent draw (eligibility) | Every draw | `conditions: {}` | Stat/flag requirements not met |
+
+### Event State Categories
+
+The engine tracks every event in one of these states:
+
+1. **PASSED** - Event was drawn and player made a choice
+2. **AVAILABLE** - Event is in the deck, can be drawn
+3. **REACHABLE** - Event could still be unlocked through future choices
+4. **BLOCKED** - Event can NEVER be reached (paths are permanently closed)
+
+### Example: Complete Prisoner Storyline
+
+```javascript
+// Parent event with exclusive outcomes
+choice("Throw him in prison", {
+    effects: { 
+        flags: { prisoner_arrested: true },
+        characterStates: { prisoner_X: "imprisoned" }
+    },
+    
+    // Parallel: These will all eventually happen
+    unlocks: [
+        event("prison_conditions_criticized", {...}),
+        event("family_appeals_to_west", {...})
+    ],
+    
+    // Exclusive: Only ONE of these will happen
+    unlocksExclusive: [
+        event("prisoner_dies_in_custody", {
+            requires: ["prisoner_X"],
+            choices: [
+                choice("Cover it up", {
+                    effects: { characterStates: { prisoner_X: "dead" } }
+                    // ↑ This triggers cascade: removes all events requiring prisoner_X
+                })
+            ]
+        }),
+        event("prisoner_escapes", {
+            requires: ["prisoner_X"],
+            choices: [...]
+        }),
+        event("prisoner_hunger_strike", {
+            requires: ["prisoner_X"],
+            choices: [...]
+        })
+    ]
+})
+```
+
+**What happens:**
+1. Player chooses "Throw him in prison"
+2. Deck gets: `prison_conditions_criticized`, `family_appeals_to_west`, `prisoner_dies_in_custody`, `prisoner_escapes`, `prisoner_hunger_strike`
+3. Random draw picks `prisoner_dies_in_custody`
+4. **Automatic**: `prisoner_escapes` and `prisoner_hunger_strike` are removed (exclusive siblings)
+5. Player chooses "Cover it up"
+6. **Cascade**: Any other events with `requires: ["prisoner_X"]` are removed (he's dead)
 
 ## Storylines
 

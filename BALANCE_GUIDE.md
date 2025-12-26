@@ -1,8 +1,8 @@
 # Balance Guide
 
 > **Status**: Living Document
-> **Last Updated**: Dec 1, 2025
-> **Based On**: `reports/balance-2025-12-01T19-42-30.json`, `reports/simulate-2025-12-01T19-42-30.json`
+> **Last Updated**: Dec 25, 2025
+> **Based On**: Latest simulation runs
 
 This guide bridges the gap between our narrative ideals (see `WRITING_GUIDE.md`) and the mathematical reality of the game engine. It provides actionable data for tuning events to ensure the game is challenging, fair, and fun.
 
@@ -10,17 +10,22 @@ This guide bridges the gap between our narrative ideals (see `WRITING_GUIDE.md`)
 
 ## 1. Event Content Summary
 
-**Total Events: 39**
+**Total Events: 82** *(as of Dec 25, 2025)*
 
-| File | Count | Theme |
-|------|-------|-------|
-| `events_war_military.js` | 9 | War, invasion, military coups |
-| `events_sanctions_international.js` | 7 | Sanctions, diplomacy, trade wars |
-| `events_energy_pipeline.js` | 6 | Gas exports, price shocks, infrastructure |
-| `events_succession_power.js` | 6 | Health crises, heirs, internal power struggles |
-| `events_social_movements.js` | 5 | Protests, opposition, media control |
-| `events_domestic_crisis.js` | 4 | Economy, shortages, disasters |
-| `events_misc.js` | 2 | Random flavor events |
+| Storyline File | Theme |
+|----------------|-------|
+| `war-invasion.storyline.js` | War, invasion, military operations |
+| `sanctions-spiral.storyline.js` | Sanctions, diplomacy, trade wars |
+| `energy-pipeline.storyline.js` | Gas exports, price shocks, infrastructure |
+| `succession-crisis.storyline.js` | Health crises, heirs, power struggles |
+| `popular-uprising.storyline.js` | Protests, opposition, media control |
+| `domestic-crisis.storyline.js` | Economy, shortages, disasters |
+| `religious-revival.storyline.js` | Church, traditionalism, moral crusades |
+| `shadow-war.storyline.js` | Intelligence, covert ops, espionage |
+| `early-game-agenda.storyline.js` | Opening moves, faction alignment |
+| `common.storyline.js` | Pacing events, standalone flavor |
+
+Run `node tools/analyze.js` for current event counts per storyline.
 
 ---
 
@@ -73,15 +78,7 @@ These events appear most frequently in the final 3 turns before a game over:
 
 ## 4. Effect Magnitude Reference
 
-When designing events, use these ranges.
-
-### Statistical Norms (Per Choice)
-| Stat | Current Mean | Target Mean | Note |
-|------|--------------|-------------|------|
-| **Personal Wealth** | +6.0 | +5.0 | Slightly generous. |
-| **Treasury** | -19.4 | -25.0 | Costs are rising towards target, but still a bit low. |
-| **Elite** | -1.1 | -2.0 | Elite loyalty is too stable; needs more volatility. |
-| **Anger** | +3.2 | +3.0 | **Perfect**. Anger gain is right on target. |
+When designing events, use these ranges as a guide for effect magnitudes.
 
 ### Scale Reference
 | Magnitude | Wealth (B) | Treasury (B) | Elite/Anger (%) |
@@ -173,11 +170,13 @@ node tools/balance.js
 ### Step 2: Simulation
 Run 1000 games to see how the meta shifts.
 ```bash
-node tools/simulate.js 1000
+node tools/simulate.js
 ```
 *Look for*:
-- **Avg Turns**: Should be 40-60 for Random/Greedy, 80-120 for Balanced.
-- **Death Causes**: Should be a healthy mix (~40% Revolution, ~40% Elite Revolt, ~20% Bankruptcy). *Currently skewing 85% Revolution.*
+- **Avg Turns**: Compare across strategies (random, greedy, conservative, balanced)
+- **Death Causes**: Check for variety - if one cause dominates heavily, investigate
+- **Event Frequency**: Early-game events should appear in ~50% of games each
+- **quiet_quarter**: Should appear 2-4 times per game, not 100+
 
 ---
 

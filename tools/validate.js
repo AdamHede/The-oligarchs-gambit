@@ -7,16 +7,18 @@
  */
 
 import { validateAllEvents } from '../events/schema.js';
-import ALL_EVENTS from '../events/index.js';
+import { allStorylines } from '../storylines/index.js';
+import { compileStorylines, getEventsArray } from '../engine/storyline-dsl.js';
 import { fileURLToPath } from 'url';
 import { resolve } from 'path';
 
 /**
- * Loads all events from the events index
+ * Loads all events from storylines
  */
 function loadAllEvents() {
     try {
-        return ALL_EVENTS;
+        const registry = compileStorylines(allStorylines);
+        return getEventsArray(registry);
     } catch (error) {
         console.error('Error loading events:', error.message);
         return [];
@@ -36,7 +38,7 @@ function main() {
     console.log(`   Loaded ${events.length} events\n`);
 
     if (events.length === 0) {
-        console.log('⚠️  No events found. Add events to events/index.js\n');
+        console.log('⚠️  No events found. Check storylines in storylines/\n');
         process.exit(0);
     }
 
