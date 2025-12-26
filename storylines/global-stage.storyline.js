@@ -35,13 +35,13 @@ export default defineStoryline({
         event("western_accord_first_offer", {
             title: "The IMF Package",
             description: "Ambassador Morrison and Commissioner Braun present the offer: $40 billion credit line, debt restructuring, technology transfer agreements. The conditions are... extensive. Court reforms. Press freedom. 'Just procedural,' Morrison says. Braun looks uncomfortable. Your oligarchs are checking their London properties.",
-            
+
             weight: 15,
             rarity: "rare",
             onceOnly: true,
             characterId: "ambassador_morrison",
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "western_accord_ally"
             },
@@ -98,13 +98,13 @@ export default defineStoryline({
         event("western_reform_demands", {
             title: "The Reform Agenda",
             description: "The Western package requires 'structural reforms.' Independent judiciary. Free press. Opposition allowed to register parties. Your advisors translate: give up control. Morrison insists these are 'standard conditions.' Your oligarchs are panicking—their British lawyers are on speed dial.",
-            
+
             weight: 12,
             rarity: "rare",
             onceOnly: true,
             characterId: "ambassador_morrison",
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "western_accord_ally"
             },
@@ -155,12 +155,12 @@ export default defineStoryline({
         event("western_relationship_improves", {
             title: "The Thaw",
             description: "Your token gestures have been noted. Braun signals that the EU might ease some restrictions. American businesses are inquiring about investment. Shell wants back in. Siemens is calling. But the hardliners at home are furious—you're showing weakness to the West.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "genuine_western_reforms"
             },
@@ -200,12 +200,12 @@ export default defineStoryline({
         event("western_relationship_cools", {
             title: "The Cold Shoulder",
             description: "Morrison's calls come less frequently. Braun is 'unavailable.' The EU is 'reassessing' the relationship. Western media runs increasingly hostile stories. You're not in the club—and they're making sure you know it.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "rejected_imf_conditions"
             },
@@ -243,13 +243,13 @@ export default defineStoryline({
         event("western_pressure_begins", {
             title: "The Human Rights Report",
             description: "Claire Whitfield's NGO releases its annual report. Your country is featured prominently: political prisoners, disappeared journalists, suspicious deaths. CNN runs it for three days. Morrison asks for 'clarification.' Braun looks away. Your press secretary calls it 'fabrication.'",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             characterId: "claire_whitfield",
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "global_stage_active"
             },
@@ -297,12 +297,12 @@ export default defineStoryline({
         event("western_inspection_disaster", {
             title: "The Inspection Goes Wrong",
             description: "You invited Western inspectors. They found things. The report is devastating: secret prisons, torture evidence, documented disappearances. Claire Whitfield is doing a victory lap on CNN. Morrison says he's 'deeply troubled.'",
-            
+
             weight: 0,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "allowed_inspection"
             },
@@ -341,12 +341,12 @@ export default defineStoryline({
         event("western_sanctions_begin", {
             title: "The First Sanctions",
             description: "The EU announces 'targeted sanctions' against 'individuals responsible for human rights violations.' Your personal accounts in London are frozen. Your daughter can't finish her degree at Oxford. The oligarchs are next. Their yachts are suddenly very interesting to Western authorities.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "global_stage_active"
             },
@@ -394,12 +394,12 @@ export default defineStoryline({
         event("western_investment_wave", {
             title: "The Money Arrives",
             description: "Western investment is flowing. Shell, BP, Siemens all want in. Your economy is stabilizing. But they want guarantees—contracts that can't be unilaterally changed, courts that follow law. The strings multiply with every dollar.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "western_accord_ally"
             },
@@ -448,12 +448,12 @@ export default defineStoryline({
         event("western_escalation_spiral", {
             title: "The New Cold War",
             description: "Relations are collapsing. Full sanctions, diplomatic expulsions, frozen assets, travel bans. Your oligarchs are screaming. Western companies are fleeing. Morrison calls to say he's being recalled. 'We tried,' he says. 'We really tried.'",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "global_stage_active"
             },
@@ -499,12 +499,12 @@ export default defineStoryline({
         event("western_back_channel", {
             title: "The Secret Talks",
             description: "A former European prime minister arrives quietly at your dacha. He represents 'certain interests' who want to avoid complete breakdown. A deal might be possible—sanctions relief for specific concessions. But it would have to stay secret.",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "global_stage_active"
             },
@@ -542,12 +542,13 @@ export default defineStoryline({
         event("western_final_choice", {
             title: "The Atlantic Question",
             description: "Years have passed. The Western relationship has defined your reign. Now a moment of clarity: integrate fully and accept their rules, or break permanently and accept the consequences. There is no middle ground left. Morrison is long gone. Braun sits across from you, exhausted.",
-            
+
             weight: 8,
-            rarity: "legendary",
+            weight: 8,
+            rarity: "rare",
             onceOnly: true,
-            storylines: ['global-stage'],
-            
+            // storylines: ['global-stage'],
+
             conditions: {
                 flag: "western_accord_ally"
             },
@@ -617,12 +618,12 @@ export default defineStoryline({
         event("western_sanctions_escalate", {
             title: "The Full Package",
             description: "You chose differently, and the West noticed. Full sectoral sanctions. Oil technology banned. Banking restrictions. SWIFT access threatened. They're trying to crush you economically. Your Chinese friends are watching with interest.",
-            
+
             weight: 12,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "western_accord_adversary"
             },
@@ -668,12 +669,12 @@ export default defineStoryline({
         event("western_asset_hunt", {
             title: "The Oligarch Squeeze",
             description: "Western governments are hunting oligarch assets. Yachts seized in Monaco. Mansions frozen in London. Villas in Sardinia confiscated. Your friends are panicking—their money is trapped abroad. Some blame you. Some are quietly switching sides.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "western_accord_adversary"
             },
@@ -704,7 +705,7 @@ export default defineStoryline({
         event("western_media_war", {
             title: "The Documentary",
             description: "BBC releases a two-hour documentary about your corruption. Leaked documents, hidden camera footage, interviews with defectors. Watched by 30 million people. Your palace. Your accounts. Your mistresses. Your press secretary calls it 'lies.' Nobody believes him.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
@@ -739,7 +740,7 @@ export default defineStoryline({
         event("western_pressure_resumes", {
             title: "The Pressure Returns",
             description: "After a brief thaw, Western pressure is back. New sanctions proposals. ICC investigations. Your oligarchs' children expelled from British schools. The message is clear: there will be no normalization without real change.",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
@@ -777,12 +778,12 @@ export default defineStoryline({
         event("western_hybrid_war", {
             title: "The Shadow War",
             description: "Your intelligence services are busy. Election interference in three Western countries. Ransomware attacks on hospitals. Disinformation flooding social media. The West knows it's you. They can't prove it publicly—yet. Plausible deniability is wearing thin.",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "hybrid_war_west"
             },
@@ -826,13 +827,13 @@ export default defineStoryline({
         event("eastern_embrace_first_offer", {
             title: "The Belt and Road Invitation",
             description: "Ambassador Zhang invites you to join the Belt and Road Initiative. $60 billion in infrastructure investment. High-speed rail, ports, digital networks. No political conditions. 'We don't interfere in internal affairs,' he smiles. Li Mei hands you the contract—273 pages of dense Chinese legalese.",
-            
+
             weight: 15,
             rarity: "rare",
             onceOnly: true,
             characterId: "ambassador_zhang",
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "eastern_embrace_ally"
             },
@@ -887,12 +888,12 @@ export default defineStoryline({
         event("eastern_infrastructure_boom", {
             title: "The Construction Sites",
             description: "Chinese workers are everywhere. New rail lines, ports, highways appearing across your country. Your people are impressed. But you notice: the workers are Chinese. The materials are Chinese. The managers are Chinese. Where is the technology transfer? Where are the local jobs?",
-            
+
             weight: 12,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "belt_road_full"
             },
@@ -930,13 +931,13 @@ export default defineStoryline({
         event("eastern_tough_negotiations", {
             title: "The Difficult Partner",
             description: "Ambassador Zhang's smile becomes fixed. You want better terms? Technology transfer? Local hiring? Li Mei produces spreadsheets showing what you owe, what you've received, what the alternatives cost. 'Partners should be reasonable,' Zhang says. It doesn't sound like a suggestion.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             characterId: "ambassador_zhang",
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "eastern_embrace_ally"
             },
@@ -975,12 +976,12 @@ export default defineStoryline({
         event("eastern_selective_partnership", {
             title: "The Limited Engagement",
             description: "You've accepted some Chinese projects, rejected others. Ambassador Zhang is polite but cool. Li Mei's visits become less frequent. The grand infrastructure dreams are now modest upgrades. But you've kept more control—for now.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "eastern_embrace_ally"
             },
@@ -1016,12 +1017,12 @@ export default defineStoryline({
         event("eastern_patience_tested", {
             title: "The Waiting Game",
             description: "Beijing is patient—but not infinitely. Your delays reviewing contracts have been noted. Other countries are signing deals. The Belt and Road moves forward without you. Ambassador Zhang suggests 'time-limited offers.' Li Mei stops calling entirely.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "eastern_embrace_ally"
             },
@@ -1058,13 +1059,13 @@ export default defineStoryline({
         event("eastern_military_offer", {
             title: "The Defense Package",
             description: "General Chen presents military cooperation: advanced fighters, S-400 air defense systems, joint exercises in the Pacific. Your generals are excited—this is equipment the West would never sell you. But the terms include 'basing rights' and 'intelligence sharing protocols.'",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             characterId: "general_chen",
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "eastern_embrace_ally"
             },
@@ -1110,12 +1111,12 @@ export default defineStoryline({
         event("eastern_friction_begins", {
             title: "The Local Pushback",
             description: "Your demands for local hiring are causing problems. Chinese contractors are threatening to leave. Projects are delayed. Li Mei presents a cost analysis: your conditions add 40% to every project. 'We only ask for efficiency,' she says. Translation: do it our way.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "eastern_embrace_ally"
             },
@@ -1155,13 +1156,13 @@ export default defineStoryline({
         event("eastern_debt_accumulates", {
             title: "The Repayment Schedule",
             description: "Li Mei requests a meeting. The infrastructure loans are coming due. $8 billion this year. Your treasury doesn't have it. She has suggestions: asset transfers, port concessions, mining rights. 'Just restructuring,' she says. The word 'restructuring' echoes in the room.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             characterId: "li_mei",
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "eastern_embrace_ally"
             },
@@ -1204,12 +1205,12 @@ export default defineStoryline({
         event("eastern_debt_trap_springs", {
             title: "The Port Concession",
             description: "To service the debt, you've signed over operating rights to your main Black Sea port. 99-year lease. Chinese companies now control your maritime trade. The opposition calls it 'selling the country.' Western media runs 'debt trap diplomacy' stories. They're not entirely wrong.",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "chinese_asset_transfers"
             },
@@ -1249,7 +1250,7 @@ export default defineStoryline({
         event("eastern_negotiations_tense", {
             title: "The Hard Bargaining",
             description: "You pushed back on debt restructuring. Ambassador Zhang is no longer smiling. Li Mei's spreadsheets now include 'penalty clauses' and 'acceleration provisions.' Chinese state media runs an editorial about 'ungrateful partners.' The temperature has dropped considerably.",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
@@ -1286,7 +1287,7 @@ export default defineStoryline({
         event("eastern_relationship_crisis", {
             title: "The Freeze",
             description: "Beijing has had enough. New loans suspended. Existing projects 'under review.' Your commodities exports face 'quality inspections' that take weeks. Ambassador Zhang is recalled 'for consultations.' You're learning what it means to disappoint China.",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
@@ -1323,7 +1324,7 @@ export default defineStoryline({
         event("eastern_relationship_cools", {
             title: "The Distant Dragon",
             description: "Relations with China have cooled. Ambassador Zhang is polite but distant. Li Mei's infrastructure offers are smaller, with less favorable terms. You're no longer the priority partner. Not an enemy—just... less interesting.",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
@@ -1358,13 +1359,13 @@ export default defineStoryline({
         event("eastern_surveillance_request", {
             title: "The Data Sharing Agreement",
             description: "Ambassador Zhang raises a 'technical matter': your Chinese-built telecommunications networks have certain... capabilities. Beijing would like access to the data. For 'security cooperation.' Your FSB chief looks alarmed—sharing intelligence with China was not in the plan.",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
             characterId: "ambassador_zhang",
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "eastern_embrace_ally"
             },
@@ -1401,12 +1402,12 @@ export default defineStoryline({
         event("eastern_junior_partner", {
             title: "The Beijing Summit",
             description: "You're invited to Beijing. State dinner, honor guard, the works. But you notice: you're seated below several African leaders. Your trade minister is ignored in negotiations. Photo ops show you as supplicant. You're not a partner—you're a client state.",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "eastern_embrace_ally"
             },
@@ -1443,12 +1444,12 @@ export default defineStoryline({
         event("eastern_escape_attempt", {
             title: "The Pivot Back",
             description: "You've decided China has too much leverage. Time to balance. You're reaching out to the West, the Third Way countries, anyone. But Beijing notices. Li Mei's calls become colder. Trade inspectors find 'problems' with your exports. Belt and Road projects slow down. Are you trapped?",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "eastern_embrace_ally"
             },
@@ -1485,12 +1486,12 @@ export default defineStoryline({
         event("eastern_final_choice", {
             title: "The Eastern Question",
             description: "Years have passed. China has become your largest creditor, trading partner, weapons supplier. They've asked for something new: a formal mutual defense treaty. This would make the relationship permanent—and visible. Ambassador Zhang sits patiently, waiting for your answer.",
-            
+
             weight: 8,
-            rarity: "legendary",
+            rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "eastern_embrace_ally"
             },
@@ -1552,12 +1553,12 @@ export default defineStoryline({
         event("eastern_quiet_undermining", {
             title: "The Currency Attack",
             description: "You aligned with the West, and China noticed. Your currency is under pressure—unusual selling patterns that trace back to Chinese state banks. Deniable, but effective. Your Finance Minister is panicking. The ruble is falling faster than interest rates can rise.",
-            
+
             weight: 12,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "eastern_embrace_adversary"
             },
@@ -1598,12 +1599,12 @@ export default defineStoryline({
         event("eastern_neighbor_support", {
             title: "The Border Dispute",
             description: "China is suddenly very interested in your neighbors' territorial claims. Old disputes resurface. Border incidents increase. Your neighbors are getting new weapons, new rhetoric, new confidence. Beijing isn't threatening you directly—just making sure you feel surrounded.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "eastern_embrace_adversary"
             },
@@ -1634,12 +1635,12 @@ export default defineStoryline({
         event("eastern_opportunist_approach", {
             title: "The Open Door",
             description: "China isn't your ally, but they're not hostile either. Ambassador Zhang maintains contact. Small deals continue. Li Mei offers 'friendship terms' on infrastructure. They're waiting—for you to fail, for you to need them, for the right moment. Patient as always.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "eastern_embrace_opportunist"
             },
@@ -1683,13 +1684,13 @@ export default defineStoryline({
         event("third_way_first_offer", {
             title: "The Alternative Summit",
             description: "Mehmet Yilmaz invites you to a summit in Istanbul. Turkey, India, Saudi Arabia, UAE, Indonesia, South Africa—countries tired of choosing between Washington and Beijing. They're building parallel institutions. New development bank, alternative payment systems, defense cooperation. 'A new world order,' he says, without irony.",
-            
+
             weight: 15,
             rarity: "rare",
             onceOnly: true,
             characterId: "mehmet_yilmaz",
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "third_way_ally"
             },
@@ -1741,12 +1742,12 @@ export default defineStoryline({
         event("third_way_institution_building", {
             title: "The New Bank",
             description: "The new development bank is being structured. Where to headquarter it? Everyone wants it. You propose your capital. It would mean prestige—and scrutiny. The Saudis have more money. The Indians have more people. Yilmaz has more enthusiasm.",
-            
+
             weight: 12,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "third_way_founding_member"
             },
@@ -1785,12 +1786,12 @@ export default defineStoryline({
         event("third_way_testing_waters", {
             title: "The Observer Status",
             description: "You've joined as an observer. Less commitment, less influence. The full members make decisions without you. Yilmaz is encouraging—'join us fully when you're ready.' Prince Khalid is less patient—'observers don't get investments.'",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "third_way_ally"
             },
@@ -1821,12 +1822,12 @@ export default defineStoryline({
         event("third_way_watching_waiting", {
             title: "The Sidelines",
             description: "You attended without committing. The summit continues without you. Deals are signed. Partnerships formed. You're watching from the margins. Yilmaz shrugs—'the door is always open.' Prince Khalid has stopped calling.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "third_way_ally"
             },
@@ -1860,13 +1861,13 @@ export default defineStoryline({
         event("third_way_currency_deal", {
             title: "The Ruble-Rupee Swap",
             description: "India proposes bilateral currency swaps—trade in rupees and rubles, bypassing the dollar. It would reduce sanctions vulnerability. But it also means accepting Indian rupees, which aren't exactly stable either. Minister Sharma is optimistic. Your central banker is skeptical.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             characterId: "priya_sharma",
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "third_way_ally"
             },
@@ -1903,12 +1904,12 @@ export default defineStoryline({
         event("third_way_payment_systems", {
             title: "The SWIFT Alternative",
             description: "The coalition is building an alternative to SWIFT. Transactions that can't be blocked by Washington. Your banks are excited. But the system is clunky, coverage is limited, and nobody trusts anyone else's currency. Progress is slow.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "currency_diversification"
             },
@@ -1944,12 +1945,12 @@ export default defineStoryline({
         event("third_way_leadership_challenge", {
             title: "The Chair Competition",
             description: "You pushed for the bank headquarters and won—barely. Now everyone wants something. India wants the next chairmanship. Saudi Arabia wants veto power on investments. Turkey wants preferential loan terms. Leadership means managing jealousy.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "third_way_bank_host"
             },
@@ -1987,13 +1988,13 @@ export default defineStoryline({
         event("third_way_unreliable_partners", {
             title: "The Turkish Problem",
             description: "Mehmet Yilmaz's government is in crisis. Inflation at 80%. Currency collapsing. The partnership deals you signed are now worthless. Turkey can't deliver, can't pay, can't even show up to meetings. Some coalition.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             characterId: "mehmet_yilmaz",
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "third_way_ally"
             },
@@ -2033,12 +2034,12 @@ export default defineStoryline({
         event("third_way_competing_interests", {
             title: "The Kashmir Question",
             description: "India and Pakistan both want you to take sides on Kashmir. The Saudis are neutral. The Turks support Pakistan. Indonesia abstains. Your 'coalition' is dissolving into bilateral squabbles. Nobody agrees on anything except opposing the West.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "third_way_ally"
             },
@@ -2082,13 +2083,13 @@ export default defineStoryline({
         event("third_way_saudi_strings", {
             title: "The Prince's Price",
             description: "Prince Khalid is willing to invest $50 billion—but he wants something specific: your support against Iran, your silence on Yemen, your public alignment with Saudi positions. His money isn't as string-free as advertised. The gold comes with chains.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             characterId: "prince_khalid",
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "third_way_ally"
             },
@@ -2127,12 +2128,12 @@ export default defineStoryline({
         event("third_way_sanctions_evasion", {
             title: "The Workarounds",
             description: "Your Third Way network is useful for one thing: evading Western sanctions. Ships reflagged in Turkey. Payments routed through UAE. Goods relabeled in India. It's working—sort of. But it's expensive, unreliable, and everyone takes a cut.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "third_way_ally"
             },
@@ -2167,7 +2168,7 @@ export default defineStoryline({
         event("third_way_funding_crisis", {
             title: "The Empty Treasury",
             description: "You refused the Saudi strings, but now you have a problem: the coalition offers moral support, not hard cash. Turkey is broke. India is careful. The development bank has no money to lend. Your own reserves are dwindling.",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
@@ -2209,12 +2210,12 @@ export default defineStoryline({
         event("third_way_coalition_frays", {
             title: "The Cracks Widen",
             description: "The coalition is fracturing. Saudi Arabia and Turkey aren't speaking. India is making deals with the US. Indonesia has lost interest. Your grand alternative to the superpowers is looking more like a debating club.",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "third_way_ally"
             },
@@ -2248,12 +2249,12 @@ export default defineStoryline({
         event("third_way_coalition_collapses", {
             title: "The Empty Summit",
             description: "The Third Way Summit in Dubai. Half the leaders don't show up. Those who come are distracted, negotiating side deals, checking their phones. The 'new world order' looks a lot like the old chaos. Yilmaz gives a defiant speech. Nobody listens.",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "third_way_ally"
             },
@@ -2287,12 +2288,12 @@ export default defineStoryline({
         event("third_way_playing_all_sides", {
             title: "The Triple Cross",
             description: "You discover your 'partners' have been negotiating with your enemies. Turkey cut a deal with NATO. Saudi Arabia is talking to Beijing about bypassing you. India is cozying up to Washington. Everyone is hedging. Everyone except you.",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "third_way_ally"
             },
@@ -2328,12 +2329,12 @@ export default defineStoryline({
         event("third_way_final_choice", {
             title: "The Independence Question",
             description: "Years of trying to build an alternative. Some successes, many failures. You're not dependent on the West or China—but you're not exactly independent either. Just... alone. The coalition exists on paper. Real power lies elsewhere. Was it worth it?",
-            
+
             weight: 8,
-            rarity: "legendary",
+            rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "third_way_ally"
             },
@@ -2384,12 +2385,12 @@ export default defineStoryline({
         event("third_way_opportunist_approach", {
             title: "The Fair-Weather Friends",
             description: "The Third Way countries are friendly when it's convenient. They'll trade, they'll talk, they'll attend summits. But when you need real support—sanctions relief, military aid, diplomatic cover—they're suddenly 'studying the situation.' Minister Sharma sends regrets.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "third_way_opportunist"
             },
@@ -2424,12 +2425,12 @@ export default defineStoryline({
         event("multi_vector_chaos", {
             title: "The Hall of Mirrors",
             description: "You're playing everyone—and everyone knows it. The West is suspicious. China is waiting to pounce. Your Third Way partners are making their own deals. Every meeting is a negotiation. Every handshake hides a dagger. You're not in control. You're just surrounded.",
-            
+
             weight: 15,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "global_alignment"
             },
@@ -2463,12 +2464,12 @@ export default defineStoryline({
         event("western_opportunist_approach", {
             title: "The Back Door Opens",
             description: "Despite publicly condemning you, Western business interests are... curious. Through intermediaries, they offer deals. Lucrative ones. They don't care about democracy—they care about oil contracts. But if you accept, you're in their pocket.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "western_accord_opportunist"
             },
@@ -2507,12 +2508,12 @@ export default defineStoryline({
         event("inflation_crisis_deepens", {
             title: "The Bread Lines Form",
             description: "Whatever your geopolitical choice, the domestic economy is suffering. Inflation at 25%. Bread prices doubled. Currency down 40%. Your foreign policy isn't filling stomachs. People are getting angry. Babushkas with empty baskets. Mothers counting kopecks.",
-            
+
             weight: 12,
             rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "global_stage_active"
             },
@@ -2551,12 +2552,12 @@ export default defineStoryline({
         event("currency_collapse_moment", {
             title: "Black Monday",
             description: "The ruble falls 20% in one day. Banks are closed. ATM lines snake around blocks. Your Finance Minister is ashen. This is the moment—every foreign relationship, every trade deal, every loan is being tested. The world is watching.",
-            
+
             weight: 10,
-            rarity: "legendary",
+            rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
-            
+
             conditions: {
                 flag: "global_stage_active"
             },
@@ -2609,7 +2610,7 @@ export default defineStoryline({
         event("foreign_creditors_call", {
             title: "The Bills Come Due",
             description: "All your foreign creditors want their money simultaneously. Western banks, Chinese development funds, Gulf investment vehicles. Everyone is calling. Your reserves won't cover it. The Finance Minister has stopped sleeping.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
@@ -2655,9 +2656,9 @@ export default defineStoryline({
         event("geopolitical_reckoning", {
             title: "The Price of Independence",
             description: "Your choices have consequences. The world has changed around you. You must assess: was it worth it? Who are your real friends? What have you given up? The map on your wall shows allies, enemies, and the vast gray spaces in between.",
-            
+
             weight: 8,
-            rarity: "legendary",
+            rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
 
@@ -2718,9 +2719,9 @@ export default defineStoryline({
         event("global_isolation", {
             title: "The Hermit Kingdom",
             description: "All doors have closed. West hostile. East disappointed. Third Way scattered. You've achieved independence through isolation. The price is growing clear. Your economy shrinks. Your friends vanish. But at least you answer to no one. Small comfort in an empty room.",
-            
+
             weight: 8,
-            rarity: "legendary",
+            rarity: "rare",
             onceOnly: true,
             storylines: ['global-stage'],
 
@@ -2763,7 +2764,7 @@ export default defineStoryline({
         event("global_rebalancing", {
             title: "The New Equilibrium",
             description: "After the chaos, you're reassessing. Old alliances have failed. New opportunities emerge. The world has changed—and so have you. Time to rebuild relationships, one deal at a time. Ambassador Morrison has been replaced. Ambassador Zhang is patient. The Third Way still waits.",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,

@@ -18,19 +18,20 @@ const loyaltyApparatusStoryline = defineStoryline({
         borderColor: '#2F4F4F',  // Dark Slate Gray
         accentColor: '#778899'   // Light Slate Gray
     },
-    
+
     tree: [
         // ================================================================
         // ACT 1: THE WATCHERS (Depth 1-2)
         // ================================================================
-        
+
         event("loyalty_the_dossiers", {
             title: "The Director's Files",
             description: "Director Sokolov of the Security Service arrives at your dacha with a leather briefcase. His eyes are pale, unblinking. Inside the case: dossiers on every person in your inner circle. Affairs. Debts. Secret meetings. Embarrassing photos. 'Knowledge is protection,' he says. 'Would you like to know what I know?'",
             weight: 0,  // Triggered only
+            rarity: 'common',
             storylines: ['loyalty-apparatus'],
             characterId: "sokolov",
-            
+
             choices: [
                 choice("'Tell me everything. Spare no details.'", {
                     effects: {
@@ -47,7 +48,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_first_target")
                     ]
                 }),
-                
+
                 choice("'Just the serious threats. I don't need gossip.'", {
                     effects: {
                         stats: {
@@ -62,7 +63,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_first_target")
                     ]
                 }),
-                
+
                 choice("'Keep your files. I trust my people.'", {
                     effects: {
                         stats: {
@@ -77,7 +78,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_trust_tested")
                     ]
                 }),
-                
+
                 choice("'What do you have on yourself, Director?'", {
                     effects: {
                         stats: {
@@ -94,13 +95,14 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         event("loyalty_first_target", {
             title: "The Suspicious Oligarch",
             description: "Sokolov's files reveal something troubling: one of your oligarch friends, Konstantin, has been meeting with Western diplomats. Frequently. In private. In Vienna. It could be business - he has investments there. Or it could be something else entirely.",
             weight: 0,
+            rarity: 'common',
             storylines: ['loyalty-apparatus'],
-            
+
             choices: [
                 choice("'Surveillance. I want to know everything he says and does.'", {
                     effects: {
@@ -116,7 +118,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_surveillance_results")
                     ]
                 }),
-                
+
                 choice("'Confront him directly. Gauge his reaction.'", {
                     effects: {
                         stats: {
@@ -130,7 +132,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_confrontation_result")
                     ]
                 }),
-                
+
                 choice("'It's probably nothing. Leave it.'", {
                     effects: {
                         stats: {
@@ -145,7 +147,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_network_expansion")
                     ]
                 }),
-                
+
                 choice("'Arrest him. Send a message.'", {
                     effects: {
                         stats: {
@@ -169,16 +171,17 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         event("loyalty_trust_tested", {
             title: "The Betrayal",
             description: "You rejected Sokolov's dossiers. You trusted your people. Now you're paying for it. One of your inner circle has been caught - red-handed - passing information to a Western journalist. Your trust was misplaced.",
             weight: 4,
+            rarity: 'common',
             storylines: ['loyalty-apparatus'],
             conditions: {
                 flag: "dossiers_rejected"
             },
-            
+
             choices: [
                 choice("'I was wrong. Director Sokolov, show me everything.'", {
                     effects: {
@@ -195,7 +198,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_first_purge")
                     ]
                 }),
-                
+
                 choice("'This was one traitor. I won't become paranoid.'", {
                     effects: {
                         stats: {
@@ -210,7 +213,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_network_expansion")
                     ]
                 }),
-                
+
                 choice("'Someone set me up. Investigate the investigation.'", {
                     effects: {
                         stats: {
@@ -226,14 +229,15 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         event("loyalty_sokolov_file", {
             title: "The Director's Secrets",
             description: "Sokolov barely blinks at your question. 'Of course I have a file on myself,' he says. 'Would you like to see it?' He opens it. The contents are... mundane. Too mundane. Either he's the only honest man in the Federation, or there's another file somewhere.",
             weight: 0,
+            rarity: 'common',
             storylines: ['loyalty-apparatus'],
             characterId: "sokolov",
-            
+
             choices: [
                 choice("'Very thorough. I appreciate your transparency.'", {
                     effects: {
@@ -243,7 +247,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_first_target")
                     ]
                 }),
-                
+
                 choice("'This is sanitized. Show me the real one.'", {
                     effects: {
                         stats: {
@@ -258,7 +262,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_parallel_investigation")
                     ]
                 }),
-                
+
                 choice("'Everyone has secrets, Director. Even you.'", {
                     effects: {
                         flags: {
@@ -272,13 +276,14 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         event("loyalty_surveillance_results", {
             title: "The Tapes",
             description: "The surveillance of Konstantin has produced results. He is indeed meeting with Western officials - but not as a traitor. He's trying to negotiate his family's escape route if 'things go badly.' He's preparing for your fall. Disloyal? Yes. Treasonous? That's a matter of interpretation.",
             weight: 0,
+            rarity: 'common',
             storylines: ['loyalty-apparatus'],
-            
+
             choices: [
                 choice("'Preparing for my fall is treason. Arrest him.'", {
                     effects: {
@@ -294,7 +299,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_first_purge")
                     ]
                 }),
-                
+
                 choice("'Understandable, but unacceptable. Seize his passport.'", {
                     effects: {
                         stats: {
@@ -308,7 +313,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_network_expansion")
                     ]
                 }),
-                
+
                 choice("'Keep watching. He might lead us to others.'", {
                     effects: {
                         stats: {
@@ -323,7 +328,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_network_expansion")
                     ]
                 }),
-                
+
                 choice("'I can use this. Summon him. Time for a private chat.'", {
                     effects: {
                         stats: {
@@ -339,13 +344,14 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         event("loyalty_confrontation_result", {
             title: "The Denial",
             description: "You confronted Konstantin about his meetings in Vienna. His reaction was... instructive. He denied nothing, admitted nothing, but his face told a story. 'Business opportunities,' he said smoothly. 'Nothing that concerns the state.' He's lying. But so is everyone, always.",
             weight: 0,
+            rarity: 'common',
             storylines: ['loyalty-apparatus'],
-            
+
             choices: [
                 choice("'I believe you. This matter is closed.'", {
                     effects: {
@@ -360,7 +366,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_network_expansion")
                     ]
                 }),
-                
+
                 choice("'I don't believe you. But I'll be watching.'", {
                     effects: {
                         flags: {
@@ -371,7 +377,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_network_expansion")
                     ]
                 }),
-                
+
                 choice("'You have 48 hours to explain yourself. Properly.'", {
                     effects: {
                         stats: {
@@ -387,18 +393,19 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         // ================================================================
         // ACT 2: THE PURGE BEGINS (Depth 2-3)
         // ================================================================
-        
+
         event("loyalty_network_expansion", {
             title: "The Eyes Multiply",
             description: "Director Sokolov proposes expanding the surveillance network. More informants embedded in every ministry. Better technology - imported from China, ironically. Deeper access to financial records, communications, even private homes. 'We can see everything,' he promises. 'For a price.'",
             weight: 5,
+            rarity: 'common',
             storylines: ['loyalty-apparatus'],
             characterId: "sokolov",
-            
+
             choices: [
                 choice("'Do it. Security is worth any cost.'", {
                     effects: {
@@ -415,7 +422,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_first_purge")
                     ]
                 }),
-                
+
                 choice("'Expand carefully. I don't want everyone paranoid.'", {
                     effects: {
                         stats: {
@@ -430,7 +437,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_first_purge")
                     ]
                 }),
-                
+
                 choice("'Focus on the elite only. Leave the public alone.'", {
                     effects: {
                         stats: {
@@ -445,7 +452,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_first_purge")
                     ]
                 }),
-                
+
                 choice("'You have enough power already, Director.'", {
                     effects: {
                         stats: {
@@ -462,13 +469,14 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         event("loyalty_first_purge", {
             title: "The Night of Long Shadows",
             description: "The evidence is clear - or clear enough. Three members of your inner circle have been meeting secretly. At a hunting lodge outside Moscow. Planning something. Maybe just complaining. Maybe dividing the spoils of your theoretical demise. Director Sokolov awaits your order. It's 2 AM.",
             weight: 4,
+            rarity: 'common',
             storylines: ['loyalty-apparatus'],
-            
+
             choices: [
                 choice("'Arrest them all. Tonight.'", {
                     effects: {
@@ -493,7 +501,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_aftermath")
                     ]
                 }),
-                
+
                 choice("'Just the ringleader. Scare the others.'", {
                     effects: {
                         stats: {
@@ -509,7 +517,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_aftermath")
                     ]
                 }),
-                
+
                 choice("'Exile, not arrest. I'm not a monster.'", {
                     effects: {
                         stats: {
@@ -524,7 +532,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_aftermath")
                     ]
                 }),
-                
+
                 choice("'Promote one of them. Break their alliance with reward.'", {
                     effects: {
                         stats: {
@@ -541,13 +549,13 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         event("loyalty_aftermath", {
             title: "The Morning After",
             description: "The purge is over - or at least this phase of it. The elite are shaken. Some are grateful it wasn't them. Others are terrified they're next. A few are already plotting revenge. The balance of power has shifted, but in which direction?",
             weight: 0,
             storylines: ['loyalty-apparatus'],
-            
+
             narrativeVariations: [
                 {
                     conditions: { flag: "purge_total" },
@@ -558,7 +566,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                     description: "Exile instead of prison. Some call it weakness. Others call it wisdom. The exiled men are bitter but alive, and they're talking to Western journalists about 'the regime's true nature.'"
                 }
             ],
-            
+
             choices: [
                 choice("'Good. Fear keeps them honest.'", {
                     effects: {
@@ -573,7 +581,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_innocent_mistake")
                     ]
                 }),
-                
+
                 choice("'Reassure the survivors. This was necessary but limited.'", {
                     effects: {
                         stats: {
@@ -587,7 +595,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_innocent_mistake")
                     ]
                 }),
-                
+
                 choice("'Perhaps I went too far. Make quiet amends.'", {
                     effects: {
                         stats: {
@@ -604,13 +612,13 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         event("loyalty_innocent_mistake", {
             title: "The Wrong Man",
             description: "New intelligence suggests a troubling possibility: one of the men you arrested may have been innocent. He wasn't plotting against you - he was planning a surprise birthday party for his wife. Wrong place, wrong time, wrong friends. Sokolov shrugs. 'Mistakes happen. In war, in governance.'",
             weight: 4,
             storylines: ['loyalty-apparatus'],
-            
+
             choices: [
                 choice("'Release him quietly. Compensate him generously.'", {
                     effects: {
@@ -626,7 +634,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_sokolov_power")
                     ]
                 }),
-                
+
                 choice("'Keep him locked up. Admitting error shows weakness.'", {
                     effects: {
                         stats: {
@@ -647,7 +655,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_sokolov_power")
                     ]
                 }),
-                
+
                 choice("'Find something. Everyone's guilty of something.'", {
                     effects: {
                         stats: {
@@ -668,7 +676,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_sokolov_power")
                     ]
                 }),
-                
+
                 choice("'This is Sokolov's failure. Reprimand him.'", {
                     effects: {
                         stats: {
@@ -685,18 +693,18 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         // ================================================================
         // ACT 3: THE MACHINE GROWS (Depth 3-4)
         // ================================================================
-        
+
         event("loyalty_sokolov_power", {
             title: "The Director's Reach",
             description: "Director Sokolov has become indispensable. He knows everything about everyone - including, presumably, you. Your personal intelligence chief (a different service, naturally) reports something troubling: Sokolov has been building his own network within the network. Loyalists who answer to him first, you second.",
             weight: 4,
             storylines: ['loyalty-apparatus'],
             characterId: "sokolov",
-            
+
             choices: [
                 choice("'He's loyal. I trust him.'", {
                     effects: {
@@ -712,7 +720,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_golden_circle_crossover")
                     ]
                 }),
-                
+
                 choice("'Monitor him. Carefully. Through separate channels.'", {
                     effects: {
                         stats: {
@@ -726,7 +734,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_sokolov_dossier")
                     ]
                 }),
-                
+
                 choice("'Reduce his authority. Divide the security services.'", {
                     effects: {
                         stats: {
@@ -741,7 +749,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_sokolov_confrontation")
                     ]
                 }),
-                
+
                 choice("'Preemptive move. Remove him before he moves against me.'", {
                     effects: {
                         stats: {
@@ -764,7 +772,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         event("loyalty_sokolov_resentment", {
             title: "The Director's Silence",
             description: "Since you blamed him - or limited his power - Sokolov has been... different. He still reports, still attends meetings, still maintains that pale-eyed stare. But the intelligence feels thinner. Less actionable. Is he holding back? Or have the threats simply diminished?",
@@ -777,7 +785,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                     { flag: "surveillance_limited" }
                 ]
             },
-            
+
             choices: [
                 choice("'Restore his authority. I need him at full capacity.'", {
                     effects: {
@@ -790,7 +798,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_golden_circle_crossover")
                     ]
                 }),
-                
+
                 choice("'Replace him. I need someone hungrier.'", {
                     effects: {
                         stats: {
@@ -805,7 +813,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_new_director")
                     ]
                 }),
-                
+
                 choice("'Investigate him. See what he's really doing.'", {
                     effects: {
                         stats: {
@@ -821,14 +829,14 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         event("loyalty_parallel_investigation", {
             title: "The Shadow File",
             description: "You ordered a parallel investigation into Director Sokolov. It took months, required foreign assets, and cost a fortune. But you have it now: the real dossier. The one Sokolov didn't want you to see.",
             weight: 0,
             storylines: ['loyalty-apparatus'],
             characterId: "sokolov",
-            
+
             choices: [
                 choice("Open it.", {
                     effects: {
@@ -840,7 +848,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_sokolov_dossier")
                     ]
                 }),
-                
+
                 choice("Burn it. Some things are better not knowing.", {
                     effects: {
                         stats: {
@@ -854,7 +862,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_golden_circle_crossover")
                     ]
                 }),
-                
+
                 choice("Keep it sealed. Insurance for later.", {
                     effects: {
                         flags: {
@@ -867,14 +875,14 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         event("loyalty_new_director", {
             title: "The New Watcher",
             description: "Sokolov is gone. His replacement, Director Ivanov, is younger, hungrier, and eager to prove himself. He promises loyalty, efficiency, and results. But he lacks Sokolov's experience, his network, his institutional knowledge. The transition period will be... vulnerable.",
             weight: 0,
             storylines: ['loyalty-apparatus'],
             characterId: "ivanov",
-            
+
             choices: [
                 choice("'Build your own team. Fresh start.'", {
                     effects: {
@@ -890,7 +898,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_golden_circle_crossover")
                     ]
                 }),
-                
+
                 choice("'Keep Sokolov's people. Learn from them.'", {
                     effects: {
                         stats: {
@@ -904,7 +912,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_golden_circle_crossover")
                     ]
                 }),
-                
+
                 choice("'Purge everything. Start from zero.'", {
                     effects: {
                         stats: {
@@ -927,11 +935,11 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         // ================================================================
         // CROSSOVER EVENTS
         // ================================================================
-        
+
         event("loyalty_golden_circle_crossover", {
             title: "The Corrupt Elite",
             description: "The surveillance network has uncovered something massive: systematic corruption among your oligarch friends. Hidden accounts totaling billions. Stolen state assets. Offshore empires built on embezzled funds. You could expose them, destroy them, purge the entire class. Or you could use this information differently.",
@@ -943,7 +951,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                     { flag: "purge_exposed_oligarchs", equals: false }
                 ]
             },
-            
+
             choices: [
                 choice("'Expose the corruption. Purge the thieves.'", {
                     effects: {
@@ -966,7 +974,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("golden_circle_the_exposure")
                     ]
                 }),
-                
+
                 choice("'Keep this information. Leverage is better than destruction.'", {
                     effects: {
                         stats: {
@@ -980,7 +988,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_succession_crossover")
                     ]
                 }),
-                
+
                 choice("'Everyone steals. It's how the system works. File it away.'", {
                     effects: {
                         stats: {
@@ -996,7 +1004,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         event("loyalty_succession_crossover", {
             title: "The Heir's Network",
             description: "If you have a chosen successor, the surveillance reveals something troubling: they've been cultivating their own security contacts. Generals who answer their calls. Intelligence officers who report to them. Their own little surveillance state within yours. Protection? Or preparation?",
@@ -1009,7 +1017,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                     { flag: "purge_cleared_succession", equals: false }
                 ]
             },
-            
+
             choices: [
                 choice("'Dismantle their network. They don't need their own spies.'", {
                     effects: {
@@ -1024,7 +1032,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("succession_network_purged")
                     ]
                 }),
-                
+
                 choice("'Let them have their network. They'll need it eventually.'", {
                     effects: {
                         stats: {
@@ -1038,7 +1046,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_sokolov_loyal")
                     ]
                 }),
-                
+
                 choice("'Acceptable, but monitor them closely.'", {
                     effects: {
                         stats: {
@@ -1054,7 +1062,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         // Entry point from Golden Circle crossover
         event("loyalty_oligarch_investigation", {
             title: "The Wealth Purge",
@@ -1064,7 +1072,7 @@ const loyaltyApparatusStoryline = defineStoryline({
             conditions: {
                 flag: "wealth_triggered_purge"
             },
-            
+
             choices: [
                 choice("'Keep going until the corruption is eradicated.'", {
                     effects: {
@@ -1080,7 +1088,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_the_empty_room")
                     ]
                 }),
-                
+
                 choice("'Enough. We've made our point.'", {
                     effects: {
                         stats: {
@@ -1094,7 +1102,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_sokolov_loyal")
                     ]
                 }),
-                
+
                 choice("'Now investigate the investigators.'", {
                     effects: {
                         stats: {
@@ -1110,7 +1118,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         // Entry point from Succession crossover
         event("loyalty_heir_investigation", {
             title: "The Crown Prince's Secrets",
@@ -1120,7 +1128,7 @@ const loyaltyApparatusStoryline = defineStoryline({
             conditions: {
                 flag: "purge_cleared_succession"
             },
-            
+
             choices: [
                 choice("'This is unacceptable. Confront them.'", {
                     effects: {
@@ -1135,7 +1143,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_the_empty_room")
                     ]
                 }),
-                
+
                 choice("'Use this information. Control them through it.'", {
                     effects: {
                         flags: {
@@ -1148,18 +1156,18 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         // ================================================================
         // ACT 4: WHO WATCHES THE WATCHMEN? (Depth 4-5)
         // ================================================================
-        
+
         event("loyalty_sokolov_dossier", {
             title: "The Real File",
             description: "You've obtained Director Sokolov's actual file - the one he didn't show you. It's... interesting. Foreign contacts. Suspicious transfers. Insurance policies. Evidence of a private fortune hidden in Montenegro. Not treason, perhaps. But not innocence either.",
             weight: 3,
             storylines: ['loyalty-apparatus'],
             characterId: "sokolov",
-            
+
             choices: [
                 choice("'Confront him with this. Demand answers.'", {
                     effects: {
@@ -1172,7 +1180,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_sokolov_confrontation")
                     ]
                 }),
-                
+
                 choice("'Keep it secret. My insurance policy now.'", {
                     effects: {
                         flags: {
@@ -1183,7 +1191,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_sokolov_loyal")
                     ]
                 }),
-                
+
                 choice("'He's no different from anyone else. File it away.'", {
                     effects: {
                         stats: {
@@ -1194,7 +1202,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_sokolov_loyal")
                     ]
                 }),
-                
+
                 choice("'This is unacceptable. Move against him.'", {
                     effects: {
                         stats: {
@@ -1210,14 +1218,14 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         event("loyalty_sokolov_confrontation", {
             title: "The Reckoning",
             description: "You summon Director Sokolov. Just the two of you. You place his file on the desk between you. His pale eyes don't waver. 'Everyone needs insurance,' he says quietly. 'Even me. Even you. The question is: do we need each other?'",
             weight: 0,
             storylines: ['loyalty-apparatus'],
             characterId: "sokolov",
-            
+
             choices: [
                 choice("'Retire quietly. Full honors. A villa in Montenegro.'", {
                     effects: {
@@ -1234,7 +1242,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_new_director")
                     ]
                 }),
-                
+
                 choice("'You're under arrest, Director.'", {
                     effects: {
                         stats: {
@@ -1255,7 +1263,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_the_empty_room")
                     ]
                 }),
-                
+
                 choice("'We understand each other. Continue your work.'", {
                     effects: {
                         stats: {
@@ -1270,7 +1278,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_sokolov_loyal")
                     ]
                 }),
-                
+
                 choice("'Who else knows about this? Your insurance.'", {
                     effects: {
                         flags: {
@@ -1283,7 +1291,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         event("loyalty_sokolov_loyal", {
             title: "The True Believer",
             description: "Director Sokolov comes to you with urgent news. His voice is almost... warm. 'There's a real plot this time,' he says. 'Multiple factions. Military and civilian. They're moving in 72 hours.' He hands you the evidence. 'I could have used this myself. I didn't.'",
@@ -1297,7 +1305,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                     { flag: "sokolov_file_leverage" }
                 ]
             },
-            
+
             choices: [
                 choice("'We move first. Tonight.'", {
                     effects: {
@@ -1314,7 +1322,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_the_empty_room")
                     ]
                 }),
-                
+
                 choice("'Are you certain? I need more evidence.'", {
                     effects: {
                         flags: {
@@ -1325,7 +1333,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_the_empty_room")
                     ]
                 }),
-                
+
                 choice("'This could be a trap. How do I know you're not part of it?'", {
                     effects: {
                         relationships: { sokolov: -20 }
@@ -1336,17 +1344,17 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         // ================================================================
         // ACT 5: THE LONELY THRONE (Depth 5-6)
         // ================================================================
-        
+
         event("loyalty_the_empty_room", {
             title: "The Last Man Standing",
             description: "You've won. Every enemy eliminated. Every traitor exposed. Every threat neutralized. The conference table that once held your inner circle is now... empty. Just you and the shadows. And perhaps Sokolov, if he survived your suspicions. The room feels very quiet.",
             weight: 3,
             storylines: ['loyalty-apparatus'],
-            
+
             narrativeVariations: [
                 {
                     conditions: { flag: "sokolov_arrested" },
@@ -1357,7 +1365,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                     description: "Sokolov sits across from you, the only survivor of your inner circle. You've purged generals, oligarchs, ministers. He remains. Either he's the most loyal man alive, or the most patient predator. You may never know which."
                 }
             ],
-            
+
             choices: [
                 choice("'Peace at last. I can finally trust the silence.'", {
                     effects: {
@@ -1372,7 +1380,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         explanation: "You purged everyone and ruled alone."
                     }
                 }),
-                
+
                 choice("'The work is never done. There are always more threats.'", {
                     effects: {
                         stats: {
@@ -1392,7 +1400,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         eventRef("loyalty_the_machine_turns")
                     ]
                 }),
-                
+
                 choice("'Perhaps I went too far. The throne feels cold.'", {
                     effects: {
                         stats: {
@@ -1409,7 +1417,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         explanation: "You realized too late what paranoia cost you."
                     }
                 }),
-                
+
                 choice("'Who's next? There must be someone still plotting.'", {
                     effects: {
                         stats: {
@@ -1426,7 +1434,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         event("loyalty_the_machine_turns", {
             title: "The Final Purge",
             description: "The surveillance apparatus you built - the machine that watched everyone - has identified one final threat. The most dangerous of all. The one person you never suspected. Your new intelligence chief presents the file with trembling hands. 'The evidence is clear, sir.' The file has your name on it.",
@@ -1438,7 +1446,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                     { flag: "paranoia_unending" }
                 ]
             },
-            
+
             choices: [
                 choice("'Destroy the file. Destroy the machine.'", {
                     effects: {
@@ -1454,7 +1462,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         explanation: "You destroyed the surveillance state you created."
                     }
                 }),
-                
+
                 choice("'There must be some mistake. I built this system.'", {
                     effects: {
                         flags: {
@@ -1468,7 +1476,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         explanation: "Even the mirror became your enemy."
                     }
                 }),
-                
+
                 choice("'Perhaps they're right. Perhaps I am the problem.'", {
                     effects: {
                         stats: {
@@ -1482,7 +1490,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         explanation: "The paranoia you cultivated finally devoured you."
                     }
                 }),
-                
+
                 choice("'Who ordered this investigation? That's the real traitor.'", {
                     effects: {
                         stats: {
@@ -1501,7 +1509,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                 })
             ]
         }),
-        
+
         // Crossover entry from Golden Circle
         event("golden_circle_the_exposure", {
             title: "The Great Unmasking",
@@ -1511,7 +1519,7 @@ const loyaltyApparatusStoryline = defineStoryline({
             conditions: {
                 flag: "purge_exposed_oligarchs"
             },
-            
+
             choices: [
                 choice("'Justice is served. The people see the truth.'", {
                     effects: {
@@ -1526,7 +1534,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         explanation: "You exposed corruption. Your own remained hidden."
                     }
                 }),
-                
+
                 choice("'Seize their assets. Redistribute to the state.'", {
                     effects: {
                         stats: {
@@ -1535,7 +1543,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                         }
                     }
                 }),
-                
+
                 choice("'Show mercy to those who cooperate. Fear to those who don't.'", {
                     effects: {
                         stats: {
