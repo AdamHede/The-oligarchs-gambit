@@ -64,9 +64,34 @@ function calculateEffectiveWeight(event, state) {
         // Use highest storyline weight if event belongs to multiple
         const storylineMultipliers = event.storylines.map(storyline => {
             const effectiveWeight = getEffectiveStorylineWeight(state, storyline, baseWeight);
-            return effectiveWeight / baseWeight;
+            
+            // v2.3: Apply recency multiplier
+            // logic: penalize recently seen, boost neglected
+            let recencyMult = 1.0;
+            if (state.storylineLastSeen && state.storylineLastSeen[storyline] !== undefined) {
+                const lastSeen = state.storylineLastSeen[storyline];
+                // Use state.turn (absolute turn counter added in v2.1)
+                const currentTurn = state.turn || 0;
+                const delta = currentTurn - lastSeen;
+                
+                // Aggressive recency curve:
+                // 1 turn ago: 0.1x (Very unlikely)
+                // 2 turns ago: 0.3x
+                // 3 turns ago: 0.6x
+                // 4 turns ago: 0.8x
+                // 5 turns ago: 1.0x (Neutral)
+                // >5 turns: +0.2x per turn (Catch up)
+                if (delta <= 1) recencyMult = 0.1;
+                else if (delta === 2) recencyMult = 0.3;
+                else if (delta === 3) recencyMult = 0.6;
+                else if (delta === 4) recencyMult = 0.8;
+                else if (delta === 5) recencyMult = 1.0;
+                else recencyMult = 1.0 + (delta - 5) * 0.2;
+            }
+
+            return (effectiveWeight * recencyMult) / baseWeight;
         });
-        const maxMultiplier = Math.max(...storylineMultipliers, 1.0);
+        const maxMultiplier = Math.max(...storylineMultipliers, 0.1);
         baseWeight *= maxMultiplier;
     }
 

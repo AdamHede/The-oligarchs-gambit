@@ -122,7 +122,8 @@ const holyAllianceStoryline = defineStoryline({
                     unlocks: [
                         eventRef("church_wants_money"),
                         eventRef("church_wants_laws"),
-                        eventRef("church_wants_enemies_punished")
+                        eventRef("church_wants_enemies_punished"),
+                        eventRef("patriarch_consolidates_power")
                     ]
                 }),
                 
@@ -135,7 +136,8 @@ const holyAllianceStoryline = defineStoryline({
                         }
                     },
                     unlocks: [
-                        eventRef("church_wants_money")
+                        eventRef("church_wants_money"),
+                        eventRef("patriarch_consolidates_power")
                     ]
                 }),
                 
@@ -314,6 +316,12 @@ const holyAllianceStoryline = defineStoryline({
                         },
                         flags: {
                             "religious_laws_passed": true
+                        },
+                        legacy: {
+                            icon: "✝️",
+                            name: "Defender of the Faith",
+                            weight: 15,
+                            explanation: "You merged Church and State into one."
                         }
                     },
                     unlocks: [
@@ -339,6 +347,12 @@ const holyAllianceStoryline = defineStoryline({
                         stats: {
                             elite: -15,
                             anger: 5
+                        },
+                        legacy: {
+                            icon: "⚖️",
+                            name: "The Secularist",
+                            weight: 20,
+                            explanation: "You stood for reason against faith."
                         }
                     },
                     unlocks: [
@@ -828,8 +842,9 @@ const holyAllianceStoryline = defineStoryline({
                         },
                         legacy: {
                             icon: "⚡",
-                            name: "Church Crusher",
-                            weight: -12
+                            name: "The God-Slayer",
+                            weight: 35,
+                            explanation: "You proved the State is greater than God."
                         }
                     }
                 }),

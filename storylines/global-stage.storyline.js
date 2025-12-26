@@ -1570,7 +1570,8 @@ export default defineStoryline({
                         treasury: -60
                     },
                     unlocks: [
-                        eventRef("inflation_crisis_deepens")
+                        eventRef("inflation_crisis_deepens"),
+                        eventRef("eastern_neighbor_support")
                     ]
                 }),
                 choice("Reach out to Beijing. Negotiate.", {
@@ -1578,7 +1579,8 @@ export default defineStoryline({
                         elite: -5
                     },
                     unlocks: [
-                        eventRef("eastern_opportunist_approach")
+                        eventRef("eastern_opportunist_approach"),
+                        eventRef("eastern_neighbor_support")
                     ]
                 }),
                 choice("Expose them publicly. Name and shame.", {
@@ -1586,7 +1588,8 @@ export default defineStoryline({
                         anger: -5
                     },
                     unlocks: [
-                        eventRef("geopolitical_reckoning")
+                        eventRef("geopolitical_reckoning"),
+                        eventRef("eastern_neighbor_support")
                     ]
                 })
             ]
@@ -2582,6 +2585,12 @@ export default defineStoryline({
                         anger: 20,
                         elite: -15
                     },
+                    legacy: {
+                        icon: "🧱",
+                        name: "The Ruble Wall",
+                        weight: 15,
+                        explanation: "You locked the wealth inside. The world could only watch."
+                    },
                     unlocks: [
                         eventRef("global_isolation")
                     ]
@@ -2725,9 +2734,9 @@ export default defineStoryline({
                     },
                     legacy: {
                         icon: "🏰",
-                        name: "The Hermit",
-                        weight: -10,
-                        explanation: "You chose isolation over compromise."
+                        name: "The Sovereign",
+                        weight: 20,
+                        explanation: "You chose isolation over compromise. A kingdom of one."
                     }
                 }),
                 choice("Make one last attempt to break out.", {
@@ -2743,9 +2752,9 @@ export default defineStoryline({
                     },
                     legacy: {
                         icon: "🌑",
-                        name: "The Isolated",
-                        weight: -15,
-                        explanation: "You ended alone, surrounded by enemies."
+                        name: "The Bunker King",
+                        weight: 30,
+                        explanation: "You ended alone, but you never surrendered."
                     }
                 })
             ]

@@ -31,6 +31,7 @@ function createInitialState(initialStats = {}, initialDeck = []) {
         relationships: {},        // v2.1: Character relationship tracking (0-100)
         characterStates: {},      // v2.1: Character states (alive, arrested, exiled, dead)
         storylineWeights: {},     // v2.1: Dynamic storyline weight modifiers
+        storylineLastSeen: {},    // v2.3: Track when a storyline was last active
         terminatedEvents: new Set(), // v2.1: Permanently blocked event IDs
         deck: [...initialDeck],
         history: [],

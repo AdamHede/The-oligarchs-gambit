@@ -42,8 +42,9 @@ const specialOperationStoryline = defineStoryline({
                         },
                         legacy: {
                             icon: "⚔️",
-                            name: "Warmonger",
-                            weight: -15
+                            name: "The Conqueror",
+                            weight: 40,
+                            explanation: "You launched the special operation to restore the empire."
                         }
                     },
                     // Parallel consequences - all will happen
@@ -565,7 +566,8 @@ const specialOperationStoryline = defineStoryline({
                         }
                     },
                     unlocks: [
-                        eventRef("mobilization_decree")
+                        eventRef("mobilization_decree"),
+                        eventRef("nuclear_threats")
                     ]
                 }),
                 
@@ -697,8 +699,9 @@ const specialOperationStoryline = defineStoryline({
                         },
                         legacy: {
                             icon: "☢️",
-                            name: "Nuclear Madman",
-                            weight: -30
+                            name: "The Atomic Tsar",
+                            weight: 100,
+                            explanation: "You reminded the world why they should fear you."
                         }
                     }
                 }),

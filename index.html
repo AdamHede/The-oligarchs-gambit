@@ -896,39 +896,43 @@
                 const imgHeight = 350;
                 const imgInset = borderWidth + 4;
 
-                ctx.save();
-                ctx.beginPath();
-                ctx.rect(imgInset, imgInset, 512 - imgInset * 2, imgHeight - imgInset);
-                ctx.clip();
+                // Safeguard clipping with try/finally to ensure ctx.restore() is always called
+                try {
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.rect(imgInset, imgInset, 512 - imgInset * 2, imgHeight - imgInset);
+                    ctx.clip();
 
-                if (imgInfo && imgInfo.loaded) {
-                    try {
-                        const sWidth = imgInfo.img.width;
-                        const sHeight = imgInfo.img.height;
-                        const dWidth = 512 - imgInset * 2;
-                        const dHeight = imgHeight - imgInset;
+                    if (imgInfo && imgInfo.loaded) {
+                        try {
+                            const sWidth = imgInfo.img.width;
+                            const sHeight = imgInfo.img.height;
+                            const dWidth = 512 - imgInset * 2;
+                            const dHeight = imgHeight - imgInset;
 
-                        const scale = Math.max(dWidth / sWidth, dHeight / sHeight);
-                        const x = imgInset + (dWidth - sWidth * scale) / 2;
-                        const y = imgInset + (dHeight - sHeight * scale) / 2;
+                            const scale = Math.max(dWidth / sWidth, dHeight / sHeight);
+                            const x = imgInset + (dWidth - sWidth * scale) / 2;
+                            const y = imgInset + (dHeight - sHeight * scale) / 2;
 
-                        ctx.drawImage(imgInfo.img, 0, 0, sWidth, sHeight, x, y, sWidth * scale, sHeight * scale);
+                            ctx.drawImage(imgInfo.img, 0, 0, sWidth, sHeight, x, y, sWidth * scale, sHeight * scale);
 
-                        // Gradient overlay for text transition
-                        const overlay = ctx.createLinearGradient(0, imgHeight - 100, 0, imgHeight);
-                        overlay.addColorStop(0, 'rgba(30, 41, 59, 0)');
-                        overlay.addColorStop(1, '#1e293b');
-                        ctx.fillStyle = overlay;
-                        ctx.fillRect(imgInset, imgHeight - 100, 512 - imgInset * 2, 100);
+                            // Gradient overlay for text transition
+                            const overlay = ctx.createLinearGradient(0, imgHeight - 100, 0, imgHeight);
+                            overlay.addColorStop(0, 'rgba(30, 41, 59, 0)');
+                            overlay.addColorStop(1, '#1e293b');
+                            ctx.fillStyle = overlay;
+                            ctx.fillRect(imgInset, imgHeight - 100, 512 - imgInset * 2, 100);
 
-                    } catch (e) {
-                        console.warn('Error drawing image', e);
+                        } catch (e) {
+                            console.warn('Error drawing image', e);
+                            drawGradient(ctx, color, imgHeight, imgInset);
+                        }
+                    } else {
                         drawGradient(ctx, color, imgHeight, imgInset);
                     }
-                } else {
-                    drawGradient(ctx, color, imgHeight, imgInset);
+                } finally {
+                    ctx.restore(); // Always restore context state to prevent clipping from persisting
                 }
-                ctx.restore();
 
                 // Title - White
                 ctx.fillStyle = '#ffffff';
@@ -1028,7 +1032,8 @@
                     }
                 });
                 if (descLines.length < 5) descLines.push(currentLine);
-                if (descLines.length === 5 && currentLine !== descLines[4]) {
+                // Safety check: ensure descLines[4] exists before trying to slice it
+                if (descLines.length === 5 && descLines[4] && currentLine !== descLines[4]) {
                     descLines[4] = descLines[4].slice(0, -3) + '...';
                 }
 
@@ -1340,7 +1345,10 @@
             const matFront = new THREE.MeshPhysicalMaterial({
                 map: frontTex,
                 color: 0xffffff,
-                ...matProps
+                ...matProps,
+                side: THREE.DoubleSide, // Fix: Ensure visibility from both sides
+                transparent: false,     // Fix: Force opaque rendering
+                alphaTest: 0.5          // Fix: Handle alpha in texture cleanly
             });
 
             const materials = [matEdge, matEdge, matBack, matFront, matEdge, matEdge];

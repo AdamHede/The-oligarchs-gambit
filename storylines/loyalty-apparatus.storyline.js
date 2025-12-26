@@ -486,7 +486,7 @@ const loyaltyApparatusStoryline = defineStoryline({
                     legacy: {
                         icon: "🌙",
                         name: "The Night Purger",
-                        weight: -12,
+                        weight: 30,
                         explanation: "You arrested three of your inner circle in a single night."
                     },
                     unlocks: [

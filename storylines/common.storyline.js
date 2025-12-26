@@ -156,12 +156,12 @@ export default defineStoryline({
             meta: { depth: 1, impact: 1, sentiment: "neutral" },
 
             choices: [
-                choice("Enjoy the peace while it lasts", {
-                    effects: { anger: -2, elite: 1 },
+                choice("Take a short vacation. You've earned it.", {
+                    effects: { anger: 3 },
                     addSelf: true // Occasionally reappear
                 }),
-                choice("Something must be wrong. Investigate.", {
-                    effects: { elite: -1, anger: 1 },
+                choice("Stage a minor media distraction.", {
+                    effects: { elite: -3 },
                     addSelf: true // Occasionally reappear
                 })
             ]

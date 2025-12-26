@@ -464,8 +464,8 @@ export default defineStoryline({
                                     },
                                     legacy: {
                                         icon: "💎",
-                                        name: "Market Maker",
-                                        weight: -10,
+                                        name: "The Cartel Boss",
+                                        weight: 20,
                                         explanation: "You rigged global commodity markets for personal gain."
                                     }
                                 }),
@@ -825,7 +825,8 @@ export default defineStoryline({
                         explanation: "You reached toward Europe. They reached back with conditions."
                     },
                     unlocks: [
-                        eventRef("western_accord_first_offer")
+                        eventRef("western_accord_first_offer"),
+                        eventRef("eastern_quiet_undermining")
                     ]
                 }),
                 
@@ -856,7 +857,8 @@ export default defineStoryline({
                         explanation: "You turned away from Europe toward a rising power."
                     },
                     unlocks: [
-                        eventRef("eastern_embrace_first_offer")
+                        eventRef("eastern_embrace_first_offer"),
+                        eventRef("western_sanctions_escalate")
                     ]
                 }),
                 

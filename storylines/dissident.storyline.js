@@ -577,7 +577,8 @@ const dissidentStoryline = defineStoryline({
                         }
                     },
                     unlocks: [
-                        eventRef("movement_grows")
+                        eventRef("movement_grows"),
+                        eventRef("mass_protests_begin")
                     ]
                 }),
                 
@@ -702,7 +703,8 @@ const dissidentStoryline = defineStoryline({
                         legacy: {
                             icon: "💀",
                             name: "Butcher of Moscow",
-                            weight: -28
+                            weight: 35,
+                            explanation: "You crushed the protests with iron resolve."
                         }
                     },
                     unlocks: [

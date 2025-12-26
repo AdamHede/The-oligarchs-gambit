@@ -1068,10 +1068,10 @@ const successionStoryline = defineStoryline({
                         }
                     },
                     legacy: {
-                        icon: "🔥",
-                        name: "The Dynasty Destroyer",
-                        weight: -12,
-                        explanation: "You purged your heir's entire network."
+                        icon: "🩸",
+                        name: "The Purger of Blood",
+                        weight: 30,
+                        explanation: "You purged your heir's entire network without hesitation."
                     },
                     unlocks: [
                         eventRef("succession_the_candidates")
@@ -1283,9 +1283,9 @@ const successionStoryline = defineStoryline({
                     },
                     legacy: {
                         icon: "⚔️",
-                        name: "The Coup Survivor",
-                        weight: -5,
-                        explanation: "Your own heir tried to overthrow you. You stopped them."
+                        name: "The Iron Father",
+                        weight: 25,
+                        explanation: "Your own heir tried to overthrow you. You crushed them without mercy."
                     },
                     unlocks: [
                         eventRef("succession_after_coup")
@@ -1614,9 +1614,9 @@ const successionStoryline = defineStoryline({
                     },
                     legacy: {
                         icon: "🔥",
-                        name: "The Destroyer",
-                        weight: -25,
-                        explanation: "If you couldn't rule, no one would."
+                        name: "The Great Destroyer",
+                        weight: 50,
+                        explanation: "You burned it all down. History will never forget you."
                     }
                 }),
                 

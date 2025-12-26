@@ -217,7 +217,7 @@ class GameEngineV2 {
 
         // Apply effects (v2.2: returns object with legacy and unavailableEntities)
         const effectResult = applyEffects(this.state, choice.effects, this.statBounds);
-        const legacy = effectResult?.legacy || effectResult; // Handle both old and new return format
+        const legacy = effectResult?.legacy || null;
 
         // v2.2: Cascade invalidation for unavailable entities
         if (effectResult?.unavailableEntities && this.registry?.entityDependencies) {
@@ -238,6 +238,16 @@ class GameEngineV2 {
 
         // Apply auto-counters
         applyAutoCounters(this.state, event.id, choiceIndex);
+
+        // v2.3: Update storyline last seen
+        if (event.storylines && Array.isArray(event.storylines)) {
+            if (!this.state.storylineLastSeen) {
+                this.state.storylineLastSeen = {};
+            }
+            event.storylines.forEach(storylineId => {
+                this.state.storylineLastSeen[storylineId] = this.state.turn;
+            });
+        }
 
         // Process deck operations (v2.1: pass full event object for onceOnly check)
         this.state.deck = processChoiceDeckOperations(

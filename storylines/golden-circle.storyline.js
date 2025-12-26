@@ -450,9 +450,9 @@ const goldenCircleStoryline = defineStoryline({
                     },
                     legacy: {
                         icon: "🏰",
-                        name: "The Palace Builder",
-                        weight: -10,
-                        explanation: "You built a palace worth more than the education system."
+                        name: "The Sun King",
+                        weight: 40,
+                        explanation: "You built a palace that outshone the tsars."
                     },
                     unlocks: [
                         eventRef("golden_circle_sanctions_warning")
@@ -800,8 +800,8 @@ const goldenCircleStoryline = defineStoryline({
                     },
                     legacy: {
                         icon: "⚔️",
-                        name: "The Purger",
-                        weight: -10,
+                        name: "The First Strike",
+                        weight: 25,
                         explanation: "You struck first against your own elite."
                     },
                     unlocks: [
@@ -980,7 +980,7 @@ const goldenCircleStoryline = defineStoryline({
                     legacy: {
                         icon: "🔥",
                         name: "The Great Purger",
-                        weight: -15,
+                        weight: 30,
                         explanation: "You destroyed the oligarch class you once led."
                     },
                     unlocks: [
