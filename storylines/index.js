@@ -8,10 +8,10 @@
 // Import Storylines
 // ================================================================
 
-import commonStoryline from './common.storyline.js';
-import earlyGameAgendaStoryline from './early-game-agenda.storyline.js';
-import specialOperationStoryline from './special-operation.storyline.js';
-import dissidentStoryline from './dissident.storyline.js';
+import commonStoryline from './common.storyline.js?v=4';
+import earlyGameAgendaStoryline from './early-game-agenda.storyline.js?v=4';
+import specialOperationStoryline from './special-operation.storyline.js?v=4';
+import dissidentStoryline from './dissident.storyline.js?v=4';
 import holyAllianceStoryline from './holy-alliance.storyline.js';
 import stubsStoryline from './stubs.storyline.js';
 
@@ -82,7 +82,7 @@ export const storylineMetadata = {
             accentColor: '#A9A9A9'   // Dark gray
         }
     },
-    
+
     'early-game-agenda': {
         name: 'Early Game Agenda',
         description: 'Year 1 agenda-setting moments',
@@ -92,7 +92,7 @@ export const storylineMetadata = {
             accentColor: '#FFA500'   // Orange
         }
     },
-    
+
     'special-operation': {
         name: 'The Special Operation',
         description: 'War, hubris, and impossible choices',
@@ -102,7 +102,7 @@ export const storylineMetadata = {
             accentColor: '#FF4444'   // Bright red
         }
     },
-    
+
     'dissident': {
         name: 'The Dissident',
         description: 'One man vs the state - repression and its costs',
@@ -112,7 +112,7 @@ export const storylineMetadata = {
             accentColor: '#778899'   // Light slate gray
         }
     },
-    
+
     'holy-alliance': {
         name: 'The Holy Alliance',
         description: 'Church-state bargain, moral crusade, cynical power',
@@ -122,11 +122,11 @@ export const storylineMetadata = {
             accentColor: '#DAA520'   // Goldenrod
         }
     },
-    
+
     // ================================================================
     // Dacha Summit Storylines (interconnected)
     // ================================================================
-    
+
     'golden-circle': {
         name: 'The Golden Circle',
         description: 'Oligarch wealth, excess, and the price of greed',
@@ -136,7 +136,7 @@ export const storylineMetadata = {
             accentColor: '#DAA520'   // Goldenrod
         }
     },
-    
+
     'succession': {
         name: 'The Succession Question',
         description: 'Dynasty, heirs, and the impossible question of who comes after',
@@ -146,7 +146,7 @@ export const storylineMetadata = {
             accentColor: '#9932CC'   // Dark Orchid
         }
     },
-    
+
     'loyalty-apparatus': {
         name: 'The Loyalty Apparatus',
         description: 'Paranoia, surveillance, and the price of trust',
@@ -156,11 +156,11 @@ export const storylineMetadata = {
             accentColor: '#778899'   // Light Slate Gray
         }
     },
-    
+
     // ================================================================
     // Economic Vision Storylines (nested/convergent)
     // ================================================================
-    
+
     'economic-vision': {
         name: 'The Economic Vision',
         description: 'Three paths to economic power, all leading to a reckoning',
@@ -170,11 +170,11 @@ export const storylineMetadata = {
             accentColor: '#B8860B'   // Dark Goldenrod
         }
     },
-    
+
     // ================================================================
     // Global Stage Storylines (reactive/adversarial)
     // ================================================================
-    
+
     'global-stage': {
         name: 'The Global Stage',
         description: 'Three geopolitical paths - your choice determines who becomes ally, adversary, or opportunist',

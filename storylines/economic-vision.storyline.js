@@ -35,13 +35,13 @@ export default defineStoryline({
         event("silicon_tech_hub", {
             title: "The Special Economic Zone",
             description: "Natasha Sergeyeva presents the plan: a gleaming tech campus outside the capital. Tax breaks, fiber optic infrastructure, imported coffee machines. 'We'll attract the world's best engineers,' she says. 'Or at least stop ours from leaving.' The Finance Minister calculates costs on a napkin.",
-            
+
             weight: 15,
             rarity: "rare",
             onceOnly: true,
             characterId: "natasha_sergeyeva",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "silicon_steppe_active"
             },
@@ -102,13 +102,13 @@ export default defineStoryline({
         event("silicon_talent_recruitment", {
             title: "The Talent War",
             description: "To build Silicon Steppe, you need engineers. They're all in California, Berlin, or London. Natasha proposes aggressive recruitment: salaries, apartments, and promises they won't be drafted. The oligarchs are offended by the salary numbers.",
-            
+
             weight: 12,
             rarity: "rare",
             onceOnly: true,
             characterId: "natasha_sergeyeva",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "silicon_steppe_active"
             },
@@ -160,13 +160,13 @@ export default defineStoryline({
         event("silicon_first_success", {
             title: "The App Store Hit",
             description: "A startup from Silicon Steppe creates a messaging app that goes viral. 50 million downloads in three months. Western media runs profiles of 'The Russian Zuckerberg.' Natasha is vindicated. The FSB wants access to the user data.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             characterId: "natasha_sergeyeva",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "silicon_steppe_active"
             },
@@ -216,13 +216,13 @@ export default defineStoryline({
         event("silicon_brain_drain", {
             title: "The Departure Lounge",
             description: "Despite the investment, engineers are still leaving. Exit interviews reveal the problem: it's not the money. It's the 'other things.' The surveillance. The uncertainty. The military conscription notices. Natasha looks tired.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             characterId: "natasha_sergeyeva",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "silicon_steppe_active"
             },
@@ -272,12 +272,12 @@ export default defineStoryline({
         event("silicon_surveillance_deal", {
             title: "The Dual-Use Dilemma",
             description: "The FSB presents a proposal: they want Silicon Steppe companies to develop surveillance technology for export. Facial recognition, social media monitoring, the works. 'Democratic countries won't do this,' the Director says. 'We can corner the market.'",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "silicon_steppe_active"
             },
@@ -333,13 +333,13 @@ export default defineStoryline({
         event("silicon_tech_oligarch_rise", {
             title: "The New Money",
             description: "Alexei Petrov, founder of that messaging app, is now worth $8 billion. He's buying football teams and funding opposition podcasts. He says things like 'innovation' and 'disruption.' The old oligarchs are threatened. So are you.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             characterId: "alexei_petrov",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "silicon_steppe_active"
             },
@@ -391,12 +391,12 @@ export default defineStoryline({
         event("silicon_foreign_investment", {
             title: "The Strings Attached",
             description: "Western venture capital is interested in Silicon Steppe. Billions available. But they want things: rule of law, independent courts, press freedom. 'Standard investor protections,' they say. The FSB Director calls it 'Western interference.'",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "silicon_steppe_active"
             },
@@ -446,12 +446,12 @@ export default defineStoryline({
         event("silicon_hack_blowback", {
             title: "The Attribution",
             description: "Silicon Steppe has been quietly doing state hacking operations. Very quietly. Until a Western cybersecurity firm publishes a detailed attribution report naming your tech companies. Screenshots. Code samples. Everything.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "silicon_steppe_active"
             },
@@ -499,13 +499,13 @@ export default defineStoryline({
         event("silicon_natasha_disillusion", {
             title: "The Resignation Letter",
             description: "Natasha Sergeyeva's resignation letter leaks. It's devastating: compromise after compromise, surveillance built into everything, innovation strangled by paranoia. 'I came to build the future,' she writes. 'I helped build a prettier prison.'",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
             characterId: "natasha_sergeyeva",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "silicon_steppe_active"
             },
@@ -576,13 +576,13 @@ export default defineStoryline({
         event("pipeline_new_route", {
             title: "The Northern Route",
             description: "Grigory Gazov presents the crown jewel: a new pipeline bypassing troublesome transit countries. $45 billion. Ten years to complete. 'We'll supply Europe directly,' he says. 'They'll depend on us completely.' The Finance Minister looks pale.",
-            
+
             weight: 15,
             rarity: "rare",
             onceOnly: true,
             characterId: "grigory_gazov",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "pipeline_state_active"
             },
@@ -638,13 +638,13 @@ export default defineStoryline({
         event("pipeline_european_leverage", {
             title: "The Cold Winter",
             description: "It's February. Gas reserves in Europe are low. Gazov suggests a 'maintenance shutdown' of existing pipelines. Prices would triple. European politicians would panic. 'Just leverage,' he shrugs. 'This is how the game is played.'",
-            
+
             weight: 12,
             rarity: "rare",
             onceOnly: true,
             characterId: "grigory_gazov",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "pipeline_state_active"
             },
@@ -699,13 +699,13 @@ export default defineStoryline({
         event("pipeline_price_war", {
             title: "The OPEC Confrontation",
             description: "The Saudis are flooding the market. Oil prices are crashing. Your budget depends on $70 barrels. They're at $40 and falling. Gazov wants to increase production to maintain revenue. The Finance Minister says that's insane.",
-            
+
             weight: 12,
             rarity: "rare",
             onceOnly: true,
             characterId: "grigory_gazov",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "pipeline_state_active"
             },
@@ -756,13 +756,13 @@ export default defineStoryline({
         event("pipeline_sanctions_bite", {
             title: "The Technology Ban",
             description: "Western sanctions hit the oil sector. No more imported drilling technology. No more deep-water expertise. No more Arctic exploration equipment. Gazov is furious. 'We can build our own,' he insists. You're not sure he's right.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             characterId: "grigory_gazov",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "pipeline_state_active"
             },
@@ -812,13 +812,13 @@ export default defineStoryline({
         event("pipeline_environmental_disaster", {
             title: "The Black Sea Spill",
             description: "A pipeline ruptures. Thousands of tons of crude in the Black Sea. Resort beaches covered in tar. International media arrives. Environmental groups are screaming. Gazov calls it 'a minor incident.'",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             characterId: "grigory_gazov",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "pipeline_state_active"
             },
@@ -868,13 +868,13 @@ export default defineStoryline({
         event("pipeline_asian_pivot", {
             title: "The Eastern Alternative",
             description: "Europe is reducing gas imports. The green transition is real. Gazov proposes a massive pivot: new pipelines to China. They'll buy everything Europe won't. 'We just need to accept their price,' he admits quietly.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             characterId: "grigory_gazov",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "pipeline_state_active"
             },
@@ -925,13 +925,13 @@ export default defineStoryline({
         event("pipeline_green_transition", {
             title: "The World Moves On",
             description: "Germany announces its last coal plant closure. The EU sets 2040 carbon neutrality. Electric vehicle sales are exploding. Gazov's confident projections from five years ago look like fantasy. The pipeline you built might be a stranded asset.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             characterId: "grigory_gazov",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "pipeline_state_active"
             },
@@ -987,13 +987,13 @@ export default defineStoryline({
         event("pipeline_gazov_desperation", {
             title: "The Old Man's Gamble",
             description: "Gazov proposes something dangerous: secretly funding environmental protests in Europe to slow their transition. NGOs, politicians, the works. 'We've done this before,' he says. 'Information operations. Nobody will know.'",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
             characterId: "grigory_gazov",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "pipeline_state_active"
             },
@@ -1040,13 +1040,13 @@ export default defineStoryline({
         event("pipeline_stranded_assets", {
             title: "The $45 Billion Question",
             description: "The northern pipeline is complete. It cost more than projected. And now... Europe doesn't want the gas. The pipeline runs at 20% capacity. Bond payments are due. Gazov has no answers.",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
             characterId: "grigory_gazov",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "pipeline_state_active"
             },
@@ -1111,13 +1111,13 @@ export default defineStoryline({
         event("fortress_import_ban", {
             title: "The Self-Sufficiency Decree",
             description: "Viktor Narodny presents the vision: ban Western imports, build domestic alternatives, achieve true independence. 'We did this before,' he says, gesturing at Soviet-era industrial photos. 'We can do it again.' The oligarchs look nauseated.",
-            
+
             weight: 15,
             rarity: "rare",
             onceOnly: true,
             characterId: "viktor_narodny",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "fortress_economy_active"
             },
@@ -1176,13 +1176,13 @@ export default defineStoryline({
         event("fortress_factory_campaign", {
             title: "The Industrial Revival",
             description: "To replace imports, you need factories. Viktor wants a massive state investment: tractors, appliances, electronics. 'Quality will come later,' he says. 'First, we need volume.' The Central Banker calculates the cost at $200 billion over ten years.",
-            
+
             weight: 12,
             rarity: "rare",
             onceOnly: true,
             characterId: "viktor_narodny",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "fortress_economy_active"
             },
@@ -1232,12 +1232,12 @@ export default defineStoryline({
         event("fortress_cheese_problem", {
             title: "The Parmesan Crisis",
             description: "It's been six months since the import ban. The new Federation cheese factories are... operational. The cheese is... edible. Technically. The elite are furious. French restaurants in Moscow are serving 'Motherland Camembert.' Nobody is fooled.",
-            
+
             weight: 12,
             rarity: "rare",
             onceOnly: true,
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "fortress_economy_active"
             },
@@ -1289,13 +1289,13 @@ export default defineStoryline({
         event("fortress_medicine_crisis", {
             title: "The Pharmacy Lines",
             description: "The import ban included pharmaceutical ingredients. Domestic production is months behind. Cancer patients can't get chemotherapy. Diabetics ration insulin. Lines form outside pharmacies. Viktor insists it's temporary.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             characterId: "viktor_narodny",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "fortress_economy_active"
             },
@@ -1344,12 +1344,12 @@ export default defineStoryline({
         event("fortress_black_market", {
             title: "The Shadow Economy",
             description: "Nature abhors a vacuum. Smuggling networks emerge overnight. Banned Western goods flow through Kazakhstan, Belarus, Turkey. Your customs officials are getting rich. The black market might now be 15% of GDP.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "fortress_economy_active"
             },
@@ -1398,13 +1398,13 @@ export default defineStoryline({
         event("fortress_ideological_purity", {
             title: "The Cosmopolitan Question",
             description: "Viktor wants to go further. 'Some of our elite have... foreign attachments,' he says. Bank accounts abroad. Children in London schools. Vacation homes in Monaco. 'How can we build a fortress when our leaders have one foot outside?'",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             characterId: "viktor_narodny",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "fortress_economy_active"
             },
@@ -1458,12 +1458,12 @@ export default defineStoryline({
         event("fortress_quality_collapse", {
             title: "The Tractor Problem",
             description: "The new Federation tractors are rolling off the line. They look impressive. Unfortunately, they break down after 200 hours. Farmers are furious. The spring planting season is at risk. Someone imported Chinese parts anyway, and they don't fit.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "fortress_economy_active"
             },
@@ -1510,12 +1510,12 @@ export default defineStoryline({
         event("fortress_brain_drain", {
             title: "The Empty Universities",
             description: "The smartest people are leaving. Not to Silicon Valley this time—anywhere. Georgia, Kazakhstan, even Mongolia. Viktor blames 'lack of patriotism.' The rector of Moscow State reports: physics department down 40%.",
-            
+
             weight: 10,
             rarity: "rare",
             onceOnly: true,
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "fortress_economy_active"
             },
@@ -1562,13 +1562,13 @@ export default defineStoryline({
         event("fortress_viktor_doubts", {
             title: "The Old Believer's Crisis",
             description: "Viktor comes to you privately. He looks shaken. 'I believed... I still believe... but the numbers...' The factories are failing. The shelves are thin. The people are angry. 'Perhaps we moved too fast,' he admits.",
-            
+
             weight: 8,
             rarity: "rare",
             onceOnly: true,
             characterId: "viktor_narodny",
             storylines: ['economic-vision'],
-            
+
             conditions: {
                 flag: "fortress_economy_active"
             },
@@ -1622,9 +1622,9 @@ export default defineStoryline({
         event("economic_reckoning_arrives", {
             title: "The Moment of Truth",
             description: "The reports are on your desk. Every chart points down. The Central Banker hasn't slept in days. Your chosen economic path—whether tech, energy, or autarky—has hit a wall. The reckoning you hoped would never come is here.",
-            
+
             weight: 0,  // Only triggered by unlocks
-            rarity: "legendary",
+            rarity: "rare",
             onceOnly: true,
             storylines: ['economic-vision'],
 
@@ -1690,9 +1690,9 @@ export default defineStoryline({
         event("reckoning_elite_revolt", {
             title: "The Dacha Confrontation",
             description: "Your inner circle demands a meeting. They're not asking nicely. The oligarchs lost billions. The generals want their equipment budgets. The technocrats are tired of explaining the inexplicable. Someone breaks a wine glass. The conversation becomes tense.",
-            
+
             weight: 0,
-            rarity: "legendary",
+            rarity: "rare",
             onceOnly: true,
             storylines: ['economic-vision'],
 
@@ -1748,9 +1748,9 @@ export default defineStoryline({
         event("reckoning_foreign_pressure", {
             title: "The Creditors Call",
             description: "China wants repayment on those infrastructure loans. The IMF is making noises. Bond markets are closed to you. The ruble is in free fall. Foreign leaders who used to take your calls are suddenly 'in meetings.'",
-            
+
             weight: 0,
-            rarity: "legendary",
+            rarity: "rare",
             onceOnly: true,
             storylines: ['economic-vision'],
 
@@ -1803,9 +1803,9 @@ export default defineStoryline({
         event("reckoning_bread_riots", {
             title: "The Streets Explode",
             description: "Spontaneous protests erupt in ten cities simultaneously. Not organized opposition—just angry people. Bread lines. Unemployment. Inflation. They're chanting economic slogans, not political ones. For now.",
-            
+
             weight: 0,
-            rarity: "legendary",
+            rarity: "rare",
             onceOnly: true,
             storylines: ['economic-vision'],
 
@@ -1860,9 +1860,9 @@ export default defineStoryline({
         event("reckoning_final_choice", {
             title: "The Decision",
             description: "It's late. You're alone in your office. The reports are on your desk. Every option has costs. Every path forward is painful. You came to power to make the Federation great. Instead... this. The next decision will define whatever comes after.",
-            
+
             weight: 0,
-            rarity: "legendary",
+            rarity: "rare",
             onceOnly: true,
             storylines: ['economic-vision'],
 

@@ -34,13 +34,12 @@ export default defineStoryline({
         event("dacha_summit", {
             title: "The Dacha Summit",
             description: "Your inner circle gathers at the presidential dacha. The fireplace crackles. Vodka flows. These are the men who made you—the oligarchs, the generals, the fixers. They helped you seize power. Now they want to know: what's in it for them? The conversation tonight will set the tone for your entire reign.",
-            
+
             forceAddAtStart: true,      // Always in starting deck
             timeGate: { maxYear: 1 },   // Disappears after Year 1
             weight: 100,                // High weight to ensure it triggers in Year 1
-            rarity: "legendary",
+            rarity: "rare",
             onceOnly: true,
-            storylines: ['early-game-agenda'],
 
             meta: { depth: 1, impact: 5, sentiment: "neutral" },
 
@@ -72,7 +71,7 @@ export default defineStoryline({
                         eventRef("golden_circle_first_deal")
                     ]
                 }),
-                
+
                 // ============================================================
                 // CHOICE 2: THE SUCCESSION QUESTION
                 // Opens: Dynasty and heir storyline
@@ -99,7 +98,7 @@ export default defineStoryline({
                         eventRef("succession_the_candidates")
                     ]
                 }),
-                
+
                 // ============================================================
                 // CHOICE 3: THE LOYALTY APPARATUS
                 // Opens: Paranoia and purge storyline
@@ -138,7 +137,7 @@ export default defineStoryline({
             title: "The First Big Move",
             description: "Six months into your consolidation of power. The Federation is stable. Perhaps too stable. Your advisors present several... opportunities. Bold action now could cement your legacy. Or hasten your fall.",
             weight: 20,
-            rarity: "epic",
+            rarity: "rare",
 
             // v2.1: Appears Year 1, Q1-Q4 (available from start, narrative says "six months")
             timeGate: {
@@ -657,13 +656,13 @@ export default defineStoryline({
         event("five_year_plan", {
             title: "The Five-Year Plan",
             description: "Your economic advisors gather in the Kremlin's walnut-paneled conference room. Oil prices are volatile. The ruble is weak. The technocrats argue over PowerPoint slides while the oligarchs check their Swiss watches. The Central Banker looks like she hasn't slept in three days. Three competing visions emerge for the Federation's economic future.",
-            
+
             forceAddAtStart: true,      // Always in starting deck
             timeGate: { maxYear: 1 },   // Disappears after Year 1
             weight: 100,                // High weight to ensure it triggers in Year 1
-            rarity: "legendary",
+            rarity: "rare",
             onceOnly: true,
-            storylines: ['early-game-agenda', 'economic-vision'],
+            // storylines: ['early-game-agenda', 'economic-vision'], // Removed to prevent conflict
 
             meta: { depth: 1, impact: 5, sentiment: "neutral" },
 
@@ -694,7 +693,7 @@ export default defineStoryline({
                         eventRef("silicon_tech_hub")
                     ]
                 }),
-                
+
                 // ============================================================
                 // CHOICE 2: THE PIPELINE STATE
                 // Opens: Energy dominance storyline
@@ -721,7 +720,7 @@ export default defineStoryline({
                         eventRef("pipeline_new_route")
                     ]
                 }),
-                
+
                 // ============================================================
                 // CHOICE 3: THE FORTRESS ECONOMY
                 // Opens: Autarky/self-sufficiency storyline
@@ -749,7 +748,7 @@ export default defineStoryline({
                         eventRef("fortress_import_ban")
                     ]
                 }),
-                
+
                 // ============================================================
                 // CHOICE 4: LAISSEZ-FAIRE (Non-commitment)
                 // Reduces control, leads to drift
@@ -787,13 +786,13 @@ export default defineStoryline({
         event("global_stage_summit", {
             title: "The Global Stage",
             description: "The World Economic Forum in Davos. Your first invitation since taking power. You fly in on the presidential jet—Western media notes it cost $80 million. The American Ambassador requests 'frank discussions.' The Chinese delegation is warmly friendly. Representatives from India, Turkey, and the Gulf circle like sharks. Back home, the ruble fell 4% today. Everyone has an offer. Everyone wants something.",
-            
+
             forceAddAtStart: true,      // Always in starting deck
             timeGate: { maxYear: 1 },   // Disappears after Year 1
             weight: 100,                // High weight to ensure it triggers in Year 1
-            rarity: "legendary",
+            rarity: "rare",
             onceOnly: true,
-            storylines: ['early-game-agenda', 'global-stage'],
+            // storylines: ['early-game-agenda', 'global-stage'],
 
             meta: { depth: 1, impact: 5, sentiment: "neutral" },
 
@@ -829,7 +828,7 @@ export default defineStoryline({
                         eventRef("eastern_quiet_undermining")
                     ]
                 }),
-                
+
                 // ============================================================
                 // CHOICE 2: THE EASTERN EMBRACE
                 // Opens: Chinese partnership path
@@ -861,7 +860,7 @@ export default defineStoryline({
                         eventRef("western_sanctions_escalate")
                     ]
                 }),
-                
+
                 // ============================================================
                 // CHOICE 3: THE THIRD WAY
                 // Opens: Non-aligned coalition path
@@ -893,7 +892,7 @@ export default defineStoryline({
                         eventRef("third_way_first_offer")
                     ]
                 }),
-                
+
                 // ============================================================
                 // CHOICE 4: MULTI-VECTOR DIPLOMACY
                 // All three paths = OPPORTUNIST (chaotic)
